@@ -42,7 +42,7 @@ function navigate(path) {
       return lines.join('\n');
     }
 
-    // Helper: Submit lead with server endpoint (no mailto fallback)
+    // Helper: Submit lead via server API
     async function submitLead(lead) {
       // Track if available
       if (window.track && typeof window.track === 'function') {
@@ -53,36 +53,21 @@ function navigate(path) {
         }
       }
 
-      try {
-        // Check if EmailJS is loaded
-        if (typeof emailjs === 'undefined') {
-          throw new Error('EmailJS SDK not loaded. Please check your internet connection and try again.');
-        }
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(lead),
+      });
 
-        // Prepare EmailJS template parameters
-        const params = {
-          name: lead.name,
-          email: lead.email,
-          phone: lead.phone || '',
-          services: lead.services?.join(', ') || '',
-          budget: lead.budget || '',
-          timeline: lead.timeline || '',
-          contactMethod: lead.contactMethod || '',
-          message: lead.message || ''
-        };
+      const data = await response.json();
 
-        // Send email via EmailJS
-        const response = await emailjs.send('service_4pj79d6', 'template_5nv5yqd', params);
-        
-        if (response.status === 200) {
-          return { success: true, via: 'emailjs', data: response };
-        } else {
-          throw new Error('EmailJS returned non-200 status');
-        }
-      } catch (error) {
-        console.error('Lead submission failed:', error);
-        throw error;
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Failed to submit lead.');
       }
+
+      return { success: true, via: 'api', data };
     }
 
     // Floating Navigation
@@ -1170,6 +1155,14 @@ function navigate(path) {
         const form = formRef.current;
         if (!form) return;
 
+        // Honeypot check - if filled, silently reject (bot detected)
+        const honeypot = form.querySelector('[name="website_url_hp"]')?.value;
+        if (honeypot) {
+          console.warn('Bot detected via honeypot');
+          // Silently fail - don't give bots feedback
+          return;
+        }
+
         // Validate required fields
         const name = form.querySelector('[name="name"]')?.value.trim();
         const email = form.querySelector('[name="email"]')?.value.trim();
@@ -1381,6 +1374,24 @@ function navigate(path) {
                       />
                     </div>
                   </div>
+
+                  {/* Honeypot field - hidden from real users, catches bots */}
+                  <input
+                    type="text"
+                    name="website_url_hp"
+                    defaultValue=""
+                    autoComplete="new-password"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    style={{ 
+                      position: 'absolute',
+                      left: '-9999px',
+                      width: '1px',
+                      height: '1px',
+                      opacity: 0,
+                      pointerEvents: 'none'
+                    }}
+                  />
 
                   {/* Budget & Timeline Row */}
                   <div className="grid md:grid-cols-2 gap-4">
