@@ -61,9 +61,21 @@ function navigate(path) {
         body: JSON.stringify(lead),
       });
 
-      const data = await response.json();
+      // Safely parse JSON - handle empty responses
+      let data = { ok: true };
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const text = await response.text();
+        if (text) {
+          try {
+            data = JSON.parse(text);
+          } catch (e) {
+            console.warn('Failed to parse response JSON:', e);
+          }
+        }
+      }
 
-      if (!response.ok || !data.ok) {
+      if (!response.ok) {
         throw new Error(data.error || 'Failed to submit lead.');
       }
 
@@ -389,10 +401,6 @@ function navigate(path) {
 
       return (
         <section ref={sectionRef} id="about" className="relative overflow-hidden" style={{ background: 'var(--bg)', paddingTop: '4rem', paddingBottom: '4rem' }}>
-          
-          {/* Masked Grid Patches */}
-          <div className="masked-grid masked-grid-purple masked-grid-top-right" aria-hidden="true"></div>
-          <div className="masked-grid masked-grid-blue masked-grid-bottom-left" aria-hidden="true"></div>
 
           {/* Hero Section - Organic Layout */}
           <div className="relative min-h-screen flex items-center px-8 md:px-12 lg:px-20 py-32">
@@ -548,12 +556,9 @@ function navigate(path) {
 
           {/* Mission Section */}
           <div className="relative px-8 md:px-12 lg:px-20 py-32">
-            <div className="max-w-6xl mx-auto relative">
-              
-              {/* Masked Grid Patch */}
-              <div className="masked-grid masked-grid-purple masked-grid-center" aria-hidden="true"></div>
+            <div className="max-w-6xl mx-auto">
 
-              <div className="relative z-10">
+              <div>
                 <p className="text-xs font-bold mb-8 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                   OUR MISSION
                 </p>
@@ -596,61 +601,38 @@ function navigate(path) {
                 </h3>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full-Stack Developer', desc: 'Clean code, modern architecture, zero bloat', color: 'var(--primary)', avatar: '/img/Adrian-avatar.png.png' },
-                  { name: 'Viktor', role: 'Visual & Front-End Designer', desc: 'Pixels that matter, designs that convert', color: 'var(--accent-blue)', avatar: '/img/Viky-avatar.jpg.jpg' },
-                  { name: 'Štěpán', role: 'Growth & Strategy', desc: 'From first call to final launch and beyond', color: 'var(--success)', avatar: '/img/Nepik-avatar.png.png' }
+                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Clean code, modern architecture, zero bloat', color: 'var(--primary)', avatar: '/img/Adrian-avatar.png.png' },
+                  { name: 'Viktor', role: 'Design & brand', tagline: 'Pixels that matter, designs that convert', color: 'var(--accent-blue)', avatar: '/img/Viky-avatar.jpg.jpg' },
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'From first call to final launch and beyond', color: 'var(--success)', avatar: '/img/Nepik-avatar.png.png' }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
-                    className="group py-10 border-b transition-all duration-400 rounded-xl"
+                    className="group py-8 md:py-10 border-b cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-transparent hover:via-[rgba(138,61,230,0.03)] hover:to-transparent"
                     style={{ 
                       borderColor: 'var(--glass-border)',
                       opacity: 0,
                       animation: 'fadeInUp 0.6s ease-out forwards',
-                      animationDelay: `${0.4 + idx * 0.1}s`,
-                      background: 'transparent'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'radial-gradient(ellipse at center, rgba(138, 61, 230, 0.04) 0%, transparent 70%)';
-                      e.currentTarget.style.paddingLeft = '16px';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.paddingLeft = '0px';
+                      animationDelay: `${0.4 + idx * 0.1}s`
                     }}
                   >
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                      <div className="flex items-center gap-6">
+                    <div className="flex items-center justify-between gap-4 md:gap-8">
+                      {/* Left side: Number + Name + Role (always visible) */}
+                      <div className="flex items-center gap-4 md:gap-6 transition-transform duration-300 group-hover:translate-x-2">
                         <span 
-                          className="text-6xl md:text-8xl font-bold transition-all duration-400 group-hover:scale-105" 
+                          className="text-5xl md:text-7xl lg:text-8xl font-bold transition-all duration-300 group-hover:scale-105" 
                           style={{ 
                             fontFamily: "'Space Grotesk', sans-serif",
                             color: member.color,
-                            opacity: 0.35
+                            opacity: 0.25
                           }}
                         >
                           {(idx + 1).toString().padStart(2, '0')}
                         </span>
-                        <img
-                          src={member.avatar}
-                          alt={member.name}
-                          className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover transition-all duration-300 group-hover:scale-110"
-                          style={{
-                            border: '2px solid var(--glass-border)',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow = `0 4px 20px ${member.color}40`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                          }}
-                        />
                         <div>
                           <h4 
-                            className="text-3xl md:text-4xl font-bold mb-2 transition-all duration-300 group-hover:translate-x-2" 
+                            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1" 
                             style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
                           >
                             {member.name}
@@ -660,11 +642,41 @@ function navigate(path) {
                           </p>
                         </div>
                       </div>
+
+                      {/* Right side: Avatar + Tagline (hidden by default, slides in on hover) */}
+                      <div className="hidden md:flex items-center gap-4 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out">
+                        <p 
+                          className="text-sm lg:text-base text-right max-w-[200px] lg:max-w-xs italic" 
+                          style={{ color: 'var(--muted)' }}
+                        >
+                          {member.tagline}
+                        </p>
+                        <img
+                          src={member.avatar}
+                          alt={member.name}
+                          className="w-14 h-14 lg:w-16 lg:h-16 rounded-full object-cover flex-shrink-0"
+                          style={{
+                            border: '2px solid var(--glass-border)'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Mobile: Avatar + Tagline (stacked, hidden by default) */}
+                    <div className="md:hidden flex items-center gap-3 mt-4 opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-24 transition-all duration-300">
+                      <img
+                        src={member.avatar}
+                        alt={member.name}
+                        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                        style={{
+                          border: '2px solid var(--glass-border)'
+                        }}
+                      />
                       <p 
-                        className="text-base md:text-lg md:text-right md:max-w-sm opacity-0 translate-y-2 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-400" 
-                        style={{ color: 'var(--text)' }}
+                        className="text-sm italic" 
+                        style={{ color: 'var(--muted)' }}
                       >
-                        {member.desc}
+                        {member.tagline}
                       </p>
                     </div>
                   </div>

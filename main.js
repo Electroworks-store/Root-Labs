@@ -50,9 +50,21 @@
         body: JSON.stringify(lead),
       });
 
-      const data = await response.json();
+      // Safely parse JSON - handle empty responses
+      let data = { ok: true };
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const text = await response.text();
+        if (text) {
+          try {
+            data = JSON.parse(text);
+          } catch (e) {
+            console.warn('Failed to parse response JSON:', e);
+          }
+        }
+      }
 
-      if (!response.ok || !data.ok) {
+      if (!response.ok) {
         throw new Error(data.error || 'Failed to submit lead.');
       }
 
