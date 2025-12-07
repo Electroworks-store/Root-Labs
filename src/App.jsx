@@ -583,72 +583,92 @@ function navigate(path) {
             </div>
           </div>
 
-          {/* Team Section */}
+          {/* Team Section - Meet the crew */}
           <div className="relative px-8 md:px-12 lg:px-20 py-32">
-            <div className="max-w-5xl mx-auto relative">
-              
-              {/* Masked Grid Patch */}
-              <div className="masked-grid masked-grid-blue masked-grid-top-left" aria-hidden="true"></div>
+            <div className="max-w-5xl mx-auto">
 
-              <div className="relative z-10">
-                <div className="mb-20">
-                  <p className="text-xs font-bold mb-6 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
-                    THE TEAM
-                  </p>
-                  <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
-                    Meet the crew
-                  </h3>
-                </div>
+              <div className="mb-20">
+                <p className="text-xs font-bold mb-6 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
+                  THE TEAM
+                </p>
+                <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                  Meet the crew
+                </h3>
+              </div>
 
-                <div className="space-y-1">
-                  {[
-                    { name: 'Adrian', role: 'Founder & Lead Designer', desc: 'Designs that convert, pixels that matter', color: 'var(--primary)' },
-                    { name: 'Viktor', role: 'Full-Stack Developer', desc: 'Clean code, modern architecture, zero bloat', color: 'var(--accent-blue)' },
-                    { name: 'Štěpán', role: 'Growth & Strategy', desc: 'From first call to final launch and beyond', color: 'var(--success)' }
-                  ].map((member, idx) => (
-                    <div 
-                      key={idx}
-                      className="group py-10 border-b transition-all duration-500 hover:pl-8"
-                      style={{ 
-                        borderColor: 'var(--glass-border)',
-                        opacity: 0,
-                        animation: 'fadeInUp 0.6s ease-out forwards',
-                        animationDelay: `${0.4 + idx * 0.1}s`
-                      }}
-                    >
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                        <div className="flex items-baseline gap-8">
-                          <span 
-                            className="text-7xl md:text-9xl font-bold opacity-8 transition-all duration-500 group-hover:opacity-20 group-hover:scale-110" 
-                            style={{ 
-                              fontFamily: "'Space Grotesk', sans-serif",
-                              color: member.color
-                            }}
-                          >
-                            {(idx + 1).toString().padStart(2, '0')}
-                          </span>
-                          <div>
-                            <h4 
-                              className="text-4xl md:text-5xl font-bold mb-3 transition-all duration-300 group-hover:translate-x-4" 
-                              style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
-                            >
-                              {member.name}
-                            </h4>
-                            <p className="text-base font-semibold" style={{ color: member.color }}>
-                              {member.role}
-                            </p>
-                          </div>
-                        </div>
-                        <p 
-                          className="text-lg md:text-right md:max-w-sm opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700" 
-                          style={{ color: '#000000' }}
+              <div className="space-y-1">
+                {[
+                  { name: 'Adrian', role: 'Full-Stack Developer', desc: 'Clean code, modern architecture, zero bloat', color: 'var(--primary)', avatar: '/img/Adrian-avatar.png.png' },
+                  { name: 'Viktor', role: 'Visual & Front-End Designer', desc: 'Pixels that matter, designs that convert', color: 'var(--accent-blue)', avatar: '/img/Viky-avatar.jpg.jpg' },
+                  { name: 'Štěpán', role: 'Growth & Strategy', desc: 'From first call to final launch and beyond', color: 'var(--success)', avatar: '/img/Nepik-avatar.png.png' }
+                ].map((member, idx) => (
+                  <div 
+                    key={idx}
+                    className="group py-10 border-b transition-all duration-400 rounded-xl"
+                    style={{ 
+                      borderColor: 'var(--glass-border)',
+                      opacity: 0,
+                      animation: 'fadeInUp 0.6s ease-out forwards',
+                      animationDelay: `${0.4 + idx * 0.1}s`,
+                      background: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'radial-gradient(ellipse at center, rgba(138, 61, 230, 0.04) 0%, transparent 70%)';
+                      e.currentTarget.style.paddingLeft = '16px';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.paddingLeft = '0px';
+                    }}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                      <div className="flex items-center gap-6">
+                        <span 
+                          className="text-6xl md:text-8xl font-bold transition-all duration-400 group-hover:scale-105" 
+                          style={{ 
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            color: member.color,
+                            opacity: 0.35
+                          }}
                         >
-                          {member.desc}
-                        </p>
+                          {(idx + 1).toString().padStart(2, '0')}
+                        </span>
+                        <img
+                          src={member.avatar}
+                          alt={member.name}
+                          className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover transition-all duration-300 group-hover:scale-110"
+                          style={{
+                            border: '2px solid var(--glass-border)',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.boxShadow = `0 4px 20px ${member.color}40`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                          }}
+                        />
+                        <div>
+                          <h4 
+                            className="text-3xl md:text-4xl font-bold mb-2 transition-all duration-300 group-hover:translate-x-2" 
+                            style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                          >
+                            {member.name}
+                          </h4>
+                          <p className="text-sm md:text-base font-semibold" style={{ color: member.color }}>
+                            {member.role}
+                          </p>
+                        </div>
                       </div>
+                      <p 
+                        className="text-base md:text-lg md:text-right md:max-w-sm opacity-0 translate-y-2 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-400" 
+                        style={{ color: 'var(--text)' }}
+                      >
+                        {member.desc}
+                      </p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
