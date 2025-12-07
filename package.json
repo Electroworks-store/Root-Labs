@@ -1,0 +1,28 @@
+{
+  "name": "root-labs-website",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Root Labs - AI-powered website redesign services",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-svg-shape": "^1.0.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.5"
+  },
+  "keywords": [
+    "contact-form",
+    "email",
+    "emailjs"
+  ],
+  "author": "Root Labs",
+  "license": "MIT"
+}
