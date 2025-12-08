@@ -469,6 +469,128 @@ function navigate(path) {
                   </div>
                 </div>
               </div>
+
+              {/* Teamster Card - Clean Workspace Style */}
+              <div className="max-w-4xl mx-auto mt-12">
+                <div className="teamster-window group">
+                  {/* macOS Traffic Light Dots */}
+                  <div className="teamster-window-header">
+                    <div className="traffic-lights">
+                      <span className="dot dot-red"></span>
+                      <span className="dot dot-yellow"></span>
+                      <span className="dot dot-green"></span>
+                    </div>
+                    <div className="window-title">
+                      <span className="teamster-window-title-text">teamster — workspace</span>
+                    </div>
+                  </div>
+
+                  {/* Window Content */}
+                  <div className="teamster-window-content">
+                    {/* Mini UI Preview */}
+                    <div className="teamster-preview">
+                      {/* Sidebar */}
+                      <div className="teamster-sidebar">
+                        <div className="sidebar-logo">T</div>
+                        <div className="sidebar-item active">
+                          <span className="sidebar-icon">📊</span>
+                        </div>
+                        <div className="sidebar-item">
+                          <span className="sidebar-icon">✓</span>
+                        </div>
+                        <div className="sidebar-item">
+                          <span className="sidebar-icon">📅</span>
+                        </div>
+                        <div className="sidebar-item">
+                          <span className="sidebar-icon">💬</span>
+                        </div>
+                        <div className="sidebar-item">
+                          <span className="sidebar-icon">👥</span>
+                        </div>
+                      </div>
+
+                      {/* Main Preview Area */}
+                      <div className="teamster-main">
+                        {/* Top Bar */}
+                        <div className="teamster-topbar">
+                          <span className="topbar-title">Overview</span>
+                          <div className="topbar-search"></div>
+                        </div>
+
+                        {/* Stats Row */}
+                        <div className="teamster-stats">
+                          <div className="stat-card">
+                            <span className="stat-value">12</span>
+                            <span className="stat-label">Tasks</span>
+                          </div>
+                          <div className="stat-card">
+                            <span className="stat-value">5</span>
+                            <span className="stat-label">Events</span>
+                          </div>
+                          <div className="stat-card">
+                            <span className="stat-value">8</span>
+                            <span className="stat-label">Team</span>
+                          </div>
+                        </div>
+
+                        {/* Task Rows */}
+                        <div className="teamster-tasks">
+                          <div className="task-row">
+                            <span className="task-check done">✓</span>
+                            <span className="task-text">Design system updates</span>
+                          </div>
+                          <div className="task-row">
+                            <span className="task-check"></span>
+                            <span className="task-text">API integration</span>
+                          </div>
+                          <div className="task-row">
+                            <span className="task-check"></span>
+                            <span className="task-text">Team standup notes</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Info Content */}
+                    <div className="teamster-info">
+                      <div className="teamster-badges">
+                        <span className="teamster-badge primary">Teamster</span>
+                        <span className="teamster-badge secondary">Internal Tool</span>
+                      </div>
+
+                      <h3 className="teamster-title">
+                        Workspace for startups
+                      </h3>
+
+                      <p className="teamster-description">
+                        An all-in-one internal workspace we built to run a startup efficiently. Tasks, metrics, events, chat, and team management—all in one clean, lightweight control center.
+                      </p>
+
+                      <div className="teamster-chips">
+                        <span className="chip">Tasks</span>
+                        <span className="chip">Metrics</span>
+                        <span className="chip">Chat</span>
+                        <span className="chip">Calendar</span>
+                        <span className="chip">Team</span>
+                      </div>
+
+                      <a 
+                        href="https://electroworks-store.github.io/Teamsterx/index.html" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="teamster-cta"
+                      >
+                        <span>Open Teamster</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                          <polyline points="15 3 21 3 21 9"></polyline>
+                          <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
