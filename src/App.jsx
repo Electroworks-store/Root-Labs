@@ -373,6 +373,108 @@ function navigate(path) {
       );
     }
 
+    // Labs & Experiments Section - HackMe Lab
+    function LabsSection() {
+      return (
+        <section id="labs" className="py-24 px-6" style={{ background: 'var(--surface)' }}>
+          <div className="max-w-6xl mx-auto">
+            {/* Section Header */}
+            <div className="mb-12 text-center">
+              <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
+                LABS & EXPERIMENTS
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                What we're building
+              </h2>
+              <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+                Internal projects and experiments that showcase our technical expertise
+              </p>
+            </div>
+
+            {/* HackMe Lab Card - Apple-style Window */}
+            <div className="max-w-4xl mx-auto">
+              <div className="hackme-window group">
+                {/* macOS Traffic Light Dots */}
+                <div className="hackme-window-header">
+                  <div className="traffic-lights">
+                    <span className="dot dot-red"></span>
+                    <span className="dot dot-yellow"></span>
+                    <span className="dot dot-green"></span>
+                  </div>
+                  <div className="window-title">
+                    <span className="window-title-text">hackme-lab</span>
+                  </div>
+                </div>
+
+                {/* Window Content */}
+                <div className="hackme-window-content">
+                  {/* Terminal-style Background Visual */}
+                  <div className="hackme-visual">
+                    <div className="terminal-lines">
+                      <span className="terminal-prompt">$</span>
+                      <span className="terminal-command">./start-challenge --level beginner</span>
+                    </div>
+                    <div className="terminal-lines">
+                      <span className="terminal-output">🔓 Loading SQL Injection challenge...</span>
+                    </div>
+                    <div className="terminal-lines">
+                      <span className="terminal-output success">✓ Challenge ready. Good luck, hacker!</span>
+                    </div>
+                    <div className="terminal-cursor"></div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="hackme-info">
+                    <div className="hackme-badges">
+                      <span className="hackme-badge primary">HackMe Lab</span>
+                      <span className="hackme-badge secondary">Experiment</span>
+                    </div>
+
+                    <h3 className="hackme-title">
+                      Learn to hack. Learn to build.
+                    </h3>
+
+                    <p className="hackme-description">
+                      An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"—no real data, just pure learning.
+                    </p>
+
+                    <ul className="hackme-features">
+                      <li>
+                        <span className="feature-icon">🎯</span>
+                        <span>Vulnerable challenges: SQLi, IDOR, cookies, XSS</span>
+                      </li>
+                      <li>
+                        <span className="feature-icon">📚</span>
+                        <span>Web dev fundamentals: HTML, CSS, JS, networking</span>
+                      </li>
+                      <li>
+                        <span className="feature-icon">🛡️</span>
+                        <span>Safe sandbox environment for learning security</span>
+                      </li>
+                    </ul>
+
+                    <a 
+                      href="https://electroworks-store.github.io/HackMe/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hackme-cta"
+                    >
+                      <span>Open HackMe Lab</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     // About Section with Organic Blob Shapes
     function About() {
       const [scrollY, setScrollY] = useState(0);
@@ -603,9 +705,9 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Clean code, modern architecture, zero bloat', color: 'var(--primary)', avatar: '/img/Adrian-avatar.png.png' },
-                  { name: 'Viktor', role: 'Design & brand', tagline: 'Pixels that matter, designs that convert', color: 'var(--accent-blue)', avatar: '/img/Viky-avatar.jpg.jpg' },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'From first call to final launch and beyond', color: 'var(--success)', avatar: '/img/Nepik-avatar.png.png' }
+                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: '/img/Adrian_avatar.png' },
+                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--accent-blue)', avatar: '/img/Viky_avatar.png' },
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--success)', avatar: '/img/Nepik_avatar.png' }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -3359,6 +3461,7 @@ function navigate(path) {
           <SpotlightStack />
           <WhyUsPricing />
           <BentoPortfolio />
+          <LabsSection />
           <About />
           <Services />
           <Contact />
