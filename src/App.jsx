@@ -378,21 +378,29 @@ function navigate(path) {
       return (
         <section id="labs" className="py-24 px-6" style={{ background: 'var(--surface)' }}>
           <div className="max-w-6xl mx-auto">
-            {/* Section Header */}
-            <div className="mb-12 text-center">
+            {/* Section Header - Left Aligned */}
+            <div className="mb-16 text-left">
               <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                 LABS & EXPERIMENTS
               </p>
               <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
                 What we're building
               </h2>
-              <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+              <p className="text-lg" style={{ color: 'var(--muted)' }}>
                 Internal projects and experiments that showcase our technical expertise
               </p>
             </div>
 
             {/* HackMe Lab Card - Apple-style Window */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl">
+              {/* Project Label Pill */}
+              <div className="mb-4">
+                <span className="project-pill">
+                  <span style={{ color: '#000000' }}>Hack</span>
+                  <span style={{ color: '#28c840' }}>Me</span>
+                </span>
+              </div>
+
               <div className="hackme-window group">
                 {/* macOS Traffic Light Dots */}
                 <div className="hackme-window-header">
@@ -425,11 +433,6 @@ function navigate(path) {
 
                   {/* Content */}
                   <div className="hackme-info">
-                    <div className="hackme-badges">
-                      <span className="hackme-badge primary">HackMe Lab</span>
-                      <span className="hackme-badge secondary">Experiment</span>
-                    </div>
-
                     <h3 className="hackme-title">
                       Learn to hack. Learn to build.
                     </h3>
@@ -470,8 +473,15 @@ function navigate(path) {
                 </div>
               </div>
 
-              {/* Teamster Card - Clean Workspace Style */}
-              <div className="max-w-4xl mx-auto mt-12">
+              {/* Teamster Card - Clean Apple-like Style */}
+              <div className="mt-16">
+                {/* Project Label Pill */}
+                <div className="mb-4">
+                  <span className="project-pill">
+                    <span style={{ color: '#0070F3' }}>Teamster</span>
+                  </span>
+                </div>
+
                 <div className="teamster-window group">
                   {/* macOS Traffic Light Dots */}
                   <div className="teamster-window-header">
@@ -487,92 +497,39 @@ function navigate(path) {
 
                   {/* Window Content */}
                   <div className="teamster-window-content">
-                    {/* Mini UI Preview */}
+                    {/* Screenshot Preview */}
                     <div className="teamster-preview">
-                      {/* Sidebar */}
-                      <div className="teamster-sidebar">
-                        <div className="sidebar-logo">T</div>
-                        <div className="sidebar-item active">
-                          <span className="sidebar-icon">📊</span>
-                        </div>
-                        <div className="sidebar-item">
-                          <span className="sidebar-icon">✓</span>
-                        </div>
-                        <div className="sidebar-item">
-                          <span className="sidebar-icon">📅</span>
-                        </div>
-                        <div className="sidebar-item">
-                          <span className="sidebar-icon">💬</span>
-                        </div>
-                        <div className="sidebar-item">
-                          <span className="sidebar-icon">👥</span>
-                        </div>
-                      </div>
-
-                      {/* Main Preview Area */}
-                      <div className="teamster-main">
-                        {/* Top Bar */}
-                        <div className="teamster-topbar">
-                          <span className="topbar-title">Overview</span>
-                          <div className="topbar-search"></div>
-                        </div>
-
-                        {/* Stats Row */}
-                        <div className="teamster-stats">
-                          <div className="stat-card">
-                            <span className="stat-value">12</span>
-                            <span className="stat-label">Tasks</span>
-                          </div>
-                          <div className="stat-card">
-                            <span className="stat-value">5</span>
-                            <span className="stat-label">Events</span>
-                          </div>
-                          <div className="stat-card">
-                            <span className="stat-value">8</span>
-                            <span className="stat-label">Team</span>
-                          </div>
-                        </div>
-
-                        {/* Task Rows */}
-                        <div className="teamster-tasks">
-                          <div className="task-row">
-                            <span className="task-check done">✓</span>
-                            <span className="task-text">Design system updates</span>
-                          </div>
-                          <div className="task-row">
-                            <span className="task-check"></span>
-                            <span className="task-text">API integration</span>
-                          </div>
-                          <div className="task-row">
-                            <span className="task-check"></span>
-                            <span className="task-text">Team standup notes</span>
-                          </div>
-                        </div>
-                      </div>
+                      <img 
+                        src="/img/teamster.png" 
+                        alt="Teamster Workspace" 
+                        className="teamster-screenshot"
+                      />
                     </div>
 
                     {/* Info Content */}
                     <div className="teamster-info">
-                      <div className="teamster-badges">
-                        <span className="teamster-badge primary">Teamster</span>
-                        <span className="teamster-badge secondary">Internal Tool</span>
-                      </div>
-
                       <h3 className="teamster-title">
-                        Workspace for startups
+                        Your team's command center
                       </h3>
 
                       <p className="teamster-description">
-                        An all-in-one internal workspace we built to run a startup efficiently. Tasks, metrics, events, chat, and team management—all in one clean, lightweight control center.
+                        A unified workspace designed for growing teams. Manage projects, track progress, and collaborate—all in one beautifully simple interface.
                       </p>
 
-                      <div className="teamster-chips">
-                        <span className="chip">Tasks</span>
-                        <span className="chip">Metrics</span>
-                        <span className="chip">Chat</span>
-                        <span className="chip">Calendar</span>
-                        <span className="chip">Team</span>
-                      </div>
+                      <ul className="teamster-features">
+                        <li>
+                          <span className="feature-icon">📋</span>
+                          <span>Sheets & task boards with real-time sync</span>
+                        </li>
+                        <li>
+                          <span className="feature-icon">📊</span>
+                          <span>Visual metrics and team analytics</span>
+                        </li>
+                        <li>
+                          <span className="feature-icon">💬</span>
+                          <span>Built-in chat and calendar integration</span>
+                        </li>
+                      </ul>
 
                       <a 
                         href="https://electroworks-store.github.io/Teamsterx/index.html" 
