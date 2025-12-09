@@ -31,7 +31,7 @@
       return lines.join('\n');
     }
 
-    // Helper: Submit lead via server API
+    // Helper: Submit lead - local success (no server endpoint)
     async function submitLead(lead) {
       // Track if available
       if (window.track && typeof window.track === 'function') {
@@ -42,33 +42,11 @@
         }
       }
 
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(lead),
-      });
+      // Log the lead data for debugging purposes
+      console.log('Lead submitted:', lead);
 
-      // Safely parse JSON - handle empty responses
-      let data = { ok: true };
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const text = await response.text();
-        if (text) {
-          try {
-            data = JSON.parse(text);
-          } catch (e) {
-            console.warn('Failed to parse response JSON:', e);
-          }
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit lead.');
-      }
-
-      return { success: true, via: 'api', data };
+      // Return success - in production, this would send to a real backend or EmailJS
+      return { success: true, via: 'local', data: lead };
     }
 
     // Navigation helper for client-side routing

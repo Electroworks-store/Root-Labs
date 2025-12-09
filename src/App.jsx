@@ -42,7 +42,7 @@ function navigate(path) {
       return lines.join('\n');
     }
 
-    // Helper: Submit lead via server API
+    // Helper: Submit lead - local success (no server endpoint)
     async function submitLead(lead) {
       // Track if available
       if (window.track && typeof window.track === 'function') {
@@ -53,33 +53,11 @@ function navigate(path) {
         }
       }
 
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(lead),
-      });
+      // Log the lead data for debugging purposes
+      console.log('Lead submitted:', lead);
 
-      // Safely parse JSON - handle empty responses
-      let data = { ok: true };
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const text = await response.text();
-        if (text) {
-          try {
-            data = JSON.parse(text);
-          } catch (e) {
-            console.warn('Failed to parse response JSON:', e);
-          }
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit lead.');
-      }
-
-      return { success: true, via: 'api', data };
+      // Return success - in production, this would send to a real backend or EmailJS
+      return { success: true, via: 'local', data: lead };
     }
 
     // Floating Navigation
@@ -254,11 +232,6 @@ function navigate(path) {
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
             {/* Left: Text Content */}
             <div className="space-y-6 stagger-item">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark">
-                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--success)' }} />
-                <span className="text-xs font-medium">{data.badge}</span>
-              </div>
-
               <h1 className="text-5xl md:text-6xl font-bold leading-tight">
                 {data.title1}
                 <span className="block mt-2" style={{ color: 'var(--primary)' }}>
@@ -391,163 +364,174 @@ function navigate(path) {
               </p>
             </div>
 
-            {/* HackMe Lab Card - Apple-style Window */}
-            <div className="max-w-4xl">
-              {/* Project Label Pill */}
-              <div className="mb-4">
-                <span className="project-pill">
-                  <span style={{ color: '#000000' }}>Hack</span>
-                  <span style={{ color: '#28c840' }}>Me</span>
-                </span>
-              </div>
-
-              <div className="hackme-window group">
-                {/* macOS Traffic Light Dots */}
-                <div className="hackme-window-header">
-                  <div className="traffic-lights">
-                    <span className="dot dot-red"></span>
-                    <span className="dot dot-yellow"></span>
-                    <span className="dot dot-green"></span>
-                  </div>
-                  <div className="window-title">
-                    <span className="window-title-text">hackme-lab</span>
-                  </div>
+            {/* Project Cards Container */}
+            <div className="space-y-20">
+              
+              {/* HackMe Lab Card */}
+              <div className="labs-project-card">
+                {/* Project Name - Centered, Big & Bold */}
+                <div className="text-center mb-6">
+                  <span className="project-pill project-pill-lg">
+                    <span style={{ color: '#000000' }}>Hack</span>
+                    <span style={{ color: '#28c840' }}>Me</span>
+                  </span>
                 </div>
 
-                {/* Window Content */}
-                <div className="hackme-window-content">
-                  {/* Terminal-style Background Visual */}
-                  <div className="hackme-visual">
-                    <div className="terminal-lines">
-                      <span className="terminal-prompt">$</span>
-                      <span className="terminal-command">./start-challenge --level beginner</span>
+                {/* Apple-style Window - Centered */}
+                <div className="max-w-4xl mx-auto">
+                  <div className="hackme-window group">
+                    {/* macOS Traffic Light Dots */}
+                    <div className="hackme-window-header">
+                      <div className="traffic-lights">
+                        <span className="dot dot-red"></span>
+                        <span className="dot dot-yellow"></span>
+                        <span className="dot dot-green"></span>
+                      </div>
+                      <div className="window-title">
+                        <span className="window-title-text">hackme-lab</span>
+                      </div>
                     </div>
-                    <div className="terminal-lines">
-                      <span className="terminal-output">🔓 Loading SQL Injection challenge...</span>
+
+                    {/* Window Content */}
+                    <div className="hackme-window-content">
+                      {/* Terminal-style Background Visual */}
+                      <div className="hackme-visual">
+                        <div className="terminal-lines">
+                          <span className="terminal-prompt">$</span>
+                          <span className="terminal-command">./start-challenge --level beginner</span>
+                        </div>
+                        <div className="terminal-lines">
+                          <span className="terminal-output">Loading SQL Injection challenge...</span>
+                        </div>
+                        <div className="terminal-lines">
+                          <span className="terminal-output success">✓ Challenge ready. Good luck, hacker!</span>
+                        </div>
+                        <div className="terminal-cursor"></div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="hackme-info">
+                        <h3 className="hackme-title">
+                          Learn to hack. Learn to build.
+                        </h3>
+
+                        <p className="hackme-description">
+                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"—no real data, just pure learning.
+                        </p>
+
+                        <ul className="hackme-features">
+                          <li>
+                            <span className="feature-dot" style={{ background: 'var(--primary)' }}></span>
+                            <span>Vulnerable challenges: SQLi, IDOR, cookies, XSS</span>
+                          </li>
+                          <li>
+                            <span className="feature-dot" style={{ background: 'var(--accent-blue)' }}></span>
+                            <span>Web dev fundamentals: HTML, CSS, JS, networking</span>
+                          </li>
+                          <li>
+                            <span className="feature-dot" style={{ background: 'var(--success)' }}></span>
+                            <span>Safe sandbox environment for learning security</span>
+                          </li>
+                        </ul>
+
+                        <a 
+                          href="https://electroworks-store.github.io/HackMe/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="hackme-cta"
+                        >
+                          <span>Open HackMe Lab</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                          </svg>
+                        </a>
+                      </div>
                     </div>
-                    <div className="terminal-lines">
-                      <span className="terminal-output success">✓ Challenge ready. Good luck, hacker!</span>
-                    </div>
-                    <div className="terminal-cursor"></div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="hackme-info">
-                    <h3 className="hackme-title">
-                      Learn to hack. Learn to build.
-                    </h3>
-
-                    <p className="hackme-description">
-                      An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"—no real data, just pure learning.
-                    </p>
-
-                    <ul className="hackme-features">
-                      <li>
-                        <span className="feature-icon">🎯</span>
-                        <span>Vulnerable challenges: SQLi, IDOR, cookies, XSS</span>
-                      </li>
-                      <li>
-                        <span className="feature-icon">📚</span>
-                        <span>Web dev fundamentals: HTML, CSS, JS, networking</span>
-                      </li>
-                      <li>
-                        <span className="feature-icon">🛡️</span>
-                        <span>Safe sandbox environment for learning security</span>
-                      </li>
-                    </ul>
-
-                    <a 
-                      href="https://electroworks-store.github.io/HackMe/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="hackme-cta"
-                    >
-                      <span>Open HackMe Lab</span>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                      </svg>
-                    </a>
                   </div>
                 </div>
               </div>
 
-              {/* Teamster Card - Clean Apple-like Style */}
-              <div className="mt-16">
-                {/* Project Label Pill */}
-                <div className="mb-4">
-                  <span className="project-pill">
+              {/* Teamster Card */}
+              <div className="labs-project-card">
+                {/* Project Name - Centered, Big & Bold */}
+                <div className="text-center mb-6">
+                  <span className="project-pill project-pill-lg">
                     <span style={{ color: '#0070F3' }}>Teamster</span>
                   </span>
                 </div>
 
-                <div className="teamster-window group">
-                  {/* macOS Traffic Light Dots */}
-                  <div className="teamster-window-header">
-                    <div className="traffic-lights">
-                      <span className="dot dot-red"></span>
-                      <span className="dot dot-yellow"></span>
-                      <span className="dot dot-green"></span>
-                    </div>
-                    <div className="window-title">
-                      <span className="teamster-window-title-text">teamster — workspace</span>
-                    </div>
-                  </div>
-
-                  {/* Window Content */}
-                  <div className="teamster-window-content">
-                    {/* Screenshot Preview */}
-                    <div className="teamster-preview">
-                      <img 
-                        src="/img/teamster.png" 
-                        alt="Teamster Workspace" 
-                        className="teamster-screenshot"
-                      />
+                {/* Apple-style Window - Centered */}
+                <div className="max-w-4xl mx-auto">
+                  <div className="teamster-window group">
+                    {/* macOS Traffic Light Dots */}
+                    <div className="teamster-window-header">
+                      <div className="traffic-lights">
+                        <span className="dot dot-red"></span>
+                        <span className="dot dot-yellow"></span>
+                        <span className="dot dot-green"></span>
+                      </div>
+                      <div className="window-title">
+                        <span className="teamster-window-title-text">teamster — workspace</span>
+                      </div>
                     </div>
 
-                    {/* Info Content */}
-                    <div className="teamster-info">
-                      <h3 className="teamster-title">
-                        Your team's command center
-                      </h3>
+                    {/* Window Content */}
+                    <div className="teamster-window-content">
+                      {/* Screenshot Preview */}
+                      <div className="teamster-preview">
+                        <img 
+                          src="/img/teamster.png" 
+                          alt="Teamster Workspace" 
+                          className="teamster-screenshot"
+                        />
+                      </div>
 
-                      <p className="teamster-description">
-                        A unified workspace designed for growing teams. Manage projects, track progress, and collaborate—all in one beautifully simple interface.
-                      </p>
+                      {/* Info Content */}
+                      <div className="teamster-info">
+                        <h3 className="teamster-title">
+                          Your team's command center
+                        </h3>
 
-                      <ul className="teamster-features">
-                        <li>
-                          <span className="feature-icon">📋</span>
-                          <span>Sheets & task boards with real-time sync</span>
-                        </li>
-                        <li>
-                          <span className="feature-icon">📊</span>
-                          <span>Visual metrics and team analytics</span>
-                        </li>
-                        <li>
-                          <span className="feature-icon">💬</span>
-                          <span>Built-in chat and calendar integration</span>
-                        </li>
-                      </ul>
+                        <p className="teamster-description">
+                          A unified workspace designed for growing teams. Manage projects, track progress, and collaborate—all in one beautifully simple interface.
+                        </p>
 
-                      <a 
-                        href="https://electroworks-store.github.io/Teamsterx/index.html" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="teamster-cta"
-                      >
-                        <span>Open Teamster</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                          <polyline points="15 3 21 3 21 9"></polyline>
-                          <line x1="10" y1="14" x2="21" y2="3"></line>
-                        </svg>
-                      </a>
+                        <ul className="teamster-features">
+                          <li>
+                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
+                            <span>Sheets & task boards with real-time sync</span>
+                          </li>
+                          <li>
+                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
+                            <span>Visual metrics and team analytics</span>
+                          </li>
+                          <li>
+                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
+                            <span>Built-in chat and calendar integration</span>
+                          </li>
+                        </ul>
+
+                        <a 
+                          href="https://electroworks-store.github.io/Teamsterx/index.html" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="teamster-cta"
+                        >
+                          <span>Open Teamster</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                          </svg>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -2304,11 +2288,6 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
 
                 <div className="space-y-8 stagger-item">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
-                    <span className="text-sm font-medium">AI-Powered Design</span>
-                  </div>
-
                   <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                     Website
                     <span className="block mt-2" style={{ color: 'var(--primary)' }}>
@@ -2401,7 +2380,7 @@ function navigate(path) {
 
               {/* Alternating Feature Rows */}
               <div className="space-y-24">
-                {/* Row 1 - Image Right */}
+                {/* Row 1 - Image Right - Speed Preview */}
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <div className="stagger-item">
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
@@ -2428,23 +2407,98 @@ function navigate(path) {
                       </li>
                     </ul>
                   </div>
-                  <div className="liquid-card p-8 stagger-item" style={{ animationDelay: '0.1s', height: '300px', background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}>
-                    <div className="h-full flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <div className="text-6xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>1-2</div>
-                        <div style={{ color: 'var(--muted)' }}>weeks delivery</div>
+                  {/* macOS-style Window - Speed Metrics */}
+                  <div className="stagger-item" style={{ animationDelay: '0.1s' }}>
+                    <div className="wyg-window">
+                      <div className="wyg-window-header">
+                        <div className="traffic-lights">
+                          <span className="dot dot-red"></span>
+                          <span className="dot dot-yellow"></span>
+                          <span className="dot dot-green"></span>
+                        </div>
+                        <span className="wyg-window-title">performance-metrics</span>
+                      </div>
+                      <div className="wyg-window-content">
+                        <div className="wyg-speed-preview">
+                          <div className="wyg-speed-header">
+                            <div className="wyg-speed-gauge">
+                              <svg viewBox="0 0 100 50" className="wyg-gauge-svg">
+                                <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(138,61,230,0.15)" strokeWidth="8" strokeLinecap="round"/>
+                                <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#speedGradient)" strokeWidth="8" strokeLinecap="round" strokeDasharray="126" strokeDashoffset="25"/>
+                                <defs>
+                                  <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#8A3DE6"/>
+                                    <stop offset="100%" stopColor="#38bdf8"/>
+                                  </linearGradient>
+                                </defs>
+                              </svg>
+                              <div className="wyg-gauge-value">98</div>
+                            </div>
+                            <div className="wyg-speed-label">Performance Score</div>
+                          </div>
+                          <div className="wyg-speed-bars">
+                            <div className="wyg-bar-item">
+                              <span className="wyg-bar-label">Load Time</span>
+                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '92%', background: 'var(--primary)' }}></div></div>
+                              <span className="wyg-bar-value">0.8s</span>
+                            </div>
+                            <div className="wyg-bar-item">
+                              <span className="wyg-bar-label">First Paint</span>
+                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '88%', background: 'var(--accent-blue)' }}></div></div>
+                              <span className="wyg-bar-value">1.2s</span>
+                            </div>
+                            <div className="wyg-bar-item">
+                              <span className="wyg-bar-label">Interactive</span>
+                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '95%', background: '#28c840' }}></div></div>
+                              <span className="wyg-bar-value">1.5s</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Row 2 - Image Left */}
+                {/* Row 2 - Image Left - Design Layout */}
                 <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div className="liquid-card p-8 stagger-item md:order-1 order-2" style={{ animationDelay: '0.2s', height: '300px', background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(138, 61, 230, 0.05) 100%)' }}>
-                    <div className="h-full grid grid-cols-2 gap-4">
-                      <div className="rounded-2xl" style={{ background: 'rgba(138, 61, 230, 0.1)' }}></div>
-                      <div className="rounded-2xl" style={{ background: 'rgba(56, 189, 248, 0.1)' }}></div>
-                      <div className="rounded-2xl col-span-2" style={{ background: 'rgba(138, 61, 230, 0.05)' }}></div>
+                  {/* macOS-style Window - Layout Preview */}
+                  <div className="stagger-item md:order-1 order-2" style={{ animationDelay: '0.2s' }}>
+                    <div className="wyg-window wyg-window-light">
+                      <div className="wyg-window-header wyg-window-header-light">
+                        <div className="traffic-lights">
+                          <span className="dot dot-red"></span>
+                          <span className="dot dot-yellow"></span>
+                          <span className="dot dot-green"></span>
+                        </div>
+                        <span className="wyg-window-title-light">layout-preview</span>
+                      </div>
+                      <div className="wyg-window-content wyg-window-content-light">
+                        <div className="wyg-layout-preview">
+                          {/* Mini navbar */}
+                          <div className="wyg-mini-nav">
+                            <div className="wyg-mini-logo"></div>
+                            <div className="wyg-mini-links">
+                              <span></span><span></span><span></span>
+                            </div>
+                            <div className="wyg-mini-cta"></div>
+                          </div>
+                          {/* Mini hero */}
+                          <div className="wyg-mini-hero">
+                            <div className="wyg-mini-hero-text">
+                              <div className="wyg-mini-h1"></div>
+                              <div className="wyg-mini-p"></div>
+                              <div className="wyg-mini-btn"></div>
+                            </div>
+                            <div className="wyg-mini-hero-img"></div>
+                          </div>
+                          {/* Mini cards */}
+                          <div className="wyg-mini-cards">
+                            <div className="wyg-mini-card"></div>
+                            <div className="wyg-mini-card"></div>
+                            <div className="wyg-mini-card"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="stagger-item md:order-2 order-1" style={{ animationDelay: '0.15s' }}>
@@ -2474,7 +2528,7 @@ function navigate(path) {
                   </div>
                 </div>
 
-                {/* Row 3 - Image Right */}
+                {/* Row 3 - Image Right - Analytics Dashboard */}
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <div className="stagger-item" style={{ animationDelay: '0.25s' }}>
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
@@ -2501,11 +2555,46 @@ function navigate(path) {
                       </li>
                     </ul>
                   </div>
-                  <div className="liquid-card p-8 stagger-item" style={{ animationDelay: '0.3s', height: '300px', background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}>
-                    <div className="h-full flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <div className="text-6xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>3x</div>
-                        <div style={{ color: 'var(--muted)' }}>avg. conversion increase</div>
+                  {/* macOS-style Window - Analytics */}
+                  <div className="stagger-item" style={{ animationDelay: '0.3s' }}>
+                    <div className="wyg-window">
+                      <div className="wyg-window-header">
+                        <div className="traffic-lights">
+                          <span className="dot dot-red"></span>
+                          <span className="dot dot-yellow"></span>
+                          <span className="dot dot-green"></span>
+                        </div>
+                        <span className="wyg-window-title">analytics-dashboard</span>
+                      </div>
+                      <div className="wyg-window-content">
+                        <div className="wyg-analytics-preview">
+                          <div className="wyg-analytics-stats">
+                            <div className="wyg-stat-box">
+                              <div className="wyg-stat-value" style={{ color: 'var(--primary)' }}>+247%</div>
+                              <div className="wyg-stat-label">Traffic</div>
+                            </div>
+                            <div className="wyg-stat-box">
+                              <div className="wyg-stat-value" style={{ color: '#28c840' }}>3.2x</div>
+                              <div className="wyg-stat-label">Conversions</div>
+                            </div>
+                            <div className="wyg-stat-box">
+                              <div className="wyg-stat-value" style={{ color: 'var(--accent-blue)' }}>-42%</div>
+                              <div className="wyg-stat-label">Bounce Rate</div>
+                            </div>
+                          </div>
+                          <div className="wyg-chart">
+                            <svg viewBox="0 0 200 60" className="wyg-chart-svg">
+                              <defs>
+                                <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#8A3DE6" stopOpacity="0.3"/>
+                                  <stop offset="100%" stopColor="#8A3DE6" stopOpacity="0"/>
+                                </linearGradient>
+                              </defs>
+                              <path d="M 0 50 Q 25 45 50 35 T 100 25 T 150 15 T 200 5 L 200 60 L 0 60 Z" fill="url(#chartGradient)"/>
+                              <path d="M 0 50 Q 25 45 50 35 T 100 25 T 150 15 T 200 5" fill="none" stroke="#8A3DE6" strokeWidth="2"/>
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2644,11 +2733,6 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
-                    <span className="text-sm font-medium">24/7 Automation</span>
-                  </div>
-
                   <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                     AI Agent
                     <span className="block mt-2" style={{ color: 'var(--accent-blue)' }}>
@@ -3253,11 +3337,6 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#FF7A2D' }} />
-                    <span className="text-sm font-medium">Full-Service Management</span>
-                  </div>
-
                   <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                     Social Media
                     <span className="block mt-2" style={{ color: '#FF7A2D' }}>
