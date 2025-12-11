@@ -582,16 +582,16 @@ function navigate(path) {
                 {/* Left: Floating Team Avatars */}
                 <div className="relative flex items-center justify-center" style={{ transform: `translateY(${sectionScroll * 0.05}px)` }}>
                   
-                  {/* Three avatars stacked vertically with middle one offset right */}
-                  <div className="relative w-full max-w-md" style={{ height: '600px' }}>
-                    {/* Avatar 1 - Top (Light Blue) */}
+                  {/* Three avatars in a more spread out layout */}
+                  <div className="relative w-full max-w-lg" style={{ height: '550px' }}>
+                    {/* Avatar 1 - Top Left (Adrian) */}
                     <div 
-                      className="absolute left-0 top-8"
+                      className="absolute left-0 top-0"
                       style={{ 
                         transform: `translateY(${sectionScroll * 0.08}px) rotate(${-sectionScroll * 0.01}deg)`,
                       }}
                     >
-                      <div className="w-56 h-56 rounded-full flex items-center justify-center"
+                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
                         style={{
                           background: 'rgba(200, 230, 255, 0.5)',
                           boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
@@ -600,19 +600,20 @@ function navigate(path) {
                         <img 
                           src="/img/Adrian_avatar.png" 
                           alt="Adrian"
-                          className="w-52 h-52 object-cover rounded-full"
+                          className="w-40 h-40 rounded-full"
+                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         />
                       </div>
                     </div>
                     
-                    {/* Avatar 2 - Middle (Purple) - Offset to right */}
+                    {/* Avatar 2 - Right (Nepik) */}
                     <div 
-                      className="absolute left-32 top-1/2 -translate-y-1/2"
+                      className="absolute right-0 top-24"
                       style={{ 
-                        transform: `translateY(calc(-50% + ${sectionScroll * 0.06}px)) rotate(${sectionScroll * 0.015}deg)`,
+                        transform: `translateY(${sectionScroll * 0.06}px) rotate(${sectionScroll * 0.015}deg)`,
                       }}
                     >
-                      <div className="w-56 h-56 rounded-full flex items-center justify-center"
+                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
                         style={{
                           background: 'rgba(220, 210, 255, 0.5)',
                           boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
@@ -621,19 +622,20 @@ function navigate(path) {
                         <img 
                           src="/img/Nepik_avatar.png" 
                           alt="Nepik"
-                          className="w-52 h-52 object-cover rounded-full"
+                          className="w-40 h-40 rounded-full"
+                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         />
                       </div>
                     </div>
                     
-                    {/* Avatar 3 - Bottom (Purple) */}
+                    {/* Avatar 3 - Bottom Center (Viky) */}
                     <div 
-                      className="absolute left-0 bottom-8"
+                      className="absolute left-1/4 bottom-0"
                       style={{ 
                         transform: `translateY(${sectionScroll * 0.07}px) rotate(${-sectionScroll * 0.02}deg)`,
                       }}
                     >
-                      <div className="w-56 h-56 rounded-full flex items-center justify-center"
+                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
                         style={{
                           background: 'rgba(210, 200, 255, 0.5)',
                           boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
@@ -642,7 +644,8 @@ function navigate(path) {
                         <img 
                           src="/img/Viky_avatar.png" 
                           alt="Viky"
-                          className="w-52 h-52 object-cover rounded-full"
+                          className="w-40 h-40 rounded-full"
+                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         />
                       </div>
                     </div>
@@ -669,7 +672,7 @@ function navigate(path) {
                   <div className="space-y-6 text-xl md:text-2xl leading-relaxed">
                     <p style={{ color: '#000000' }}>
                       Competing with agencies charging <span style={{ color: 'var(--text)', fontWeight: 700 }}>10x more</span>. 
-                      Delivering <span style={{ color: 'var(--primary)', fontWeight: 700 }}>50+ projects</span> in 
+                      Delivering <span style={{ color: 'var(--primary)', fontWeight: 700 }}>4 projects</span> in 
                       just <span style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>7 days</span> average.
                     </p>
                   </div>
@@ -678,7 +681,7 @@ function navigate(path) {
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     {[
                       { value: '15', label: 'Years Old', color: 'var(--primary)', blobPath: blobPath4 },
-                      { value: '50+', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
+                      { value: '4', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
                       { value: '7d', label: 'Avg Time', color: 'var(--success)', blobPath: blobPath6 }
                     ].map((stat, idx) => (
                       <div key={idx} className="relative flex items-center justify-center">
@@ -769,8 +772,8 @@ function navigate(path) {
               <div className="space-y-0">
                 {[
                   { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: '/img/Adrian_avatar.png' },
-                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--accent-blue)', avatar: '/img/Viky_avatar.png' },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--success)', avatar: '/img/Nepik_avatar.png' }
+                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--primary)', avatar: '/img/Viky_avatar.png' },
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: '/img/Nepik_avatar.png' }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -783,18 +786,8 @@ function navigate(path) {
                     }}
                   >
                     <div className="flex items-center justify-between gap-4 md:gap-8">
-                      {/* Left side: Number + Name + Role (always visible) */}
+                      {/* Left side: Name + Role (always visible) */}
                       <div className="flex items-center gap-4 md:gap-6 transition-transform duration-300 group-hover:translate-x-2">
-                        <span 
-                          className="text-5xl md:text-7xl lg:text-8xl font-bold transition-all duration-300 group-hover:scale-105" 
-                          style={{ 
-                            fontFamily: "'Space Grotesk', sans-serif",
-                            color: member.color,
-                            opacity: 0.25
-                          }}
-                        >
-                          {(idx + 1).toString().padStart(2, '0')}
-                        </span>
                         <div>
                           <h4 
                             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1" 
@@ -802,7 +795,7 @@ function navigate(path) {
                           >
                             {member.name}
                           </h4>
-                          <p className="text-sm md:text-base font-semibold" style={{ color: member.color }}>
+                          <p className="text-sm md:text-base font-semibold" style={{ color: 'var(--primary)' }}>
                             {member.role}
                           </p>
                         </div>
@@ -2322,7 +2315,7 @@ function navigate(path) {
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>weeks delivery</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>50+</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>4</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>sites built</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
