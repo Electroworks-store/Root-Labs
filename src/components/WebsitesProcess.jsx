@@ -230,61 +230,43 @@ function VibePicker() {
                   {/* content block */}
                   {vibe.id === 'luxury' ? (
                     <>
-                      {/* Gold accent line at top */}
-                      <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${vibe.accent}, transparent)`, marginBottom: 10, opacity: 0.5 }} />
-                      
-                      <div className="mock-card" style={{ marginTop: 6, borderRadius: 8, padding: 12, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(212,175,55,0.15)', marginBottom: 8 }}>
-                        {/* Luxury image placeholder with gold border */}
-                        <div style={{ height: 65, borderRadius: 6, background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)', marginBottom: 10, border: '1px solid rgba(212,175,55,0.2)', position: 'relative', overflow: 'hidden' }}>
-                          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 40, height: 40, borderRadius: '50%', background: vibe.accent, opacity: 0.2 }} />
-                        </div>
+                      {/* Clean minimal luxury card */}
+                      <div className="mock-card" style={{ marginTop: 8, borderRadius: 8, padding: 14, background: 'rgba(255,255,255,0.03)', marginBottom: 8 }}>
+                        {/* Simple image placeholder */}
+                        <div style={{ height: 70, borderRadius: 6, background: 'rgba(245,241,232,0.06)', marginBottom: 12 }} />
                         
-                        {/* Gold title bar */}
-                        <div style={{ height: 18, width: '75%', borderRadius: 4, background: `linear-gradient(90deg, ${vibe.accent}, ${vibe.accent3})`, marginBottom: 6, opacity: 0.9 }} />
-                        <div style={{ height: 8, width: '90%', borderRadius: 3, background: 'rgba(245,241,232,0.15)', marginBottom: 5 }} />
-                        <div style={{ height: 8, width: '65%', borderRadius: 3, background: 'rgba(245,241,232,0.1)' }} />
+                        {/* Clean title */}
+                        <div style={{ height: 12, width: '60%', borderRadius: 3, background: vibe.accent, marginBottom: 8, opacity: 0.85 }} />
+                        <div style={{ height: 6, width: '85%', borderRadius: 2, background: 'rgba(245,241,232,0.12)', marginBottom: 4 }} />
+                        <div style={{ height: 6, width: '55%', borderRadius: 2, background: 'rgba(245,241,232,0.08)' }} />
                       </div>
                       
-                      {/* Elegant button with gold accent */}
-                      <div style={{ marginTop: 10, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
-                        <div style={{ width: 100, height: 28, borderRadius: 4, background: vibe.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(212,175,55,0.3)' }}>
-                          <div style={{ width: 60, height: 2, background: 'rgba(0,0,0,0.3)' }} />
-                        </div>
-                        <div style={{ width: 28, height: 28, borderRadius: 4, border: '1px solid rgba(212,175,55,0.3)', background: 'rgba(255,255,255,0.02)' }} />
-                      </div>
                     </>
                   ) : vibe.id === 'tech' ? (
                     <>
-                      {/* Neon glow accent line */}
-                      <div style={{ height: 2, background: `linear-gradient(90deg, ${vibe.accent2}, ${vibe.accent}, ${vibe.accent3})`, marginBottom: 8, boxShadow: `0 0 8px ${vibe.accent}`, borderRadius: 2 }} />
-                      
-                      <div className="mock-card" style={{ marginTop: 6, borderRadius: 12, padding: 10, background: 'rgba(0,217,255,0.03)', border: '1px solid rgba(0,217,255,0.15)', position: 'relative', marginBottom: 8 }}>
-                        {/* Tech grid background */}
-                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(rgba(0,217,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,217,255,0.05) 1px, transparent 1px)', backgroundSize: '20px 20px', opacity: 0.3, borderRadius: 12 }} />
-                        
-                        {/* Dashboard elements */}
-                        <div style={{ position: 'relative', display: 'flex', gap: 8, marginBottom: 8 }}>
-                          <div style={{ width: 55, height: 55, borderRadius: 8, background: `linear-gradient(135deg, ${vibe.accent} 0%, ${vibe.accent2} 100%)`, boxShadow: `0 4px 16px ${vibe.accent}40`, border: '1px solid rgba(0,217,255,0.3)' }} />
-                          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5 }}>
-                            <div style={{ height: 11, borderRadius: 4, background: vibe.accent, opacity: 0.8, boxShadow: `0 0 8px ${vibe.accent}60` }} />
-                            <div style={{ height: 7, width: '70%', borderRadius: 3, background: 'rgba(232,244,248,0.2)' }} />
-                            <div style={{ height: 7, width: '50%', borderRadius: 3, background: vibe.accent3, opacity: 0.6 }} />
+                      {/* Clean minimal tech card */}
+                      <div className="mock-card" style={{ marginTop: 8, borderRadius: 10, padding: 12, background: 'rgba(0,217,255,0.04)', marginBottom: 8 }}>
+                        {/* Simple dashboard preview */}
+                        <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                          <div style={{ width: 48, height: 48, borderRadius: 8, background: vibe.accent, opacity: 0.85 }} />
+                          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'center' }}>
+                            <div style={{ height: 8, width: '80%', borderRadius: 3, background: vibe.accent, opacity: 0.7 }} />
+                            <div style={{ height: 6, width: '55%', borderRadius: 2, background: 'rgba(232,244,248,0.15)' }} />
                           </div>
                         </div>
                         
-                        {/* Data visualization bars */}
-                        <div style={{ display: 'flex', gap: 4, alignItems: 'flex-end', height: 35, marginTop: 6 }}>
-                          <div style={{ flex: 1, height: '60%', background: vibe.accent2, borderRadius: '3px 3px 0 0', boxShadow: `0 0 6px ${vibe.accent2}40` }} />
-                          <div style={{ flex: 1, height: '85%', background: vibe.accent, borderRadius: '3px 3px 0 0', boxShadow: `0 0 8px ${vibe.accent}60` }} />
-                          <div style={{ flex: 1, height: '50%', background: vibe.accent3, borderRadius: '3px 3px 0 0', boxShadow: `0 0 6px ${vibe.accent3}40` }} />
-                          <div style={{ flex: 1, height: '70%', background: vibe.accent2, borderRadius: '3px 3px 0 0' }} />
+                        {/* Simple data bars */}
+                        <div style={{ display: 'flex', gap: 5, alignItems: 'flex-end', height: 32 }}>
+                          <div style={{ flex: 1, height: '55%', background: vibe.accent2, borderRadius: '3px 3px 0 0', opacity: 0.7 }} />
+                          <div style={{ flex: 1, height: '80%', background: vibe.accent, borderRadius: '3px 3px 0 0', opacity: 0.85 }} />
+                          <div style={{ flex: 1, height: '45%', background: vibe.accent3, borderRadius: '3px 3px 0 0', opacity: 0.6 }} />
+                          <div style={{ flex: 1, height: '65%', background: vibe.accent2, borderRadius: '3px 3px 0 0', opacity: 0.7 }} />
                         </div>
                       </div>
                       
-                      {/* Tech buttons */}
-                      <div style={{ marginTop: 10, display: 'flex', gap: 8, marginBottom: 28 }}>
-                        <div style={{ flex: 1, height: 28, borderRadius: 8, background: `linear-gradient(135deg, ${vibe.accent} 0%, ${vibe.accent2} 100%)`, boxShadow: `0 4px 12px ${vibe.accent}40`, border: '1px solid rgba(0,217,255,0.4)' }} />
-                        <div style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${vibe.accent}`, background: 'rgba(0,217,255,0.05)' }} />
+                      {/* Minimal button */}
+                      <div style={{ marginTop: 12, marginBottom: 28 }}>
+                        <div style={{ width: 90, height: 26, borderRadius: 6, background: vibe.accent, opacity: 0.85 }} />
                       </div>
                     </>
                   ) : vibe.id === 'playful' ? (
@@ -464,222 +446,114 @@ function ColorBubbles() {
 // Bubble component with ref forwarding
 // (Small, self-contained Bubble component removed - replaced by inline render in ColorBubbles)
 
-// Component 3: Font Carousel - Creative Measuring Design
+// Component 3: Font Carousel - Clean Minimal Design (Apple-inspired)
 function FontCarouselWord() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef);
+  const [activeFont, setActiveFont] = useState(0);
+  
+  // Using only fonts already in the project
   const fonts = [
-    { key: 'playfair', label: 'Playfair Display', fam: "'Playfair Display', serif" },
-    { key: 'gulf', label: 'Gulf Display', fam: "'Gulf Display', sans-serif" },
-    { key: 'inter', label: 'Inter', fam: "'Inter', sans-serif" }
+    { key: 'syne', label: 'Syne', fam: "'Syne', sans-serif" },
+    { key: 'inter', label: 'Inter', fam: "'Inter', sans-serif" },
+    { key: 'playfair', label: 'Playfair', fam: "'Playfair Display', serif" },
+    { key: 'space', label: 'Space Grotesk', fam: "'Space Grotesk', sans-serif" }
   ];
 
-  // Triple the fonts array for seamless infinite scroll
-  const repeatedFonts = [...fonts, ...fonts, ...fonts];
+  // Auto-cycle fonts with crossfade (respects prefers-reduced-motion)
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+    
+    const interval = setInterval(() => {
+      setActiveFont(prev => (prev + 1) % fonts.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [fonts.length]);
 
   return (
     <section
       ref={sectionRef}
       id="font-pick"
-      className="webproc webproc-font py-20"
+      className="webproc webproc-font py-24"
       style={{ 
         opacity: isInView ? 1 : 0, 
         transition: 'opacity 0.6s ease-out',
-        minHeight: '100vh',
+        minHeight: '70vh',
         position: 'relative',
         background: 'var(--bg)',
-        overflow: 'hidden'
+        display: 'flex',
+        alignItems: 'center'
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 relative" style={{ height: '100vh', paddingTop: '4rem', paddingBottom: '4rem' }}>
-        {/* Header in top left corner */}
-        <div style={{ position: 'absolute', top: '3rem', left: '3rem', textAlign: 'left', zIndex: 10 }}>
-          <h2 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>
-            Typography
-          </h2>
+      <div className="max-w-4xl mx-auto px-6 text-center w-full">
+        {/* Clean heading */}
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+          And finally a <span style={{ color: 'var(--primary)' }}>font</span>
+        </h2>
+        <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '3rem' }}>
+          The right typeface brings your brand to life.
+        </p>
+
+        {/* Font preview with crossfade */}
+        <div className="font-preview-container" style={{
+          position: 'relative',
+          height: '120px',
+          marginBottom: '2.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {fonts.map((font, i) => (
+            <div
+              key={font.key}
+              className="font-preview-item"
+              style={{
+                position: 'absolute',
+                fontFamily: font.fam,
+                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                fontWeight: 600,
+                color: 'var(--text)',
+                opacity: activeFont === i ? 1 : 0,
+                transform: activeFont === i ? 'translateY(0)' : 'translateY(10px)',
+                transition: 'opacity 0.6s ease, transform 0.6s ease',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {font.label}
+            </div>
+          ))}
+
         </div>
 
-        {/* Grid lines background */}
+        {/* Simple font selector chips */}
         <div style={{
-          position: 'absolute',
-          top: '2rem',
-          left: '2rem',
-          right: '2rem',
-          bottom: '2rem',
-          backgroundImage: `
-            linear-gradient(to right, rgba(138, 61, 230, 0.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(138, 61, 230, 0.08) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-          opacity: 0.4,
-          pointerEvents: 'none'
-        }} />
-
-        {/* Central font display area */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          textAlign: 'center',
-          width: 'calc(100% - 8rem)',
-          maxWidth: '700px'
+          display: 'flex',
+          gap: '12px',
+          justifyContent: 'center',
+          flexWrap: 'wrap'
         }}>
-          {/* Vertical ruler marks on left of carousel */}
-          <div style={{
-            position: 'absolute',
-            left: '-40px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            height: '120px',
-            width: '2px',
-            background: 'var(--muted)',
-            opacity: 0.3
-          }}>
-            {[0, 25, 50, 75, 100].map(num => (
-              <div key={num} style={{
-                position: 'absolute',
-                top: `${num}%`,
-                left: '-8px',
-                width: '18px',
-                height: '2px',
-                background: 'var(--muted)',
-                opacity: 0.4
-              }}>
-                <span style={{
-                  position: 'absolute',
-                  left: '-42px',
-                  top: '-9px',
-                  fontSize: '13px',
-                  color: 'var(--text)',
-                  fontWeight: 600,
-                  fontFamily: 'monospace',
-                  opacity: 0.8,
-                  letterSpacing: '-0.5px'
-                }}>{num}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Vertical ruler marks on right of carousel */}
-          <div style={{
-            position: 'absolute',
-            right: '-40px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            height: '120px',
-            width: '2px',
-            background: 'var(--muted)',
-            opacity: 0.3
-          }}>
-            {[0, 25, 50, 75, 100].map(num => (
-              <div key={num} style={{
-                position: 'absolute',
-                top: `${num}%`,
-                right: '-8px',
-                width: '18px',
-                height: '2px',
-                background: 'var(--muted)',
-                opacity: 0.4
-              }}>
-                <span style={{
-                  position: 'absolute',
-                  right: '-42px',
-                  top: '-9px',
-                  fontSize: '13px',
-                  color: 'var(--text)',
-                  fontWeight: 600,
-                  fontFamily: 'monospace',
-                  opacity: 0.8,
-                  letterSpacing: '-0.5px'
-                }}>{num}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Measurement annotations */}
-          <div style={{
-            marginBottom: '5px',
-            fontSize: '13px',
-            color: 'var(--text)',
-            fontFamily: 'monospace',
-            display: 'flex',
-            gap: '24px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            fontWeight: 600,
-            opacity: 0.7,
-            position: 'relative',
-            zIndex: 10
-          }}>
-            <span>Weight: <strong>400-700</strong></span>
-            <span>•</span>
-            <span>Size: <strong>48-96px</strong></span>
-            <span>•</span>
-            <span>Line: <strong>1.2</strong></span>
-          </div>
-
-          {/* Font carousel - fade in/out */}
-          <div className="font-carousel">
-            {repeatedFonts.map((f, i) => (
-              <div
-                key={`${f.key}-${i}`}
-                className="font-item"
-                style={{ fontFamily: f.fam }}
-              >
-                {f.label}
-              </div>
-            ))}
-          </div>
-
-          {/* Dimension arrows */}
-          <div style={{
-            position: 'absolute',
-            bottom: '-50px',
-            left: '0',
-            right: '0',
-            height: '2px',
-            background: 'var(--muted)',
-            opacity: 0.3
-          }}>
-            <div style={{
-              position: 'absolute',
-              left: '0',
-              top: '-4px',
-              width: '0',
-              height: '0',
-              borderTop: '5px solid transparent',
-              borderBottom: '5px solid transparent',
-              borderRight: `8px solid var(--muted)`,
-              opacity: 0.5
-            }} />
-            <div style={{
-              position: 'absolute',
-              right: '0',
-              top: '-4px',
-              width: '0',
-              height: '0',
-              borderTop: '5px solid transparent',
-              borderBottom: '5px solid transparent',
-              borderLeft: `8px solid var(--muted)`,
-              opacity: 0.5
-            }} />
-            <span style={{
-              position: 'absolute',
-              top: '10px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              fontSize: '12px',
-              color: 'var(--text)',
-              fontFamily: 'monospace',
-              background: 'var(--bg)',
-              padding: '3px 10px',
-              whiteSpace: 'nowrap',
-              fontWeight: 700,
-              opacity: 1
-            }}>580px</span>
-          </div>
+          {fonts.map((font, i) => (
+            <button
+              key={font.key}
+              onClick={() => setActiveFont(i)}
+              style={{
+                padding: '8px 20px',
+                borderRadius: '9999px',
+                border: '1px solid',
+                borderColor: activeFont === i ? 'var(--primary)' : 'var(--glass-border)',
+                background: activeFont === i ? 'rgba(138, 61, 230, 0.1)' : 'transparent',
+                color: activeFont === i ? 'var(--primary)' : 'var(--muted)',
+                fontFamily: font.fam,
+                fontSize: '0.9rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              {font.label}
+            </button>
+          ))}
         </div>
       </div>
     </section>

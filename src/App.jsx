@@ -356,7 +356,7 @@ function navigate(path) {
               <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                 LABS & EXPERIMENTS
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}>
                 What we're building
               </h2>
               <p className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -404,7 +404,7 @@ function navigate(path) {
                           <span className="terminal-output">Loading SQL Injection challenge...</span>
                         </div>
                         <div className="terminal-lines">
-                          <span className="terminal-output success">✓ Challenge ready. Good luck, hacker!</span>
+                          <span className="terminal-output success">? Challenge ready. Good luck, hacker!</span>
                         </div>
                         <div className="terminal-cursor"></div>
                       </div>
@@ -416,7 +416,7 @@ function navigate(path) {
                         </h3>
 
                         <p className="hackme-description">
-                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"—no real data, just pure learning.
+                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"�no real data, just pure learning.
                         </p>
 
                         <ul className="hackme-features">
@@ -473,7 +473,7 @@ function navigate(path) {
                         <span className="dot dot-green"></span>
                       </div>
                       <div className="window-title">
-                        <span className="teamster-window-title-text">teamster — workspace</span>
+                        <span className="teamster-window-title-text">teamster � workspace</span>
                       </div>
                     </div>
 
@@ -495,7 +495,7 @@ function navigate(path) {
                         </h3>
 
                         <p className="teamster-description">
-                          A unified workspace designed for growing teams. Manage projects, track progress, and collaborate—all in one beautifully simple interface.
+                          A unified workspace designed for growing teams. Manage projects, track progress, and collaborate�all in one beautifully simple interface.
                         </p>
 
                         <ul className="teamster-features">
@@ -579,75 +579,54 @@ function navigate(path) {
               {/* Main Content Grid */}
               <div className="grid lg:grid-cols-2 gap-20 items-center">
                 
-                {/* Left: Floating Team Avatars */}
-                <div className="relative flex items-center justify-center" style={{ transform: `translateY(${sectionScroll * 0.05}px)` }}>
+                {/* Left: Team Avatars - Clean row layout */}
+                <div className="relative flex items-center justify-center">
                   
-                  {/* Three avatars in a more spread out layout */}
-                  <div className="relative w-full max-w-lg" style={{ height: '550px' }}>
-                    {/* Avatar 1 - Top Left (Adrian) */}
-                    <div 
-                      className="absolute left-0 top-0"
-                      style={{ 
-                        transform: `translateY(${sectionScroll * 0.08}px) rotate(${-sectionScroll * 0.01}deg)`,
+                  {/* Three avatars in a horizontal row */}
+                  <div className="flex gap-6 items-center justify-center">
+                    {/* Avatar 1 - Adrian */}
+                    <div className="w-40 h-40 rounded-full flex items-center justify-center overflow-hidden"
+                      style={{
+                        background: 'rgba(200, 230, 255, 0.5)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
                       }}
                     >
-                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
-                        style={{
-                          background: 'rgba(200, 230, 255, 0.5)',
-                          boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
-                        }}
-                      >
-                        <img 
-                          src="/img/Adrian_avatar.png" 
-                          alt="Adrian"
-                          className="w-40 h-40 rounded-full"
-                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                        />
-                      </div>
+                      <img 
+                        src="/img/Adrian_avatar.png" 
+                        alt="Adrian"
+                        className="w-36 h-36 rounded-full"
+                        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      />
                     </div>
                     
-                    {/* Avatar 2 - Right (Nepik) */}
-                    <div 
-                      className="absolute right-0 top-24"
-                      style={{ 
-                        transform: `translateY(${sectionScroll * 0.06}px) rotate(${sectionScroll * 0.015}deg)`,
+                    {/* Avatar 2 - Nepik */}
+                    <div className="w-40 h-40 rounded-full flex items-center justify-center overflow-hidden"
+                      style={{
+                        background: 'rgba(220, 210, 255, 0.5)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
                       }}
                     >
-                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
-                        style={{
-                          background: 'rgba(220, 210, 255, 0.5)',
-                          boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
-                        }}
-                      >
-                        <img 
-                          src="/img/Nepik_avatar.png" 
-                          alt="Nepik"
-                          className="w-40 h-40 rounded-full"
-                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                        />
-                      </div>
+                      <img 
+                        src="/img/Nepik_avatar.png" 
+                        alt="Nepik"
+                        className="w-36 h-36 rounded-full"
+                        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      />
                     </div>
                     
-                    {/* Avatar 3 - Bottom Center (Viky) */}
-                    <div 
-                      className="absolute left-1/4 bottom-0"
-                      style={{ 
-                        transform: `translateY(${sectionScroll * 0.07}px) rotate(${-sectionScroll * 0.02}deg)`,
+                    {/* Avatar 3 - Viky */}
+                    <div className="w-40 h-40 rounded-full flex items-center justify-center overflow-hidden"
+                      style={{
+                        background: 'rgba(210, 200, 255, 0.5)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
                       }}
                     >
-                      <div className="w-44 h-44 rounded-full flex items-center justify-center overflow-hidden"
-                        style={{
-                          background: 'rgba(210, 200, 255, 0.5)',
-                          boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
-                        }}
-                      >
-                        <img 
-                          src="/img/Viky_avatar.png" 
-                          alt="Viky"
-                          className="w-40 h-40 rounded-full"
-                          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                        />
-                      </div>
+                      <img 
+                        src="/img/Viky_avatar.png" 
+                        alt="Viky"
+                        className="w-36 h-36 rounded-full"
+                        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -656,7 +635,7 @@ function navigate(path) {
                 <div className="space-y-8">
                   <h2 
                     className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]" 
-                    style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                    style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}
                   >
                     Three teenagers
                     <span className="block mt-3" style={{ 
@@ -671,9 +650,7 @@ function navigate(path) {
 
                   <div className="space-y-6 text-xl md:text-2xl leading-relaxed">
                     <p style={{ color: '#000000' }}>
-                      Competing with agencies charging <span style={{ color: 'var(--text)', fontWeight: 700 }}>10x more</span>. 
-                      Delivering <span style={{ color: 'var(--primary)', fontWeight: 700 }}>4 projects</span> in 
-                      just <span style={{ color: 'var(--accent-blue)', fontWeight: 700 }}>7 days</span> average.
+                      Competing with agencies charging <span style={{ color: 'var(--text)', fontWeight: 700 }}>10x more</span>.     
                     </p>
                   </div>
 
@@ -681,7 +658,7 @@ function navigate(path) {
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     {[
                       { value: '15', label: 'Years Old', color: 'var(--primary)', blobPath: blobPath4 },
-                      { value: '4', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
+                      { value: '4+', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
                       { value: '7d', label: 'Avg Time', color: 'var(--success)', blobPath: blobPath6 }
                     ].map((stat, idx) => (
                       <div key={idx} className="relative flex items-center justify-center">
@@ -714,7 +691,7 @@ function navigate(path) {
                   </div>
 
                   <p className="text-base pt-6" style={{ color: '#000000' }}>
-                    Prague, Czech Republic  •  Est. 2024
+                    Brno, Czech Republic  �  Est. 2024
                   </p>
                 </div>
 
@@ -733,7 +710,7 @@ function navigate(path) {
                 
                 <h3 
                   className="text-3xl md:text-5xl lg:text-6xl font-bold mb-12 max-w-4xl leading-tight"
-                  style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                  style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}
                 >
                   Making professional web design accessible to everyone
                 </h3>
@@ -764,7 +741,7 @@ function navigate(path) {
                 <p className="text-xs font-bold mb-6 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                   THE TEAM
                 </p>
-                <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}>
                   Meet the crew
                 </h3>
               </div>
@@ -773,7 +750,7 @@ function navigate(path) {
                 {[
                   { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: '/img/Adrian_avatar.png' },
                   { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--primary)', avatar: '/img/Viky_avatar.png' },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: '/img/Nepik_avatar.png' }
+                  { name: '�tep�n', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: '/img/Nepik_avatar.png' }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -791,7 +768,7 @@ function navigate(path) {
                         <div>
                           <h4 
                             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1" 
-                            style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                            style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}
                           >
                             {member.name}
                           </h4>
@@ -926,7 +903,7 @@ function navigate(path) {
           <div className="max-w-6xl mx-auto px-8 md:px-12 relative z-10">
             {/* Section Header */}
             <div className="text-center mb-32 stagger-item">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                 {heading}
               </h2>
               <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -1001,7 +978,7 @@ function navigate(path) {
                       <h3 
                         className="text-4xl md:text-6xl font-bold transition-all" 
                         style={{ 
-                          fontFamily: "'Syne', sans-serif",
+                          fontFamily: "'Gulf Display', sans-serif",
                           color: service.color
                         }}
                       >
@@ -1422,7 +1399,7 @@ function navigate(path) {
                   style={{ outline: 'none' }}
                 >
                   <div className="flex justify-center"><Check className="w-16 h-16" style={{ color: 'var(--success)' }} /></div>
-                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                     Thank You!
                   </h3>
                   <p className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -1463,7 +1440,7 @@ function navigate(path) {
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className="contact-hero text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                 {data.heading}
               </h2>
               <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -2281,7 +2258,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
 
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                     Website
                     <span className="block mt-2" style={{ color: 'var(--primary)' }}>
                       Redesign
@@ -2363,7 +2340,7 @@ function navigate(path) {
           <section className="py-24" style={{ background: 'var(--bg)' }}>
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   What You Get
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2379,7 +2356,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Speed & Performance
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Lightning Fast Delivery
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2402,7 +2379,7 @@ function navigate(path) {
                   </div>
                   {/* macOS-style Window - Speed Metrics */}
                   <div className="stagger-item" style={{ animationDelay: '0.1s' }}>
-                    <div className="wyg-window">
+                    <div className="wyg-window wyg-window-animated">
                       <div className="wyg-window-header">
                         <div className="traffic-lights">
                           <span className="dot dot-red"></span>
@@ -2456,39 +2433,25 @@ function navigate(path) {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   {/* macOS-style Window - Layout Preview */}
                   <div className="stagger-item md:order-1 order-2" style={{ animationDelay: '0.2s' }}>
-                    <div className="wyg-window wyg-window-light">
+                    <div className="wyg-window wyg-window-light wyg-window-animated">
                       <div className="wyg-window-header wyg-window-header-light">
                         <div className="traffic-lights">
                           <span className="dot dot-red"></span>
                           <span className="dot dot-yellow"></span>
                           <span className="dot dot-green"></span>
                         </div>
-                        <span className="wyg-window-title-light">layout-preview</span>
+                        <span className="wyg-window-title-light">preview</span>
                       </div>
                       <div className="wyg-window-content wyg-window-content-light">
-                        <div className="wyg-layout-preview">
-                          {/* Mini navbar */}
-                          <div className="wyg-mini-nav">
-                            <div className="wyg-mini-logo"></div>
-                            <div className="wyg-mini-links">
-                              <span></span><span></span><span></span>
-                            </div>
-                            <div className="wyg-mini-cta"></div>
+                        <div className="wyg-layout-preview-clean">
+                          {/* Minimal 2-block preview */}
+                          <div className="wyg-preview-nav">
+                            <div className="wyg-preview-logo"></div>
+                            <div className="wyg-preview-menu"></div>
                           </div>
-                          {/* Mini hero */}
-                          <div className="wyg-mini-hero">
-                            <div className="wyg-mini-hero-text">
-                              <div className="wyg-mini-h1"></div>
-                              <div className="wyg-mini-p"></div>
-                              <div className="wyg-mini-btn"></div>
-                            </div>
-                            <div className="wyg-mini-hero-img"></div>
-                          </div>
-                          {/* Mini cards */}
-                          <div className="wyg-mini-cards">
-                            <div className="wyg-mini-card"></div>
-                            <div className="wyg-mini-card"></div>
-                            <div className="wyg-mini-card"></div>
+                          <div className="wyg-preview-hero">
+                            <div className="wyg-preview-title"></div>
+                            <div className="wyg-preview-btn"></div>
                           </div>
                         </div>
                       </div>
@@ -2498,7 +2461,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-blue)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Design & Experience
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Modern Clean Design
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2527,7 +2490,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Results & Growth
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Conversion Focused
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2550,7 +2513,7 @@ function navigate(path) {
                   </div>
                   {/* macOS-style Window - Analytics */}
                   <div className="stagger-item" style={{ animationDelay: '0.3s' }}>
-                    <div className="wyg-window">
+                    <div className="wyg-window wyg-window-animated">
                       <div className="wyg-window-header">
                         <div className="traffic-lights">
                           <span className="dot dot-red"></span>
@@ -2607,7 +2570,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   Simple, Transparent Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2642,7 +2605,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Gulf Display', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>
                         ${plan.monthly}
@@ -2726,7 +2689,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                     AI Agent
                     <span className="block mt-2" style={{ color: 'var(--accent-blue)' }}>
                       Development
@@ -2790,7 +2753,7 @@ function navigate(path) {
                            style={{ background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', boxShadow: '0 8px 32px rgba(56, 189, 248, 0.4)' }} />
                     </div>
                     <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                      <div className="text-3xl font-bold" style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}>
                         Intelligent Automation
                       </div>
                       <div className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -2821,11 +2784,11 @@ function navigate(path) {
                   <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
                   <span className="text-sm font-semibold" style={{ color: 'var(--accent-blue)' }}>Intelligent Automation</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   What Your AI Can Do
                 </h2>
                 <p className="text-xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
-                  From customer support to data analysis—powerful capabilities that work 24/7
+                  From customer support to data analysis�powerful capabilities that work 24/7
                 </p>
               </div>
 
@@ -2905,7 +2868,7 @@ function navigate(path) {
                   <ArrowRight className="w-6 h-6" />
                 </a>
                 <p className="mt-4 text-sm" style={{ color: 'var(--muted)' }}>
-                  Start with a free consultation • No commitment required
+                  Start with a free consultation � No commitment required
                 </p>
               </div>
             </div>
@@ -2919,7 +2882,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   Flexible AI Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2954,7 +2917,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Gulf Display', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--accent-blue)' }}>
                         ${plan.monthly}
@@ -3009,14 +2972,14 @@ function navigate(path) {
 
       // Placeholder reels data - replace with real content later
       const reels = [
-        { id: 1, platform: 'TikTok', username: '@rootlabs', caption: 'How we redesigned this website in 48 hours 🚀', likes: '12.4K', comments: '234' },
-        { id: 2, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Behind the scenes of our AI workflow ✨', likes: '8.7K', comments: '156' },
-        { id: 3, platform: 'TikTok', username: '@rootlabs', caption: 'Client reaction to their new site 🔥', likes: '24.1K', comments: '412' },
+        { id: 1, platform: 'TikTok', username: '@rootlabs', caption: 'How we redesigned this website in 48 hours ??', likes: '12.4K', comments: '234' },
+        { id: 2, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Behind the scenes of our AI workflow ?', likes: '8.7K', comments: '156' },
+        { id: 3, platform: 'TikTok', username: '@rootlabs', caption: 'Client reaction to their new site ??', likes: '24.1K', comments: '412' },
         { id: 4, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Design trends you need to know in 2025', likes: '15.2K', comments: '287' },
-        { id: 5, platform: 'TikTok', username: '@rootlabs', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523' },
+        { id: 5, platform: 'TikTok', username: '@rootlabs', caption: 'POV: Your website finally converts ??', likes: '31.8K', comments: '523' },
         { id: 6, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Speed run: Landing page in 2 hours', likes: '19.6K', comments: '341' },
         { id: 7, platform: 'TikTok', username: '@rootlabs', caption: 'Why your website is losing customers', likes: '42.3K', comments: '678' },
-        { id: 8, platform: 'Instagram', username: '@rootlabs.studio', caption: 'The secret to 10x engagement 📈', likes: '11.9K', comments: '198' },
+        { id: 8, platform: 'Instagram', username: '@rootlabs.studio', caption: 'The secret to 10x engagement ??', likes: '11.9K', comments: '198' },
       ];
 
       // Calculate 3D transforms based on position relative to center
@@ -3330,7 +3293,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                     Social Media
                     <span className="block mt-2" style={{ color: '#FF7A2D' }}>
                       Management
@@ -3385,7 +3348,7 @@ function navigate(path) {
                 >
                   <div className="absolute inset-0 p-12 flex flex-col items-center justify-center gap-12">
                     <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                      <div className="text-3xl font-bold" style={{ fontFamily: "'Gulf Display', sans-serif", color: 'var(--text)' }}>
                         Community Growth
                       </div>
                       <div className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -3410,7 +3373,7 @@ function navigate(path) {
             <div className="max-w-6xl mx-auto px-6 relative z-10">
               {/* Hero Text */}
               <div className="text-center mb-24 stagger-item">
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   Social Media That<br />Actually Works
                 </h2>
                 <p className="text-2xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -3428,7 +3391,7 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Content Creation
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Posts that stop the scroll
                     </h3>
                     <p className="text-xl leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
@@ -3456,11 +3419,11 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: 'var(--primary)' }} />
                       Community Management
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Build real relationships
                     </h3>
                     <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-                      We don't just post and ghost. We actively engage with your audience—responding to comments, DMs, and mentions. Building a loyal community that actually cares about your brand.
+                      We don't just post and ghost. We actively engage with your audience�responding to comments, DMs, and mentions. Building a loyal community that actually cares about your brand.
                     </p>
                   </div>
                 </div>
@@ -3473,11 +3436,11 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Growth Strategy
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                       Track what matters
                     </h3>
                     <p className="text-xl leading-relaxed mb-10" style={{ color: 'var(--muted)' }}>
-                      Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing—follower count, engagement rates, and actual business impact.
+                      Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing�follower count, engagement rates, and actual business impact.
                     </p>
                     <div className="grid grid-cols-3 gap-8">
                       <div>
@@ -3524,7 +3487,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
                   Grow Your Social Presence
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -3559,7 +3522,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Gulf Display', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#FF7A2D' }}>
                         ${plan.monthly}
@@ -3642,12 +3605,12 @@ function navigate(path) {
       };
 
       const products = [
-        { name: "Croissant au Beurre", price: "â‚¬3.50", description: "Buttery, flaky layers baked to golden perfection", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500" },
-        { name: "Pain de Campagne", price: "â‚¬5.20", description: "Rustic country bread with a crispy crust", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500" },
-        { name: "Tarte aux Pommes", price: "â‚¬4.80", description: "Classic apple tart with vanilla glaze", image: "https://images.unsplash.com/photo-1535920527002-b35e96722eb9?w=500" },
-        { name: "Pain au Chocolat", price: "â‚¬3.80", description: "Dark chocolate wrapped in tender pastry", image: "https://images.unsplash.com/photo-1623334044303-241021148842?w=500" },
-        { name: "Baguette Tradition", price: "â‚¬2.90", description: "Traditional French baguette, made daily", image: "https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500" },
-        { name: "Ã‰clair au CafÃ©", price: "â‚¬4.20", description: "Coffee cream filled choux with espresso glaze", image: "https://images.unsplash.com/photo-1612201142855-c7a22f14e0a9?w=500" }
+        { name: "Croissant au Beurre", price: "€3.50", description: "Buttery, flaky layers baked to golden perfection", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500" },
+        { name: "Pain de Campagne", price: "€5.20", description: "Rustic country bread with a crispy crust", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500" },
+        { name: "Tarte aux Pommes", price: "€4.80", description: "Classic apple tart with vanilla glaze", image: "https://images.unsplash.com/photo-1535920527002-b35e96722eb9?w=500" },
+        { name: "Pain au Chocolat", price: "€3.80", description: "Dark chocolate wrapped in tender pastry", image: "https://images.unsplash.com/photo-1623334044303-241021148842?w=500" },
+        { name: "Baguette Tradition", price: "€2.90", description: "Traditional French baguette, made daily", image: "https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500" },
+        { name: "Éclair au Café", price: "€4.20", description: "Coffee cream filled choux with espresso glaze", image: "https://images.unsplash.com/photo-1612201142855-c7a22f14e0a9?w=500" }
       ];
 
       const galleryImages = [
@@ -3732,7 +3695,7 @@ function navigate(path) {
                 className: 'bakery-mobile-menu',
                 onClick: () => setMenuOpen(!menuOpen),
                 style: { color: '#8C5A3E', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }
-              }, menuOpen ? 'âœ•' : 'â˜°')
+              }, menuOpen ? '✕' : '☰')
             )
           ),
           menuOpen && React.createElement('div', { style: { background: '#F3E9DC', padding: '1rem' } },
@@ -3800,7 +3763,7 @@ function navigate(path) {
                 React.createElement('h2', { style: { fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: 'serif', color: '#8C5A3E', fontStyle: 'italic' } }, 'A Family Tradition'),
                 React.createElement('div', { style: { width: '4rem', height: '0.25rem', background: '#D9A282' } }),
                 React.createElement('p', { style: { fontSize: '1.125rem', color: 'rgba(140, 90, 62, 0.8)', lineHeight: '1.7' } },
-                  'For three generations, our family has been perfecting the art of traditional French baking. Every loaf, every pastry, every delicate Ã©clair is crafted with the same care and dedication that our grandmother brought to her first bakery in the heart of Provence.'
+                  'For three generations, our family has been perfecting the art of traditional French baking. Every loaf, every pastry, every delicate éclair is crafted with the same care and dedication that our grandmother brought to her first bakery in the heart of Provence.'
                 ),
                 React.createElement('p', { style: { fontSize: '1.125rem', color: 'rgba(140, 90, 62, 0.8)', lineHeight: '1.7' } },
                   'We rise before dawn to ensure that when you step into our bakery, you are greeted by the warm aroma of bread fresh from the oven and the promise of something made with love.'
@@ -3884,9 +3847,9 @@ function navigate(path) {
                 ),
                 React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '1.5rem' } },
                   [
-                    ['ðŸ“', 'Address', '12 Rue de la Boulangerie\n06140 Provence, France'],
-                    ['ðŸ•', 'Hours', 'Tuesday - Saturday: 6:00 AM - 7:00 PM\nSunday: 7:00 AM - 2:00 PM\nMonday: Closed'],
-                    ['ðŸ“ž', 'Phone', '+33 4 93 12 34 56']
+                    ['📍', 'Address', '12 Rue de la Boulangerie\n06140 Provence, France'],
+                    ['🕐', 'Hours', 'Tuesday - Saturday: 6:00 AM - 7:00 PM\nSunday: 7:00 AM - 2:00 PM\nMonday: Closed'],
+                    ['📞', 'Phone', '+33 4 93 12 34 56']
                   ].map(([icon, title, text]) =>
                     React.createElement('div', { key: title, style: { display: 'flex', gap: '1rem' } },
                       React.createElement('div', { style: { fontSize: '1.5rem' } }, icon),
@@ -3908,7 +3871,7 @@ function navigate(path) {
                   React.createElement('img', { src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800', alt: 'Bakery location', style: { width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 } }),
                   React.createElement('div', { style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' } },
                     React.createElement('div', { style: { background: 'rgba(255,255,255,0.9)', padding: '2rem', borderRadius: '8px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' } },
-                      React.createElement('div', { style: { fontSize: '3rem', marginBottom: '0.5rem' } }, 'ðŸ“'),
+                      React.createElement('div', { style: { fontSize: '3rem', marginBottom: '0.5rem' } }, '📍'),
                       React.createElement('p', { style: { color: '#8C5A3E', fontWeight: 600 } }, 'Find us in the heart of Provence')
                     )
                   )
@@ -3948,7 +3911,7 @@ function navigate(path) {
               onMouseEnter: (e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'; },
               onMouseLeave: (e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; }
             }, React.createElement(ArrowLeft, { className: "w-4 h-4 inline mr-1" }), ' Back to Recent Transformations'),
-            React.createElement('p', { style: { fontSize: '0.875rem', opacity: 0.7, margin: 0 } }, 'Â© 2025 Boulangerie Maison Â· A Rooted Labs Showcase'),
+            React.createElement('p', { style: { fontSize: '0.875rem', opacity: 0.7, margin: 0 } }, '© 2025 Boulangerie Maison · A Rooted Labs Showcase'),
             React.createElement('p', { style: { fontSize: '0.75rem', opacity: 0.5, marginTop: '0.5rem' } }, 'This is a design demonstration, not a real business')
           )
         )
@@ -3993,8 +3956,8 @@ function navigate(path) {
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
-                ðŸ’» Tech Haven
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
+                💻 Tech Haven
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>
                 Full tech store website will be implemented here
@@ -4048,8 +4011,8 @@ function navigate(path) {
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
-                ðŸ½ï¸ Culinary Delight
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Gulf Display', sans-serif" }}>
+                🍽️ Culinary Delight
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>
                 Full restaurant website will be implemented here
@@ -4150,4 +4113,5 @@ function navigate(path) {
     }
 
     export default App;
+
 
