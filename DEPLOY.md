@@ -1,7 +1,7 @@
 # Deployment Guide
 
 This project is configured to deploy to GitHub Pages at:
-**https://rootlabs0.github.io/RootLabs/**
+**https://electroworks-store.github.io/Root-Labs/**
 
 ## Deployment Steps
 
@@ -30,7 +30,7 @@ This project is configured to deploy to GitHub Pages at:
 
 Make sure GitHub Pages is enabled for your repository:
 
-1. Go to your repo: `https://github.com/rootlabs0/RootLabs`
+1. Go to your repo: `https://github.com/Electroworks-store/Root-Labs`
 2. Navigate to **Settings** → **Pages**
 3. Under **Source**, select the `gh-pages` branch
 4. Save the settings
@@ -39,5 +39,6 @@ After the first deployment, your site will be live at the URL above within a few
 
 ## Notes
 
-- The `base` path in `vite.config.js` is set to `/RootLabs/` to match the repository name
+- The `base` path in `vite.config.js` is set to `/Root-Labs/` to match the repository name
 - All asset paths will be automatically prefixed with this base path
+- Logo and images are in the `public/` folder and will be copied to `dist/` during build

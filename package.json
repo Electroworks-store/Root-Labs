@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Root Labs - AI-powered website redesign services",
-  "homepage": "https://rootlabs0.github.io/RootLabs/",
+  "homepage": "https://electroworks-store.github.io/Root-Labs/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
