@@ -241,6 +241,10 @@ function VibePicker() {
                         <div style={{ height: 6, width: '55%', borderRadius: 2, background: 'rgba(245,241,232,0.08)' }} />
                       </div>
                       
+                      {/* Minimal button */}
+                      <div style={{ marginTop: 12, marginBottom: 28 }}>
+                        <div style={{ width: 80, height: 26, borderRadius: 4, background: vibe.accent, opacity: 0.9 }} />
+                      </div>
                     </>
                   ) : vibe.id === 'tech' ? (
                     <>
