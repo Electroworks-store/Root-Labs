@@ -931,7 +931,7 @@
         messagePlaceholder: contactData?.dataset.messageplaceholder || 'Tell us about your project...',
         buttonText: contactData?.dataset.buttontext || 'Send Message',
         emailText: contactData?.dataset.emailtext || 'Or email us directly at',
-        emailLink: contactData?.dataset.emaillink || 'hello@rootlabs.studio',
+        emailLink: contactData?.dataset.emaillink || 'rootlabs0@gmail.com',
         scheduleUrl: contactData?.dataset.scheduleurl || ''
       };
 
