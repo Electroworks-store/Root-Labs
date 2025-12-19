@@ -481,7 +481,7 @@ function navigate(path) {
                       {/* Screenshot Preview */}
                       <div className="teamster-preview">
                         <img 
-                          src="/img/teamster.png" 
+                          src={`${import.meta.env.BASE_URL}img/teamster.png`}
                           alt="Teamster Workspace" 
                           className="teamster-screenshot"
                         />
@@ -602,7 +602,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src="/img/Adrian_avatar.png" 
+                            src={`${import.meta.env.BASE_URL}img/Adrian_avatar.png`}
                             alt="Adrian"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -630,7 +630,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src="/img/Nepik_avatar.png" 
+                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
                             alt="Nepik"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -658,7 +658,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src="/img/Viky_avatar.png" 
+                            src={`${import.meta.env.BASE_URL}img/Viky_avatar.png`}
                             alt="Viky"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -786,9 +786,9 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: '/img/Adrian_avatar.png' },
-                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--primary)', avatar: '/img/Viky_avatar.png' },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: '/img/Nepik_avatar.png' }
+                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
+                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` }
                 ].map((member, idx) => (
                   <div 
                     key={idx}

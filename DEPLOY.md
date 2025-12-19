@@ -24,13 +24,35 @@ This project is configured to deploy to GitHub Pages and serves from custom doma
 ## Configuration Details
 
 ### Vite Base Path
-- Set to `base: "/"` in `vite.config.js` for custom domain (rootlabs.studio)
-- All assets use root-based paths: `/assets/`, `/img/`, etc.
+- Set to `base: "./"` in `vite.config.js` for universal compatibility
+- Works with custom domain (rootlabs.studio) and GitHub Pages subdirectory
+- Assets use relative paths that work in any deployment context
 
-### Logo and Assets
-- Logo is served from: `public/img/Rootlabs-logo.png`
-- Vite automatically copies `public/` contents to `dist/` during build
-- Logo path in HTML: `/img/Rootlabs-logo.png` (works with custom domain)
+### Asset Handling Rules
+
+**Rule: All static assets MUST be in `public/` folder**
+
+#### ✅ Correct Pattern
+1. **Place images in**: `public/img/` (or `public/avatars/`, `public/fonts/`, etc.)
+2. **Reference in JSX/TSX**: Use `import.meta.env.BASE_URL` for dynamic base path
+   ```jsx
+   <img src={`${import.meta.env.BASE_URL}img/teamster.png`} alt="..." />
+   ```
+3. **Result**: Vite copies `public/` contents to `dist/` during build
+   - `public/img/logo.png` → `dist/img/logo.png`
+   - Path resolves to: `./img/logo.png` (works everywhere)
+
+#### ❌ Incorrect Patterns
+- ❌ Hardcoded absolute paths: `src="/img/logo.png"` (breaks with base path changes)
+- ❌ Images outside `public/`: `img/logo.png` at project root (NOT included in build)
+- ❌ Missing BASE_URL: Static string paths won't adapt to deployment context
+
+### File Naming (Case-Sensitive!)
+GitHub Pages is **case-sensitive**. Ensure exact filename matches:
+- ✅ `Rootlabs-logo.png` (matches file)
+- ❌ `RootLabs-logo.png` (404 on production)
+- ✅ `Adrian_avatar.png` (matches file)
+- ❌ `adrian_avatar.png` (404 on production)
 
 ### GitHub Pages Setup
 
