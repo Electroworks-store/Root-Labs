@@ -611,7 +611,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src={`${import.meta.env.BASE_URL}img/Nepik_new.png`}
+                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
                             alt="Nepik"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -767,9 +767,9 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: '"Built different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
+                  { name: 'Adrian', role: 'Full stack dev', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
                   { name: 'Viktor', role: 'Design & brand', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_new.png`}
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -1407,11 +1407,17 @@ function navigate(path) {
       if (submitStatus === 'success') {
         return (
           <section id="contact" className="contact-section py-32 px-6" style={{ background: 'var(--surface)' }}>
-            {/* Decorative Wave Background - 3 solid layers */}
+            {/* Decorative Wave Background - 3 soft curved layers */}
             <div className="contact-waves-bg" aria-hidden="true">
-              <div className="wave-layer wave-layer--light" />
-              <div className="wave-layer wave-layer--mid" />
-              <div className="wave-layer wave-layer--dark" />
+              <svg className="wave-svg wave-svg--light" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path d="M0,160 C180,220 360,100 540,160 C720,220 900,100 1080,160 C1260,220 1350,140 1440,180 L1440,320 L0,320 Z" />
+              </svg>
+              <svg className="wave-svg wave-svg--mid" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path d="M0,200 C240,140 360,260 600,180 C840,100 960,240 1200,160 C1320,120 1400,200 1440,160 L1440,320 L0,320 Z" />
+              </svg>
+              <svg className="wave-svg wave-svg--dark" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path d="M0,220 C200,160 400,280 640,200 C880,120 1040,260 1280,180 C1360,150 1420,220 1440,200 L1440,320 L0,320 Z" />
+              </svg>
             </div>
             
             <div className="max-w-4xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
@@ -1463,11 +1469,17 @@ function navigate(path) {
 
       return (
         <section id="contact" className="contact-section py-24 px-6" style={{ background: 'var(--surface)' }}>
-          {/* Decorative Wave Background - 3 solid layers */}
+          {/* Decorative Wave Background - 3 soft curved layers */}
           <div className="contact-waves-bg" aria-hidden="true">
-            <div className="wave-layer wave-layer--light" />
-            <div className="wave-layer wave-layer--mid" />
-            <div className="wave-layer wave-layer--dark" />
+            <svg className="wave-svg wave-svg--light" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path d="M0,160 C180,220 360,100 540,160 C720,220 900,100 1080,160 C1260,220 1350,140 1440,180 L1440,320 L0,320 Z" />
+            </svg>
+            <svg className="wave-svg wave-svg--mid" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path d="M0,200 C240,140 360,260 600,180 C840,100 960,240 1200,160 C1320,120 1400,200 1440,160 L1440,320 L0,320 Z" />
+            </svg>
+            <svg className="wave-svg wave-svg--dark" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path d="M0,220 C200,160 400,280 640,200 C880,120 1040,260 1280,180 C1360,150 1420,220 1440,200 L1440,320 L0,320 Z" />
+            </svg>
           </div>
           
           <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
@@ -2106,24 +2118,20 @@ function navigate(path) {
         <section id="whyus-journey" className="journey-timeline-section" ref={sectionRef}>
           <div className="journey-container">
             <header className="journey-header">
+              <span className="journey-label">Our Process</span>
               <h2 className="journey-main-heading">{heading}</h2>
               {subheading && <p className="journey-subheading">{subheading}</p>}
             </header>
 
             <div className="journey-timeline-track">
-              {/* Background line */}
+              {/* Minimal progress line */}
               <div 
-                className="timeline-line timeline-line-bg" 
-                aria-hidden="true"
-              ></div>
-              {/* Progress fill */}
-              <div 
-                className="timeline-line timeline-line-progress" 
+                className="timeline-line-minimal" 
                 style={{ 
-                  height: `${scrollProgress * 100}%`
+                  '--progress': `${scrollProgress * 100}%`
                 }}
                 aria-hidden="true"
-              ></div>
+              />
               
               {journeySteps.map((step, idx) => (
                 <div 
@@ -2134,37 +2142,29 @@ function navigate(path) {
                   aria-label={`Step ${idx + 1}: ${step.phase}`}
                 >
                   <div className="journey-content">
-                    <span className="journey-phase">{step.phase}</span>
+                    <span className="journey-step-number">{String(idx + 1).padStart(2, '0')}</span>
                     <h3 className="journey-title">{step.title}</h3>
                     <p className="journey-desc">{step.desc}</p>
                     
                     <div className="journey-metric" data-animated={hasAnimated[idx]}>
-                      <div className="journey-metric-value">
+                      <span className="journey-metric-value">
                         {hasAnimated[idx] && counters[idx] > 0 ? (
-                          <>
-                            {counters[idx]}{step.unit}
-                          </>
+                          <>{counters[idx]}{step.unit}</>
                         ) : (
-                          <>
-                            {step.metricText}{step.unit}
-                          </>
+                          <>{step.metricText}{step.unit}</>
                         )}
-                      </div>
-                      <div className="journey-metric-label">{step.metricLabel}</div>
+                      </span>
+                      <span className="journey-metric-label">{step.metricLabel}</span>
                     </div>
-                  </div>
-
-                  <div className={`timeline-dot ${activeStep === idx ? 'timeline-dot--active' : ''}`} aria-hidden="true">
-                    <div className="dot-inner"></div>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="journey-cta">
-              <p className="journey-cta-text">Ready to start?</p>
               <a href="#pricing" className="journey-cta-button">
                 Get Started
+                <span className="cta-arrow">→</span>
               </a>
             </div>
           </div>
