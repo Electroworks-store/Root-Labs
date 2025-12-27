@@ -453,7 +453,7 @@ function navigate(path) {
                         <span className="dot dot-green"></span>
                       </div>
                       <div className="window-title">
-                        <span className="teamster-window-title-text">teamster ? workspace</span>
+                        <span className="teamster-window-title-text">teamster - workspace</span>
                       </div>
                     </div>
 
@@ -1677,21 +1677,21 @@ function navigate(path) {
                       data.buttonText
                     )}
                   </button>
+
+                  {/* Email Fallback - Inside card */}
+                  <p className="text-center text-sm pt-4" style={{ color: 'var(--muted)' }}>
+                    {data.emailText}{' '}
+                    <a 
+                      href={`mailto:${data.emailLink}`} 
+                      className="font-semibold transition-opacity hover:opacity-70"
+                      style={{ color: 'var(--primary)' }}
+                    >
+                      {data.emailLink}
+                    </a>
+                  </p>
                 </div>
               </form>
             </div>
-
-            {/* Email Fallback */}
-            <p className="text-center mt-8" style={{ color: 'var(--muted)' }}>
-              {data.emailText}{' '}
-              <a 
-                href={`mailto:${data.emailLink}`} 
-                className="font-semibold transition-opacity hover:opacity-70"
-                style={{ color: 'var(--primary)' }}
-              >
-                {data.emailLink}
-              </a>
-            </p>
           </div>
         </section>
       );

@@ -2595,8 +2595,8 @@
     }
 
     .contact-card {
-      background: rgba(16, 18, 27, 0.92);
-      backdrop-filter: blur(35px);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(15px);
       border: 2px solid var(--glass-border);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -2750,7 +2750,7 @@
 
     /* Wave Layer 2 - Medium purple (middle wave) */
     .wave-layer--mid {
-      height: 78%;
+      height: 72%;
       background: #9f7aea;
       clip-path: polygon(
         0% 48%,
@@ -2772,7 +2772,7 @@
 
     /* Wave Layer 3 - Darkest purple (bottom wave, front) */
     .wave-layer--dark {
-      height: 63%;
+      height: 50%;
       background: #805ad5;
       clip-path: polygon(
         0% 43%,
