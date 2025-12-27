@@ -396,7 +396,7 @@ function navigate(path) {
                         </h3>
 
                         <p className="hackme-description">
-                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable"?no real data, just pure learning.
+                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable" no real data, just pure learning.
                         </p>
 
                         <ul className="hackme-features">
@@ -611,7 +611,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.jpeg`}
+                            src={`${import.meta.env.BASE_URL}img/Nepik_new.png`}
                             alt="Nepik"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -769,7 +769,7 @@ function navigate(path) {
                 {[
                   { name: 'Adrian', role: 'Full stack dev', tagline: '"Built different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
                   { name: 'Viktor', role: 'Design & brand', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` }
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_new.png`}
                 ].map((member, idx) => (
                   <div 
                     key={idx}
