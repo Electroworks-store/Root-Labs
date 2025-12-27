@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef } from 'react';
-import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3 } from 'lucide-react';
+import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send } from 'lucide-react';
 import { generatePath, SvgShape } from 'react-svg-shape';
 import GardenerWebsite from './showcase/Gardener';
 import TechStore from './showcase/TechStore';
@@ -226,13 +226,10 @@ function navigate(path) {
                  style={{ background: 'var(--mesh-secondary)', bottom: '20%', right: '15%', animationDelay: '2s' }} />
           </div>
           
-          {/* Masked Grid Patches - Purple accent for hero */}
-          <div className="masked-grid masked-grid-purple masked-grid-bottom-right" aria-hidden="true"></div>
-
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
             {/* Left: Text Content */}
             <div className="space-y-6 stagger-item">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight" style={{ fontFamily: 'Syne, sans-serif' }}>
                 {data.title1}
                 <span className="block mt-2" style={{ color: 'var(--primary)' }}>
                   {data.title2}
@@ -256,26 +253,10 @@ function navigate(path) {
                 </a>
               </div>
             </div>
-
-            {/* Right: Animated Mesh Gradient Card */}
-            <div 
-              className="relative h-[400px] rounded-3xl mesh-gradient liquid-glass stagger-item"
-              style={{ 
-                animationDelay: '0.2s',
-                transform: `perspective(1000px) rotateY(${mousePos.x * 0.5}deg) rotateX(${-mousePos.y * 0.5}deg)`
-              }}
-            >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-3 p-8">
-                  <div className="text-6xl font-bold opacity-10">{data.cardNumber}</div>
-                  <div className="text-xl font-semibold" style={{ color: 'var(--primary)' }}>
-                    {data.cardSubtitle}
-                  </div>
-                  <div className="text-base" style={{ color: 'var(--muted)' }}>
-                    {data.cardText}
-                  </div>
-                </div>
-              </div>
+            
+            {/* Right: Logo */}
+            <div className="relative flex items-center justify-center">
+              <img src="/img/Rootlabs-logo-xbg.png" alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
             </div>
           </div>
         </section>
@@ -696,7 +677,7 @@ function navigate(path) {
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     {[
                       { value: '15', label: 'Years Old', color: 'var(--primary)', blobPath: blobPath4 },
-                      { value: '4+', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
+                      { value: '3+', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
                       { value: '7d', label: 'Avg Time', color: 'var(--success)', blobPath: blobPath6 }
                     ].map((stat, idx) => (
                       <div key={idx} className="relative flex items-center justify-center">
@@ -729,7 +710,7 @@ function navigate(path) {
                   </div>
 
                   <p className="text-base pt-6" style={{ color: '#000000' }}>
-                    Brno, Czech Republic  ?  Est. 2024
+                    Brno, Czech Republic · Established 2025
                   </p>
                 </div>
 
@@ -786,9 +767,9 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: 'Built different', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
-                  { name: 'Viktor', role: 'Design & brand', tagline: 'Made it look good', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: 'Kept it from falling apart', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` }
+                  { name: 'Adrian', role: 'Full stack dev', tagline: '"Built different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
+                  { name: 'Viktor', role: 'Design & brand', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
+                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -917,9 +898,9 @@ function navigate(path) {
           accentColor: '#8A3DE6',
           link: '/social',
           stats: [
-            { label: 'Starting at', value: '$499/mo' },
-            { label: 'Reach', value: '10K+' },
-            { label: 'Content', value: 'Daily Posts' }
+            { label: 'Starting at', value: '$879/mo' },
+            { label: 'videos/month', value: '2' },
+            { label: 'posts/month', value: '8' }
           ],
           features: ['Content Creation', 'Community Management', 'Growth Strategy', 'Analytics Reports', 'Influencer Outreach', '3+ Platforms'],
           align: 'left'
@@ -1052,7 +1033,7 @@ function navigate(path) {
                       </div>
 
                       {/* Features List */}
-                      <div className={`grid grid-cols-2 gap-x-4 gap-y-3 py-4 ${service.align === 'right' ? 'md:justify-items-end' : ''}`}>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 py-4">
                         {service.features.map((feature, i) => (
                           <div 
                             key={i}
@@ -1710,7 +1691,7 @@ function navigate(path) {
 
       const socials = [
         { name: 'YouTube', url: 'https://youtube.com/@rootlabs', icon: 'M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z' },
-        { name: 'Instagram', url: 'https://instagram.com/rootlabs', icon: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' }
+        { name: 'Instagram', url: 'https://instagram.com/rootlabs.studio', icon: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' }
       ];
 
       return (
@@ -1854,36 +1835,62 @@ function navigate(path) {
       const statColors = [
         '#8A3DE6', // Purple
         '#38bdf8', // Blue
-        '#FF7A2D', // Orange
+        '#8A3DE6', // Purple
         '#38bdf8'  // Blue (was green)
       ];
 
       return (
         <section ref={sectionRef} className="stats-section py-20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid md:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 justify-items-center max-w-4xl mx-auto">
               {stats.map((stat, idx) => {
                 const color = statColors[idx % statColors.length];
                 return (
                   <div 
                     key={idx} 
-                    className="group relative"
+                    className="group relative text-center"
                   >
-                    {/* Decorative line on top */}
-                    <div 
-                      className="h-1 w-16 mb-6 rounded-full transition-all duration-500 group-hover:w-full"
-                      style={{ background: color }}
-                    />
-                    
-                    {/* Number */}
-                    <div 
-                      className="text-6xl md:text-7xl font-bold mb-3 transition-all duration-300 group-hover:scale-105"
-                      style={{ 
-                        color: color,
-                        fontFamily: "'Space Grotesk', sans-serif"
-                      }}
-                    >
-                      {counts[idx]}{stat.suffix}
+                    {/* Number container with line centered over number only */}
+                    <div className="relative inline-block mb-8">
+                      {/* Decorative line on top - centered over the number */}
+                      <div 
+                        className="h-1 w-16 mb-6 mx-auto rounded-full transition-all duration-500 group-hover:w-full"
+                        style={{ background: color }}
+                      />
+                      
+                      {/* Number - Outlined style matching process numbers */}
+                      <div className="relative inline-flex justify-center">
+                        <div 
+                          className="text-[5rem] md:text-[7rem] font-bold leading-none transition-all duration-300 group-hover:scale-105"
+                          style={{ 
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            WebkitTextStroke: `2.5px ${color}`,
+                            WebkitTextFillColor: 'transparent',
+                            backgroundImage: `radial-gradient(circle, ${color}20 0%, ${color}15 100%)`,
+                            WebkitBackgroundClip: 'text',
+                            backgroundClip: 'text',
+                            color: 'transparent'
+                          }}
+                        >
+                          {counts[idx]}
+                        </div>
+                        {stat.suffix && (
+                          <div 
+                            className="absolute left-full bottom-2 text-[2rem] md:text-[2.5rem] font-bold leading-none ml-1 transition-all duration-300 group-hover:scale-105"
+                            style={{ 
+                              fontFamily: "'Space Grotesk', sans-serif",
+                              WebkitTextStroke: `1.5px ${color}`,
+                              WebkitTextFillColor: 'transparent',
+                              backgroundImage: `radial-gradient(circle, ${color}20 0%, ${color}15 100%)`,
+                              WebkitBackgroundClip: 'text',
+                              backgroundClip: 'text',
+                              color: 'transparent'
+                            }}
+                          >
+                            {stat.suffix}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     
                     {/* Label */}
@@ -2779,34 +2786,9 @@ function navigate(path) {
                   </div>
                 </div>
 
-                {/* Right: Animated Card */}
-                <div 
-                  className="relative h-[500px] rounded-3xl liquid-glass stagger-item hidden md:block"
-                  style={{ 
-                    animationDelay: '0.2s',
-                    transform: `perspective(1000px) rotateY(${mousePos.x * 0.3}deg) rotateX(${-mousePos.y * 0.3}deg)`,
-                    background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(138, 61, 230, 0.1) 100%)'
-                  }}
-                >
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-12 gap-8">
-                    {/* Animated Gradient Orbs */}
-                    <div className="relative w-32 h-32">
-                      <div className="absolute inset-0 rounded-full opacity-60 blur-2xl" 
-                           style={{ background: 'radial-gradient(circle, var(--accent-blue) 0%, transparent 70%)', animation: 'pulse 3s ease-in-out infinite' }} />
-                      <div className="absolute inset-4 rounded-full opacity-80 blur-xl" 
-                           style={{ background: 'radial-gradient(circle, var(--primary) 0%, transparent 70%)', animation: 'pulse 3s ease-in-out infinite 0.5s' }} />
-                      <div className="absolute inset-8 rounded-full" 
-                           style={{ background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', boxShadow: '0 8px 32px rgba(56, 189, 248, 0.4)' }} />
-                    </div>
-                    <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
-                        Intelligent Automation
-                      </div>
-                      <div className="text-lg" style={{ color: 'var(--muted)' }}>
-                        AI that works 24/7 for you
-                      </div>
-                    </div>
-                  </div>
+                {/* Right: AI Flow Visual */}
+                <div className="stagger-item hidden md:flex items-center justify-center" style={{ animationDelay: '0.15s' }}>
+                  <AIHeroFlowVisual />
                 </div>
               </div>
             </div>
@@ -3293,6 +3275,184 @@ function navigate(path) {
       );
     }
 
+    // AI Hero Flow Visual Component - Input -> AI -> Output
+    function AIHeroFlowVisual() {
+      return (
+        <div className="ai-hero-flow" aria-label="AI transforms messy input into clean output">
+          {/* SVG Connector Lines */}
+          <svg className="ai-hero-flow-connector" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="connectorGrad1" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stopColor="#8A3DE6" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.6" />
+              </linearGradient>
+              <linearGradient id="connectorGrad2" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#8A3DE6" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+            {/* Left to Center connector */}
+            <path 
+              className="ai-connector-path ai-connector-path--1"
+              d="M 60 100 Q 110 80, 160 100" 
+              fill="none" 
+              stroke="url(#connectorGrad1)" 
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            {/* Center to Right connector */}
+            <path 
+              className="ai-connector-path ai-connector-path--2"
+              d="M 240 100 Q 290 120, 340 100" 
+              fill="none" 
+              stroke="url(#connectorGrad2)" 
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+
+          <div className="ai-hero-flow-nodes">
+            {/* Left Node: Raw Input (Tangled Yarn) */}
+            <div className="ai-hero-flow-node ai-hero-flow-node--input">
+              <svg className="ai-yarn" viewBox="0 0 60 60" fill="none">
+                <path d="M10 30 Q25 10, 40 25 T55 30" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+                <path d="M15 25 Q30 40, 45 20" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+                <path d="M8 35 Q20 45, 35 30 T50 35" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+                <path d="M12 40 Q28 20, 48 40" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                <path d="M20 15 Q35 35, 50 20" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+                <path d="M5 28 Q22 50, 42 28" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+                <path d="M18 45 Q33 25, 52 42" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                <path d="M25 12 Q40 30, 55 18" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+                <path d="M8 22 Q25 38, 45 22" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+                <path d="M30 48 Q45 30, 58 45" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
+              </svg>
+            </div>
+
+            {/* Center Node: AI Pulse Orb */}
+            <div className="ai-hero-flow-node ai-hero-flow-node--ai">
+              <div className="ai-pulse-orb">
+                <div className="ai-pulse-orb__ring ai-pulse-orb__ring--1"></div>
+                <div className="ai-pulse-orb__ring ai-pulse-orb__ring--2"></div>
+                <div className="ai-pulse-orb__core"></div>
+              </div>
+            </div>
+
+            {/* Right Node: Clean Output (Bullet Lines) */}
+            <div className="ai-hero-flow-node ai-hero-flow-node--output">
+              <div className="ai-output-lines">
+                <div className="ai-output-line ai-output-line--1">
+                  <span className="ai-output-bullet"></span>
+                  <span className="ai-output-bar"></span>
+                </div>
+                <div className="ai-output-line ai-output-line--2">
+                  <span className="ai-output-bullet"></span>
+                  <span className="ai-output-bar ai-output-bar--accent"></span>
+                </div>
+                <div className="ai-output-line ai-output-line--3">
+                  <span className="ai-output-bullet"></span>
+                  <span className="ai-output-bar"></span>
+                </div>
+                <div className="ai-output-line ai-output-line--4">
+                  <span className="ai-output-bullet"></span>
+                  <span className="ai-output-bar"></span>
+                </div>
+                <div className="ai-output-line ai-output-line--5">
+                  <span className="ai-output-bullet"></span>
+                  <span className="ai-output-bar ai-output-bar--short"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile: Simple arrows between stacked nodes */}
+          <div className="ai-hero-flow-mobile-arrows">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </div>
+        </div>
+      );
+    }
+
+    // Engagement Tiles Component
+    function EngagementTiles() {
+      const [isLiked, setIsLiked] = useState(false);
+      const [pulseHeart, setPulseHeart] = useState(false);
+      const [neighborReact, setNeighborReact] = useState(false);
+      const [flashComment, setFlashComment] = useState(false);
+      const [flashSend, setFlashSend] = useState(false);
+
+      const tiles = [
+        { id: 'like', icon: Heart, label: 'Like' },
+        { id: 'comment', icon: MessageCircle, label: 'Comment' },
+        { id: 'send', icon: Send, label: 'Send' }
+      ];
+
+      const handleLikeClick = () => {
+        const newLiked = !isLiked;
+        setIsLiked(newLiked);
+        if (newLiked) {
+          setPulseHeart(true);
+          setNeighborReact(true);
+          setTimeout(() => setPulseHeart(false), 350);
+          setTimeout(() => setNeighborReact(false), 250);
+        }
+      };
+
+      const handleCommentClick = () => {
+        setFlashComment(true);
+        setTimeout(() => setFlashComment(false), 300);
+      };
+
+      const handleSendClick = () => {
+        setFlashSend(true);
+        setTimeout(() => setFlashSend(false), 300);
+      };
+
+      const getClickHandler = (id) => {
+        if (id === 'like') return handleLikeClick;
+        if (id === 'comment') return handleCommentClick;
+        return handleSendClick;
+      };
+
+      return (
+        <div className="engagement-tiles" aria-label="Engagement actions">
+          {tiles.map((tile, idx) => {
+            const Icon = tile.icon;
+            const isLikeTile = tile.id === 'like';
+            const isActive = isLikeTile && isLiked;
+            const isNeighbor = idx === 1 || idx === 2;
+            const shouldReact = isNeighbor && neighborReact;
+            const shouldFlash = (tile.id === 'comment' && flashComment) || (tile.id === 'send' && flashSend);
+            
+            const wrapClass = `engagement-tile-wrap engagement-tile-wrap--${tile.id}${shouldReact ? ' is-reacting' : ''}`;
+            const tileClass = `engagement-tile engagement-tile--${tile.id}${pulseHeart && isLikeTile ? ' is-pulsing' : ''}${shouldFlash ? ' is-flashing' : ''}`;
+            
+            return (
+              <div key={tile.id} className={wrapClass}>
+                <button
+                  type="button"
+                  className={tileClass}
+                  onClick={getClickHandler(tile.id)}
+                  aria-label={tile.label}
+                  aria-pressed={isLikeTile ? isLiked : undefined}
+                >
+                  <Icon
+                    size={36}
+                    className={`engagement-tile__icon${isActive ? ' is-active' : ''}`}
+                    strokeWidth={2}
+                  />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
     // Social Media Service Page - Fluid & Organic
     function SocialPage() {
       const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -3369,39 +3529,23 @@ function navigate(path) {
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>10K+</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>followers</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>2</div>
+                      <div className="text-sm" style={{ color: 'var(--muted)' }}>videos/month</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>24</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>8</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>posts/month</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>5x</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>engagement</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
+                      <div className="text-sm" style={{ color: 'var(--muted)' }}>support</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Right: Fluid Organic Card */}
-                <div 
-                  className="relative h-[500px] rounded-3xl liquid-glass stagger-item hidden md:block"
-                  style={{ 
-                    animationDelay: '0.2s',
-                    transform: `perspective(1000px) rotateY(${mousePos.x * 0.3}deg) rotateX(${-mousePos.y * 0.3}deg)`,
-                    background: 'linear-gradient(135deg, rgba(255, 122, 45, 0.08) 0%, rgba(138, 61, 230, 0.08) 100%)'
-                  }}
-                >
-                  <div className="absolute inset-0 p-12 flex flex-col items-center justify-center gap-12">
-                    <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
-                        Community Growth
-                      </div>
-                      <div className="text-lg" style={{ color: 'var(--muted)' }}>
-                        Strategic engagement that scales
-                      </div>
-                    </div>
-                  </div>
+                {/* Right: Engagement Tiles */}
+                <div className="relative flex items-center justify-center stagger-item hidden md:flex" style={{ animationDelay: '0.2s' }}>
+                  <EngagementTiles />
                 </div>
               </div>
             </div>
@@ -3489,10 +3633,6 @@ function navigate(path) {
                       Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing?follower count, engagement rates, and actual business impact.
                     </p>
                     <div className="grid grid-cols-3 gap-8">
-                      <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>10K+</div>
-                        <div style={{ color: 'var(--muted)' }}>Avg. Reach</div>
-                      </div>
                       <div>
                         <div className="text-5xl font-bold mb-2" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>5x</div>
                         <div style={{ color: 'var(--muted)' }}>Growth</div>

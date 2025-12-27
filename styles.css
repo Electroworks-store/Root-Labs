@@ -1396,10 +1396,11 @@
     }
 
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4rem;
+      max-width: 800px;
       margin: 0 auto;
     }
 
@@ -1449,9 +1450,9 @@
       font-family: 'Inter', sans-serif;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 768px) {
       .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: 1.5rem;
       }
     }
@@ -1492,8 +1493,8 @@
 
     .journey-main-heading {
       font-size: clamp(3rem, 6vw, 4.5rem);
-      font-weight: 800;
-      font-family: 'Gulf Display', sans-serif;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
       color: var(--text);
       margin-bottom: 1rem;
       line-height: 1.1;
@@ -1744,7 +1745,7 @@
     /* Phase Badge - Colorful with blue accent */
     .journey-phase {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.9375rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -1767,7 +1768,7 @@
 
     /* Title */
     .journey-title {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: 700;
       font-family: 'Gulf Display', sans-serif;
       color: var(--text);
@@ -1777,7 +1778,7 @@
 
     /* Description */
     .journey-desc {
-      font-size: 1.125rem;
+      font-size: 1.40625rem;
       line-height: 1.7;
       color: var(--muted);
       margin-bottom: 1.5rem;
@@ -1802,7 +1803,7 @@
     }
 
     .journey-metric-value {
-      font-size: 1.75rem;
+      font-size: 2.1875rem;
       font-weight: 800;
       font-family: 'Space Grotesk', 'Inter', sans-serif;
       color: var(--accent-blue);
@@ -1819,7 +1820,7 @@
     }
 
     .journey-metric-label {
-      font-size: 0.75rem;
+      font-size: 0.9375rem;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -1922,19 +1923,19 @@
       }
 
       .journey-title {
-        font-size: 1.75rem;
+        font-size: 2.1875rem;
       }
 
       .journey-desc {
-        font-size: 1rem;
+        font-size: 1.25rem;
       }
 
       .journey-metric-value {
-        font-size: 1.5rem;
+        font-size: 1.875rem;
       }
 
       .journey-metric-label {
-        font-size: 0.7rem;
+        font-size: 0.875rem;
       }
 
       .journey-cta {
@@ -2322,6 +2323,27 @@
       }
       75% {
         transform: translateY(-12px) translateX(8px);
+      }
+    }
+
+    /* Gentle floating animation for hero logo */
+    @keyframes gentle-float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .hero-logo-float {
+      animation: gentle-float 6s ease-in-out infinite;
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-logo-float {
+        animation: none;
       }
     }
 
@@ -5031,4 +5053,504 @@
       .avatar-upright {
         animation: none !important;
       }
+    }
+
+    /* ========================================
+       ENGAGEMENT TILES - Social Hero
+       ======================================== */
+
+    /* Container - staircase layout using CSS Grid */
+    .engagement-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 96px);
+      grid-template-rows: repeat(3, auto);
+      gap: 12px;
+      align-items: end;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    /* Wrapper positions for staircase */
+    .engagement-tile-wrap {
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .engagement-tile-wrap--like {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .engagement-tile-wrap--comment {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .engagement-tile-wrap--send {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    /* Neighbor reaction when heart is clicked */
+    .engagement-tile-wrap.is-reacting {
+      transform: translateX(2px);
+      filter: drop-shadow(0 0 8px rgba(138, 61, 230, 0.3));
+    }
+
+    /* The tile button itself */
+    .engagement-tile {
+      width: 96px;
+      height: 96px;
+      border-radius: 18px;
+      border: 2px solid transparent;
+      background: 
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(135deg, #8A3DE6 0%, #FF7A2D 100%) border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    /* Hover lift */
+    .engagement-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Focus visible for accessibility */
+    .engagement-tile:focus-visible {
+      outline: 2px solid #8A3DE6;
+      outline-offset: 3px;
+    }
+
+    /* Float animations per tile */
+    .engagement-tile--like {
+      animation: float-like 6s ease-in-out infinite;
+    }
+
+    .engagement-tile--comment {
+      animation: float-comment 6s ease-in-out infinite;
+      animation-delay: -2s;
+    }
+
+    .engagement-tile--send {
+      animation: float-send 6s ease-in-out infinite;
+      animation-delay: -4s;
+    }
+
+    /* Heart pulse animation */
+    .engagement-tile.is-pulsing {
+      animation: heartPulse 0.35s ease-out;
+    }
+
+    /* Outline flash for comment/send */
+    .engagement-tile.is-flashing {
+      animation: tileFlash 0.3s ease-out;
+    }
+
+    @keyframes tileFlash {
+      0% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(138, 61, 230, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(138, 61, 230, 0.2);
+      }
+      100% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 0px rgba(138, 61, 230, 0);
+      }
+    }
+
+    /* Icon default state */
+    .engagement-tile__icon {
+      color: var(--muted);
+      fill: none;
+      transition: color 0.3s ease, fill 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Heart active (liked) state */
+    .engagement-tile__icon.is-active {
+      color: #ff4d4f;
+      fill: #ff4d4f;
+      transform: scale(1.1);
+    }
+
+    /* Floating Animations */
+    @keyframes float-like {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes float-comment {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes float-send {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Heart Pulse Animation - subtle */
+    @keyframes heartPulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 6px 20px rgba(255, 77, 79, 0.25);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .engagement-tile,
+      .engagement-tile--like,
+      .engagement-tile--comment,
+      .engagement-tile--send {
+        animation: none !important;
+      }
+      .engagement-tile-wrap.is-reacting {
+        transform: none;
+      }
+    }
+
+    /* Responsive - smaller on mobile */
+    @media (max-width: 640px) {
+      .engagement-tiles {
+        grid-template-columns: repeat(3, 80px);
+        gap: 8px;
+      }
+      .engagement-tile {
+        width: 80px;
+        height: 80px;
+        border-radius: 14px;
+      }
+      .engagement-tile__icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    /* ========================================
+       AI HERO FLOW VISUAL - Input -> AI -> Output
+       ======================================== */
+
+    .ai-hero-flow {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SVG Connector sits behind nodes */
+    .ai-hero-flow-connector {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ai-connector-path {
+      stroke-dasharray: 8 4;
+      animation: connectorDash 2s linear infinite;
+    }
+
+    .ai-connector-path--2 {
+      animation-delay: -1s;
+    }
+
+    @keyframes connectorDash {
+      0% {
+        stroke-dashoffset: 24;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Nodes container - horizontal row */
+    .ai-hero-flow-nodes {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Individual node tiles */
+    .ai-hero-flow-node {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid transparent;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+        linear-gradient(135deg, rgba(138, 61, 230, 0.15) 0%, rgba(56, 189, 248, 0.15) 100%);
+      background-origin: padding-box, border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .ai-hero-flow-node:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+        linear-gradient(135deg, rgba(138, 61, 230, 0.3) 0%, rgba(56, 189, 248, 0.3) 100%);
+    }
+
+    /* Input node - Tangled Yarn */
+    .ai-hero-flow-node--input {
+      animation: nodeFloat 5s ease-in-out infinite;
+    }
+
+    .ai-yarn {
+      width: 60px;
+      height: 60px;
+      animation: yarnFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes yarnFloat {
+      0%, 100% {
+        transform: rotate(-2deg) scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: rotate(2deg) scale(1.02);
+        opacity: 1;
+      }
+    }
+
+    /* AI Node - Pulse Orb */
+    .ai-hero-flow-node--ai {
+      animation: nodeFloat 5s ease-in-out infinite;
+      animation-delay: -1.5s;
+    }
+
+    .ai-pulse-orb {
+      position: relative;
+      width: 48px;
+      height: 48px;
+    }
+
+    .ai-pulse-orb__core {
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8 0%, #8A3DE6 100%);
+      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.4);
+      animation: orbPulse 2.5s ease-in-out infinite;
+    }
+
+    .ai-pulse-orb__ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      animation: ringExpand 2.5s ease-out infinite;
+    }
+
+    .ai-pulse-orb__ring--2 {
+      animation-delay: 1.25s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes ringExpand {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    /* Output node - Clean Lines */
+    .ai-hero-flow-node--output {
+      animation: nodeFloat 5s ease-in-out infinite;
+      animation-delay: -3s;
+    }
+
+    .ai-output-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .ai-output-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: translateX(-8px);
+      animation: lineReveal 0.4s ease-out forwards;
+    }
+
+    .ai-output-line--1 { animation-delay: 0.1s; }
+    .ai-output-line--2 { animation-delay: 0.22s; }
+    .ai-output-line--3 { animation-delay: 0.34s; }
+    .ai-output-line--4 { animation-delay: 0.46s; }
+    .ai-output-line--5 { animation-delay: 0.58s; }
+
+    @keyframes lineReveal {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .ai-output-bullet {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #6B7280;
+      flex-shrink: 0;
+    }
+
+    .ai-output-bar {
+      width: 50px;
+      height: 6px;
+      border-radius: 3px;
+      background: #D1D5DB;
+    }
+
+    .ai-output-bar--accent {
+      background: linear-gradient(90deg, #8A3DE6 0%, #38bdf8 100%);
+      width: 55px;
+    }
+
+    .ai-output-bar--short {
+      width: 35px;
+    }
+
+    /* Shared float for all nodes */
+    @keyframes nodeFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* Mobile arrows - hidden on desktop */
+    .ai-hero-flow-mobile-arrows {
+      display: none;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .ai-yarn,
+      .ai-pulse-orb__core,
+      .ai-pulse-orb__ring,
+      .ai-hero-flow-node,
+      .ai-connector-path {
+        animation: none !important;
+      }
+      .ai-output-line {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+    }
+
+    /* Mobile: Stack vertically */
+    @media (max-width: 768px) {
+      .ai-hero-flow {
+        max-width: 200px;
+        min-height: auto;
+        padding: 20px 0;
+      }
+
+      .ai-hero-flow-nodes {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .ai-hero-flow-node {
+        width: 90px;
+        height: 90px;
+      }
+
+      .ai-hero-flow-connector {
+        display: none;
+      }
+
+      .ai-hero-flow-mobile-arrows {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 70px;
+        top: 95px;
+        z-index: 0;
+      }
+
+      .ai-hero-flow-mobile-arrows svg {
+        width: 20px;
+        height: 20px;
+        color: var(--muted);
+        opacity: 0.4;
+      }
+    }
+
+    /* Dark mode adjustments */
+    [data-theme="dark"] .ai-hero-flow-node {
+      background: rgba(30, 30, 35, 0.9);
+      background-image: 
+        linear-gradient(rgba(30, 30, 35, 0.9), rgba(30, 30, 35, 0.9)),
+        linear-gradient(135deg, rgba(138, 61, 230, 0.2) 0%, rgba(56, 189, 248, 0.2) 100%);
+    }
+
+    [data-theme="dark"] .ai-output-bar {
+      background: #4B5563;
+    }
+
+    [data-theme="dark"] .ai-output-bullet {
+      background: #9CA3AF;
     }
