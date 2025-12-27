@@ -611,7 +611,7 @@ function navigate(path) {
                           }}
                         >
                           <img 
-                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
+                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.jpeg`}
                             alt="Nepik"
                             className="w-44 h-44 rounded-full"
                             style={{ objectFit: 'cover', objectPosition: 'center top' }}
@@ -1407,7 +1407,14 @@ function navigate(path) {
       if (submitStatus === 'success') {
         return (
           <section id="contact" className="contact-section py-32 px-6" style={{ background: 'var(--surface)' }}>
-            <div className="max-w-4xl mx-auto">
+            {/* Decorative Wave Background - 3 solid layers */}
+            <div className="contact-waves-bg" aria-hidden="true">
+              <div className="wave-layer wave-layer--light" />
+              <div className="wave-layer wave-layer--mid" />
+              <div className="wave-layer wave-layer--dark" />
+            </div>
+            
+            <div className="max-w-4xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
               <div className="contact-card liquid-card" style={{ padding: '48px', textAlign: 'center' }}>
                 <div 
                   ref={successRef}
@@ -1456,7 +1463,14 @@ function navigate(path) {
 
       return (
         <section id="contact" className="contact-section py-24 px-6" style={{ background: 'var(--surface)' }}>
-          <div className="max-w-5xl mx-auto">
+          {/* Decorative Wave Background - 3 solid layers */}
+          <div className="contact-waves-bg" aria-hidden="true">
+            <div className="wave-layer wave-layer--light" />
+            <div className="wave-layer wave-layer--mid" />
+            <div className="wave-layer wave-layer--dark" />
+          </div>
+          
+          <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
             {/* Header */}
             <div className="contact-hero text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>

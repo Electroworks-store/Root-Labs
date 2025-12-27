@@ -2332,7 +2332,7 @@
         transform: translateY(0px);
       }
       50% {
-        transform: translateY(-12px);
+        transform: translateY(-21px);
       }
     }
 
@@ -2586,10 +2586,6 @@
        ENHANCED CONTACT SECTION STYLES
        ======================================== */
 
-    .contact-section {
-      position: relative;
-    }
-
     .contact-hero h2 {
       font-family: 'Gulf Display', sans-serif;
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
@@ -2599,9 +2595,9 @@
     }
 
     .contact-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
+      background: rgba(16, 18, 27, 0.92);
+      backdrop-filter: blur(35px);
+      border: 2px solid var(--glass-border);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -2696,6 +2692,167 @@
 
       .contact-hero h2 {
         font-size: 2.5rem;
+      }
+    }
+
+    /* ========================================
+       CONTACT WAVES BACKGROUND
+       3 solid purple wave layers behind contact card
+       Matching reference: bold, solid fills, 3 distinct layers
+       ======================================== */
+
+    .contact-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-waves-bg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 90%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Base wave layer styles */
+    .wave-layer {
+      position: absolute;
+      bottom: 0;
+      left: -5%;
+      width: 110%;
+      pointer-events: none;
+    }
+
+    /* Wave Layer 1 - Lightest purple (top wave, reaches highest) */
+    .wave-layer--light {
+      height: 92%;
+      background: #b794f4;
+      clip-path: polygon(
+        0% 38%,
+        8% 45%,
+        18% 41%,
+        28% 48%,
+        38% 35%,
+        48% 43%,
+        58% 32%,
+        68% 41%,
+        78% 28%,
+        88% 38%,
+        100% 32%,
+        100% 100%,
+        0% 100%
+      );
+      z-index: 1;
+    }
+
+    /* Wave Layer 2 - Medium purple (middle wave) */
+    .wave-layer--mid {
+      height: 78%;
+      background: #9f7aea;
+      clip-path: polygon(
+        0% 48%,
+        10% 41%,
+        20% 51%,
+        30% 38%,
+        40% 48%,
+        50% 35%,
+        60% 45%,
+        70% 33%,
+        80% 43%,
+        90% 35%,
+        100% 45%,
+        100% 100%,
+        0% 100%
+      );
+      z-index: 2;
+    }
+
+    /* Wave Layer 3 - Darkest purple (bottom wave, front) */
+    .wave-layer--dark {
+      height: 63%;
+      background: #805ad5;
+      clip-path: polygon(
+        0% 43%,
+        12% 35%,
+        22% 48%,
+        32% 33%,
+        42% 45%,
+        52% 31%,
+        62% 43%,
+        72% 28%,
+        82% 41%,
+        92% 31%,
+        100% 38%,
+        100% 100%,
+        0% 100%
+      );
+      z-index: 3;
+    }
+
+    /* Subtle depth shadows between layers (optional refinement) */
+    .wave-layer--mid {
+      box-shadow: 0 -8px 24px rgba(128, 90, 213, 0.15);
+    }
+
+    .wave-layer--dark {
+      box-shadow: 0 -12px 32px rgba(102, 51, 153, 0.2);
+    }
+
+    /* Ensure contact card stays above waves */
+    .contact-card {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Wave Mobile Adjustments */
+    @media (max-width: 768px) {
+      .contact-waves-bg {
+        height: 70%;
+      }
+
+      .wave-layer--light {
+        height: 80%;
+        clip-path: polygon(
+          0% 50%,
+          15% 55%,
+          30% 45%,
+          50% 55%,
+          70% 42%,
+          85% 52%,
+          100% 45%,
+          100% 100%,
+          0% 100%
+        );
+      }
+
+      .wave-layer--mid {
+        height: 65%;
+        clip-path: polygon(
+          0% 55%,
+          20% 48%,
+          40% 58%,
+          60% 45%,
+          80% 55%,
+          100% 48%,
+          100% 100%,
+          0% 100%
+        );
+      }
+
+      .wave-layer--dark {
+        height: 50%;
+        clip-path: polygon(
+          0% 52%,
+          25% 42%,
+          50% 55%,
+          75% 40%,
+          100% 50%,
+          100% 100%,
+          0% 100%
+        );
       }
     }
 
