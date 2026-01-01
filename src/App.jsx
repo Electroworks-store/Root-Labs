@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send } from 'lucide-react';
+import heroLogo from '../img/Rootlabs-logo-xbg.png';
 import { generatePath, SvgShape } from 'react-svg-shape';
 import GardenerWebsite from './showcase/Gardener';
 import TechStore from './showcase/TechStore';
@@ -256,7 +257,7 @@ function navigate(path) {
             
             {/* Right: Logo */}
             <div className="relative flex items-center justify-center">
-              <img src="./img/Rootlabs-logo-xbg.png" alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
+              <img src={heroLogo} alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
             </div>
           </div>
         </section>
