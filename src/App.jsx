@@ -256,7 +256,7 @@ function navigate(path) {
             
             {/* Right: Logo */}
             <div className="relative flex items-center justify-center">
-              <img src="/img/Rootlabs-logo-xbg.png" alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
+              <img src="./img/Rootlabs-logo-xbg.png" alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
             </div>
           </div>
         </section>
