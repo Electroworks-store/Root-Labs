@@ -123,7 +123,7 @@ function navigate(path) {
       return (
         <>
           {/* Main Navigation - Centered */}
-          <nav className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${scrolled ? 'scale-95' : 'scale-100'}`}>
+          <nav className={`fixed top-6 inset-x-0 flex justify-center z-50 transition-all duration-500 ${scrolled ? 'scale-95' : 'scale-100'}`}>
             <div className="glass-premium rounded-full px-8 py-4 flex items-center gap-8 shadow-2xl">
               <a 
                 href="#hero"
@@ -241,14 +241,14 @@ function navigate(path) {
               </p>
 
               <div className="flex gap-4 pt-2">
-                <a href="#work" className="glow-on-hover relative px-7 py-3.5 rounded-full text-white font-semibold text-base overflow-hidden group focus:outline-none focus:ring-4 focus:ring-opacity-50 inline-flex items-center transition-all duration-300 hover:scale-105"
+                <a href="#work" className="glow-on-hover relative px-7 py-4 rounded-full text-white font-semibold text-base overflow-hidden group focus:outline-none focus:ring-4 focus:ring-opacity-50 inline-flex items-center transition-all duration-300 hover:scale-105"
                         style={{ 
                           background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)',
                           boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
                         }}>
                   <span className="relative z-10">{data.btnPrimary}</span>
                 </a>
-                <a href="#pricing" className="btn-glass px-7 py-3.5 text-base inline-flex items-center transition-all duration-300 hover:scale-105">
+                <a href="#pricing" className="btn-glass px-7 py-4 text-base inline-flex items-center transition-all duration-300 hover:scale-105">
                   {data.btnSecondary}
                 </a>
               </div>
@@ -2020,6 +2020,7 @@ function navigate(path) {
         { phase: 'Our approach', title: cards[1]?.title || 'AI-enhanced workflow', desc: cards[1]?.desc || 'Smart automation meets human expertise', metricText: '5-7', unit: ' days', metricLabel: 'our delivery', side: 'right', targetNumber: 7 },
         { phase: 'Outcome', title: cards[2]?.title || 'Launch faster', desc: cards[2]?.desc || 'Get to market while competitors plan', metricText: '80', unit: '% faster', metricLabel: 'time savings', side: 'left', targetNumber: 80 }
       ];
+      const journeyLabels = ['Problem', 'Our Approach', 'Outcome'];
 
       // Scroll progress and active step detection
       useEffect(() => {
@@ -2142,19 +2143,19 @@ function navigate(path) {
                   aria-label={`Step ${idx + 1}: ${step.phase}`}
                 >
                   <div className="journey-content">
-                    <span className="journey-step-number">{String(idx + 1).padStart(2, '0')}</span>
+                    <span className="journey-step-number">{journeyLabels[idx] || String(idx + 1).padStart(2, '0')}</span>
                     <h3 className="journey-title">{step.title}</h3>
                     <p className="journey-desc">{step.desc}</p>
                     
                     <div className="journey-metric" data-animated={hasAnimated[idx]}>
-                      <span className="journey-metric-value">
+                      <div className="journey-metric-value">
                         {hasAnimated[idx] && counters[idx] > 0 ? (
                           <>{counters[idx]}{step.unit}</>
                         ) : (
                           <>{step.metricText}{step.unit}</>
                         )}
-                      </span>
-                      <span className="journey-metric-label">{step.metricLabel}</span>
+                      </div>
+                      <div className="journey-metric-label">{step.metricLabel}</div>
                     </div>
                   </div>
                 </div>
