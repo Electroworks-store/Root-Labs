@@ -2,6 +2,5 @@
 
 /* Tell Tailwind where to look for class usage (v4 style) */
 @source "../index.html";
-@source "../src/**/*.{js,ts,jsx,tsx}";
+@source "./**/*.{js,ts,jsx,tsx}";
 @source "../public/**/*.{html,js}";
-@source "../**/*.{html,js,ts,jsx,tsx}";
