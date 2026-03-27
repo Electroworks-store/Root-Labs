@@ -1,6 +1,11 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send } from 'lucide-react';
 import heroLogo from '../img/Rootlabs-logo-xbg.png';
+import sakura1 from '../img/sakura1.webp';
+import sakura2 from '../img/sakura2.webp';
+import sakura3 from '../img/sakura3.webp';
+import sakura4 from '../img/sakura4.webp';
+import beakerImg from '../img/beaker.webp';
 import { generatePath, SvgShape } from 'react-svg-shape';
 import GardenerWebsite from './showcase/Gardener';
 import TechStore from './showcase/TechStore';
@@ -230,7 +235,7 @@ function navigate(path) {
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
             {/* Left: Text Content */}
             <div className="space-y-6 stagger-item">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight" style={{ fontFamily: 'Syne, sans-serif' }}>
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
                 {data.title1}
                 <span className="block mt-2" style={{ color: 'var(--primary)' }}>
                   {data.title2}
@@ -244,7 +249,7 @@ function navigate(path) {
               <div className="flex gap-4 pt-2">
                 <a href="#work" className="glow-on-hover relative px-7 py-4 rounded-full text-white font-semibold text-base overflow-hidden group focus:outline-none focus:ring-4 focus:ring-opacity-50 inline-flex items-center transition-all duration-300 hover:scale-105"
                         style={{ 
-                          background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)',
+                          background: 'var(--primary)',
                           boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
                         }}>
                   <span className="relative z-10">{data.btnPrimary}</span>
@@ -255,9 +260,40 @@ function navigate(path) {
               </div>
             </div>
             
-            {/* Right: Logo */}
-            <div className="relative flex items-center justify-center">
-              <img src={heroLogo} alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" />
+            {/* Right: Logo with vertical glass pills */}
+            <div className="relative flex items-center justify-center" style={{ minHeight: 380 }}>
+              {/* Vertical pill shapes behind logo */}
+              <div className="hero-pills-container" aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '18px',
+                  zIndex: 0,
+                  pointerEvents: 'none'
+                }}
+              >
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="hero-pill"
+                    style={{
+                      width: i === 2 ? 62 : i === 1 || i === 3 ? 54 : 46,
+                      height: i === 2 ? '75%' : i === 1 || i === 3 ? '65%' : '55%',
+                      borderRadius: 9999,
+                      background: 'rgba(138, 61, 230, 0.04)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(138, 61, 230, 0.08)',
+                      boxShadow: '0 4px 24px rgba(138, 61, 230, 0.06), inset 0 1px 0 rgba(255,255,255,0.4)',
+                      animationDelay: `${i * 0.12}s`
+                    }}
+                  />
+                ))}
+              </div>
+              <img src={heroLogo} alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" style={{ position: 'relative', zIndex: 1 }} />
             </div>
           </div>
         </section>
@@ -337,7 +373,7 @@ function navigate(path) {
               <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                 LABS & EXPERIMENTS
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}>
                 What we're building
               </h2>
               <p className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -519,6 +555,255 @@ function navigate(path) {
       );
     }
 
+    // Labs Headline Section — big "Labs" with flask icon
+    function LabsHeadline() {
+      return (
+        <section className="py-32 px-6" style={{ background: 'var(--bg)' }}>
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            {/* Left: Description */}
+            <div>
+              <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
+                We believe great design shouldn't cost a fortune or take months to deliver. That's why we've built a cutting-edge AI with human creativity.
+              </p>
+            </div>
+            {/* Right: Big "Labs" with beaker image */}
+            <div className="flex items-center justify-center md:justify-end">
+              <h2 className="font-bold tracking-tight select-none" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)', lineHeight: 1, fontSize: 'clamp(8rem, 14vw, 13rem)' }}>
+                L
+                <span className="inline-block relative" style={{ width: '0.95em', margin: '0 -0.06em' }}>
+                  <img src={beakerImg} alt="" className="inline-block" style={{ width: '0.95em', height: '1.18em', verticalAlign: 'baseline', marginBottom: '-0.15em', objectFit: 'contain' }} />
+                </span>
+                bs
+              </h2>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Sakura Gallery — scroll-hijacked showcase
+    function SakuraGallery() {
+      const containerRef = useRef(null);
+      const [activeIndex, setActiveIndex] = useState(0);
+      const [isLocked, setIsLocked] = useState(false);
+      const isTransitioning = useRef(false);
+      const lastScrollTime = useRef(0);
+      const accumulatedDelta = useRef(0);
+      const SCROLL_THRESHOLD = 120; // pixels of scroll needed to trigger a slide change
+
+      const slides = [
+        { img: sakura1, name: 'Idea Stage', description: 'Every great project starts with a spark. We brainstorm, sketch, and explore all creative directions before committing to a path forward.' },
+        { img: sakura2, name: 'Research', description: 'Deep dive into the problem space. We study the market, analyze competitors, and gather the insights needed to make informed design decisions.' },
+        { img: sakura3, name: 'Working', description: 'Heads down, hands on. Our team builds, iterates, and refines, turning research and concepts into a polished, functional product.' },
+        { img: sakura4, name: 'Final Product', description: 'The finished result, tested, refined, and ready to ship. A product that looks stunning and performs beautifully in the real world.' },
+      ];
+
+      useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            const locked = entry.isIntersecting && entry.intersectionRatio > 0.8;
+            setIsLocked(locked);
+            if (!locked) accumulatedDelta.current = 0;
+          },
+          { threshold: [0.8, 1] }
+        );
+        observer.observe(container);
+        return () => observer.disconnect();
+      }, []);
+
+      useEffect(() => {
+        if (!isLocked) return;
+
+        const handleWheel = (e) => {
+          const direction = e.deltaY > 0 ? 1 : -1;
+          const nextIndex = activeIndex + direction;
+
+          // At boundaries, let page scroll naturally
+          if (nextIndex < 0 || nextIndex > slides.length - 1) {
+            accumulatedDelta.current = 0;
+            return;
+          }
+
+          // Always prevent default when inside the gallery range
+          e.preventDefault();
+
+          if (isTransitioning.current) return;
+
+          // Accumulate scroll delta for intentional feel
+          accumulatedDelta.current += Math.abs(e.deltaY);
+
+          if (accumulatedDelta.current >= SCROLL_THRESHOLD) {
+            accumulatedDelta.current = 0;
+            isTransitioning.current = true;
+            lastScrollTime.current = Date.now();
+            setActiveIndex(nextIndex);
+            setTimeout(() => { isTransitioning.current = false; }, 700);
+          }
+        };
+
+        window.addEventListener('wheel', handleWheel, { passive: false });
+        return () => window.removeEventListener('wheel', handleWheel);
+      }, [isLocked, activeIndex, slides.length]);
+
+      // Touch support
+      const touchStart = useRef(0);
+      useEffect(() => {
+        if (!isLocked) return;
+
+        const handleTouchStart = (e) => { touchStart.current = e.touches[0].clientY; };
+        const handleTouchEnd = (e) => {
+          if (isTransitioning.current) return;
+
+          const delta = touchStart.current - e.changedTouches[0].clientY;
+          if (Math.abs(delta) < 50) return;
+
+          const direction = delta > 0 ? 1 : -1;
+          const nextIndex = activeIndex + direction;
+          if (nextIndex < 0 || nextIndex > slides.length - 1) return;
+
+          lastScrollTime.current = Date.now();
+          isTransitioning.current = true;
+          setActiveIndex(nextIndex);
+          setTimeout(() => { isTransitioning.current = false; }, 700);
+        };
+
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd, { passive: true });
+        return () => {
+          window.removeEventListener('touchstart', handleTouchStart);
+          window.removeEventListener('touchend', handleTouchEnd);
+        };
+      }, [isLocked, activeIndex, slides.length]);
+
+      return (
+        <section
+          ref={containerRef}
+          className="sakura-gallery"
+          style={{
+            height: '100vh',
+            position: 'sticky',
+            top: 0,
+            overflow: 'hidden',
+            background: 'var(--bg)'
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+              {/* Left: Image */}
+              <div className="relative" style={{ height: '70vh', borderRadius: 20, overflow: 'hidden' }}>
+                {slides.map((slide, i) => (
+                    <img
+                      key={i}
+                      src={slide.img}
+                      alt={slide.name}
+                      className="absolute object-contain"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        top: '-5%',
+                        left: 0,
+                        opacity: activeIndex === i ? 1 : 0,
+                        transform: activeIndex === i ? 'scale(1)' : 'scale(1.05)',
+                        transition: 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)',
+                        borderRadius: 20
+                      }}
+                    />
+                  ))}
+              </div>
+
+              {/* Right: Text + progress */}
+              <div className="flex flex-col justify-center" style={{ minHeight: '50vh' }}>
+                {/* Progress dots */}
+                <div className="flex gap-2 mb-8">
+                  {slides.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => { if (!isTransitioning.current) { setActiveIndex(i); isTransitioning.current = true; setTimeout(() => { isTransitioning.current = false; }, 700); } }}
+                      className="transition-all duration-300"
+                      style={{
+                        width: activeIndex === i ? 32 : 8,
+                        height: 8,
+                        borderRadius: 9999,
+                        background: activeIndex === i ? 'var(--primary)' : 'rgba(138, 61, 230, 0.15)',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0
+                      }}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Slide counter */}
+                <p className="text-xs font-bold tracking-[0.3em] mb-4" style={{ color: 'var(--primary)' }}>
+                  {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+                </p>
+
+                {/* Title */}
+                <div style={{ position: 'relative', minHeight: 80 }}>
+                  {slides.map((slide, i) => (
+                    <h3
+                      key={i}
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold"
+                      style={{
+                        fontFamily: "'Geist', sans-serif",
+                        position: i === 0 ? 'relative' : 'absolute',
+                        top: 0,
+                        left: 0,
+                        opacity: activeIndex === i ? 1 : 0,
+                        transform: activeIndex === i ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.5s ease, transform 0.5s ease',
+                        pointerEvents: activeIndex === i ? 'auto' : 'none'
+                      }}
+                    >
+                      {slide.name}
+                    </h3>
+                  ))}
+                </div>
+
+                {/* Description */}
+                <div style={{ position: 'relative', minHeight: 80, marginTop: '1.5rem' }}>
+                  {slides.map((slide, i) => (
+                    <p
+                      key={i}
+                      className="text-lg leading-relaxed"
+                      style={{
+                        color: 'var(--muted)',
+                        position: i === 0 ? 'relative' : 'absolute',
+                        top: 0,
+                        left: 0,
+                        maxWidth: 480,
+                        opacity: activeIndex === i ? 1 : 0,
+                        transform: activeIndex === i ? 'translateY(0)' : 'translateY(16px)',
+                        transition: 'opacity 0.5s ease 0.05s, transform 0.5s ease 0.05s',
+                        pointerEvents: activeIndex === i ? 'auto' : 'none'
+                      }}
+                    >
+                      {slide.description}
+                    </p>
+                  ))}
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Sakura Gallery wrapper — provides scroll-lock spacing
+    function SakuraGalleryWrapper() {
+      return (
+        <div style={{ height: `${150 * 4}vh`, position: 'relative' }}>
+          <SakuraGallery />
+        </div>
+      );
+    }
+
     // About Section with Organic Blob Shapes
     function About() {
       const [scrollY, setScrollY] = useState(0);
@@ -655,7 +940,7 @@ function navigate(path) {
                 <div className="space-y-8">
                   <h2 
                     className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]" 
-                    style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                    style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}
                   >
                     Three teenagers
                     <span className="block mt-3" style={{ 
@@ -730,7 +1015,7 @@ function navigate(path) {
                 
                 <h3 
                   className="text-3xl md:text-5xl lg:text-6xl font-bold mb-12 max-w-4xl leading-tight"
-                  style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                  style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}
                 >
                   Making professional web design accessible to everyone
                 </h3>
@@ -761,7 +1046,7 @@ function navigate(path) {
                 <p className="text-xs font-bold mb-6 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                   THE TEAM
                 </p>
-                <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                <h3 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}>
                   Meet the crew
                 </h3>
               </div>
@@ -788,7 +1073,7 @@ function navigate(path) {
                         <div>
                           <h4 
                             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1" 
-                            style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}
+                            style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}
                           >
                             {member.name}
                           </h4>
@@ -923,7 +1208,7 @@ function navigate(path) {
           <div className="max-w-6xl mx-auto px-8 md:px-12 relative z-10">
             {/* Section Header */}
             <div className="text-center mb-32 stagger-item">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                 {heading}
               </h2>
               <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -998,7 +1283,7 @@ function navigate(path) {
                       <h3 
                         className="text-4xl md:text-6xl font-bold transition-all" 
                         style={{ 
-                          fontFamily: "'Syne', sans-serif",
+                          fontFamily: "'Geist', sans-serif",
                           color: service.color
                         }}
                       >
@@ -1056,7 +1341,7 @@ function navigate(path) {
                           onClick={(e) => { e.preventDefault(); navigate(service.link); }}
                           className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-base transition-all hover:scale-105 hover:shadow-2xl"
                           style={{ 
-                            background: `linear-gradient(135deg, ${service.color} 0%, ${service.accentColor} 100%)`,
+                            background: service.color,
                             color: 'white',
                             boxShadow: `0 8px 32px ${service.color}40`
                           }}
@@ -1432,7 +1717,7 @@ function navigate(path) {
                   style={{ outline: 'none' }}
                 >
                   <div className="flex justify-center"><Check className="w-16 h-16" style={{ color: 'var(--success)' }} /></div>
-                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Geist', sans-serif" }}>
                     Thank You!
                   </h3>
                   <p className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -1443,7 +1728,7 @@ function navigate(path) {
                       href="#pricing" 
                       className="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105"
                       style={{ 
-                        background: 'linear-gradient(135deg, var(--primary), var(--accent-blue))',
+                        background: 'var(--primary)',
                         color: 'white'
                       }}
                     >
@@ -1486,7 +1771,7 @@ function navigate(path) {
           <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
             {/* Header */}
             <div className="contact-hero text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                 {data.heading}
               </h2>
               <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -1677,7 +1962,7 @@ function navigate(path) {
                     style={{ 
                       background: isSubmitting 
                         ? 'var(--muted)'
-                        : 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)',
+                        : 'var(--primary)',
                       boxShadow: isSubmitting ? 'none' : '0 4px 16px rgba(138, 61, 230, 0.24)'
                     }}
                   >
@@ -2321,7 +2606,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
 
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
                     Website
                     <span className="block mt-2" style={{ color: 'var(--primary)' }}>
                       Redesign
@@ -2337,7 +2622,7 @@ function navigate(path) {
                       href="#pricing"
                       className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:scale-105"
                       style={{ 
-                        background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)',
+                        background: 'var(--primary)',
                         boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
                       }}
                     >
@@ -2403,7 +2688,7 @@ function navigate(path) {
           <section className="py-24" style={{ background: 'var(--bg)' }}>
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                   What You Get
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2419,7 +2704,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Speed & Performance
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Lightning Fast Delivery
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2530,7 +2815,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-blue)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Design & Experience
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Modern Clean Design
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2559,7 +2844,7 @@ function navigate(path) {
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Results & Growth
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Conversion Focused
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2639,7 +2924,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                   Simple, Transparent Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2674,7 +2959,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>
                         ${plan.monthly}
@@ -2698,7 +2983,7 @@ function navigate(path) {
                       href="#contact"
                       className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
                       style={{ 
-                        background: plan.popular ? 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)' : 'rgba(138, 61, 230, 0.1)',
+                        background: plan.popular ? 'var(--primary)' : 'rgba(138, 61, 230, 0.1)',
                         color: plan.popular ? 'white' : 'var(--primary)',
                         border: plan.popular ? 'none' : '1px solid var(--glass-border)'
                       }}
@@ -2758,7 +3043,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
                     AI Agent
                     <span className="block mt-2" style={{ color: 'var(--accent-blue)' }}>
                       Development
@@ -2774,8 +3059,8 @@ function navigate(path) {
                       href="#pricing"
                       className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:scale-105"
                       style={{ 
-                        background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)',
-                        boxShadow: '0 8px 24px rgba(56, 189, 248, 0.3)'
+                        background: 'var(--primary)',
+                        boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
                       }}
                     >
                       View Pricing
@@ -2828,7 +3113,7 @@ function navigate(path) {
                   <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
                   <span className="text-sm font-semibold" style={{ color: 'var(--accent-blue)' }}>Intelligent Automation</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                   What Your AI Can Do
                 </h2>
                 <p className="text-xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -2926,7 +3211,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                   Flexible AI Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2961,7 +3246,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--accent-blue)' }}>
                         ${plan.monthly}
@@ -2985,7 +3270,7 @@ function navigate(path) {
                       href="#contact"
                       className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
                       style={{ 
-                        background: plan.popular ? 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)' : 'rgba(56, 189, 248, 0.1)',
+                        background: plan.popular ? 'var(--primary)' : 'rgba(56, 189, 248, 0.1)',
                         color: plan.popular ? 'white' : 'var(--accent-blue)',
                         border: plan.popular ? 'none' : '1px solid var(--glass-border)'
                       }}
@@ -3515,7 +3800,7 @@ function navigate(path) {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Left: Content */}
                 <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
                     Social Media
                     <span className="block mt-2" style={{ color: '#FF7A2D' }}>
                       Management
@@ -3579,7 +3864,7 @@ function navigate(path) {
             <div className="max-w-6xl mx-auto px-6 relative z-10">
               {/* Hero Text */}
               <div className="text-center mb-24 stagger-item">
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                   Social Media That<br />Actually Works
                 </h2>
                 <p className="text-2xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -3597,7 +3882,7 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Content Creation
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Posts that stop the scroll
                     </h3>
                     <p className="text-xl leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
@@ -3625,7 +3910,7 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: 'var(--primary)' }} />
                       Community Management
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Build real relationships
                     </h3>
                     <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
@@ -3642,7 +3927,7 @@ function navigate(path) {
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Growth Strategy
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
                       Track what matters
                     </h3>
                     <p className="text-xl leading-relaxed mb-10" style={{ color: 'var(--muted)' }}>
@@ -3689,7 +3974,7 @@ function navigate(path) {
             
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                   Grow Your Social Presence
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -3724,7 +4009,7 @@ function navigate(path) {
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#FF7A2D' }}>
                         ${plan.monthly}
@@ -3748,7 +4033,7 @@ function navigate(path) {
                       href="#contact"
                       className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
                       style={{ 
-                        background: plan.popular ? 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)' : 'rgba(255, 122, 45, 0.1)',
+                        background: plan.popular ? '#FF7A2D' : 'rgba(255, 122, 45, 0.1)',
                         color: plan.popular ? 'white' : '#FF7A2D',
                         border: plan.popular ? 'none' : '1px solid var(--glass-border)'
                       }}
@@ -3778,6 +4063,8 @@ function navigate(path) {
           <WhyUsPricing />
           {/* <BentoPortfolio /> */}
           <LabsSection />
+          <LabsHeadline />
+          <SakuraGalleryWrapper />
           <About />
           <Services />
           <Contact />
@@ -4158,7 +4445,7 @@ function navigate(path) {
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                  Tech Haven
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>
@@ -4213,7 +4500,7 @@ function navigate(path) {
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
                  Culinary Delight
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>

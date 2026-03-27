@@ -168,7 +168,7 @@ function VibePicker() {
       aria-label="Choose a vibe"
     >
       <div className="max-w-7xl mx-auto px-6 relative" style={{ minHeight: 420 }}>
-        <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif", textAlign: 'left' }}>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif", textAlign: 'left' }}>
           First we choose the <span className="brand-accent" style={{ color: 'var(--primary)' }}>vibe</span>
         </h2>
 
@@ -437,7 +437,7 @@ function ColorBubbles() {
 
           {/* Center headline - higher z-index */}
           <div className="relative z-10 text-center" style={{ paddingTop: '40vh' }}>
-            <h2 className="text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+            <h2 className="text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}>
               Then a <span className="brand-accent" style={{ color: 'var(--primary)' }}>Color</span>
             </h2>
           </div>
@@ -458,7 +458,7 @@ function FontCarouselWord() {
   
   // Using only fonts already in the project
   const fonts = [
-    { key: 'syne', label: 'Syne', fam: "'Syne', sans-serif" },
+    { key: 'geist', label: 'Geist', fam: "'Geist', sans-serif" },
     { key: 'inter', label: 'Inter', fam: "'Inter', sans-serif" },
     { key: 'playfair', label: 'Playfair', fam: "'Playfair Display', serif" },
     { key: 'space', label: 'Space Grotesk', fam: "'Space Grotesk', sans-serif" }
@@ -492,7 +492,7 @@ function FontCarouselWord() {
     >
       <div className="max-w-4xl mx-auto px-6 text-center w-full">
         {/* Clean heading */}
-        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
           And finally a <span style={{ color: 'var(--primary)' }}>font</span>
         </h2>
         <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '3rem' }}>
@@ -571,7 +571,7 @@ export default function WebsitesProcess() {
       {/* Major page heading */}
       <section className="design-process-intro text-center py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl md:text-5xl font-extrabold" style={{ fontFamily: "'Syne', sans-serif" }}>
+          <h1 className="text-4xl md:text-5xl font-extrabold" style={{ fontFamily: "'Geist', sans-serif" }}>
             Design process
           </h1>
         </div>
