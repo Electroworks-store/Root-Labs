@@ -479,85 +479,118 @@ function FontCarouselWord() {
     <section
       ref={sectionRef}
       id="font-pick"
-      className="webproc webproc-font py-24"
+      className="webproc webproc-font"
       style={{ 
         opacity: isInView ? 1 : 0, 
         transition: 'opacity 0.6s ease-out',
-        minHeight: '70vh',
+        minHeight: '50vh',
         position: 'relative',
         background: 'var(--bg)',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '4rem 1.5rem'
       }}
     >
-      <div className="max-w-4xl mx-auto px-6 text-center w-full">
-        {/* Clean heading */}
+      <h2 style={{
+        fontFamily: "'Geist', sans-serif",
+        fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
+        fontWeight: 800,
+        lineHeight: 1.1,
+        textAlign: 'center'
+      }}>
+        And finally a{' '}
+        <span style={{ position: 'relative', display: 'inline-block' }}>
+          {fonts.map((font, i) => (
+            <span
+              key={font.key}
+              style={{
+                position: i === 0 ? 'relative' : 'absolute',
+                left: i === 0 ? undefined : 0,
+                top: i === 0 ? undefined : 0,
+                fontFamily: font.fam,
+                fontWeight: 800,
+                color: 'var(--primary)',
+                opacity: activeFont === i ? 1 : 0,
+                transform: activeFont === i ? 'translateY(0)' : 'translateY(8px)',
+                transition: 'opacity 0.5s ease, transform 0.5s ease',
+                whiteSpace: 'nowrap',
+                visibility: activeFont === i || i === 0 ? 'visible' : 'hidden'
+              }}
+              aria-hidden={activeFont !== i}
+            >
+              {font.label}
+            </span>
+          ))}
+        </span>
+      </h2>
+    </section>
+  );
+}
+
+/* ── Responsiveness Showcase ─────────────────────────────── */
+function ResponsivenessShowcase() {
+  const sectionRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.25 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* Placeholder page content drawn inside each device */
+  const MockupContent = () => (
+    <div className="resp-content">
+      <div className="resp-nav-bar">
+        <div className="resp-nav-logo" />
+        <div className="resp-nav-links">
+          <span /><span /><span />
+        </div>
+      </div>
+      <div className="resp-hero-block">
+        <div className="resp-hero-title" />
+        <div className="resp-hero-sub" />
+        <div className="resp-hero-btn" />
+      </div>
+      <div className="resp-cards-row">
+        <div className="resp-card" />
+        <div className="resp-card" />
+        <div className="resp-card" />
+      </div>
+    </div>
+  );
+
+  return (
+    <section ref={sectionRef} className={`resp-showcase py-24 ${visible ? 'resp-visible' : ''}`}>
+      <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
-          And finally a <span style={{ color: 'var(--primary)' }}>font</span>
+          Responsiveness
         </h2>
-        <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: '3rem' }}>
-          The right typeface brings your brand to life.
+        <p className="text-lg mb-16 max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
+          Every page we build looks pixel-perfect across all screen sizes.
         </p>
 
-        {/* Font preview with crossfade */}
-        <div className="font-preview-container" style={{
-          position: 'relative',
-          height: '120px',
-          marginBottom: '2.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          {fonts.map((font, i) => (
-            <div
-              key={font.key}
-              className="font-preview-item"
-              style={{
-                position: 'absolute',
-                fontFamily: font.fam,
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                fontWeight: 600,
-                color: 'var(--text)',
-                opacity: activeFont === i ? 1 : 0,
-                transform: activeFont === i ? 'translateY(0)' : 'translateY(10px)',
-                transition: 'opacity 0.6s ease, transform 0.6s ease',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {font.label}
+        <div className="resp-devices">
+          {/* Laptop */}
+          <div className="resp-laptop">
+            <div className="resp-laptop-body">
+              <MockupContent />
             </div>
-          ))}
+          </div>
 
-        </div>
-
-        {/* Simple font selector chips */}
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
-          {fonts.map((font, i) => (
-            <button
-              key={font.key}
-              onClick={() => setActiveFont(i)}
-              style={{
-                padding: '8px 20px',
-                borderRadius: '9999px',
-                border: '1px solid',
-                borderColor: activeFont === i ? 'var(--primary)' : 'var(--glass-border)',
-                background: activeFont === i ? 'rgba(138, 61, 230, 0.1)' : 'transparent',
-                color: activeFont === i ? 'var(--primary)' : 'var(--muted)',
-                fontFamily: font.fam,
-                fontSize: '0.9rem',
-                fontWeight: 500,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {font.label}
-            </button>
-          ))}
+          {/* Mobile */}
+          <div className="resp-phone">
+            <div className="resp-phone-notch" />
+            <div className="resp-phone-screen">
+              <MockupContent />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -580,6 +613,7 @@ export default function WebsitesProcess() {
       <VibePicker />
       <ColorBubbles />
       <FontCarouselWord />
+      <ResponsivenessShowcase />
     </div>
   );
 }

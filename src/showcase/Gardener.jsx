@@ -224,7 +224,7 @@ const GardenerWebsite = () => {
                 <p>
                   With over a decade of experience, we've learned that the best gardens are born 
                   from patience, attention to soil health, and a deep respect for the natural 
-                  rhythms of growth. We don't just plant gardens—we cultivate relationships 
+                  rhythms of growth. We don't just plant gardens, we cultivate relationships 
                   between people and the earth beneath their feet.
                 </p>
                 

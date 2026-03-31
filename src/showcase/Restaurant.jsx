@@ -233,7 +233,7 @@ const Restaurant = () => {
               <div className="w-24 h-1 bg-gradient-to-r from-[#D4AF37] to-transparent mb-8" />
               
               <p className="text-lg text-[#FAF8F3]/90 leading-relaxed">
-                At Maison Vert, we believe that dining is an art form—a symphony of flavors, textures, and stories woven together on every plate. Our culinary philosophy is rooted in seasonality, sustainability, and the relentless pursuit of perfection.
+                At Maison Vert, we believe that dining is an art form, a symphony of flavors, textures, and stories woven together on every plate. Our culinary philosophy is rooted in seasonality, sustainability, and the relentless pursuit of perfection.
               </p>
               
               <p className="text-lg text-[#FAF8F3]/90 leading-relaxed">
@@ -247,7 +247,7 @@ const Restaurant = () => {
               {/* Chef Signature */}
               <div className="pt-8">
                 <p className="font-serif text-2xl text-[#D4AF37] italic" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  — Chef Alexandre Beaumont
+                  Chef Alexandre Beaumont
                 </p>
               </div>
             </div>
@@ -307,7 +307,7 @@ const Restaurant = () => {
                 <div className="w-16 h-1 bg-[#D4AF37] mb-6" />
                 
                 <p className="text-[#FAF8F3]/80 text-lg mb-6 leading-relaxed">
-                  Our most celebrated dish—Prime Angus tenderloin wrapped in wild mushroom duxelles 
+                  Our most celebrated dish. Prime Angus tenderloin wrapped in wild mushroom duxelles 
                   and silky chicken liver pâté, encased in golden puff pastry. Served with roasted 
                   root vegetables and a decadent black truffle jus.
                 </p>
@@ -323,7 +323,7 @@ const Restaurant = () => {
                 <div className="bg-[#1E2D2F]/50 rounded-lg p-4 border-l-4 border-[#D4AF37]">
                   <p className="text-[#FAF8F3]/70 text-sm italic">
                     "A masterpiece that takes 48 hours to prepare. Each layer tells a story of patience, 
-                    precision, and passion." — Chef Alexandre
+                    precision, and passion." ~ Chef Alexandre
                   </p>
                 </div>
               </div>
@@ -771,7 +771,7 @@ const Restaurant = () => {
                   </div>
                   <p className="text-[#FAF8F3]/80 italic leading-relaxed mb-6">
                     "From the moment we walked in, we knew this would be special. The attention 
-                    to detail, the flavors, the atmosphere—everything was impeccable. A must-visit."
+                    to detail, the flavors, the atmosphere, everything was impeccable. A must-visit."
                   </p>
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center">
@@ -833,7 +833,7 @@ const Restaurant = () => {
                         6:00 PM • Amuse-Bouche
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
-                        A surprise from the chef—a single perfect bite that awakens your palate 
+                        A surprise from the chef. A single perfect bite that awakens your palate 
                         and sets the tone for the evening ahead.
                       </p>
                     </div>
@@ -856,7 +856,7 @@ const Restaurant = () => {
                         7:00 PM • The Main Event
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
-                        Your entrée arrives—a work of art on a plate. Every element is intentional, 
+                        Your entrée arrives, a work of art on a plate. Every element is intentional, 
                         every flavor balanced to perfection.
                       </p>
                     </div>
@@ -879,7 +879,7 @@ const Restaurant = () => {
                         8:30 PM • The Finale
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
-                        Dessert arrives with theatrical flair—perhaps a soufflé that rises before 
+                        Dessert arrives with theatrical flair. Perhaps a soufflé that rises before 
                         your eyes, or a delicate creation that melts on your tongue.
                       </p>
                     </div>

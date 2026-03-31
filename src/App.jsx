@@ -6,7 +6,10 @@ import sakura2 from '../img/sakura2.webp';
 import sakura3 from '../img/sakura3.webp';
 import sakura4 from '../img/sakura4.webp';
 import beakerImg from '../img/beaker.webp';
-import { generatePath, SvgShape } from 'react-svg-shape';
+import beaker1 from '../img/beaker1.webp';
+import beaker2 from '../img/beaker2.webp';
+import beaker3 from '../img/beaker3.webp';
+import beaker4 from '../img/beaker4.webp';
 import GardenerWebsite from './showcase/Gardener';
 import TechStore from './showcase/TechStore';
 import Restaurant from './showcase/Restaurant';
@@ -70,6 +73,7 @@ function navigate(path) {
     function FloatingNav() {
       const [scrolled, setScrolled] = useState(false);
       const [lang, setLang] = useState('EN');
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       
       const navData = document.getElementById('nav-data');
       const brand = navData?.dataset.brand || '';
@@ -187,6 +191,60 @@ function navigate(path) {
               </span>
             </div>
           </button>
+
+          {/* Mobile Navigation */}
+          <div className="mobile-nav-bar md:hidden">
+            <a
+              href="#hero"
+              onClick={handleBrandClick}
+              className="mobile-nav-bubble"
+            >
+              <img src={heroLogo} alt="Root Labs" className="mobile-nav-logo" />
+            </a>
+            <button
+              className="mobile-nav-bubble"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text)' }}>
+                {mobileMenuOpen ? (
+                  <>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="3" y1="7" x2="21" y2="7" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="17" x2="21" y2="17" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className="mobile-menu-dropdown md:hidden">
+              {items.map((item) => (
+                <a
+                  key={item}
+                  href={getHref(item)}
+                  onClick={(e) => { handleClick(e, item); setMobileMenuOpen(false); }}
+                  className="mobile-menu-item"
+                >
+                  {item}
+                </a>
+              ))}
+              <button
+                onClick={() => { toggleLanguage(); setMobileMenuOpen(false); }}
+                className="mobile-menu-item"
+                style={{ border: 'none', background: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}
+              >
+                {lang === 'EN' ? 'Switch to CZ' : 'Switch to EN'}
+              </button>
+            </div>
+          )}
         </>
       );
     }
@@ -247,53 +305,26 @@ function navigate(path) {
               </p>
 
               <div className="flex gap-4 pt-2">
-                <a href="#work" className="glow-on-hover relative px-7 py-4 rounded-full text-white font-semibold text-base overflow-hidden group focus:outline-none focus:ring-4 focus:ring-opacity-50 inline-flex items-center transition-all duration-300 hover:scale-105"
+                <a href="#work" className="glow-on-hover relative px-7 py-4 rounded-full text-white font-semibold text-base inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
                         style={{ 
                           background: 'var(--primary)',
-                          boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
+                          boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                         }}>
                   <span className="relative z-10">{data.btnPrimary}</span>
                 </a>
-                <a href="#pricing" className="btn-glass px-7 py-4 text-base inline-flex items-center transition-all duration-300 hover:scale-105">
+                    <a href="#pricing" className="btn-glass px-7 py-4 text-base inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
                   {data.btnSecondary}
                 </a>
               </div>
             </div>
             
-            {/* Right: Logo with vertical glass pills */}
-            <div className="relative flex items-center justify-center" style={{ minHeight: 380 }}>
-              {/* Vertical pill shapes behind logo */}
-              <div className="hero-pills-container" aria-hidden="true"
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '18px',
-                  zIndex: 0,
-                  pointerEvents: 'none'
-                }}
-              >
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="hero-pill"
-                    style={{
-                      width: i === 2 ? 62 : i === 1 || i === 3 ? 54 : 46,
-                      height: i === 2 ? '75%' : i === 1 || i === 3 ? '65%' : '55%',
-                      borderRadius: 9999,
-                      background: 'rgba(138, 61, 230, 0.04)',
-                      backdropFilter: 'blur(8px)',
-                      WebkitBackdropFilter: 'blur(8px)',
-                      border: '1px solid rgba(138, 61, 230, 0.08)',
-                      boxShadow: '0 4px 24px rgba(138, 61, 230, 0.06), inset 0 1px 0 rgba(255,255,255,0.4)',
-                      animationDelay: `${i * 0.12}s`
-                    }}
-                  />
-                ))}
-              </div>
-              <img src={heroLogo} alt="Root Labs Logo" className="w-full max-w-md hero-logo-float" style={{ position: 'relative', zIndex: 1 }} />
+            {/* Right: Hero visual */}
+            <div className="relative flex items-center justify-center hero-logo-column" style={{ minHeight: 420 }}>
+              <img
+                src={`${import.meta.env.BASE_URL}img/hero-right.png`}
+                alt=""
+                className="hero-right-img"
+              />
             </div>
           </div>
         </section>
@@ -433,23 +464,8 @@ function navigate(path) {
                         </h3>
 
                         <p className="hackme-description">
-                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Intentionally "hackable" no real data, just pure learning.
+                          An interactive, beginner-friendly platform teaching web fundamentals and cybersecurity through safe, simulated challenges. Explore SQLi, XSS, IDOR and more in a safe sandbox environment.
                         </p>
-
-                        <ul className="hackme-features">
-                          <li>
-                            <span className="feature-dot" style={{ background: 'var(--primary)' }}></span>
-                            <span>Vulnerable challenges: SQLi, IDOR, cookies, XSS</span>
-                          </li>
-                          <li>
-                            <span className="feature-dot" style={{ background: 'var(--accent-blue)' }}></span>
-                            <span>Web dev fundamentals: HTML, CSS, JS, networking</span>
-                          </li>
-                          <li>
-                            <span className="feature-dot" style={{ background: 'var(--success)' }}></span>
-                            <span>Safe sandbox environment for learning security</span>
-                          </li>
-                        </ul>
 
                         <a 
                           href="https://electroworks-store.github.io/HackMe/" 
@@ -512,23 +528,8 @@ function navigate(path) {
                         </h3>
 
                         <p className="teamster-description">
-                          A unified workspace designed for growing teams. Manage projects, track progress, and collaborate?all in one beautifully simple interface.
+                          A unified workspace designed for growing teams. Sheets, metrics, chat, and calendar — all in one beautifully simple interface.
                         </p>
-
-                        <ul className="teamster-features">
-                          <li>
-                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
-                            <span>Sheets & task boards with real-time sync</span>
-                          </li>
-                          <li>
-                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
-                            <span>Visual metrics and team analytics</span>
-                          </li>
-                          <li>
-                            <span className="feature-dot" style={{ background: '#0070F3' }}></span>
-                            <span>Built-in chat and calendar integration</span>
-                          </li>
-                        </ul>
 
                         <a 
                           href="https://electroworks-store.github.io/Teamsterx/index.html" 
@@ -555,26 +556,76 @@ function navigate(path) {
       );
     }
 
+    // Animated beaker that cycles through 4 frames
+    function AnimatedBeakerLabs() {
+      const beakerFrames = [beaker1, beaker2, beaker3, beaker4];
+      const [frame, setFrame] = useState(0);
+      const loadedRef = useRef(false);
+
+      // Preload all beaker images into browser cache before starting animation
+      useEffect(() => {
+        const images = beakerFrames.map(src => {
+          const img = new Image();
+          img.src = src;
+          return img;
+        });
+        Promise.all(images.map(img => img.decode ? img.decode() : new Promise(r => { img.onload = r; }))).then(() => {
+          loadedRef.current = true;
+        });
+      }, []);
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          if (loadedRef.current) {
+            setFrame(prev => (prev + 1) % beakerFrames.length);
+          }
+        }, 400);
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <h2 className="font-bold tracking-tight select-none" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)', lineHeight: 1, fontSize: 'clamp(6rem, 11vw, 10rem)', display: 'inline-flex', alignItems: 'flex-end', whiteSpace: 'nowrap' }}>
+          <span>L</span>
+          <span style={{ display: 'inline-block', width: '0.7em', height: '1em', position: 'relative', zIndex: 10, flexShrink: 0 }}>
+            {beakerFrames.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt=""
+                style={{
+                  width: '8em',
+                  height: '8em',
+                  objectFit: 'contain',
+                  objectPosition: 'center bottom',
+                  position: 'absolute',
+                  bottom: '2.52em',
+                  left: '50%',
+                  transform: 'translateX(-50%) scale(1.6)',
+                  visibility: frame === i ? 'visible' : 'hidden',
+                  zIndex: 100
+                }}
+              />
+            ))}
+          </span>
+          <span>bs</span>
+        </h2>
+      );
+    }
+
     // Labs Headline Section — big "Labs" with flask icon
     function LabsHeadline() {
       return (
         <section className="py-32 px-6" style={{ background: 'var(--bg)' }}>
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center labs-headline-grid">
             {/* Left: Description */}
-            <div>
+            <div className="labs-headline-text">
               <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-                We believe great design shouldn't cost a fortune or take months to deliver. That's why we've built a cutting-edge AI with human creativity.
+                We're a small team that loves to experiment. We mix cutting-edge AI with raw human creativity to build things that feel fresh, fast, and a little unexpected.
               </p>
             </div>
             {/* Right: Big "Labs" with beaker image */}
-            <div className="flex items-center justify-center md:justify-end">
-              <h2 className="font-bold tracking-tight select-none" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)', lineHeight: 1, fontSize: 'clamp(8rem, 14vw, 13rem)' }}>
-                L
-                <span className="inline-block relative" style={{ width: '0.95em', margin: '0 -0.06em' }}>
-                  <img src={beakerImg} alt="" className="inline-block" style={{ width: '0.95em', height: '1.18em', verticalAlign: 'baseline', marginBottom: '-0.15em', objectFit: 'contain' }} />
-                </span>
-                bs
-              </h2>
+            <div className="flex items-center justify-center md:justify-end labs-headline-beaker">
+              <AnimatedBeakerLabs />
             </div>
           </div>
         </section>
@@ -798,245 +849,296 @@ function navigate(path) {
     // Sakura Gallery wrapper — provides scroll-lock spacing
     function SakuraGalleryWrapper() {
       return (
-        <div style={{ height: `${150 * 4}vh`, position: 'relative' }}>
+        <div style={{ height: '200vh', position: 'relative' }}>
           <SakuraGallery />
         </div>
       );
     }
 
-    // About Section with Organic Blob Shapes
+    // About Section
     function About() {
-      const [scrollY, setScrollY] = useState(0);
-      const [blobPath1] = useState(() => generatePath({ complexity: 12, contrast: 3 }));
-      const [blobPath2] = useState(() => generatePath({ complexity: 14, contrast: 4 }));
-      const [blobPath3] = useState(() => generatePath({ complexity: 16, contrast: 5 }));
-      const [blobPath4] = useState(() => generatePath({ complexity: 10, contrast: 3 }));
-      const [blobPath5] = useState(() => generatePath({ complexity: 11, contrast: 4 }));
-      const [blobPath6] = useState(() => generatePath({ complexity: 13, contrast: 3 }));
-      const sectionRef = useRef(null);
+      // Half-circle wave layers: semicircles centered at x=0, only right half visible
+      const waveRadii = [440, 380, 320, 270, 220, 175, 140, 105];
+      const waveColors = [
+        'rgba(138, 61, 230, 0.045)',
+        'rgba(138, 61, 230, 0.08)',
+        'rgba(138, 61, 230, 0.13)',
+        'rgba(138, 61, 230, 0.19)',
+        'rgba(138, 61, 230, 0.27)',
+        'rgba(138, 61, 230, 0.36)',
+        'rgba(138, 61, 230, 0.48)',
+        'rgba(138, 61, 230, 0.62)',
+      ];
+
+      // Wavy half-circle centered at (0, 400) in SVG, arcs rightward
+      function wavyHalfCircle(r, seed) {
+        const cx = 0, cy = 400;
+        const points = [];
+        const steps = 64;
+        for (let i = 0; i <= steps; i++) {
+          const angle = -Math.PI / 2 + (Math.PI * i) / steps;
+          const wobble = Math.sin(angle * 6 + seed) * (r * 0.06) + Math.cos(angle * 4 - seed * 1.3) * (r * 0.04);
+          const rx = r + wobble;
+          const x = cx + Math.cos(angle) * rx;
+          const y = cy + Math.sin(angle) * rx;
+          points.push(`${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`);
+        }
+        // Close back along the flat left edge (x=0)
+        points.push(`L0 ${(cy + r + 20).toFixed(1)}`);
+        points.push(`L0 ${(cy - r - 20).toFixed(1)}`);
+        points.push('Z');
+        return points.join(' ');
+      }
+
+
+
+      const wavesRef = useRef(null);
+      const [wavesVisible, setWavesVisible] = useState(false);
 
       useEffect(() => {
-        const handleScroll = () => setScrollY(window.scrollY);
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        const el = wavesRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(
+          ([entry]) => { if (entry.isIntersecting) { setWavesVisible(true); obs.disconnect(); } },
+          { threshold: 0.15 }
+        );
+        obs.observe(el);
+        return () => obs.disconnect();
       }, []);
 
-      const getSectionScroll = () => {
-        if (!sectionRef.current) return 0;
-        const rect = sectionRef.current.getBoundingClientRect();
-        const sectionTop = rect.top + scrollY;
-        return Math.max(0, scrollY - sectionTop + window.innerHeight / 2);
-      };
-
-      const sectionScroll = getSectionScroll();
-
       return (
-        <section ref={sectionRef} id="about" className="relative overflow-hidden" style={{ background: 'var(--bg)', paddingTop: '4rem', paddingBottom: '4rem' }}>
+        <section id="about" className="relative" style={{ background: 'var(--bg)', paddingTop: '4rem', paddingBottom: '4rem' }}>
 
-          {/* Hero Section - Organic Layout */}
-          <div className="relative min-h-screen flex items-center px-8 md:px-12 lg:px-20 py-32">
-            <div className="max-w-7xl mx-auto w-full relative z-10">
-              
-              {/* Intro Label */}
-              <p className="text-xs font-bold mb-8 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
-                ABOUT ROOT LABS
-              </p>
+          {/* Hero Section - Wave Half-Circle + Text */}
+          <div ref={wavesRef} className="relative min-h-screen flex items-center py-32" style={{ overflow: 'visible' }}>
 
-              {/* Main Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-20 items-center">
-                
-                {/* Left: Floating Team Avatars - Orbiting Triangle */}
-                <div className="relative flex items-center justify-center" style={{ transform: `translateY(${sectionScroll * 0.05}px)` }}>
-                  
-                  {/* Three avatars orbiting in a triangle - all same color */}
-                  <div className="relative w-full max-w-md" style={{ height: '420px' }}>
-                    {/* Avatar 1 - Adrian */}
-                    <div 
-                      className="avatar-orbit avatar-orbit-1"
-                      style={{ 
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-96px',
-                        marginTop: '-96px'
-                      }}
-                    >
-                      <div className="avatar-upright">
-                        <div className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden"
-                          style={{
-                            background: 'rgba(138, 61, 230, 0.15)',
-                            boxShadow: '0 8px 24px rgba(138, 61, 230, 0.2)'
-                          }}
-                        >
-                          <img 
-                            src={`${import.meta.env.BASE_URL}img/Adrian_avatar.png`}
-                            alt="Adrian"
-                            className="w-44 h-44 rounded-full"
-                            style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Avatar 2 - Nepik */}
-                    <div 
-                      className="avatar-orbit avatar-orbit-2"
-                      style={{ 
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-96px',
-                        marginTop: '-96px'
-                      }}
-                    >
-                      <div className="avatar-upright">
-                        <div className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden"
-                          style={{
-                            background: 'rgba(138, 61, 230, 0.15)',
-                            boxShadow: '0 8px 24px rgba(138, 61, 230, 0.2)'
-                          }}
-                        >
-                          <img 
-                            src={`${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
-                            alt="Nepik"
-                            className="w-44 h-44 rounded-full"
-                            style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Avatar 3 - Viky */}
-                    <div 
-                      className="avatar-orbit avatar-orbit-3"
-                      style={{ 
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-96px',
-                        marginTop: '-96px'
-                      }}
-                    >
-                      <div className="avatar-upright">
-                        <div className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden"
-                          style={{
-                            background: 'rgba(138, 61, 230, 0.15)',
-                            boxShadow: '0 8px 24px rgba(138, 61, 230, 0.2)'
-                          }}
-                        >
-                          <img 
-                            src={`${import.meta.env.BASE_URL}img/Viky_avatar.png`}
-                            alt="Viky"
-                            className="w-44 h-44 rounded-full"
-                            style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            {/* Purple half-circle waves flush to left edge */}
+            <div
+              className={`about-waves-anchor ${wavesVisible ? 'about-waves-entered' : ''}`}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: 560,
+                height: 800,
+                zIndex: 1,
+                pointerEvents: 'none',
+              }}
+            >
+              <svg
+                viewBox="0 0 560 800"
+                preserveAspectRatio="xMinYMid meet"
+                style={{ display: 'block', position: 'absolute', left: -30, top: 0, width: 'calc(100% + 30px)', height: '100%' }}
+                aria-hidden="true"
+              >
+                {waveRadii.map((r, i) => (
+                  <path
+                    key={i}
+                    d={wavyHalfCircle(r, i * 1.7 + 0.5)}
+                    fill={waveColors[i]}
+                    className="about-wave-ring"
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  />
+                ))}
+              </svg>
 
-                {/* Right: Text Content */}
-                <div className="space-y-8">
-                  <h2 
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]" 
+
+
+            </div>
+
+            {/* Content - offset to clear waves */}
+            <div className="relative z-10 px-8 md:px-12 lg:px-20 about-content-block" style={{ marginLeft: 'min(35vw, 500px)' }}>
+                <div className="space-y-6 max-w-3xl">
+                  <p className="text-xs font-bold tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
+                    ABOUT ROOT LABS
+                  </p>
+
+                  <h2
+                    className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.05]"
                     style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}
                   >
-                    Three teenagers
-                    <span className="block mt-3" style={{ 
-                      background: 'linear-gradient(120deg, var(--primary) 0%, var(--accent-blue) 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text'
-                    }}>
-                      building the future
-                    </span>
+                    We build websites
+                    <br />
+                    <span style={{ color: 'var(--primary)' }}>that stand out.</span>
                   </h2>
 
-                  <div className="space-y-6 text-xl md:text-2xl leading-relaxed">
-                    <p style={{ color: '#000000' }}>
-                      Competing with agencies charging <span style={{ color: 'var(--text)', fontWeight: 700 }}>10x more</span>.     
-                    </p>
-                  </div>
-
-                  {/* Stats with BLOB shapes instead of boxes */}
-                  <div className="grid grid-cols-3 gap-6 pt-8">
-                    {[
-                      { value: '15', label: 'Years Old', color: 'var(--primary)', blobPath: blobPath4 },
-                      { value: '3+', label: 'Projects', color: 'var(--accent-blue)', blobPath: blobPath5 },
-                      { value: '7d', label: 'Avg Time', color: 'var(--success)', blobPath: blobPath6 }
-                    ].map((stat, idx) => (
-                      <div key={idx} className="relative flex items-center justify-center">
-                        {/* Blob background */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                          <SvgShape width={140} height={140}>
-                            <SvgShape.Path 
-                              svgPath={stat.blobPath} 
-                              colors={[stat.color, stat.color]} 
-                            />
-                          </SvgShape>
-                        </div>
-                        {/* Content on top of blob */}
-                        <div className="relative z-10 text-center py-6">
-                          <div 
-                            className="text-3xl md:text-4xl font-bold mb-1"
-                            style={{ 
-                              fontFamily: "'Space Grotesk', sans-serif",
-                              color: 'var(--text)'
-                            }}
-                          >
-                            {stat.value}
-                          </div>
-                          <p className="text-xs font-semibold tracking-wider" style={{ color: '#000000' }}>
-                            {stat.label}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className="text-base pt-6" style={{ color: '#000000' }}>
-                    Brno, Czech Republic · Established 2025
+                  <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
+                    Three students from Brno combining AI with human creativity to ship in days, not months.
                   </p>
                 </div>
-
-              </div>
             </div>
           </div>
 
-          {/* Mission Section */}
-          <div className="relative px-8 md:px-12 lg:px-20 py-32">
-            <div className="max-w-6xl mx-auto">
+          {/* Mission Section — Venn Diagram */}
+          {(() => {
+            const vennRef = useRef(null);
+            const [vennVisible, setVennVisible] = useState(false);
 
-              <div>
-                <p className="text-xs font-bold mb-8 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
-                  OUR MISSION
-                </p>
-                
-                <h3 
-                  className="text-3xl md:text-5xl lg:text-6xl font-bold mb-12 max-w-4xl leading-tight"
-                  style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}
-                >
-                  Making professional web design accessible to everyone
-                </h3>
+            useEffect(() => {
+              const el = vennRef.current;
+              if (!el) return;
+              const obs = new IntersectionObserver(
+                ([entry]) => { if (entry.isIntersecting) { setVennVisible(true); obs.disconnect(); } },
+                { threshold: 0.2 }
+              );
+              obs.observe(el);
+              return () => obs.disconnect();
+            }, []);
 
-                <div className="grid md:grid-cols-2 gap-12 max-w-5xl">
-                  <div className="space-y-4 text-lg leading-relaxed">
-                    <p style={{ color: '#000000' }}>
-                      We believe great design shouldn't cost a fortune or take months to deliver. 
-                      That's why we've built a system that combines cutting-edge AI with human creativity.
-                    </p>
+            // Circle geometry: 3 circles in classic Venn layout
+            // Canvas: 520 x 480, circles r=140
+            const r = 140;
+            const cx = 260, cy = 220; // center of the diagram
+            const spread = 90; // distance from center to each circle's center
+            const circles = [
+              { cx: cx - spread * 0.87, cy: cy - spread * 0.5, label: 'Creativity', lx: -68, ly: -55, color: [138, 61, 230] },   // purple
+              { cx: cx + spread * 0.87, cy: cy - spread * 0.5, label: 'Quality', lx: 68, ly: -55, color: [56, 132, 248] },     // blue
+              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [20, 184, 166] },                               // teal
+            ];
+
+            return (
+              <div ref={vennRef} className="relative px-8 md:px-12 lg:px-20 py-32">
+                <div className="max-w-6xl mx-auto text-center">
+                  <p
+                    className="text-xs font-bold mb-16 tracking-[0.3em]"
+                    style={{
+                      color: 'var(--primary)',
+                      opacity: vennVisible ? 1 : 0,
+                      transform: vennVisible ? 'translateY(0)' : 'translateY(16px)',
+                      transition: 'opacity 0.6s ease, transform 0.6s ease',
+                    }}
+                  >
+                    OUR MISSION
+                  </p>
+
+                  {/* SVG Venn Diagram */}
+                  <div
+                    className="relative mx-auto"
+                    style={{ width: '100%', maxWidth: 520, aspectRatio: '520 / 480' }}
+                  >
+                    <svg
+                      viewBox="0 0 520 480"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ width: '100%', height: '100%', display: 'block' }}
+                      aria-hidden="true"
+                    >
+                      <defs>
+                        {/* Radial gradients for each circle — unique colors */}
+                        {circles.map((c, i) => (
+                          <radialGradient key={`grad-${i}`} id={`vennGrad${i + 1}`} cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor={`rgba(${c.color.join(',')}, 0.14)`} />
+                            <stop offset="100%" stopColor={`rgba(${c.color.join(',')}, 0.03)`} />
+                          </radialGradient>
+                        ))}
+                      </defs>
+
+                      {/* Three main circles — layered so overlaps naturally darken */}
+                      {circles.map((c, i) => (
+                        <g key={i}>
+                          <circle
+                            cx={c.cx}
+                            cy={c.cy}
+                            r={r}
+                            fill={`url(#vennGrad${i + 1})`}
+                            stroke={`rgba(${c.color.join(',')}, 0.22)`}
+                            strokeWidth="1.5"
+                            style={{
+                              opacity: vennVisible ? 1 : 0,
+                              transform: vennVisible
+                                ? 'scale(1)'
+                                : `translate(${c.lx * 0.4}px, ${c.ly * 0.4}px) scale(0.7)`,
+                              transformOrigin: `${c.cx}px ${c.cy}px`,
+                              transition: `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s`,
+                            }}
+                          />
+                        </g>
+                      ))}
+
+                      {/* Overlap enhancement: draw circles again with lighter fill for stacking effect */}
+                      {circles.map((c, i) => (
+                        <circle
+                          key={`overlap-${i}`}
+                          cx={c.cx}
+                          cy={c.cy}
+                          r={r}
+                          fill={`rgba(${c.color.join(',')}, 0.04)`}
+                          style={{
+                            opacity: vennVisible ? 1 : 0,
+                            transition: `opacity 1.2s ease ${0.5 + i * 0.1}s`,
+                          }}
+                        />
+                      ))}
+
+                      {/* Labels */}
+                      {circles.map((c, i) => (
+                        <text
+                          key={`label-${i}`}
+                          x={c.cx + c.lx}
+                          y={c.cy + c.ly}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          fill={`rgb(${c.color.join(',')})`}
+                          fontFamily="'Geist', sans-serif"
+                          fontWeight="700"
+                          fontSize="15"
+                          letterSpacing="0.04em"
+                          style={{
+                            opacity: vennVisible ? 1 : 0,
+                            transform: vennVisible ? 'translateY(0)' : 'translateY(10px)',
+                            transition: `opacity 0.6s ease ${0.6 + i * 0.15}s, transform 0.6s ease ${0.6 + i * 0.15}s`,
+                          }}
+                        >
+                          {c.label}
+                        </text>
+                      ))}
+                    </svg>
+
+                    {/* Center logo — floating above SVG at the triple intersection */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '46%',
+                        left: '50%',
+                        transform: vennVisible
+                          ? 'translate(-50%, -50%) scale(1)'
+                          : 'translate(-50%, -50%) scale(0)',
+                        width: 64,
+                        height: 64,
+                        borderRadius: '50%',
+                        background: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 24px rgba(138, 61, 230, 0.15), 0 0 0 4px rgba(138, 61, 230, 0.06)',
+                        zIndex: 5,
+                        transition: 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s',
+                      }}
+                    >
+                      <img
+                        src={`${import.meta.env.BASE_URL}img/rootlabs-favicon.png`}
+                        alt="Root Labs"
+                        style={{ width: '70%', height: '70%', objectFit: 'contain' }}
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-4 text-lg leading-relaxed">
-                    <p style={{ color: '#000000' }}>
-                      Fast turnarounds. Premium quality. Prices that make sense. 
-                      That's the Root Labs promise.
-                    </p>
-                  </div>
+
+                  <p
+                    className="text-lg md:text-xl leading-relaxed mt-14 max-w-2xl mx-auto"
+                    style={{
+                      color: 'var(--muted)',
+                      opacity: vennVisible ? 1 : 0,
+                      transform: vennVisible ? 'translateY(0)' : 'translateY(20px)',
+                      transition: 'opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s',
+                    }}
+                  >
+                    Where creativity, quality, and speed overlap, that's where we work.
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
+            );
+          })()}
 
           {/* Team Section - Meet the crew */}
           <div className="relative px-8 md:px-12 lg:px-20 py-32">
@@ -1129,241 +1231,303 @@ function navigate(path) {
       );
     }
 
-    // Services Section - Alternating Layout with Numbers
+    // Services Section - Scroll Wheel + Dynamic Content
     function Services() {
       const servicesData = document.getElementById('services-data');
       const heading = servicesData?.dataset.heading || '';
       const subheading = servicesData?.dataset.subheading || '';
 
-      // Get individual service data
       const websitesData = document.getElementById('websites-data');
       const aiData = document.getElementById('ai-data');
       const socialData = document.getElementById('social-data');
 
-      const [hoveredIndex, setHoveredIndex] = useState(null);
+      const sectionRef = useRef(null);
+      const [activeIndex, setActiveIndex] = useState(0);
+      const [wheelRotation, setWheelRotation] = useState(0);
+      const [contentVisible, setContentVisible] = useState(true);
+      const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+      const prevIndex = useRef(0);
 
       const allServices = [
         {
           id: 'websites',
           number: '01',
-          title: 'Website Redesign',
+          title: 'Custom Websites',
+          price: '$499',
+          timeline: '7 days',
           description: websitesData?.dataset.subheading || '',
           color: '#8A3DE6',
-          accentColor: '#38bdf8',
           link: '/websites',
-          stats: [
-            { label: 'Starting at', value: '$499' },
-            { label: 'Delivery', value: '7 Days' },
-            { label: 'Results', value: '3x ROI' }
-          ],
           features: ['Responsive Design', 'Speed Optimization', 'Modern UI/UX', 'SEO-Friendly', 'Custom Animations', 'Performance Audit'],
-          align: 'left'
         },
         {
           id: 'ai',
           number: '02',
           title: 'AI Agents',
+          price: '$299/mo',
+          timeline: '<1s response',
           description: aiData?.dataset.subheading || '',
           color: '#38bdf8',
-          accentColor: '#8A3DE6',
           link: '/ai',
-          stats: [
-            { label: 'Starting at', value: '$299/mo' },
-            { label: 'Response', value: '<1 Second' },
-            { label: 'Uptime', value: '24/7' }
-          ],
           features: ['Customer Support', 'Lead Qualification', 'Multi-Channel Deploy', 'Custom Training', 'CRM Integration', 'Real-time Analytics'],
-          align: 'right'
         },
         {
           id: 'social',
           number: '03',
           title: 'Social Media',
+          price: '$879/mo',
+          timeline: '10 posts/mo',
           description: socialData?.dataset.subheading || '',
           color: '#FF7A2D',
-          accentColor: '#8A3DE6',
           link: '/social',
-          stats: [
-            { label: 'Starting at', value: '$879/mo' },
-            { label: 'videos/month', value: '2' },
-            { label: 'posts/month', value: '8' }
-          ],
           features: ['Content Creation', 'Community Management', 'Growth Strategy', 'Analytics Reports', 'Influencer Outreach', '3+ Platforms'],
-          align: 'left'
         }
       ];
 
-      return (
-        <section id="services" className="py-32 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
-          {/* Subtle background elements */}
-          <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full blur-3xl opacity-[0.03] pointer-events-none" 
-               style={{ background: '#8A3DE6' }} />
-          <div className="absolute bottom-1/4 right-0 w-96 h-96 rounded-full blur-3xl opacity-[0.03] pointer-events-none" 
-               style={{ background: '#38bdf8' }} />
+      // Scroll-driven wheel rotation
+      useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+
+        const handleScroll = () => {
+          const rect = el.getBoundingClientRect();
+          const vh = window.innerHeight;
+          const scrolled = -rect.top;
+          const totalScroll = el.offsetHeight - vh;
+          const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
           
-          {/* Masked Grid Patches - Purple for services */}
-          <div className="masked-grid masked-grid-purple masked-grid-top-left" aria-hidden="true"></div>
-          <div className="masked-grid masked-grid-grey masked-grid-bottom-right" aria-hidden="true"></div>
+          // Map progress to 0–2 (3 sections) and snap to nearest
+          const rawIndex = progress * (allServices.length - 1);
+          const snappedIndex = Math.round(rawIndex);
+          const clampedIndex = Math.max(0, Math.min(allServices.length - 1, snappedIndex));
+          
+          // Snap rotation to exact 120deg increments
+          setWheelRotation(clampedIndex * 120);
 
-          <div className="max-w-6xl mx-auto px-8 md:px-12 relative z-10">
+          if (clampedIndex !== prevIndex.current) {
+            setContentVisible(false);
+            setTimeout(() => {
+              setActiveIndex(clampedIndex);
+              setContentVisible(true);
+              prevIndex.current = clampedIndex;
+            }, 200);
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      // Track viewport width for mobile rotation offset
+      useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+      }, []);
+
+      // Click handler to jump to a specific service
+      const jumpToService = (idx) => {
+        setWheelRotation(idx * 120);
+        setContentVisible(false);
+        setTimeout(() => {
+          setActiveIndex(idx);
+          setContentVisible(true);
+          prevIndex.current = idx;
+        }, 200);
+      };
+
+      const service = allServices[activeIndex];
+
+      // Wheel SVG constants — donut ring, full circle
+      const outerR = 320;
+      const innerR = 150;
+      const wheelCx = 350;
+      const wheelCy = 350;
+      const sectorAngle = 120;
+      const gapWidth = 8; // constant-width gap in SVG units
+
+      return (
+        <section
+          id="services"
+          ref={sectionRef}
+          className="relative"
+          style={{ height: '250vh', background: 'var(--bg)' }}
+        >
+          <div
+            className="sticky top-0 overflow-hidden"
+            style={{ height: '100vh' }}
+          >
             {/* Section Header */}
-            <div className="text-center mb-32 stagger-item">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                {heading}
-              </h2>
-              <p className="text-xl" style={{ color: 'var(--muted)' }}>
-                {subheading}
+            <div className="absolute top-8 left-0 right-0 text-center z-10 px-8">
+              <p className="text-xs font-bold tracking-[0.3em] mb-2" style={{ color: 'var(--primary)' }}>
+                OUR SERVICES
               </p>
+              <p className="text-base" style={{ color: 'var(--muted)' }}>Three services, limitless results</p>
             </div>
 
-            {/* Alternating Services */}
-            <div className="space-y-32">
-              {allServices.map((service, idx) => (
-                <div 
-                  key={service.id}
-                  className="stagger-item group"
-                  style={{ animationDelay: `${idx * 0.15}s` }}
-                  onMouseEnter={() => setHoveredIndex(idx)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                >
-                  {/* Hover glow */}
-                  <div 
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none blur-3xl"
-                    style={{ background: `${service.color}08` }}
-                  />
+            <div className="wheel-layout">
+              {/* Left Column — Wheel */}
+              <div className="wheel-col-left">
+                <div className="wheel-container">
+                  <svg
+                    viewBox="0 0 700 700"
+                    className="wheel-svg"
+                    style={{
+                      transform: `rotate(${(isMobile ? 0 : 90) - wheelRotation}deg)`,
+                      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                  >
+                    {allServices.map((s, i) => {
+                      // Full sector angles (no gap subtracted from the arcs)
+                      const startDeg = i * sectorAngle - 90 - sectorAngle / 2;
+                      const endDeg = i * sectorAngle - 90 + sectorAngle / 2;
+                      const startRad = startDeg * (Math.PI / 180);
+                      const endRad = endDeg * (Math.PI / 180);
 
-                  {/* Content Grid - Alternating */}
-                  <div className={`grid md:grid-cols-2 gap-16 items-center relative ${service.align === 'right' ? 'md:flex-row-reverse' : ''}`}>
-                    {/* Number Side */}
-                    <div className={`flex ${service.align === 'right' ? 'md:order-2 md:justify-end' : 'md:order-1 md:justify-start'} justify-center`}>
-                      <div className="relative">
-                        {/* Background gradient that shows through text */}
-                        <div 
-                          className="absolute inset-0 flex items-center justify-center"
-                          style={{ 
-                            background: `radial-gradient(circle, ${service.color} 0%, ${service.accentColor} 100%)`,
-                            filter: 'blur(30px)',
-                            opacity: 0,
-                            transition: 'opacity 0.7s'
-                          }}
-                          ref={(el) => {
-                            if (el && el.parentElement) {
-                              const parent = el.parentElement.parentElement.parentElement;
-                              if (parent.classList.contains('group')) {
-                                parent.addEventListener('mouseenter', () => el.style.opacity = '0.15');
-                                parent.addEventListener('mouseleave', () => el.style.opacity = '0');
-                              }
-                            }
-                          }}
-                        >
-                          <div style={{ width: '80%', height: '80%' }} />
-                        </div>
-                        
-                        {/* Large Readable Number - Outlined with gradient fill */}
-                        <div 
-                          className="relative text-[10rem] md:text-[14rem] font-bold leading-none select-none transition-all group-hover:scale-105"
-                          style={{ 
-                            fontFamily: "'Space Grotesk', sans-serif",
-                            WebkitTextStroke: `2.5px ${service.color}`,
-                            WebkitTextFillColor: 'transparent',
-                            backgroundImage: `radial-gradient(circle, ${service.color}20 0%, ${service.accentColor}15 100%)`,
-                            WebkitBackgroundClip: 'text',
-                            backgroundClip: 'text',
-                            color: 'transparent'
-                          }}
-                        >
-                          {service.number}
-                        </div>
-                      </div>
-                    </div>
+                      // Outer arc points
+                      const ox1 = wheelCx + outerR * Math.cos(startRad);
+                      const oy1 = wheelCy + outerR * Math.sin(startRad);
+                      const ox2 = wheelCx + outerR * Math.cos(endRad);
+                      const oy2 = wheelCy + outerR * Math.sin(endRad);
+                      // Inner arc points
+                      const ix1 = wheelCx + innerR * Math.cos(endRad);
+                      const iy1 = wheelCy + innerR * Math.sin(endRad);
+                      const ix2 = wheelCx + innerR * Math.cos(startRad);
+                      const iy2 = wheelCy + innerR * Math.sin(startRad);
 
-                    {/* Content Side */}
-                    <div className={`${service.align === 'right' ? 'md:order-1 md:text-right' : 'md:order-2 md:text-left'} text-center md:text-left space-y-6`}>
-                      {/* Title */}
-                      <h3 
-                        className="text-4xl md:text-6xl font-bold transition-all" 
-                        style={{ 
-                          fontFamily: "'Geist', sans-serif",
-                          color: service.color
-                        }}
-                      >
-                        {service.title}
-                      </h3>
-                      
-                      {/* Description */}
-                      <p 
-                        className="text-lg md:text-xl leading-relaxed max-w-xl" 
-                        style={{ color: 'var(--muted)' }}
-                      >
-                        {service.description}
-                      </p>
+                      const d = [
+                        `M ${ox1} ${oy1}`,
+                        `A ${outerR} ${outerR} 0 0 1 ${ox2} ${oy2}`,
+                        `L ${ix1} ${iy1}`,
+                        `A ${innerR} ${innerR} 0 0 0 ${ix2} ${iy2}`,
+                        'Z',
+                      ].join(' ');
 
-                      {/* Stats Grid */}
-                      <div className="grid grid-cols-3 gap-4 py-4">
-                        {service.stats.map((stat, i) => (
-                          <div key={i} className="text-center md:text-left">
-                            <div 
-                              className="text-2xl md:text-3xl font-bold mb-1"
-                              style={{ 
-                                color: service.color,
-                                fontFamily: "'Space Grotesk', sans-serif"
-                              }}
-                            >
-                              {stat.value}
-                            </div>
-                            <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--muted)', opacity: 0.7 }}>
-                              {stat.label}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      // Label position
+                      const midDeg = (startDeg + endDeg) / 2;
+                      const midRad = midDeg * (Math.PI / 180);
+                      const labelR = (outerR + innerR) / 2;
+                      const lx = wheelCx + labelR * Math.cos(midRad);
+                      const ly = wheelCy + labelR * Math.sin(midRad);
+                      const isActive = i === activeIndex;
 
-                      {/* Features List */}
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 py-4">
-                        {service.features.map((feature, i) => (
-                          <div 
-                            key={i}
-                            className="flex items-center gap-2 text-sm"
+                      // Counter-rotate labels to keep them horizontal to the viewer
+                      const svgRotation = (isMobile ? 0 : 90) - wheelRotation;
+                      const labelRotation = -svgRotation;
+
+                      return (
+                        <g key={s.id} style={{ cursor: 'pointer' }} onClick={() => jumpToService(i)}>
+                          <path
+                            d={d}
+                            fill={s.color}
+                            opacity={isActive ? 1 : 0.65}
+                            style={{ transition: 'opacity 0.5s' }}
+                          />
+                          <text
+                            x={lx}
+                            y={ly}
+                            textAnchor="middle"
+                            dominantBaseline="central"
+                            fontFamily="'Space Grotesk', sans-serif"
+                            fontWeight="800"
+                            fontSize={isActive ? '52' : '40'}
+                            fill="white"
+                            pointerEvents="none"
+                            style={{
+                              transition: 'font-size 0.5s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                              transform: `rotate(${labelRotation}deg)`,
+                              transformOrigin: `${lx}px ${ly}px`,
+                            }}
                           >
-                            <div 
-                              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                              style={{ background: service.color }}
-                            />
-                            <span style={{ color: 'var(--text)' }}>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* CTA Button - Always pill-shaped */}
-                      <div className={`pt-4 ${service.align === 'right' ? 'md:flex md:justify-end' : ''}`}>
-                        <a 
-                          href={service.link}
-                          onClick={(e) => { e.preventDefault(); navigate(service.link); }}
-                          className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-base transition-all hover:scale-105 hover:shadow-2xl"
-                          style={{ 
-                            background: service.color,
-                            color: 'white',
-                            boxShadow: `0 8px 32px ${service.color}40`
-                          }}
-                        >
-                          Explore {service.title}
-                          <ArrowRight className="w-5 h-5" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Connecting Line (except last) */}
-                  {idx < allServices.length - 1 && (
-                    <div 
-                      className="h-24 w-px mx-auto mt-24 opacity-20"
-                      style={{ background: `linear-gradient(to bottom, ${service.color}, ${allServices[idx + 1].color})` }}
-                    />
-                  )}
+                            {s.number}
+                          </text>
+                        </g>
+                      );
+                    })}
+                    {/* Constant-width gap lines between sectors */}
+                    {allServices.map((_, i) => {
+                      const dividerDeg = i * sectorAngle - 90 - sectorAngle / 2;
+                      const dividerRad = dividerDeg * (Math.PI / 180);
+                      const x1 = wheelCx + (innerR - 2) * Math.cos(dividerRad);
+                      const y1 = wheelCy + (innerR - 2) * Math.sin(dividerRad);
+                      const x2 = wheelCx + (outerR + 2) * Math.cos(dividerRad);
+                      const y2 = wheelCy + (outerR + 2) * Math.sin(dividerRad);
+                      return (
+                        <line
+                          key={`gap-${i}`}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke="var(--bg, #f5f5f7)"
+                          strokeWidth={gapWidth}
+                          pointerEvents="none"
+                        />
+                      );
+                    })}
+                  </svg>
                 </div>
-              ))}
-            </div>
+              </div>
 
+              {/* Right Column — Content */}
+              <div
+                className="wheel-col-right"
+                style={{
+                  opacity: contentVisible ? 1 : 0,
+                  transform: contentVisible ? 'translateY(0)' : 'translateY(24px)',
+                  transition: 'opacity 0.35s ease, transform 0.45s ease',
+                }}
+              >
+                {/* Service title */}
+                <h3
+                  className="wheel-service-title"
+                  style={{ color: service.color }}
+                >
+                  {service.title}
+                </h3>
+
+                {/* Price & timeline */}
+                <div className="wheel-meta">
+                  <span className="wheel-meta-value">{service.price}</span>
+                  <span className="wheel-meta-sep">|</span>
+                  <span className="wheel-meta-value">{service.timeline}</span>
+                </div>
+
+                {/* Description */}
+                {service.description && (
+                  <p className="wheel-description">{service.description}</p>
+                )}
+
+                {/* Features grid */}
+                <div className="wheel-features">
+                  {service.features.map((f, i) => (
+                    <div key={i} className="wheel-feature-item">
+                      <div
+                        className="wheel-feature-dot"
+                        style={{ background: service.color }}
+                      />
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <div className="wheel-cta-wrap">
+                  <a
+                    href={service.link}
+                    onClick={(e) => { e.preventDefault(); navigate(service.link); }}
+                    className="wheel-cta-btn"
+                    style={{
+                      background: service.color,
+                      boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)',
+                    }}
+                  >
+                    Explore {service.title}
+                    <ArrowRight className="w-5 h-5" />
+                  </a>
+                </div>
+
+
+              </div>
+            </div>
           </div>
         </section>
       );
@@ -1726,20 +1890,21 @@ function navigate(path) {
                   <div className="flex gap-4 justify-center pt-4">
                     <a 
                       href="#pricing" 
-                      className="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105"
+                      className="px-6 py-3 rounded-full font-semibold transition-all hover:translate-y-[-1px]"
                       style={{ 
                         background: 'var(--primary)',
-                        color: 'white'
+                        color: 'white',
+                        boxShadow: 'inset 0 0 0 4px rgba(255, 255, 255, 0.18)'
                       }}
                     >
                       View Pricing
                     </a>
                     <button 
                       onClick={() => setSubmitStatus(null)}
-                      className="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105"
+                      className="px-6 py-3 rounded-full font-semibold transition-all hover:translate-y-[-1px]"
                       style={{ 
-                        background: 'var(--glass-bg-dark)',
-                        border: '1px solid var(--glass-border)',
+                        background: 'transparent',
+                        boxShadow: 'inset 0 0 0 2px rgba(138, 61, 230, 0.18)',
                         color: 'var(--text)'
                       }}
                     >
@@ -2154,7 +2319,7 @@ function navigate(path) {
       return (
         <section ref={sectionRef} className="stats-section py-20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid md:grid-cols-3 gap-8 justify-items-center max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 gap-8 justify-items-center max-w-3xl mx-auto">
               {stats.map((stat, idx) => {
                 const color = statColors[idx % statColors.length];
                 return (
@@ -2449,7 +2614,7 @@ function navigate(path) {
             </div>
 
             <div className="journey-cta">
-              <a href="#pricing" className="journey-cta-button">
+              <a href="#contact" className="journey-cta-button">
                 Get Started
                 <span className="cta-arrow">→</span>
               </a>
@@ -2592,8 +2757,8 @@ function navigate(path) {
         <div className="min-h-screen">
           <FloatingNav />
           
-          {/* Hero Section */}
-          <section ref={heroRef} className="service-page-hero min-h-screen flex items-center relative overflow-hidden pt-24">
+          {/* Hero Section — Centered headline + carousel */}
+          <section ref={heroRef} className="service-page-hero relative overflow-hidden pt-32 pb-16">
             {/* Animated Background Blobs */}
             <div className="absolute inset-0 overflow-hidden">
               <div className="blob absolute w-96 h-96 rounded-full" 
@@ -2603,311 +2768,139 @@ function navigate(path) {
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Centered headline */}
+              <div className="text-center space-y-6 stagger-item mb-16">
+                <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
+                  Your Brand,
+                  <span className="block mt-2" style={{ color: 'var(--primary)' }}>
+                    Online
+                  </span>
+                </h1>
 
-                <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
-                    Website
-                    <span className="block mt-2" style={{ color: 'var(--primary)' }}>
-                      Redesign
-                    </span>
-                  </h1>
+                <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+                  {subheading}
+                </p>
 
-                  <p className="text-xl leading-relaxed max-w-lg" style={{ color: 'var(--muted)' }}>
-                    {subheading}
-                  </p>
-
-                  <div className="flex gap-4">
-                    <a 
-                      href="#pricing"
-                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:scale-105"
-                      style={{ 
-                        background: 'var(--primary)',
-                        boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
-                      }}
-                    >
-                      View Pricing
-                    </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:scale-105">
-                      Contact Us
-                    </a>
-                  </div>
-
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-6 pt-8">
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>1-2</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>weeks delivery</div>
-                    </div>
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>4</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>sites built</div>
-                    </div>
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>3x</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>conversions</div>
-                    </div>
-                  </div>
+                <div className="flex gap-4 justify-center pt-2">
+                  <a 
+                    href="#pricing"
+                    className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
+                    style={{ 
+                      background: 'var(--primary)',
+                      boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
+                    }}
+                  >
+                    View Pricing
+                  </a>
+                  <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                    Contact Us
+                  </a>
                 </div>
+              </div>
 
-                {/* Right: Layered Card Design */}
-                <div 
-                  className="relative h-[500px] rounded-3xl liquid-glass stagger-item hidden md:block"
-                  style={{ 
-                    animationDelay: '0.2s',
-                    transform: `perspective(1000px) rotateY(${mousePos.x * 0.3}deg) rotateX(${-mousePos.y * 0.3}deg)`,
-                    background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.08) 0%, rgba(56, 189, 248, 0.08) 100%)'
-                  }}
-                >
-                  <div className="absolute inset-0 p-12 flex flex-col justify-between">
-                    {/* Layered grid mockup */}
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="h-3 rounded-full" style={{ background: 'linear-gradient(90deg, var(--primary) 0%, var(--accent-blue) 100%)' }}></div>
-                      <div className="h-3 rounded-full col-span-2" style={{ background: 'rgba(255,255,255,0.1)' }}></div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="h-24 rounded-2xl" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}></div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="h-16 rounded-xl" style={{ background: 'rgba(138, 61, 230, 0.1)' }}></div>
-                        <div className="h-16 rounded-xl" style={{ background: 'rgba(56, 189, 248, 0.1)' }}></div>
+              {/* 3D Cylindrical Carousel */}
+              <div className="cylinder-wrap">
+                <div className="cylinder-scene">
+                  <div className="cylinder-ring">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i, idx) => (
+                      <div key={idx} className="cylinder-card" style={{ '--i': idx }}>
+                        <div className="cf-phone">
+                          <div className="cf-phone-notch" />
+                          <div className="cf-screen">
+                            <div className="cf-nav"><div className="cf-hamburger" /><div className="cf-logo-dot" /></div>
+                            <div className="cf-hero-img" />
+                            <div className="cf-body">
+                              <div className="cf-title-line" />
+                              <div className="cf-sub-line" />
+                              <div className="cf-cta-pill" />
+                            </div>
+                            <div className="cf-cards-row"><div className="cf-mini-card" /><div className="cf-mini-card" /></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-4 gap-3">
-                      <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }}></div>
-                      <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }}></div>
-                      <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }}></div>
-                      <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }}></div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Features Section - Alternating Layout */}
-          <section className="py-24" style={{ background: 'var(--bg)' }}>
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  What You Get
-                </h2>
-                <p className="text-xl" style={{ color: 'var(--muted)' }}>
-                  Everything you need to launch a stunning website
-                </p>
+          {/* What You Get */}
+          <section className="py-28 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
+            <div className="max-w-6xl mx-auto px-6 relative z-10">
+              
+              {/* Two-column layout: left text, right mockup visual */}
+              <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
+                {/* Left: message */}
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--primary)' }}>
+                    What you get
+                  </p>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
+                    A website that actually
+                    <span className="block" style={{ color: 'var(--primary)' }}>represents you</span>
+                  </h2>
+                  <p className="text-lg mb-4" style={{ color: 'var(--muted)', lineHeight: '1.7' }}>
+                    Not a template with your logo slapped on. A custom-built space where people come to see your brand, understand your story, and trust what you offer.
+                  </p>
+                  <p className="text-lg" style={{ color: 'var(--muted)', lineHeight: '1.7' }}>
+                    Every detail is intentional. The colors, the layout, the flow. All designed to feel like <em>you</em>.
+                  </p>
+                </div>
+
+                {/* Right: browser mockup */}
+                <div className="wyg-brand-visual">
+                  <div className="wyg-brand-browser">
+                    <div className="wyg-brand-browser-bar">
+                      <span className="wdot wdot-r" /><span className="wdot wdot-y" /><span className="wdot wdot-g" />
+                      <div className="wyg-brand-url-bar">
+                        <span>yourbrand.com</span>
+                      </div>
+                    </div>
+                    <div className="wyg-brand-screen">
+                      <div className="wyg-brand-page">
+                        <div className="wyg-bp-nav">
+                          <div className="wyg-bp-logo" />
+                          <div className="wyg-bp-links"><span /><span /><span /></div>
+                        </div>
+                        <div className="wyg-bp-hero">
+                          <div className="wyg-bp-tagline" />
+                          <div className="wyg-bp-subtitle" />
+                          <div className="wyg-bp-cta" />
+                        </div>
+                        <div className="wyg-bp-features">
+                          <div className="wyg-bp-feat" />
+                          <div className="wyg-bp-feat" />
+                          <div className="wyg-bp-feat" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Alternating Feature Rows */}
-              <div className="space-y-24">
-                {/* Row 1 - Image Right - Speed Preview */}
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div className="stagger-item">
-                    <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
-                      Speed & Performance
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Lightning Fast Delivery
-                    </h3>
-                    <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                      Most projects completed in 1-2 weeks. We use AI to accelerate design and development without compromising quality.
-                    </p>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>AI-accelerated design process</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>Rapid prototyping and iteration</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>Fast loading speeds optimized</span>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* macOS-style Window - Speed Metrics */}
-                  <div className="stagger-item" style={{ animationDelay: '0.1s' }}>
-                    <div className="wyg-window wyg-window-animated">
-                      <div className="wyg-window-header">
-                        <div className="traffic-lights">
-                          <span className="dot dot-red"></span>
-                          <span className="dot dot-yellow"></span>
-                          <span className="dot dot-green"></span>
-                        </div>
-                        <span className="wyg-window-title">performance-metrics</span>
-                      </div>
-                      <div className="wyg-window-content">
-                        <div className="wyg-speed-preview">
-                          <div className="wyg-speed-header">
-                            <div className="wyg-speed-gauge">
-                              <svg viewBox="0 0 100 50" className="wyg-gauge-svg">
-                                <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(138,61,230,0.15)" strokeWidth="8" strokeLinecap="round"/>
-                                <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#speedGradient)" strokeWidth="8" strokeLinecap="round" strokeDasharray="126" strokeDashoffset="25"/>
-                                <defs>
-                                  <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#8A3DE6"/>
-                                    <stop offset="100%" stopColor="#38bdf8"/>
-                                  </linearGradient>
-                                </defs>
-                              </svg>
-                              <div className="wyg-gauge-value">98</div>
-                            </div>
-                            <div className="wyg-speed-label">Performance Score</div>
-                          </div>
-                          <div className="wyg-speed-bars">
-                            <div className="wyg-bar-item">
-                              <span className="wyg-bar-label">Load Time</span>
-                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '92%', background: 'var(--primary)' }}></div></div>
-                              <span className="wyg-bar-value">0.8s</span>
-                            </div>
-                            <div className="wyg-bar-item">
-                              <span className="wyg-bar-label">First Paint</span>
-                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '88%', background: 'var(--accent-blue)' }}></div></div>
-                              <span className="wyg-bar-value">1.2s</span>
-                            </div>
-                            <div className="wyg-bar-item">
-                              <span className="wyg-bar-label">Interactive</span>
-                              <div className="wyg-bar-track"><div className="wyg-bar-fill" style={{ width: '95%', background: '#28c840' }}></div></div>
-                              <span className="wyg-bar-value">1.5s</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              {/* Three value points */}
+              <div className="grid md:grid-cols-3 gap-10">
+                <div className="wyg-value-card">
+                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>01</div>
+                  <h3 className="text-lg font-semibold mb-2">Designed for your brand</h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                    Every layout, color, and interaction starts from who you are. No recycled templates, no generic pages.
+                  </p>
                 </div>
-
-                {/* Row 2 - Image Left - Design Layout */}
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  {/* macOS-style Window - Layout Preview */}
-                  <div className="stagger-item md:order-1 order-2" style={{ animationDelay: '0.2s' }}>
-                    <div className="wyg-window wyg-window-light wyg-window-animated">
-                      <div className="wyg-window-header wyg-window-header-light">
-                        <div className="traffic-lights">
-                          <span className="dot dot-red"></span>
-                          <span className="dot dot-yellow"></span>
-                          <span className="dot dot-green"></span>
-                        </div>
-                        <span className="wyg-window-title-light">preview</span>
-                      </div>
-                      <div className="wyg-window-content wyg-window-content-light">
-                        <div className="wyg-layout-preview-clean">
-                          {/* Simplified mini app preview */}
-                          <div className="wyg-preview-nav">
-                            <div className="wyg-preview-logo"></div>
-                            <div className="wyg-preview-menu"></div>
-                          </div>
-                          <div className="wyg-preview-hero">
-                            <div className="wyg-preview-title"></div>
-                            <div className="wyg-preview-subtitle"></div>
-                            <div className="wyg-preview-btn"></div>
-                          </div>
-                          <div className="wyg-preview-cards">
-                            <div className="wyg-preview-card"></div>
-                            <div className="wyg-preview-card"></div>
-                            <div className="wyg-preview-card"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="stagger-item md:order-2 order-1" style={{ animationDelay: '0.15s' }}>
-                    <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-blue)', fontSize: '0.875rem', fontWeight: '600' }}>
-                      Design & Experience
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Modern Clean Design
-                    </h3>
-                    <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                      Clean, readable layouts that convert. We strip away clutter and focus on what matters: your message and your users.
-                    </p>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--accent-blue)' }} />
-                        <span style={{ color: 'var(--text)' }}>Conversion-focused layouts</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--accent-blue)' }} />
-                        <span style={{ color: 'var(--text)' }}>Mobile-first responsive design</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--accent-blue)' }} />
-                        <span style={{ color: 'var(--text)' }}>Smooth micro-interactions</span>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="wyg-value-card">
+                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>02</div>
+                  <h3 className="text-lg font-semibold mb-2">Built to be visited</h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                    Fast, smooth, and structured so people actually enjoy being on your site and keep coming back.
+                  </p>
                 </div>
-
-                {/* Row 3 - Image Right - Analytics Dashboard */}
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div className="stagger-item" style={{ animationDelay: '0.25s' }}>
-                    <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
-                      Results & Growth
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Conversion Focused
-                    </h3>
-                    <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                      Strategic CTAs and user flows designed to turn visitors into customers. Data-driven design that delivers results.
-                    </p>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>Strategic call-to-action placement</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>SEO-optimized for search engines</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Check className="w-5 h-5" style={{ color: 'var(--primary)' }} />
-                        <span style={{ color: 'var(--text)' }}>Analytics integration included</span>
-                      </li>
-                    </ul>
-                  </div>
-                  {/* macOS-style Window - Analytics */}
-                  <div className="stagger-item" style={{ animationDelay: '0.3s' }}>
-                    <div className="wyg-window wyg-window-animated">
-                      <div className="wyg-window-header">
-                        <div className="traffic-lights">
-                          <span className="dot dot-red"></span>
-                          <span className="dot dot-yellow"></span>
-                          <span className="dot dot-green"></span>
-                        </div>
-                        <span className="wyg-window-title">analytics-dashboard</span>
-                      </div>
-                      <div className="wyg-window-content">
-                        <div className="wyg-analytics-preview">
-                          <div className="wyg-analytics-stats">
-                            <div className="wyg-stat-box">
-                              <div className="wyg-stat-value" style={{ color: 'var(--primary)' }}>+247%</div>
-                              <div className="wyg-stat-label">Traffic</div>
-                            </div>
-                            <div className="wyg-stat-box">
-                              <div className="wyg-stat-value" style={{ color: '#28c840' }}>3.2x</div>
-                              <div className="wyg-stat-label">Conversions</div>
-                            </div>
-                            <div className="wyg-stat-box">
-                              <div className="wyg-stat-value" style={{ color: 'var(--accent-blue)' }}>-42%</div>
-                              <div className="wyg-stat-label">Bounce Rate</div>
-                            </div>
-                          </div>
-                          <div className="wyg-chart">
-                            <svg viewBox="0 0 200 60" className="wyg-chart-svg">
-                              <defs>
-                                <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                  <stop offset="0%" stopColor="#8A3DE6" stopOpacity="0.3"/>
-                                  <stop offset="100%" stopColor="#8A3DE6" stopOpacity="0"/>
-                                </linearGradient>
-                              </defs>
-                              <path d="M 0 50 Q 25 45 50 35 T 100 25 T 150 15 T 200 5 L 200 60 L 0 60 Z" fill="url(#chartGradient)"/>
-                              <path d="M 0 50 Q 25 45 50 35 T 100 25 T 150 15 T 200 5" fill="none" stroke="#8A3DE6" strokeWidth="2"/>
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="wyg-value-card">
+                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>03</div>
+                  <h3 className="text-lg font-semibold mb-2">Yours to keep</h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                    Clean code, full ownership, no page-builder lock-in. A site that grows with your business.
+                  </p>
                 </div>
               </div>
             </div>
@@ -3057,15 +3050,15 @@ function navigate(path) {
                   <div className="flex gap-4">
                     <a 
                       href="#pricing"
-                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:scale-105"
+                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
                       style={{ 
                         background: 'var(--primary)',
-                        boxShadow: '0 8px 24px rgba(138, 61, 230, 0.3)'
+                        boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                       }}
                     >
                       View Pricing
                     </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:scale-105">
+                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
                       Book Demo
                     </a>
                   </div>
@@ -3185,11 +3178,11 @@ function navigate(path) {
               <div className="text-center pb-24 stagger-item" style={{ animationDelay: '0.7s' }}>
                 <a 
                   href="#pricing"
-                  className="inline-flex items-center gap-3 px-10 py-5 font-bold text-lg transition-all hover:scale-105"
+                  className="inline-flex items-center gap-3 px-10 py-5 font-bold text-lg transition-all hover:translate-y-[-1px]"
                   style={{ 
                     background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', 
                     color: 'white',
-                    boxShadow: '0 8px 32px rgba(56, 189, 248, 0.3)',
+                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)',
                     borderRadius: '9999px'
                   }}
                 >
@@ -3814,15 +3807,15 @@ function navigate(path) {
                   <div className="flex gap-4">
                     <a 
                       href="#pricing"
-                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:scale-105"
+                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
                       style={{ 
                         background: 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)',
-                        boxShadow: '0 8px 24px rgba(255, 122, 45, 0.3)'
+                        boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                       }}
                     >
                       View Pricing
                     </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:scale-105">
+                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
                       Get Started
                     </a>
                   </div>
@@ -3950,12 +3943,12 @@ function navigate(path) {
                 <div className="text-center stagger-item py-16" style={{ animationDelay: '0.4s' }}>
                   <a 
                     href="#pricing" 
-                    className="px-10 py-5 font-bold text-lg inline-flex items-center gap-3 hover-elastic"
+                    className="px-10 py-5 font-bold text-lg inline-flex items-center gap-3 transition-all hover:translate-y-[-1px]"
                     style={{ 
                       background: 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)', 
                       color: 'white',
                       borderRadius: '9999px',
-                      boxShadow: '0 8px 32px rgba(255, 122, 45, 0.3)'
+                      boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                     }}
                   >
                     View Pricing Plans

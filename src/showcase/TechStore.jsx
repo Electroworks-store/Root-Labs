@@ -751,7 +751,7 @@ export default function TechStore() {
                   Why Choose <span className="text-[#00AEEF]">NexTech</span>
                 </h2>
                 <p className="text-[#C0C0C0] text-lg leading-relaxed">
-                  We're not just selling devices — we're delivering experiences. Every product is carefully 
+                  We're not just selling devices. We're delivering experiences. Every product is carefully 
                   curated to meet the demands of modern creators, professionals, and tech enthusiasts.
                 </p>
               </div>

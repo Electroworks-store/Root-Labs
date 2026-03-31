@@ -2348,7 +2348,7 @@
                   What Your AI Can Do
                 </h2>
                 <p className="text-xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
-                  From customer support to data analysis—powerful capabilities that work 24/7
+                  From customer support to data analysis, powerful capabilities that work 24/7
                 </p>
               </div>
 
@@ -2498,7 +2498,7 @@
                     Multi-Channel
                   </h3>
                   <p style={{ color: 'var(--muted)', lineHeight: '1.6' }}>
-                    Deploy on web, Slack, email, SMS—wherever your customers are.
+                    Deploy on web, Slack, email, SMS, wherever your customers are.
                   </p>
                 </div>
               </div>
@@ -2806,7 +2806,7 @@
                       Build real relationships
                     </h3>
                     <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-                      We don't just post and ghost. We actively engage with your audience—responding to comments, DMs, and mentions. Building a loyal community that actually cares about your brand.
+                      We don't just post and ghost. We actively engage with your audience, responding to comments, DMs, and mentions. Building a loyal community that actually cares about your brand.
                     </p>
                   </div>
                 </div>
@@ -2823,7 +2823,7 @@
                       Track what matters
                     </h3>
                     <p className="text-xl leading-relaxed mb-10" style={{ color: 'var(--muted)' }}>
-                      Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing—follower count, engagement rates, and actual business impact.
+                      Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing. Follower count, engagement rates, and actual business impact.
                     </p>
                     <div className="grid grid-cols-3 gap-8">
                       <div>
