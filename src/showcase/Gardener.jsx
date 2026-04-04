@@ -153,7 +153,7 @@ const GardenerWebsite = () => {
           </div>
           
           {/* Main heading with decorative font */}
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
             Root & Bloom
           </h1>
           
@@ -210,7 +210,7 @@ const GardenerWebsite = () => {
             
             {/* Content side */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Growing with Purpose
               </h2>
               
@@ -271,7 +271,7 @@ const GardenerWebsite = () => {
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Our Services
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -324,7 +324,7 @@ const GardenerWebsite = () => {
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#344E41] mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Recent Projects
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -384,7 +384,7 @@ const GardenerWebsite = () => {
         <div className="max-w-5xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Voices from the Garden
             </h2>
             <p className="text-xl text-white/80">
@@ -452,7 +452,7 @@ const GardenerWebsite = () => {
         <div className="max-w-5xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Let's Grow Together
             </h2>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
@@ -600,10 +600,10 @@ const GardenerWebsite = () => {
 
       {/* CSS for animations */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         
         * {
-          font-family: 'Poppins', sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
         }
         
         @keyframes fadeInUp {

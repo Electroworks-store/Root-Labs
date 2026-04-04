@@ -112,18 +112,17 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .web-vibe-card { 
-    width: 200px !important; 
-    height: 200px !important;
+    width: 180px !important; 
+    height: 180px !important;
   }
   .webproc-vibe .vibe-canvas { height: 440px; }
 }
 
 @media (max-width: 640px) {
   .web-vibe-card { 
-    width: 170px !important; 
-    height: 170px !important;
+    width: 150px !important; 
+    height: 150px !important;
   }
-  .webproc-vibe .vibe-canvas { height: 380px; }
   .webproc-vibe .vibe-canvas { height: 340px; }
 }
 

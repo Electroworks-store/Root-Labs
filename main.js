@@ -281,9 +281,9 @@
                 <span className="text-xs font-medium">{data.badge}</span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-6xl md:text-8xl font-bold leading-tight whitespace-nowrap">
                 {data.title1}
-                <span className="block mt-2" style={{ color: 'var(--primary)' }}>
+                <span className="font-accent block mt-2">
                   {data.title2}
                 </span>
               </h1>
@@ -436,7 +436,7 @@
             <div className="grid lg:grid-cols-2 gap-16 items-start">
               {/* Left Column - Text Content */}
               <div className="space-y-6 stagger-item">
-                <h2 className="text-4xl md:text-5xl font-bold font-['Syne'] leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold font-['Helvetica_Neue'] leading-tight">
                   {data.heading1}
                   <span className="block" style={{ 
                     background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)',
@@ -562,7 +562,7 @@
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             {/* Section Header */}
             <div className="text-center mb-32 stagger-item">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 {heading}
               </h2>
               <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -617,7 +617,7 @@
                         <div 
                           className="relative text-[10rem] md:text-[14rem] font-bold leading-none select-none transition-all group-hover:scale-105"
                           style={{ 
-                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
                             WebkitTextStroke: `2.5px ${service.color}`,
                             WebkitTextFillColor: 'transparent',
                             backgroundImage: `radial-gradient(circle, ${service.color}20 0%, ${service.accentColor}15 100%)`,
@@ -637,7 +637,7 @@
                       <h3 
                         className="text-4xl md:text-6xl font-bold transition-all" 
                         style={{ 
-                          fontFamily: "'Syne', sans-serif",
+                          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
                           color: service.color
                         }}
                       >
@@ -660,7 +660,7 @@
                               className="text-2xl md:text-3xl font-bold mb-1"
                               style={{ 
                                 color: service.color,
-                                fontFamily: "'Space Grotesk', sans-serif"
+                                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif"
                               }}
                             >
                               {stat.value}
@@ -1058,7 +1058,7 @@
                   style={{ outline: 'none' }}
                 >
                   <div style={{ fontSize: '3rem' }}>✓</div>
-                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-3xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Thank You!
                   </h3>
                   <p className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -1099,7 +1099,7 @@
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className="contact-hero text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 {data.heading}
               </h2>
               <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -1494,7 +1494,7 @@
                       className="text-6xl md:text-7xl font-bold mb-3 transition-all duration-300 group-hover:scale-105"
                       style={{ 
                         color: color,
-                        fontFamily: "'Space Grotesk', sans-serif"
+                        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif"
                       }}
                     >
                       {counts[idx]}{stat.suffix}
@@ -1915,9 +1915,9 @@
                     <span className="text-sm font-medium">AI-Powered Design</span>
                   </div>
 
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Website
-                    <span className="block mt-2" style={{ color: 'var(--primary)' }}>
+                    <span className="font-accent block mt-2">
                       Redesign
                     </span>
                   </h1>
@@ -1945,15 +1945,15 @@
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>1-2</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>1-2</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>weeks delivery</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>50+</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>50+</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>sites built</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>3x</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--primary)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>3x</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>conversions</div>
                     </div>
                   </div>
@@ -1997,7 +1997,7 @@
           <section className="py-24" style={{ background: 'var(--bg)' }}>
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   What You Get
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2013,7 +2013,7 @@
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Speed & Performance
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Lightning Fast Delivery
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2037,7 +2037,7 @@
                   <div className="liquid-card p-8 stagger-item" style={{ animationDelay: '0.1s', height: '300px', background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}>
                     <div className="h-full flex items-center justify-center">
                       <div className="text-center space-y-4">
-                        <div className="text-6xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>1-2</div>
+                        <div className="text-6xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--primary)' }}>1-2</div>
                         <div style={{ color: 'var(--muted)' }}>weeks delivery</div>
                       </div>
                     </div>
@@ -2057,7 +2057,7 @@
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-blue)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Design & Experience
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Modern Clean Design
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2086,7 +2086,7 @@
                     <div className="inline-block px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(138, 61, 230, 0.1)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
                       Results & Growth
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Conversion Focused
                     </h3>
                     <p style={{ color: 'var(--muted)', lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
@@ -2110,7 +2110,7 @@
                   <div className="liquid-card p-8 stagger-item" style={{ animationDelay: '0.3s', height: '300px', background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}>
                     <div className="h-full flex items-center justify-center">
                       <div className="text-center space-y-4">
-                        <div className="text-6xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>3x</div>
+                        <div className="text-6xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--primary)' }}>3x</div>
                         <div style={{ color: 'var(--muted)' }}>avg. conversion increase</div>
                       </div>
                     </div>
@@ -2125,7 +2125,7 @@
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}></div>
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Simple, Transparent Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2160,9 +2160,9 @@
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>
+                      <div className="text-4xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--primary)' }}>
                         ${plan.monthly}
                         <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
                       </div>
@@ -2249,9 +2249,9 @@
                     <span className="text-sm font-medium">24/7 Automation</span>
                   </div>
 
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     AI Agent
-                    <span className="block mt-2" style={{ color: 'var(--accent-blue)' }}>
+                    <span className="block mt-2" style={{ color: 'var(--accent-blue)', fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}>
                       Development
                     </span>
                   </h1>
@@ -2279,15 +2279,15 @@
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>24/7</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>uptime</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>10K+</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>10K+</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>queries/day</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>95%</div>
+                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>95%</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>accuracy</div>
                     </div>
                   </div>
@@ -2313,7 +2313,7 @@
                            style={{ background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', boxShadow: '0 8px 32px rgba(56, 189, 248, 0.4)' }} />
                     </div>
                     <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                      <div className="text-3xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--text)' }}>
                         Intelligent Automation
                       </div>
                       <div className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -2344,7 +2344,7 @@
                   <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
                   <span className="text-sm font-semibold" style={{ color: 'var(--accent-blue)' }}>Intelligent Automation</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   What Your AI Can Do
                 </h2>
                 <p className="text-xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -2373,7 +2373,7 @@
                            style={{ background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', opacity: 0.9 }}>
                         <div className="w-6 h-6 rounded-lg" style={{ background: 'rgba(255,255,255,0.95)' }} />
                       </div>
-                      <h3 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                      <h3 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                         Customer Support AI
                       </h3>
                       <p className="text-lg" style={{ color: 'var(--muted)', lineHeight: '1.7' }}>
@@ -2411,7 +2411,7 @@
                        style={{ background: 'var(--primary)' }} />
                   
                   <div className="relative z-10">
-                    <div className="text-6xl font-bold mb-3" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <div className="text-6xl font-bold mb-3" style={{ color: 'var(--accent-blue)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       95%
                     </div>
                     <p className="text-lg font-semibold mb-2">Accuracy Rate</p>
@@ -2434,7 +2434,7 @@
                        style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)', opacity: 0.9 }}>
                     <div className="w-5 h-5 rounded-full" style={{ background: 'rgba(255,255,255,0.95)' }} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Lead Qualification
                   </h3>
                   <p style={{ color: 'var(--muted)', lineHeight: '1.6' }}>
@@ -2455,7 +2455,7 @@
                        style={{ background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', opacity: 0.9 }}>
                     <div className="w-5 h-5" style={{ background: 'rgba(255,255,255,0.95)', clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Data Analysis
                   </h3>
                   <p style={{ color: 'var(--muted)', lineHeight: '1.6' }}>
@@ -2472,7 +2472,7 @@
                     border: '1px solid rgba(56, 189, 248, 0.1)'
                   }}
                 >
-                  <div className="text-5xl font-bold mb-3" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <div className="text-5xl font-bold mb-3" style={{ color: 'var(--primary)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     &lt;1s
                   </div>
                   <p className="text-lg font-semibold mb-2">Response Time</p>
@@ -2494,7 +2494,7 @@
                        style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%)', opacity: 0.9 }}>
                     <div className="w-5 h-5 rounded" style={{ background: 'rgba(255,255,255,0.95)' }} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Multi-Channel
                   </h3>
                   <p style={{ color: 'var(--muted)', lineHeight: '1.6' }}>
@@ -2529,7 +2529,7 @@
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(138, 61, 230, 0.05) 100%)' }}></div>
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Flexible AI Pricing
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2564,9 +2564,9 @@
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--accent-blue)' }}>
+                      <div className="text-4xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--accent-blue)' }}>
                         ${plan.monthly}
                         <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
                       </div>
@@ -2666,7 +2666,7 @@
                     <span className="text-sm font-medium">Full-Service Management</span>
                   </div>
 
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                     Social Media
                     <span className="block mt-2" style={{ color: '#FF7A2D' }}>
                       Management
@@ -2696,15 +2696,15 @@
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-6 pt-8">
                     <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>2</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>2</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>videos/month</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>8</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>8</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>posts/month</div>
                     </div>
                     <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
+                      <div className="text-3xl font-bold" style={{ color: '#FF7A2D', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>24/7</div>
                       <div className="text-sm" style={{ color: 'var(--muted)' }}>support</div>
                     </div>
                   </div>
@@ -2730,7 +2730,7 @@
                            style={{ background: 'radial-gradient(circle, #FF7A2D 0%, transparent 70%)', animation: 'float 4s ease-in-out infinite 2s' }} />
                     </div>
                     <div className="text-center space-y-4">
-                      <div className="text-3xl font-bold" style={{ fontFamily: "'Syne', sans-serif", color: 'var(--text)' }}>
+                      <div className="text-3xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--text)' }}>
                         Community Growth
                       </div>
                       <div className="text-lg" style={{ color: 'var(--muted)' }}>
@@ -2756,7 +2756,7 @@
             <div className="max-w-6xl mx-auto px-6 relative z-10">
               {/* Hero Text */}
               <div className="text-center mb-24 stagger-item">
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Social Media That<br />Actually Works
                 </h2>
                 <p className="text-2xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -2774,7 +2774,7 @@
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Content Creation
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Posts that stop the scroll
                     </h3>
                     <p className="text-xl leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
@@ -2802,7 +2802,7 @@
                       <div className="w-2 h-2 rounded-full" style={{ background: 'var(--primary)' }} />
                       Community Management
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Build real relationships
                     </h3>
                     <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
@@ -2819,7 +2819,7 @@
                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
                       Growth Strategy
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Track what matters
                     </h3>
                     <p className="text-xl leading-relaxed mb-10" style={{ color: 'var(--muted)' }}>
@@ -2827,15 +2827,15 @@
                     </p>
                     <div className="grid grid-cols-3 gap-8">
                       <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>10K+</div>
+                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>10K+</div>
                         <div style={{ color: 'var(--muted)' }}>Avg. Reach</div>
                       </div>
                       <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>5x</div>
+                        <div className="text-5xl font-bold mb-2" style={{ color: 'var(--primary)', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>5x</div>
                         <div style={{ color: 'var(--muted)' }}>Growth</div>
                       </div>
                       <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
+                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>24/7</div>
                         <div style={{ color: 'var(--muted)' }}>Support</div>
                       </div>
                     </div>
@@ -2862,7 +2862,7 @@
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255, 122, 45, 0.05) 0%, rgba(138, 61, 230, 0.05) 100%)' }}></div>
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Grow Your Social Presence
                 </h2>
                 <p className="text-xl" style={{ color: 'var(--muted)' }}>
@@ -2897,9 +2897,9 @@
                         Most Popular
                       </div>
                     )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>{plan.name}</h3>
+                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#FF7A2D' }}>
+                      <div className="text-4xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: '#FF7A2D' }}>
                         ${plan.monthly}
                         <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
                       </div>
@@ -3330,7 +3330,7 @@
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 💻 Tech Haven
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>
@@ -3385,7 +3385,7 @@
 
           <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
             <div className="text-center max-w-2xl px-6">
-              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+              <h1 className="text-6xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 🍽️ Culinary Delight
               </h1>
               <p className="text-xl mb-6" style={{ color: 'var(--muted)' }}>

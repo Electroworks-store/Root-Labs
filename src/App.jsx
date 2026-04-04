@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react';
-import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send } from 'lucide-react';
+import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send, Bookmark, MoreVertical, Home, Search, Plus, Bell, User } from 'lucide-react';
 import heroLogo from '../img/Rootlabs-logo-xbg.png';
+import favicon from '../img/rootlabs-favicon.png';
 import sakura1 from '../img/sakura1.webp';
 import sakura2 from '../img/sakura2.webp';
 import sakura3 from '../img/sakura3.webp';
@@ -13,6 +14,7 @@ import beaker4 from '../img/beaker4.webp';
 import GardenerWebsite from './showcase/Gardener';
 import TechStore from './showcase/TechStore';
 import Restaurant from './showcase/Restaurant';
+import Masonry from './components/Masonry';
 import WebsitesProcess from './components/WebsitesProcess';
 
 // Navigation helper for client-side routing
@@ -1280,7 +1282,7 @@ function navigate(path) {
           description: socialData?.dataset.subheading || '',
           color: '#FF7A2D',
           link: '/social',
-          features: ['Content Creation', 'Community Management', 'Growth Strategy', 'Analytics Reports', 'Influencer Outreach', '3+ Platforms'],
+          features: ['Hook & Script Research', 'Visual Strategy', 'Content Experimentation', 'Niche Analysis', 'CTA Optimization', '3+ Platforms'],
         }
       ];
 
@@ -2802,21 +2804,9 @@ function navigate(path) {
               <div className="cylinder-wrap">
                 <div className="cylinder-scene">
                   <div className="cylinder-ring">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i, idx) => (
+                    {Array.from({ length: 10 }, (_, idx) => (
                       <div key={idx} className="cylinder-card" style={{ '--i': idx }}>
-                        <div className="cf-phone">
-                          <div className="cf-phone-notch" />
-                          <div className="cf-screen">
-                            <div className="cf-nav"><div className="cf-hamburger" /><div className="cf-logo-dot" /></div>
-                            <div className="cf-hero-img" />
-                            <div className="cf-body">
-                              <div className="cf-title-line" />
-                              <div className="cf-sub-line" />
-                              <div className="cf-cta-pill" />
-                            </div>
-                            <div className="cf-cards-row"><div className="cf-mini-card" /><div className="cf-mini-card" /></div>
-                          </div>
-                        </div>
+                        <div className="cf-placeholder" />
                       </div>
                     ))}
                   </div>
@@ -3282,288 +3272,48 @@ function navigate(path) {
       );
     }
 
-    // Social Showcase Carousel - 3D Horizontal Reel Display
-    function SocialShowcaseCarousel() {
-      const trackRef = useRef(null);
-      const [centerIndex, setCenterIndex] = useState(0);
-      const [isDragging, setIsDragging] = useState(false);
-      const dragStartX = useRef(0);
-      const dragStartY = useRef(0);
-      const scrollStartX = useRef(0);
-      const isHorizontalDrag = useRef(false);
-
-      // Placeholder reels data - replace with real content later
-      const reels = [
-        { id: 1, platform: 'TikTok', username: '@rootlabs', caption: 'How we redesigned this website in 48 hours ??', likes: '12.4K', comments: '234' },
-        { id: 2, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Behind the scenes of our AI workflow ?', likes: '8.7K', comments: '156' },
-        { id: 3, platform: 'TikTok', username: '@rootlabs', caption: 'Client reaction to their new site ??', likes: '24.1K', comments: '412' },
-        { id: 4, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Design trends you need to know in 2025', likes: '15.2K', comments: '287' },
-        { id: 5, platform: 'TikTok', username: '@rootlabs', caption: 'POV: Your website finally converts ??', likes: '31.8K', comments: '523' },
-        { id: 6, platform: 'Instagram', username: '@rootlabs.studio', caption: 'Speed run: Landing page in 2 hours', likes: '19.6K', comments: '341' },
-        { id: 7, platform: 'TikTok', username: '@rootlabs', caption: 'Why your website is losing customers', likes: '42.3K', comments: '678' },
-        { id: 8, platform: 'Instagram', username: '@rootlabs.studio', caption: 'The secret to 10x engagement ??', likes: '11.9K', comments: '198' },
+    // Social Masonry Grid - Post Gallery
+    function SocialMasonryGrid() {
+      // aspectRatio = height/width  (portrait A4 ≈ 1.414 | landscape 16:9 ≈ 0.5625 | square = 1)
+      const posts = [
+        { id: 1, type: 'portrait' },
+        { id: 2, type: 'portrait' },
+        { id: 5, type: 'landscape', span: 2 },
+        { id: 3, type: 'portrait' },
+        { id: 4, type: 'portrait' },
       ];
 
-      // Calculate 3D transforms based on position relative to center
-      const getCardTransform = (index) => {
-        const offset = index - centerIndex;
-        const absOffset = Math.abs(offset);
-        
-        // Rotation: cards rotate toward/away from viewer - gentler
-        const rotateY = offset * -6;
-        
-        // Scale: center slightly larger, sides smaller
-        const scale = absOffset === 0 ? 1.02 : Math.max(0.88, 1 - absOffset * 0.05);
-        
-        // Vertical curve: subtle arc effect
-        const translateY = absOffset * absOffset * 3;
-        
-        // Z-depth for 3D effect
-        const translateZ = absOffset === 0 ? 10 : -absOffset * 10;
-        
-        // Opacity: gentle fade for distant cards
-        const opacity = Math.max(0.6, 1 - absOffset * 0.12);
-
-        return {
-          transform: `
-            perspective(1200px)
-            rotateY(${rotateY}deg)
-            scale(${scale})
-            translateY(${translateY}px)
-            translateZ(${translateZ}px)
-          `,
-          opacity,
-          zIndex: 10 - absOffset,
-        };
+      const ratioMap = {
+        portrait:  1.4142,
+        landscape: 0.36,
+        square:    1.0,
       };
 
-      // Update center card on scroll
-      useEffect(() => {
-        const track = trackRef.current;
-        if (!track) return;
-
-        const updateCenterCard = () => {
-          const cards = track.querySelectorAll('.social-reel-card');
-          const trackRect = track.getBoundingClientRect();
-          const trackCenter = trackRect.left + trackRect.width / 2;
-
-          let closestIndex = 0;
-          let closestDistance = Infinity;
-
-          cards.forEach((card, index) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2;
-            const distance = Math.abs(cardCenter - trackCenter);
-
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestIndex = index;
-            }
-          });
-
-          setCenterIndex(closestIndex);
-        };
-
-        track.addEventListener('scroll', updateCenterCard, { passive: true });
-        updateCenterCard();
-
-        return () => track.removeEventListener('scroll', updateCenterCard);
-      }, []);
-
-      // Arrow navigation
-      const scrollToIndex = (index) => {
-        const track = trackRef.current;
-        if (!track) return;
-        const cards = track.querySelectorAll('.social-reel-card');
-        const targetIndex = Math.max(0, Math.min(index, cards.length - 1));
-        if (cards[targetIndex]) {
-          cards[targetIndex].scrollIntoView({
-            behavior: 'smooth',
-            inline: 'center',
-            block: 'nearest'
-          });
-        }
-      };
-
-      const handlePrev = () => scrollToIndex(centerIndex - 1);
-      const handleNext = () => scrollToIndex(centerIndex + 1);
-
-      // Mouse drag handling - only horizontal
-      const handleMouseDown = (e) => {
-        setIsDragging(true);
-        isHorizontalDrag.current = false;
-        dragStartX.current = e.clientX;
-        dragStartY.current = e.clientY;
-        scrollStartX.current = trackRef.current?.scrollLeft || 0;
-      };
-
-      const handleMouseMove = (e) => {
-        if (!isDragging || !trackRef.current) return;
-        
-        const dx = e.clientX - dragStartX.current;
-        const dy = e.clientY - dragStartY.current;
-        
-        // Determine drag direction on first significant move
-        if (!isHorizontalDrag.current && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
-          isHorizontalDrag.current = Math.abs(dx) > Math.abs(dy);
-        }
-        
-        // Only scroll horizontally if it's a horizontal drag
-        if (isHorizontalDrag.current) {
-          trackRef.current.scrollLeft = scrollStartX.current - dx;
-        }
-      };
-
-      const handleMouseUp = () => {
-        setIsDragging(false);
-        isHorizontalDrag.current = false;
-      };
-
-      useEffect(() => {
-        document.addEventListener('mouseup', handleMouseUp);
-        document.addEventListener('mouseleave', handleMouseUp);
-        return () => {
-          document.removeEventListener('mouseup', handleMouseUp);
-          document.removeEventListener('mouseleave', handleMouseUp);
-        };
-      }, []);
+      const items = posts.map(p => ({
+        id: p.id,
+        img: `/socialmedia/post-${p.id}.png?v=2`,
+        aspectRatio: ratioMap[p.type],
+        span: p.span || 1,
+        height: 0,
+      }));
 
       return (
-        <section className="social-carousel-section" aria-label="Social media showcase carousel">
-          <div className="social-carousel-header">
-            <h2 className="social-carousel-title">Our Content in Action</h2>
-            <p className="social-carousel-subtitle">See what we create for brands like yours</p>
-          </div>
-
-          <div className="social-carousel-wrapper">
-            {/* Edge Fades */}
-            <div className="social-carousel-fade-left" aria-hidden="true" />
-            <div className="social-carousel-fade-right" aria-hidden="true" />
-
-            {/* Arrow Controls */}
-            <button 
-              className="social-carousel-arrow social-carousel-arrow-left"
-              onClick={handlePrev}
-              aria-label="Previous reel"
-              disabled={centerIndex === 0}
-              style={{ opacity: centerIndex === 0 ? 0.3 : undefined }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button 
-              className="social-carousel-arrow social-carousel-arrow-right"
-              onClick={handleNext}
-              aria-label="Next reel"
-              disabled={centerIndex === reels.length - 1}
-              style={{ opacity: centerIndex === reels.length - 1 ? 0.3 : undefined }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-
-            {/* Carousel Track */}
-            <div
-              ref={trackRef}
-              className="social-carousel-track"
-              role="region"
-              aria-label="Scrollable content carousel"
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-            >
-              {reels.map((reel, index) => {
-                const isCenter = index === centerIndex;
-                const style = getCardTransform(index);
-
-                return (
-                  <article
-                    key={reel.id}
-                    className={`social-reel-card ${isCenter ? 'is-center' : ''}`}
-                    style={style}
-                    aria-label={`${reel.platform} reel by ${reel.username}`}
-                  >
-                    <div className="social-reel-card-inner">
-                      <div className="social-reel-content">
-                        {/* Clean Minimal Placeholder */}
-                        <div className="social-reel-placeholder" aria-hidden="true">
-                          {/* Subtle play icon in center */}
-                          <div style={{
-                            position: 'absolute',
-                            top: '45%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            opacity: 0.15
-                          }}>
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
-                          </div>
-                          {/* "Reel Preview" text */}
-                          <div style={{
-                            position: 'absolute',
-                            top: '55%',
-                            left: '50%',
-                            transform: 'translate(-50%, 0)',
-                            fontSize: '0.625rem',
-                            fontWeight: 500,
-                            color: 'rgba(255, 255, 255, 0.25)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.1em'
-                          }}>
-                            Reel Preview
-                          </div>
-                        </div>
-
-                        {/* Platform Badge */}
-                        <div className="social-reel-platform">{reel.platform}</div>
-
-                        {/* Play Indicator (shown when not center) */}
-                        <div className="social-reel-play-indicator" aria-hidden="true">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-
-                        {/* Overlay with user info */}
-                        <div className="social-reel-overlay">
-                          <div className="social-reel-username">{reel.username}</div>
-                          <div className="social-reel-caption">{reel.caption}</div>
-                        </div>
-
-                        {/* Side Action Buttons */}
-                        <div className="social-reel-actions" aria-hidden="true">
-                          <div>
-                            <button className="social-reel-action-btn" tabIndex={-1}>
-                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                              </svg>
-                            </button>
-                            <div className="social-reel-action-count">{reel.likes}</div>
-                          </div>
-                          <div>
-                            <button className="social-reel-action-btn" tabIndex={-1}>
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/>
-                              </svg>
-                            </button>
-                            <div className="social-reel-action-count">{reel.comments}</div>
-                          </div>
-                          <div>
-                            <button className="social-reel-action-btn" tabIndex={-1}>
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+        <section className="social-masonry-section" aria-label="Social media posts gallery">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="social-masonry-header">
+              <h2 className="social-masonry-title">Our Content in Action</h2>
+              <p className="social-masonry-subtitle">See what we create for brands like yours</p>
             </div>
+            <Masonry
+              items={items}
+              ease="power3.out"
+              duration={0.6}
+              stagger={0.05}
+              animateFrom="bottom"
+              scaleOnHover={true}
+              hoverScale={0.95}
+              blurToFocus={true}
+            />
           </div>
         </section>
       );
@@ -3672,6 +3422,323 @@ function navigate(path) {
     }
 
     // Engagement Tiles Component
+    // 3D Instagram Phone Mockup - Auto-scrolling Reels Feed
+    function InstaPhoneMockup() {
+      const [currentReel, setCurrentReel] = useState(0);
+      const [likedReels, setLikedReels] = useState({});
+      const [showComments, setShowComments] = useState(false);
+      const [doubleTapHeart, setDoubleTapHeart] = useState(false);
+      const [isFollowing, setIsFollowing] = useState(false);
+      const [noTransition, setNoTransition] = useState(false);
+      const touchStartY = useRef(null);
+      const [followParticles, setFollowParticles] = useState([]);
+
+      const handleFollow = () => {
+        const wasFollowing = isFollowing;
+        setIsFollowing(!wasFollowing);
+        if (!wasFollowing) {
+          const particles = Array.from({ length: 8 }, (_, i) => ({
+            id: Date.now() + i,
+            x: (Math.random() - 0.5) * 60,
+            y: -(Math.random() * 40 + 10),
+            scale: Math.random() * 0.5 + 0.5,
+          }));
+          setFollowParticles(particles);
+          setTimeout(() => setFollowParticles([]), 700);
+        }
+      };
+
+      const reels = [
+        { id: 1, username: 'rootlabs.studio', caption: 'How we redesigned this site in 48h ✨', likes: '12.4K', comments: '234', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)' },
+        { id: 2, username: 'rootlabs.studio', caption: 'Client reaction to their new brand 🔥', likes: '24.1K', comments: '412', gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)' },
+        { id: 3, username: 'rootlabs.studio', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%)' },
+        { id: 4, username: 'rootlabs.studio', caption: 'Design trends you NEED in 2026', likes: '15.2K', comments: '287', gradient: 'linear-gradient(135deg, #0c1220 0%, #1a3a5c 100%)' },
+      ];
+      const reelsCount = reels.length;
+      // Extended array for infinite scroll: original + first reel copy at end
+      const extendedReels = [...reels, reels[0]];
+
+      const commentsByReel = [
+        [
+          { user: 'you_found_me', text: 'why are you reading fake comments lmao', time: '1m', color: '#e11d48' },
+          { user: 'notabot_i_swear', text: 'this comment was written by a developer 🤓', time: '4m', color: '#7c3aed' },
+          { user: 'ur.mum.online', text: 'bro spent 3 days on this mockup 💀', time: '9m', color: '#0891b2' },
+          { user: 'definitely_real', text: 'I told my friends about this fake phone', time: '12m', color: '#16a34a' },
+          { user: 'scroll.addict', text: 'wait is this actually scrollable 😭', time: '18m', color: '#d97706' },
+        ],
+        [
+          { user: 'ceo_of_cringe', text: "pov: you're inspecting a portfolio site at midnight", time: '2m', color: '#be185d' },
+          { user: 'webdev_therapist', text: 'hire them before someone else does fr', time: '5m', color: '#4f46e5' },
+          { user: 'figma.goblin', text: 'this transitions smoother than my excuses', time: '8m', color: '#0d9488' },
+          { user: 'not.a.scam', text: 'I showed this to my boss and got promoted', time: '15m', color: '#dc2626' },
+          { user: 'pixels.and.pain', text: 'the dev is watching you read this 👁️', time: '22m', color: '#9333ea' },
+        ],
+        [
+          { user: 'hello.world', text: 'if you can read this, hire rootlabs', time: '30s', color: '#2563eb' },
+          { user: 'senior.lurker', text: 'congrats on finding the easter eggs section', time: '3m', color: '#65a30d' },
+          { user: 'ux.gremlin', text: "technically this isn't even a real video 🤭", time: '7m', color: '#d97706' },
+          { user: 'chaos.agent_', text: 'i swiped on a fake phone. no regrets.', time: '11m', color: '#e11d48' },
+          { user: 'type.fast.cry.more', text: 'bro coded a whole IG just to flex', time: '20m', color: '#7c3aed' },
+        ],
+        [
+          { user: 'fourth.wall.fc', text: "this comment doesn't exist and yet here we are", time: '1m', color: '#0891b2' },
+          { user: 'brand.whisperer', text: 'ok but the gradient on this is actually 🔥', time: '6m', color: '#16a34a' },
+          { user: 'just.a.div', text: 'I am a div element pretending to be a person', time: '9m', color: '#4f46e5' },
+          { user: 'scroll.goblin99', text: "you've now spent 4 minutes on a fake reel", time: '14m', color: '#be185d' },
+          { user: 'css.is.my.cardio', text: 'someone actually built this. respect. 🫡', time: '19m', color: '#9333ea' },
+        ],
+      ];
+
+      // When we land on the clone (index reelsCount), snap back to 0 without animation
+      useEffect(() => {
+        if (currentReel === reelsCount) {
+          const t = setTimeout(() => {
+            setNoTransition(true);
+            setCurrentReel(0);
+          }, 460);
+          return () => clearTimeout(t);
+        }
+      }, [currentReel, reelsCount]);
+
+      // Re-enable transition after the no-transition snap
+      useEffect(() => {
+        if (noTransition) {
+          const frame = requestAnimationFrame(() =>
+            requestAnimationFrame(() => setNoTransition(false))
+          );
+          return () => cancelAnimationFrame(frame);
+        }
+      }, [noTransition]);
+
+      // Auto-scroll reels
+      useEffect(() => {
+        if (showComments) return;
+        const interval = setInterval(() => {
+          setCurrentReel(prev => (prev + 1) % (reelsCount + 1));
+        }, 4000);
+        return () => clearInterval(interval);
+      }, [reelsCount, showComments]);
+
+      const handleSwipeStart = (e) => {
+        touchStartY.current = e.touches ? e.touches[0].clientY : null;
+      };
+
+      const handleSwipeEnd = (e) => {
+        if (touchStartY.current === null) return;
+        const endY = e.changedTouches[0].clientY;
+        const diff = touchStartY.current - endY;
+        if (Math.abs(diff) > 30) {
+          if (diff > 0) {
+            setCurrentReel(prev => (prev + 1) % (reelsCount + 1));
+          } else {
+            setCurrentReel(prev => (prev <= 0 ? 0 : prev - 1));
+          }
+        }
+        touchStartY.current = null;
+      };
+
+      const handleLike = () => {
+        const reel = extendedReels[currentReel] || extendedReels[0];
+        setLikedReels(prev => ({ ...prev, [reel.id]: !prev[reel.id] }));
+      };
+
+      const handleDoubleTap = () => {
+        const reel = extendedReels[currentReel] || extendedReels[0];
+        if (!likedReels[reel.id]) {
+          setLikedReels(prev => ({ ...prev, [reel.id]: true }));
+        }
+        setDoubleTapHeart(true);
+        setTimeout(() => setDoubleTapHeart(false), 900);
+      };
+
+      const reel = extendedReels[currentReel] || extendedReels[0];
+      const isLiked = likedReels[reel.id];
+
+      return (
+        <div className="insta-phone-scene">
+          <div className="insta-phone-body">
+            {/* Phone frame details */}
+            <div className="insta-phone-notch" />
+            <div className="insta-phone-btn insta-phone-btn--vol1" />
+            <div className="insta-phone-btn insta-phone-btn--vol2" />
+            <div className="insta-phone-btn insta-phone-btn--power" />
+
+            {/* Screen */}
+            <div className="insta-phone-screen">
+              {/* Status bar */}
+              <div className="insta-status-bar">
+                <span>9:41</span>
+                <div className="insta-status-icons">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+                </div>
+              </div>
+
+              {/* Instagram header */}
+              <div className="insta-nav-header">
+                <span className="insta-nav-title">Reels</span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+
+              {/* Reel viewport */}
+              <div
+                className="insta-viewport"
+                onDoubleClick={handleDoubleTap}
+                onTouchStart={handleSwipeStart}
+                onTouchEnd={handleSwipeEnd}
+              >
+                {/* Scrolling reel track */}
+                <div
+                  className="insta-reel-track"
+                  style={{
+                    transform: `translateY(-${currentReel * 100}%)`,
+                    transition: noTransition ? 'none' : undefined,
+                  }}
+                >
+                  {extendedReels.map((r, i) => {
+                    const liked = likedReels[r.id];
+                    return (
+                      <div key={`reel-${i}`} className="insta-reel-slide">
+                        <div className="insta-reel-bg" style={{ background: r.gradient }}>
+                          <svg className="insta-reel-play-icon" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.08)">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+
+                        {/* Action rail */}
+                        <div className="insta-action-rail">
+                          <button className="insta-action-btn" onClick={(e) => { e.stopPropagation(); handleLike(); }}>
+                            <Heart
+                              size={28}
+                              fill={liked ? '#ff3040' : 'none'}
+                              color={liked ? '#ff3040' : 'white'}
+                              className={liked ? 'insta-heart-pop' : ''}
+                            />
+                            <span>{r.likes}</span>
+                          </button>
+                          <button className="insta-action-btn" onClick={(e) => { e.stopPropagation(); setShowComments(true); }}>
+                            <MessageCircle size={28} color="white" />
+                            <span>{r.comments}</span>
+                          </button>
+                          <button className="insta-action-btn">
+                            <Send size={24} color="white" />
+                          </button>
+                          <button className="insta-action-btn">
+                            <Bookmark size={24} color="white" />
+                          </button>
+                          <button className="insta-action-btn">
+                            <MoreVertical size={24} color="white" />
+                          </button>
+                        </div>
+
+                        {/* Bottom info */}
+                        <div className="insta-reel-bottom">
+                          <div className="insta-reel-user-row">
+                            <img src={favicon} alt="RL" className="insta-reel-avatar" style={{ objectFit: 'contain', background: '#fff', borderRadius: '50%' }} />
+                            <span className="insta-reel-uname">{r.username}</span>
+                            <span style={{ position: 'relative', display: 'inline-block' }}>
+                              <button className={`insta-follow-pill ${isFollowing ? 'is-following' : ''}`} onClick={handleFollow}>{isFollowing ? 'Following' : 'Follow'}</button>
+                              {followParticles.map(p => (
+                                <span key={p.id} className="follow-particle" style={{ '--px': `${p.x}px`, '--py': `${p.y}px`, '--s': p.scale }} />
+                              ))}
+                            </span>
+                          </div>
+                          <div className="insta-reel-cap">{r.caption}</div>
+                          <div className="insta-reel-music">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            <span>Original Audio · rootlabs.studio</span>
+                          </div>
+                        </div>
+
+                        {/* Progress bars */}
+                        <div className="insta-reel-progress">
+                          {reels.map((_, j) => (
+                            <div key={j} className={`insta-progress-bar ${j === (currentReel % reelsCount) ? 'active' : ''} ${j < (currentReel % reelsCount) ? 'done' : ''}`} />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Double-tap heart animation */}
+                {doubleTapHeart && (
+                  <div className="insta-doubletap-heart">
+                    <Heart size={80} fill="white" color="white" />
+                  </div>
+                )}
+              </div>
+
+              {/* Comments overlay */}
+              <div className={`insta-comments-sheet ${showComments ? 'is-open' : ''}`}>
+                <div className="insta-comments-handle" />
+                <div className="insta-comments-head">
+                  <span>Comments</span>
+                  <button onClick={() => setShowComments(false)}>
+                    <X size={20} color="white" />
+                  </button>
+                </div>
+                <div className="insta-comments-body">
+                  {commentsByReel[currentReel % reelsCount].map((c, i) => (
+                    <div key={i} className="insta-comment-row">
+                      <div className="insta-comment-av" style={{ background: c.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: 'white' }}>
+                        {c.user[0].toUpperCase()}
+                      </div>
+                      <div className="insta-comment-content">
+                        <span className="insta-comment-name">{c.user}</span>
+                        <span className="insta-comment-txt">{c.text}</span>
+                        <span className="insta-comment-time">{c.time}</span>
+                      </div>
+                      <button className="insta-comment-heart">
+                        <Heart size={12} color="rgba(255,255,255,0.4)" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="insta-comment-input">
+                  <div className="insta-comment-input-av" />
+                  <div className="insta-comment-input-field">Add a comment...</div>
+                </div>
+              </div>
+
+              {/* Bottom nav */}
+              <div className="insta-bottom-nav">
+                {/* Home - Instagram style filled house */}
+                <button className="insta-nav-btn insta-nav-btn--active">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <path d="M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005Z"/>
+                  </svg>
+                </button>
+                {/* Reels - squircle with play triangle */}
+                <button className="insta-nav-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="2" y="2" width="20" height="20" rx="6" ry="6" stroke="rgba(255,255,255,0.6)" strokeWidth="2"/>
+                    <path d="M10 8.5l6 3.5-6 3.5V8.5z" fill="rgba(255,255,255,0.6)"/>
+                  </svg>
+                </button>
+                <button className="insta-nav-btn">
+                  <Plus size={24} color="rgba(255,255,255,0.6)" />
+                </button>
+                {/* Search */}
+                <button className="insta-nav-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </button>
+                <button className="insta-nav-btn">
+                  <img src={favicon} alt="Profile" className="insta-nav-profile-img" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function EngagementTiles() {
       const [isLiked, setIsLiked] = useState(false);
       const [pulseHeart, setPulseHeart] = useState(false);
@@ -3744,6 +3811,726 @@ function navigate(path) {
             );
           })}
         </div>
+      );
+    }
+
+    // Video Dissection - Break down a video into its components
+    function VideoDissection() {
+      const sectionRef = useRef(null);
+      const phoneRef = useRef(null);
+      const [isInView, setIsInView] = useState(false);
+
+      // ── Continuous playhead state ──
+      const totalDur = 22;
+      const playSpeed = 0.65;
+      const [currentTime, setCurrentTime] = useState(0);
+      const timeRef = useRef(0);
+      const animRef = useRef(null);
+      const lastRef = useRef(null);
+      const pausedRef = useRef(false);
+      const draggingRef = useRef(false);
+      const [hoverTime, setHoverTime] = useState(null);
+      const [isPlaying, setIsPlaying] = useState(true);
+      const [hoveredClip, setHoveredClip] = useState(null);
+      const rulerRef = useRef(null);
+
+      const segments = [
+        { id: 0, label: 'Hook', color: '#FF8C42', duration: '0-3 Seconds', title: 'The Hook', body: 'The first 1-3 seconds decide everything. We research the highest-performing hooks in your niche and craft opening frames that stop the scroll instantly. Pattern interrupts, bold text overlays, unexpected visuals.' },
+        { id: 1, label: 'Problem', color: '#A855F7', duration: '3-8 Seconds', title: 'The Problem', body: 'Call out the pain point your audience already feels. This is where relatability builds trust. We script this section to make viewers nod along and feel understood before you even pitch a solution.' },
+        { id: 2, label: 'Solution', color: '#22D3EE', duration: '8-18 Seconds', title: 'The Solution', body: 'Present your product or service as the answer, but without sounding like an ad. We frame it through storytelling, quick demos, or social proof. The viewer should think "I need this" not "they\'re selling me."' },
+        { id: 3, label: 'CTA', color: '#F43F5E', duration: '18-22 Seconds', title: 'The CTA', body: 'Every video needs a clear next step. Follow, comment, link in bio, save for later. We test different CTAs across videos to find what drives the most action for your specific audience.' },
+        { id: 4, label: 'Visuals', color: '#34D399', duration: 'Throughout', title: 'Visuals & Editing', body: 'Fast cuts, on-brand colors, text overlays timed to voiceover, trending transitions. We handle the visual direction end-to-end so every frame looks intentional, not thrown together.' },
+      ];
+
+      const segTimes = [
+        { start: 0, end: 3 },
+        { start: 3, end: 8 },
+        { start: 8, end: 18 },
+        { start: 18, end: 22 },
+      ];
+
+      // Derive active segment from continuous playhead position
+      const activeSegment = (() => {
+        for (let i = 0; i < segTimes.length; i++) {
+          if (currentTime >= segTimes[i].start && currentTime < segTimes[i].end) return i;
+        }
+        return 3;
+      })();
+
+      const active = segments[activeSegment];
+
+      // Observe section entering viewport
+      useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([e]) => setIsInView(e.isIntersecting), { threshold: 0.2 });
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, []);
+
+      // Continuous rAF playhead animation
+      useEffect(() => {
+        if (!isInView) { lastRef.current = null; return; }
+        const tick = (now) => {
+          if (!pausedRef.current && !draggingRef.current && lastRef.current != null) {
+            const dt = (now - lastRef.current) / 1000 * playSpeed;
+            timeRef.current = (timeRef.current + dt) % totalDur;
+            setCurrentTime(timeRef.current);
+          }
+          lastRef.current = now;
+          animRef.current = requestAnimationFrame(tick);
+        };
+        animRef.current = requestAnimationFrame(tick);
+        return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
+      }, [isInView]);
+
+      // Jump playhead to a specific time
+      const jumpTo = (t) => {
+        timeRef.current = Math.max(0, Math.min(totalDur - 0.01, t));
+        setCurrentTime(timeRef.current);
+      };
+
+      // Click anywhere on ruler or track area to scrub
+      const handleScrub = (e) => {
+        if (!rulerRef.current) return;
+        const rect = rulerRef.current.getBoundingClientRect();
+        jumpTo(((e.clientX - rect.left) / rect.width) * totalDur);
+      };
+
+      // Drag the playhead
+      const startDrag = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        draggingRef.current = true;
+        const onMove = (me) => {
+          if (rulerRef.current) {
+            const rect = rulerRef.current.getBoundingClientRect();
+            jumpTo(((me.clientX - rect.left) / rect.width) * totalDur);
+          }
+        };
+        const onUp = () => {
+          draggingRef.current = false;
+          window.removeEventListener('mousemove', onMove);
+          window.removeEventListener('mouseup', onUp);
+        };
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+      };
+
+      // Toggle play/pause
+      const togglePlay = () => {
+        pausedRef.current = !pausedRef.current;
+        setIsPlaying(!pausedRef.current);
+      };
+
+      const playheadPct = (currentTime / totalDur) * 100;
+
+      // Timecode formatter  00:SS:FF (frames at 30fps)
+      const fmtTC = (t) => {
+        const s = Math.floor(Math.max(0, t));
+        const f = Math.floor((Math.max(0, t) % 1) * 30);
+        return `00:${String(s).padStart(2, '0')}:${String(f).padStart(2, '0')}`;
+      };
+
+      return (
+        <section
+          ref={sectionRef}
+          className="py-24 relative overflow-hidden"
+          style={{ background: 'var(--surface)' }}
+        >
+          <div className="max-w-7xl mx-auto px-6">
+            {/* Section header */}
+            <div className="text-center md:text-center mb-16 stagger-item vd-section-header">
+              <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: '#FF7A2D' }}>
+                HOW WE THINK
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                Anatomy of a video that converts
+              </h2>
+              <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+                Every second is intentional. Here's how we break down a single piece of content.
+              </p>
+            </div>
+
+            {/* Main content: phone left (1/3) + text & timeline right (2/3) */}
+            <div className="vd-layout grid md:grid-cols-3 gap-8 md:gap-12 items-start">
+              
+              {/* Left - iPhone Mockup (1/3) */}
+              <div className="flex justify-center md:sticky md:top-32">
+                <div
+                  ref={phoneRef}
+                  className="vd-phone-wrapper"
+                  style={{
+                    perspective: '1200px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <div
+                    className="vd-phone"
+                    style={{
+                      width: 280,
+                      height: 580,
+                      borderRadius: 40,
+                      background: '#111',
+                      border: '4px solid #333',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      boxShadow: '0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05) inset',
+                      transform: isInView
+                        ? 'rotateY(-8deg) rotateX(2deg) scale(1)'
+                        : 'rotateY(-20deg) rotateX(8deg) scale(0.9)',
+                      transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                      transformStyle: 'preserve-3d',
+                    }}
+                  >
+                    {/* Notch */}
+                    <div style={{
+                      position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)',
+                      width: 100, height: 28, borderRadius: 20, background: '#000', zIndex: 20
+                    }} />
+
+                    {/* Screen content - placeholder per segment */}
+                    <div style={{
+                      position: 'absolute', inset: 0, borderRadius: 36,
+                      background: `linear-gradient(160deg, ${active.color}22 0%, ${active.color}08 50%, #0a0a0a 100%)`,
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                      transition: 'background 0.6s ease', padding: 24
+                    }}>
+                      {/* Play icon */}
+                      <div style={{
+                        width: 64, height: 64, borderRadius: '50%',
+                        background: `${active.color}20`, border: `2px solid ${active.color}40`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        marginBottom: 16, transition: 'all 0.5s ease'
+                      }}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill={active.color}>
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+
+                      {/* Segment label on screen */}
+                      <div style={{
+                        fontSize: 14, fontWeight: 700, letterSpacing: '0.1em',
+                        color: active.color, textTransform: 'uppercase',
+                        transition: 'color 0.5s ease'
+                      }}>
+                        {active.label}
+                      </div>
+                      <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>
+                        {active.duration}
+                      </div>
+
+                      {/* Fake video waveform bars */}
+                      <div style={{
+                        display: 'flex', gap: 3, marginTop: 32, alignItems: 'flex-end', height: 40
+                      }}>
+                        {Array.from({ length: 20 }).map((_, i) => {
+                          const h = 8 + Math.sin(i * 0.8 + activeSegment * 2) * 16 + Math.random() * 8;
+                          return (
+                            <div key={i} style={{
+                              width: 3, height: h, borderRadius: 2,
+                              background: active.color,
+                              opacity: 0.3 + Math.random() * 0.4,
+                              transition: 'height 0.4s ease, background 0.5s ease'
+                            }} />
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Subtle 3D side shine */}
+                    <div style={{
+                      position: 'absolute', top: 0, right: 0, width: 2, height: '100%',
+                      background: 'linear-gradient(180deg, rgba(255,255,255,0.08), transparent, rgba(255,255,255,0.04))',
+                      borderRadius: '0 36px 36px 0'
+                    }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right - Explanation text + NLE Timeline (2/3) */}
+              <div className="md:col-span-2 flex flex-col gap-8">
+              <div className="vd-text-panel flex flex-col justify-center" style={{ minHeight: 240 }}>
+                <div style={{ position: 'relative' }}>
+                  {segments.map((seg, i) => (
+                    <div
+                      key={seg.id}
+                      style={{
+                        position: i === 0 ? 'relative' : 'absolute',
+                        top: 0, left: 0, right: 0,
+                        opacity: activeSegment === i ? 1 : 0,
+                        transform: activeSegment === i ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.5s ease, transform 0.5s ease',
+                        pointerEvents: activeSegment === i ? 'auto' : 'none'
+                      }}
+                    >
+                      {/* Colored dot + duration badge */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <div style={{ width: 10, height: 10, borderRadius: '50%', background: seg.color }} />
+                        <span style={{
+                          fontSize: '0.8rem', fontWeight: 600, color: seg.color,
+                          letterSpacing: '0.08em', textTransform: 'uppercase'
+                        }}>
+                          {seg.duration}
+                        </span>
+                      </div>
+
+                      <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{
+                        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                        color: 'var(--text)'
+                      }}>
+                        {seg.title}
+                      </h3>
+
+                      <p className="text-lg leading-relaxed" style={{ color: 'var(--muted)', maxWidth: 480 }}>
+                        {seg.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            {(() => {
+              const tcMarks = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
+              const subTicks = Array.from({ length: totalDur * 2 + 1 }, (_, i) => i * 0.5);
+
+              const tracks = [
+                {
+                  id: 'V1', label: 'V1', type: 'video',
+                  clips: [
+                    { start: 0, end: 3, name: 'hook_shot_v3.mp4', color: '#FF8C42', seg: 0 },
+                    { start: 3.1, end: 8, name: 'broll_problem.mp4', color: '#A855F7', seg: 1 },
+                    { start: 8.1, end: 17.9, name: 'product_demo_final.mp4', color: '#22D3EE', seg: 2 },
+                    { start: 18, end: 22, name: 'cta_take2.mp4', color: '#F43F5E', seg: 3 },
+                  ]
+                },
+                {
+                  id: 'A2', label: 'A1', type: 'audio',
+                  clips: [
+                    { start: 0, end: 22, name: 'background_music.mp3', color: '#facc15', seg: -1 },
+                  ]
+                },
+              ];
+
+              const seededRand = (seed) => {
+                let x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+                return x - Math.floor(x);
+              };
+
+              return (
+                <div
+                  className="vd-nle"
+                  onMouseEnter={() => { pausedRef.current = true; setIsPlaying(false); }}
+                  onMouseLeave={() => { pausedRef.current = false; setIsPlaying(true); }}
+                  style={{
+                    background: '#1a1a1e',
+                    borderRadius: 12,
+                    overflow: 'hidden',
+                    border: '1px solid #2a2a2e',
+                    boxShadow: '0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)',
+                    fontFamily: "'SF Mono', 'Fira Code', 'Consolas', monospace",
+                  }}
+                >
+                <div className="vd-nle-inner">
+                  {/* Top toolbar */}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '6px 12px', background: '#141416', borderBottom: '1px solid #2a2a2e',
+                    fontSize: 11, color: '#666',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ color: '#888', fontWeight: 600 }}>Sequence: Reel_Final_v4</span>
+                      <span style={{ color: '#444' }}>|</span>
+                      <span>1080x1920</span>
+                      <span style={{ color: '#444' }}>|</span>
+                      <span>30fps</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {/* Snap/magnet icon */}
+                      <div style={{ width: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M4 12h16M12 4v16" /></svg>
+                      </div>
+                      {/* Play/Pause toggle */}
+                      <button
+                        onClick={togglePlay}
+                        className="vd-play-btn"
+                        aria-label={isPlaying ? 'Pause' : 'Play'}
+                        style={{
+                          background: 'none', border: 'none', cursor: 'pointer',
+                          padding: 2, display: 'flex', alignItems: 'center',
+                        }}
+                      >
+                        {isPlaying ? (
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="#999">
+                            <rect x="5" y="4" width="5" height="16" rx="1" />
+                            <rect x="14" y="4" width="5" height="16" rx="1" />
+                          </svg>
+                        ) : (
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="#ccc">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        )}
+                      </button>
+                      {/* Live timecode */}
+                      <span style={{
+                        fontFamily: "'SF Mono', monospace", fontSize: 11,
+                        color: '#ccc', background: '#222', padding: '2px 8px', borderRadius: 3,
+                        letterSpacing: '0.05em', minWidth: 76, textAlign: 'center',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}>
+                        {fmtTC(currentTime)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Timecode ruler (clickable to scrub) */}
+                  <div
+                    ref={rulerRef}
+                    onClick={handleScrub}
+                    onMouseMove={(e) => {
+                      if (!rulerRef.current) return;
+                      const rect = rulerRef.current.getBoundingClientRect();
+                      setHoverTime(Math.max(0, Math.min(totalDur, ((e.clientX - rect.left) / rect.width) * totalDur)));
+                    }}
+                    onMouseLeave={() => setHoverTime(null)}
+                    style={{
+                      position: 'relative', height: 24, background: '#1e1e22',
+                      borderBottom: '1px solid #2a2a2e', marginLeft: 52,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {/* Sub-ticks */}
+                    {subTicks.map((t) => (
+                      <div key={`sub-${t}`} style={{
+                        position: 'absolute', left: `${(t / totalDur) * 100}%`,
+                        top: 16, width: 1, height: t % 1 === 0 ? 8 : 4,
+                        background: t % 2 === 0 ? '#444' : '#2a2a2e',
+                        pointerEvents: 'none',
+                      }} />
+                    ))}
+                    {/* Major timecodes */}
+                    {tcMarks.map((t) => (
+                      <div key={`tc-${t}`} style={{
+                        position: 'absolute', left: `${(t / totalDur) * 100}%`,
+                        top: 2, fontSize: 9, color: '#555', transform: 'translateX(-50%)',
+                        userSelect: 'none', whiteSpace: 'nowrap', pointerEvents: 'none',
+                      }}>
+                        00:{String(t).padStart(2, '0')}
+                      </div>
+                    ))}
+
+                    {/* Hover timecode tooltip */}
+                    {hoverTime !== null && (
+                      <div style={{
+                        position: 'absolute',
+                        left: `${(hoverTime / totalDur) * 100}%`,
+                        bottom: '100%',
+                        transform: 'translateX(-50%)',
+                        background: '#333',
+                        color: '#eee',
+                        fontSize: 10,
+                        padding: '2px 6px',
+                        borderRadius: 4,
+                        whiteSpace: 'nowrap',
+                        pointerEvents: 'none',
+                        fontVariantNumeric: 'tabular-nums',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                        zIndex: 50,
+                        marginBottom: 2,
+                      }}>
+                        {fmtTC(hoverTime)}
+                      </div>
+                    )}
+
+                    {/* Hover line (ghost) */}
+                    {hoverTime !== null && (
+                      <div style={{
+                        position: 'absolute',
+                        left: `${(hoverTime / totalDur) * 100}%`,
+                        top: 0, bottom: -200,
+                        width: 1,
+                        background: 'rgba(255,255,255,0.08)',
+                        pointerEvents: 'none',
+                        zIndex: 5,
+                      }} />
+                    )}
+
+                    {/* Playhead top marker (draggable) */}
+                    <div
+                      className="vd-playhead-marker"
+                      onMouseDown={startDrag}
+                      style={{
+                        position: 'absolute', left: `${playheadPct}%`, top: 0,
+                        transform: 'translateX(-50%)', zIndex: 30,
+                        cursor: 'ew-resize',
+                      }}
+                    >
+                      <svg width="14" height="16" viewBox="0 0 14 16" style={{ display: 'block', margin: '0 auto' }}>
+                        <path d="M0 0h14v9l-7 7-7-7z" fill="#e33" />
+                        <path d="M3 3h8v4l-4 4-4-4z" fill="#ff6666" opacity="0.4" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Tracks */}
+                  <div style={{ position: 'relative' }}>
+                    {tracks.map((track, ti) => {
+                      const isAudio = track.type === 'audio';
+                      const trackH = isAudio ? 42 : 52;
+
+                      return (
+                        <div key={track.id} style={{
+                          display: 'flex', borderBottom: ti < tracks.length - 1 ? '1px solid #222' : 'none',
+                          background: ti % 2 === 0 ? '#1a1a1e' : '#1c1c20',
+                        }}>
+                          {/* Track header */}
+                          <div style={{
+                            width: 52, minWidth: 52, height: trackH,
+                            background: '#161618', borderRight: '1px solid #2a2a2e',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            flexDirection: 'column', gap: 2, userSelect: 'none',
+                          }}>
+                            <span style={{
+                              fontSize: 10, fontWeight: 700,
+                              color: isAudio ? '#22c55e' : '#38bdf8',
+                              letterSpacing: '0.05em',
+                            }}>
+                              {track.label}
+                            </span>
+                            <div style={{ display: 'flex', gap: 3 }}>
+                              <div style={{
+                                width: 12, height: 12, borderRadius: 2,
+                                background: '#2a2a2e', display: 'flex',
+                                alignItems: 'center', justifyContent: 'center',
+                                fontSize: 7, color: '#555', fontWeight: 700,
+                              }}>M</div>
+                              <div style={{
+                                width: 12, height: 12, borderRadius: 2,
+                                background: '#2a2a2e', display: 'flex',
+                                alignItems: 'center', justifyContent: 'center',
+                                fontSize: 7, color: '#555', fontWeight: 700,
+                              }}>S</div>
+                            </div>
+                          </div>
+
+                          {/* Track clips area */}
+                          <div
+                            onClick={(e) => {
+                              const el = e.currentTarget;
+                              const rect = el.getBoundingClientRect();
+                              jumpTo(((e.clientX - rect.left) / rect.width) * totalDur);
+                            }}
+                            style={{
+                              flex: 1, position: 'relative', height: trackH,
+                              overflow: 'hidden', cursor: 'pointer',
+                            }}
+                          >
+                            {track.clips.map((clip, ci) => {
+                              const leftPct = (clip.start / totalDur) * 100;
+                              const widthPct = ((clip.end - clip.start) / totalDur) * 100;
+                              const isHighlit = clip.seg === activeSegment;
+                              const isHovered = hoveredClip === `${track.id}-${ci}`;
+
+                              return (
+                                <div
+                                  key={`${track.id}-${ci}`}
+                                  onMouseEnter={() => setHoveredClip(`${track.id}-${ci}`)}
+                                  onMouseLeave={() => setHoveredClip(null)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (clip.seg >= 0) jumpTo(segTimes[clip.seg].start + 0.1);
+                                  }}
+                                  className="vd-clip"
+                                  style={{
+                                    position: 'absolute',
+                                    left: `${leftPct}%`,
+                                    width: `${widthPct}%`,
+                                    top: 2,
+                                    bottom: 2,
+                                    borderRadius: 5,
+                                    background: isHighlit
+                                      ? `linear-gradient(180deg, ${clip.color}55 0%, ${clip.color}35 100%)`
+                                      : isHovered
+                                        ? `linear-gradient(180deg, ${clip.color}40 0%, ${clip.color}25 100%)`
+                                        : `linear-gradient(180deg, ${clip.color}30 0%, ${clip.color}1a 100%)`,
+                                    border: `1px solid ${isHighlit ? clip.color + '80' : isHovered ? clip.color + '55' : clip.color + '35'}`,
+                                    cursor: clip.seg >= 0 ? 'pointer' : 'default',
+                                    overflow: 'hidden',
+                                    transition: 'background 0.15s, border-color 0.15s, box-shadow 0.15s',
+                                    boxShadow: isHighlit
+                                      ? `0 0 16px ${clip.color}18, inset 0 1px 0 ${clip.color}15`
+                                      : isHovered
+                                        ? `inset 0 1px 0 ${clip.color}10`
+                                        : 'none',
+                                    zIndex: isHovered ? 5 : 1,
+                                  }}
+                                >
+                                  {/* Clip content */}
+                                  {isAudio ? (
+                                    <div style={{
+                                      position: 'relative',
+                                      height: '100%',
+                                      overflow: 'hidden',
+                                    }}>
+                                      {/* Clip name */}
+                                      <div style={{
+                                        position: 'absolute', top: 4, left: 8, right: 8,
+                                        zIndex: 3, pointerEvents: 'none',
+                                        display: 'flex', alignItems: 'center', gap: 4,
+                                      }}>
+                                        <svg width="8" height="8" viewBox="0 0 24 24" fill={clip.color} opacity={0.6} style={{ flexShrink: 0 }}>
+                                          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                                        </svg>
+                                        <span style={{
+                                          fontSize: 10, fontWeight: 600,
+                                          color: isHighlit ? '#e0e0e0' : isHovered ? '#bbb' : '#777',
+                                          whiteSpace: 'nowrap', overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                          transition: 'color 0.15s',
+                                          textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                                          letterSpacing: '0.01em',
+                                        }}>{clip.name}</span>
+                                      </div>
+                                      {/* Waveform */}
+                                      <svg width="100%" height="20" viewBox="0 0 200 20" preserveAspectRatio="none" style={{
+                                        position: 'absolute', bottom: 3, left: 0, right: 0,
+                                        opacity: isHighlit ? 0.65 : isHovered ? 0.4 : 0.18,
+                                        transition: 'opacity 0.15s',
+                                      }}>
+                                        {Array.from({ length: 100 }).map((_, wi) => {
+                                          const h = seededRand(ci * 1000 + wi + ti * 317) * 14 + 2;
+                                          return (
+                                            <rect
+                                              key={wi} x={wi * 2} y={10 - h / 2}
+                                              width={1.4} height={h} rx={0.7}
+                                              fill={clip.color}
+                                            />
+                                          );
+                                        })}
+                                      </svg>
+                                    </div>
+                                  ) : (
+                                    /* Video clip content */
+                                    <div style={{
+                                      padding: '4px 8px', display: 'flex', alignItems: 'center',
+                                      height: '100%', gap: 6,
+                                    }}>
+                                      {/* Thumbnail strip */}
+                                      <div style={{
+                                        width: 28, height: '80%', borderRadius: 3,
+                                        background: `linear-gradient(160deg, ${clip.color}25, ${clip.color}0a)`,
+                                        border: `1px solid ${clip.color}18`,
+                                        flexShrink: 0,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                      }}>
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill={clip.color} opacity={isHighlit ? 0.7 : 0.3}>
+                                          <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+                                        </svg>
+                                      </div>
+                                      {/* Filename */}
+                                      <div style={{ overflow: 'hidden', flex: 1, minWidth: 0 }}>
+                                        <div style={{
+                                          fontSize: 10, fontWeight: 600,
+                                          color: isHighlit ? '#e0e0e0' : isHovered ? '#bbb' : '#777',
+                                          whiteSpace: 'nowrap', overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                          transition: 'color 0.15s',
+                                          textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+                                          lineHeight: 1.3,
+                                          letterSpacing: '0.01em',
+                                        }}>{clip.name}</div>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Active segment glow */}
+                                  {isHighlit && (
+                                    <div style={{
+                                      position: 'absolute', inset: 0, borderRadius: 5,
+                                      boxShadow: `inset 0 0 0 1px ${clip.color}35`,
+                                      pointerEvents: 'none',
+                                    }} />
+                                  )}
+
+                                  {/* Hover tooltip */}
+                                  {isHovered && (
+                                    <div style={{
+                                      position: 'absolute', bottom: '100%', left: '50%',
+                                      transform: 'translateX(-50%)',
+                                      background: '#2a2a30', color: '#eee', fontSize: 10,
+                                      padding: '4px 10px', borderRadius: 6, whiteSpace: 'nowrap',
+                                      pointerEvents: 'none', zIndex: 50,
+                                      boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                                      marginBottom: 6, fontWeight: 500,
+                                      border: '1px solid #3a3a40',
+                                    }}>
+                                      <span style={{ color: clip.color }}>{segments.find(s => s.id === clip.seg)?.label || track.label}</span>
+                                      <span style={{ color: '#666', margin: '0 5px' }}>&middot;</span>
+                                      {clip.name}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    {/* Playhead line (spans all tracks) */}
+                    <div style={{
+                      position: 'absolute', top: 0, bottom: 0,
+                      left: 52, right: 0,
+                      pointerEvents: 'none', zIndex: 20,
+                    }}>
+                      <div className="vd-playhead-line" style={{
+                        position: 'absolute',
+                        left: `${playheadPct}%`,
+                        top: 0, bottom: 0,
+                        width: 1.5, background: '#e33',
+                        transform: 'translateX(-0.75px)',
+                        boxShadow: '0 0 8px rgba(238,51,51,0.5), 0 0 2px rgba(238,51,51,0.8)',
+                      }} />
+                    </div>
+                  </div>
+
+                  {/* Bottom bar */}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '4px 12px', background: '#141416', borderTop: '1px solid #2a2a2e',
+                    fontSize: 10, color: '#444',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span>Duration: 00:22:00</span>
+                      <span style={{ color: '#333' }}>|</span>
+                      <span style={{ color: isPlaying ? '#22c55e' : '#e33' }}>
+                        {isPlaying ? 'Playing' : 'Paused'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {/* Zoom slider mock */}
+                      <div style={{
+                        width: 60, height: 3, background: '#2a2a2e', borderRadius: 2,
+                        position: 'relative',
+                      }}>
+                        <div style={{
+                          position: 'absolute', left: '60%', top: -2,
+                          width: 7, height: 7, borderRadius: '50%',
+                          background: '#555', border: '1px solid #666',
+                          transform: 'translateX(-50%)',
+                        }} />
+                      </div>
+                      <span>Fit</span>
+                    </div>
+                  </div>
+                </div>{/* end vd-nle-inner */}
+                </div>
+              );
+            })()}
+            </div>{/* end right 2/3 column */}
+            </div>{/* end vd-layout grid */}
+          </div>
+        </section>
       );
     }
 
@@ -3837,16 +4624,19 @@ function navigate(path) {
                   </div>
                 </div>
 
-                {/* Right: Engagement Tiles */}
+                {/* Right: 3D Instagram Phone */}
                 <div className="relative flex items-center justify-center stagger-item hidden md:flex" style={{ animationDelay: '0.2s' }}>
-                  <EngagementTiles />
+                  <InstaPhoneMockup />
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Social Showcase Carousel - 3D Reel Display */}
-          <SocialShowcaseCarousel />
+          {/* Social Masonry Grid - Post Gallery */}
+          <SocialMasonryGrid />
+
+          {/* Video Dissection Section */}
+          <VideoDissection />
 
           {/* Features Section - Flowing Wave Layout */}
           <section className="py-32 relative overflow-hidden" style={{ background: 'var(--bg)' }}>

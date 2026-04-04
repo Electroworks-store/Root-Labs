@@ -167,12 +167,12 @@ function VibePicker() {
       className="webproc webproc-vibe py-20 relative"
       aria-label="Choose a vibe"
     >
-      <div className="max-w-7xl mx-auto px-6 relative" style={{ minHeight: 420 }}>
-        <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif", textAlign: 'left' }}>
-          First we choose the <span className="brand-accent" style={{ color: 'var(--primary)' }}>vibe</span>
+      <div className="max-w-7xl mx-auto px-6 relative" style={{ minHeight: 480 }}>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", textAlign: 'center' }}>
+          First we choose the <span className="font-accent brand-accent">vibe</span>
         </h2>
 
-        <div ref={canvasRef} className="vibe-canvas relative" style={{ height: 340 }}>
+        <div ref={canvasRef} className="vibe-canvas relative" style={{ height: 400 }}>
           {VIBES.map((vibe, i) => {
             const pos = initialPositions[i];
             const ref = useRef(null);
@@ -183,10 +183,10 @@ function VibePicker() {
 
             const baseStyle = {
               position: 'absolute',
-              width: 240,
-              minWidth: 220,
-              height: 240,
-              borderRadius: 20,
+              width: 220,
+              minWidth: 200,
+              height: 220,
+              borderRadius: 18,
               boxShadow: currentPos.isDragging 
                 ? '0 20px 60px rgba(14,14,14,0.25)' 
                 : '0 12px 40px rgba(14,14,14,0.08)',
@@ -340,10 +340,10 @@ function ColorBubbles() {
       ref={sectionRef}
       id="color-palette"
       className="webproc webproc-color py-24 relative"
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: '80vh' }}
     >
       <div className="max-w-7xl mx-auto px-6 relative">
-        <div className="color-bubbles-canvas relative" style={{ minHeight: 300 }}>
+        <div className="color-bubbles-canvas relative" style={{ minHeight: 350 }}>
           
           {/* Light Blue - Top Left */}
           <div
@@ -351,10 +351,10 @@ function ColorBubbles() {
             className="color-bubble bubble-1"
             style={{
               position: 'absolute',
-              width: '180px',
-              height: '180px',
-              left: '10%',
-              top: '18%',
+              width: '160px',
+              height: '160px',
+              left: '5%',
+              top: '15%',
               borderRadius: '9999px',
               background: '#7DD3FC',
               willChange: 'transform',
@@ -369,10 +369,10 @@ function ColorBubbles() {
             className="color-bubble bubble-2"
             style={{
               position: 'absolute',
-              width: '160px',
-              height: '160px',
-              left: '48%',
-              top: '8%',
+              width: '140px',
+              height: '140px',
+              left: '45%',
+              top: '5%',
               borderRadius: '9999px',
               background: '#A855F7',
               willChange: 'transform',
@@ -387,10 +387,10 @@ function ColorBubbles() {
             className="color-bubble bubble-3"
             style={{
               position: 'absolute',
-              width: '100px',
-              height: '100px',
-              left: '20%',
-              top: '110%',
+              width: '90px',
+              height: '90px',
+              left: '18%',
+              top: '80%',
               borderRadius: '9999px',
               background: '#FF1744',
               willChange: 'transform',
@@ -405,10 +405,10 @@ function ColorBubbles() {
             className="color-bubble bubble-4"
             style={{
               position: 'absolute',
-              width: '100px',
-              height: '100px',
-              left: '58%',
-              top: '125%',
+              width: '90px',
+              height: '90px',
+              left: '62%',
+              top: '85%',
               borderRadius: '9999px',
               background: '#FF6B35',
               willChange: 'transform',
@@ -423,10 +423,10 @@ function ColorBubbles() {
             className="color-bubble bubble-5"
             style={{
               position: 'absolute',
-              width: '220px',
-              height: '220px',
+              width: '180px',
+              height: '180px',
               left: '78%',
-              top: '45%',
+              top: '35%',
               borderRadius: '9999px',
               background: '#FFD600',
               willChange: 'transform',
@@ -436,9 +436,9 @@ function ColorBubbles() {
           />
 
           {/* Center headline - higher z-index */}
-          <div className="relative z-10 text-center" style={{ paddingTop: '40vh' }}>
-            <h2 className="text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)' }}>
-              Then a <span className="brand-accent" style={{ color: 'var(--primary)' }}>Color</span>
+          <div className="relative z-10 text-center" style={{ paddingTop: '30vh' }}>
+            <h2 className="text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", color: 'var(--text)' }}>
+              Then a <span className="font-accent brand-accent">Color</span>
             </h2>
           </div>
         </div>
@@ -456,7 +456,7 @@ function FontCarouselWord() {
   const isInView = useInView(sectionRef);
   const [activeFont, setActiveFont] = useState(0);
   
-  // Using only fonts already in the project
+  // Showcase fonts for the design process demo
   const fonts = [
     { key: 'geist', label: 'Geist', fam: "'Geist', sans-serif" },
     { key: 'inter', label: 'Inter', fam: "'Inter', sans-serif" },
@@ -493,8 +493,8 @@ function FontCarouselWord() {
       }}
     >
       <h2 style={{
-        fontFamily: "'Geist', sans-serif",
-        fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
+        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+        fontSize: 'clamp(2.5rem, 6vw, 5rem)',
         fontWeight: 800,
         lineHeight: 1.1,
         textAlign: 'center'
@@ -519,7 +519,7 @@ function FontCarouselWord() {
               }}
               aria-hidden={activeFont !== i}
             >
-              {font.label}
+              font
             </span>
           ))}
         </span>
@@ -568,8 +568,8 @@ function ResponsivenessShowcase() {
 
   return (
     <section ref={sectionRef} className={`resp-showcase py-24 ${visible ? 'resp-visible' : ''}`}>
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           Responsiveness
         </h2>
         <p className="text-lg mb-16 max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -597,6 +597,213 @@ function ResponsivenessShowcase() {
   );
 }
 
+// Winding Path Timeline wrapper
+function WindingPath({ children, steps }) {
+  const pathRef = useRef(null);
+  const svgRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const [drawLength, setDrawLength] = useState(0);
+  const [totalLength, setTotalLength] = useState(0);
+  const [activeStep, setActiveStep] = useState(-1);
+  const nodeRefs = useRef([]);
+
+  // Calculate SVG path based on container height
+  const [pathD, setPathD] = useState('');
+  const [nodePositions, setNodePositions] = useState([]);
+
+  useEffect(() => {
+    const updatePath = () => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+      const h = wrapper.offsetHeight;
+      const w = Math.min(wrapper.offsetWidth, 1200);
+      const cx = w / 2;
+      const amplitude = Math.min(w * 0.35, 350);
+      
+      // Build a winding path with one S-curve per step
+      const stepCount = steps.length;
+      const segH = h / stepCount;
+      const positions = [];
+      let d = `M ${cx} 0`;
+      
+      for (let i = 0; i < stepCount; i++) {
+        const yStart = i * segH;
+        const yMid = yStart + segH * 0.5;
+        const yEnd = yStart + segH;
+        const dir = i % 2 === 0 ? 1 : -1;
+        const xPeak = cx + amplitude * dir;
+        
+        // Cubic bezier for smooth S-curves
+        d += ` C ${cx} ${yStart + segH * 0.15}, ${xPeak} ${yStart + segH * 0.3}, ${xPeak} ${yMid}`;
+        d += ` C ${xPeak} ${yMid + segH * 0.2}, ${cx} ${yEnd - segH * 0.15}, ${cx} ${yEnd}`;
+        
+        // Node at the peak of each curve
+        positions.push({ x: xPeak, y: yMid });
+      }
+      
+      setPathD(d);
+      setNodePositions(positions);
+    };
+
+    updatePath();
+    window.addEventListener('resize', updatePath);
+    return () => window.removeEventListener('resize', updatePath);
+  }, [steps.length]);
+
+  // Get total path length once path is rendered
+  useEffect(() => {
+    if (pathRef.current) {
+      const len = pathRef.current.getTotalLength();
+      setTotalLength(len);
+      setDrawLength(0);
+    }
+  }, [pathD]);
+
+  // Scroll-driven draw + node activation
+  useEffect(() => {
+    if (!totalLength || !wrapperRef.current) return;
+
+    const handleScroll = () => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+      const rect = wrapper.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      
+      // Progress: 0 when wrapper top hits bottom of viewport, 1 when wrapper bottom hits top
+      const progress = Math.max(0, Math.min(1,
+        (windowH - rect.top) / (rect.height + windowH)
+      ));
+      
+      // Draw with slight lead so line arrives before content
+      const drawProgress = Math.min(1, progress * 1.3);
+      setDrawLength(drawProgress * totalLength);
+      
+      // Activate steps based on scroll position
+      const stepProgress = progress * steps.length;
+      setActiveStep(Math.floor(stepProgress - 0.2));
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [totalLength, steps.length]);
+
+  return (
+    <div ref={wrapperRef} className="winding-path-wrapper" style={{ position: 'relative' }}>
+      {/* SVG Path */}
+      {pathD && (
+        <svg
+          ref={svgRef}
+          className="winding-path-svg"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}
+          preserveAspectRatio="none"
+        >
+          {/* Ghost path (track) */}
+          <path
+            d={pathD}
+            fill="none"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth="2"
+          />
+          {/* Drawn path (active) */}
+          <path
+            ref={pathRef}
+            d={pathD}
+            fill="none"
+            stroke="url(#pathGradient)"
+            strokeWidth="2"
+            strokeDasharray={totalLength || 0}
+            strokeDashoffset={(totalLength || 0) - drawLength}
+            strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 0.1s linear' }}
+          />
+          {/* Glow version */}
+          <path
+            d={pathD}
+            fill="none"
+            stroke="var(--primary)"
+            strokeWidth="6"
+            strokeDasharray={totalLength || 0}
+            strokeDashoffset={(totalLength || 0) - drawLength}
+            strokeLinecap="round"
+            opacity="0.15"
+            style={{ transition: 'stroke-dashoffset 0.1s linear', filter: 'blur(8px)' }}
+          />
+          <defs>
+            <linearGradient id="pathGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--primary)" />
+              <stop offset="100%" stopColor="#38bdf8" />
+            </linearGradient>
+          </defs>
+          {/* Nodes */}
+          {nodePositions.map((pos, i) => (
+            <g key={i}>
+              {/* Outer glow */}
+              <circle
+                cx={pos.x}
+                cy={pos.y}
+                r="20"
+                fill="var(--primary)"
+                opacity={activeStep >= i ? 0.15 : 0}
+                style={{ transition: 'opacity 0.5s ease', filter: 'blur(8px)' }}
+              />
+              {/* Node ring */}
+              <circle
+                cx={pos.x}
+                cy={pos.y}
+                r="8"
+                fill={activeStep >= i ? 'var(--primary)' : 'transparent'}
+                stroke={activeStep >= i ? 'var(--primary)' : 'rgba(255,255,255,0.15)'}
+                strokeWidth="2"
+                style={{ transition: 'all 0.4s ease' }}
+              />
+              {/* Step number */}
+              <text
+                x={pos.x}
+                y={pos.y + 1}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill={activeStep >= i ? '#fff' : 'rgba(255,255,255,0.3)'}
+                fontSize="9"
+                fontWeight="700"
+                fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif"
+                style={{ transition: 'fill 0.4s ease' }}
+              >
+                {i + 1}
+              </text>
+            </g>
+          ))}
+        </svg>
+      )}
+      
+      {/* Step content */}
+      {children.map((child, i) => (
+        <div
+          key={i}
+          className={`winding-step ${activeStep >= i ? 'winding-step-active' : ''}`}
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            opacity: activeStep >= i ? 1 : 0.3,
+            transform: activeStep >= i ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'opacity 0.6s ease, transform 0.6s ease'
+          }}
+        >
+          {child}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // Main parent component
 export default function WebsitesProcess() {
   return (
@@ -604,7 +811,7 @@ export default function WebsitesProcess() {
       {/* Major page heading */}
       <section className="design-process-intro text-center py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl md:text-5xl font-extrabold" style={{ fontFamily: "'Geist', sans-serif" }}>
+          <h1 className="text-4xl md:text-5xl font-extrabold" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
             Design process
           </h1>
         </div>

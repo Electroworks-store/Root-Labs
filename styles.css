@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 * {
       margin: 0;
       padding: 0;
@@ -32,12 +30,13 @@
       --glow-primary: rgba(138, 61, 230, 0.16);
       --focus-ring: #8B7355;
       --focus-ring-alpha: rgba(139, 115, 85, 0.12);
-      --font-heading: 'Geist', sans-serif;
+      --font-heading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --font-accent: 'Playfair Display', serif;
+      --font-accent-color: var(--primary);
     }
     
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
@@ -75,14 +74,15 @@
     }
     
     h1, h2, h3, h4 {
-      font-family: 'Geist', sans-serif;
+      font-family: var(--font-heading);
       font-weight: 700;
     }
 
     /* Playfair Display accent — wrap key words inside headers with this class */
     .font-accent {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-accent);
       font-style: italic;
+      color: var(--font-accent-color);
     }
 
     
@@ -344,7 +344,7 @@
     .project-title {
       font-size: 2.5rem;
       font-weight: 800;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 1.25rem;
       line-height: 1.2;
@@ -493,8 +493,11 @@
         padding-right: 1.5rem !important;
       }
 
-      /* Hide hero logo column on mobile */
+      /* Hide hero logo column + image on mobile */
       .hero-logo-column {
+        display: none !important;
+      }
+      .hero-right-img {
         display: none !important;
       }
 
@@ -590,7 +593,7 @@
       text-decoration: none;
       border-radius: 10px;
       transition: background 0.15s ease;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .mobile-menu-item:hover,
@@ -655,7 +658,7 @@
     .feature-title {
       font-size: 1.5rem;
       font-weight: 700;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 0.5rem;
       line-height: 1.3;
@@ -744,7 +747,7 @@
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 0.75rem;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .product-card-desc {
@@ -821,7 +824,7 @@
     .services-main-title {
       font-size: 4.5rem;
       font-weight: 800;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 1rem;
       line-height: 1.1;
@@ -921,7 +924,7 @@
     .service-panel-title {
       font-size: 2.5rem;
       font-weight: 800;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 1rem;
       line-height: 1.2;
@@ -974,7 +977,7 @@
     .stat-value {
       font-size: 2rem;
       font-weight: 800;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--service-color);
       margin-bottom: 0.5rem;
     }
@@ -1157,7 +1160,7 @@
     }
 
     .wheel-service-title {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 3rem;
       font-weight: 800;
       line-height: 1.1;
@@ -1168,7 +1171,7 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
       color: var(--text);
@@ -1326,7 +1329,7 @@
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 1.5rem;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       line-height: 1.2;
     }
 
@@ -1460,7 +1463,7 @@
     }
 
     .pricing-heading {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: clamp(2.25rem, 4vw, 3rem);
       font-weight: 700;
       margin-bottom: 0.75rem;
@@ -1537,7 +1540,7 @@
     }
 
     .pricing-card-name {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1.25rem;
       font-weight: 700;
       color: var(--text);
@@ -1556,7 +1559,7 @@
     }
 
     .price-number {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: clamp(2.75rem, 4vw, 3.25rem);
       font-weight: 700;
       color: var(--primary);
@@ -1576,7 +1579,7 @@
       color: var(--text);
       font-weight: 600;
       margin-top: 0.75rem;
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .price-monthly-label {
@@ -1750,7 +1753,7 @@
     .stat-number {
       font-size: 3rem;
       font-weight: 700;
-      font-family: 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
       line-height: 1;
       margin-bottom: 0.5rem;
       display: block;
@@ -1780,7 +1783,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      font-family: 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
     }
 
     @media (max-width: 768px) {
@@ -1837,7 +1840,7 @@
     .journey-main-heading {
       font-size: clamp(2.4rem, 4.8vw, 3.3rem);
       font-weight: 600;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 0.9rem;
       line-height: 1.2;
@@ -1976,7 +1979,7 @@
       display: block;
       font-size: 0.825rem;
       font-weight: 500;
-      font-family: 'Space Grotesk', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--muted);
       letter-spacing: 0.05em;
       margin-bottom: 0.9rem;
@@ -1992,7 +1995,7 @@
     .journey-title {
       font-size: 1.5rem;
       font-weight: 600;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 0.6rem;
       line-height: 1.3;
@@ -2023,7 +2026,7 @@
     .journey-metric-value {
       font-size: 1.8rem;
       font-weight: 600;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       line-height: 1;
     }
@@ -2064,7 +2067,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.25s ease;
-      font-family: 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
       box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.18);
       text-decoration: none;
     }
@@ -2199,7 +2202,7 @@
     .whyus-main-heading {
       font-size: clamp(3rem, 6vw, 5rem);
       font-weight: 800;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 1rem;
       line-height: 1.1;
@@ -2258,7 +2261,7 @@
     .float-card-title {
       font-size: 1.5rem;
       font-weight: 700;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--text);
       margin-bottom: 0.75rem;
       line-height: 1.2;
@@ -2474,15 +2477,12 @@
     .cylinder-wrap {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
-      overflow: hidden;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
     }
 
     .cylinder-scene {
       width: 100%;
-      height: 420px;
-      perspective: 1200px;
+      height: 480px;
+      perspective: 600px;
       perspective-origin: 50% 50%;
       display: flex;
       align-items: center;
@@ -2494,7 +2494,7 @@
       height: 0;
       position: relative;
       transform-style: preserve-3d;
-      animation: cylinderSpin 28s linear infinite;
+      animation: cylinderSpin 50s linear infinite;
     }
 
     .cylinder-ring:hover {
@@ -2508,145 +2508,49 @@
 
     .cylinder-card {
       position: absolute;
-      width: 200px;
-      height: 370px;
-      left: -100px;
-      top: -185px;
-      transform: rotateY(calc(var(--i) * 45deg)) translateZ(-520px);
+      width: 700px;
+      height: 440px;
+      left: -350px;
+      top: -220px;
+      transform: rotateY(calc(var(--i) * 36deg)) translateZ(-1300px);
+      backface-visibility: hidden;
     }
 
-    /* Phone frame */
-    .cf-phone {
+    .cf-placeholder {
       width: 100%;
       height: 100%;
-      background: #12121f;
-      border: 2px solid rgba(255,255,255,0.12);
-      border-radius: 28px;
-      padding: 10px 8px 14px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
-    }
-
-    .cf-phone-notch {
-      width: 44px;
-      height: 5px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 4px;
-      margin: 2px auto 8px;
-    }
-
-    .cf-screen {
-      flex: 1;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #1a1a2e;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cf-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-    }
-    .cf-hamburger {
-      width: 18px;
-      height: 2px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 1px;
-      box-shadow: 0 5px 0 rgba(255,255,255,0.3), 0 10px 0 rgba(255,255,255,0.3);
-    }
-    .cf-logo-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      background: var(--primary);
-    }
-
-    .cf-hero-img {
-      height: 110px;
-      margin: 0 10px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(138,61,230,0.15) 0%, rgba(56,189,248,0.12) 100%);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .cf-body {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .cf-title-line {
-      height: 8px;
-      width: 65%;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.2);
-    }
-    .cf-sub-line {
-      height: 5px;
-      width: 45%;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.08);
-    }
-    .cf-cta-pill {
-      margin-top: 4px;
-      height: 16px;
-      width: 50%;
-      border-radius: 8px;
-      background: var(--primary);
-    }
-
-    .cf-cards-row {
-      display: flex;
-      gap: 6px;
-      padding: 0 10px 10px;
-      margin-top: auto;
-    }
-    .cf-mini-card {
-      flex: 1;
-      height: 44px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: #000;
+      border-radius: 16px;
     }
 
     @media (max-width: 768px) {
       .cylinder-scene {
-        height: 340px;
-        perspective: 900px;
+        height: 380px;
+        perspective: 480px;
       }
       .cylinder-card {
-        width: 160px;
-        height: 300px;
-        left: -80px;
-        top: -150px;
-        transform: rotateY(calc(var(--i) * 45deg)) translateZ(-400px);
+        width: 460px;
+        height: 290px;
+        left: -230px;
+        top: -145px;
+        transform: rotateY(calc(var(--i) * 36deg)) translateZ(-920px);
+        backface-visibility: hidden;
       }
-      .cf-phone { border-radius: 22px; }
-      .cf-hero-img { height: 80px; }
     }
 
     @media (max-width: 480px) {
       .cylinder-scene {
-        height: 280px;
-        perspective: 700px;
+        height: 300px;
+        perspective: 380px;
       }
       .cylinder-card {
-        width: 130px;
-        height: 240px;
-        left: -65px;
-        top: -120px;
-        transform: rotateY(calc(var(--i) * 45deg)) translateZ(-320px);
+        width: 320px;
+        height: 200px;
+        left: -160px;
+        top: -100px;
+        transform: rotateY(calc(var(--i) * 36deg)) translateZ(-680px);
+        backface-visibility: hidden;
       }
-      .cf-phone { border-radius: 18px; padding: 8px 6px 10px; }
-      .cf-phone-notch { width: 32px; height: 4px; margin-bottom: 5px; }
-      .cf-hero-img { height: 60px; margin: 0 6px; }
-      .cf-body { padding: 8px; gap: 4px; }
-      .cf-cards-row { padding: 0 6px 6px; }
-      .cf-mini-card { height: 32px; }
     }
 
     /* ── Brand Section ("What You Get") ── */
@@ -2688,7 +2592,7 @@
       background: rgba(255,255,255,0.05);
       font-size: 0.75rem;
       color: var(--muted);
-      font-family: 'Space Grotesk', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .wyg-brand-screen {
@@ -2771,7 +2675,7 @@
     .wyg-value-num {
       font-size: 0.85rem;
       font-weight: 700;
-      font-family: 'Space Grotesk', monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin-bottom: 12px;
     }
 
@@ -2867,11 +2771,15 @@
 
     /* Hero Right Image */
     .hero-right-img {
-      width: 100%;
-      max-width: 520px;
-      height: auto;
-      animation: gentle-float 6s ease-in-out infinite;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 75%;
+      max-height: 580px;
+      width: auto;
       pointer-events: none;
+      z-index: 5;
     }
 
     /* Respect reduced motion preferences */
@@ -2907,7 +2815,7 @@
     .modal-title {
       font-size: 2.5rem;
       font-weight: 700;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin-bottom: 0.5rem;
       text-align: center;
       color: var(--text);
@@ -2960,7 +2868,7 @@
     .plan-name {
       font-size: 1.5rem;
       font-weight: 700;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin-bottom: 1.5rem;
       color: var(--text);
     }
@@ -2980,7 +2888,7 @@
     .plan-monthly {
       font-size: 2.5rem;
       font-weight: 700;
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--primary);
       line-height: 1;
       margin-bottom: 0.5rem;
@@ -3121,7 +3029,7 @@
        ======================================== */
 
     .contact-hero h2 {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -3393,9 +3301,9 @@
 
     /* Font stack variables for carousel */
     :root {
-      --ff-1: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-      --ff-2: 'Geist', system-ui, sans-serif;
-      --ff-3: 'Space Grotesk', system-ui, sans-serif;
+      --ff-1: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      --ff-2: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --ff-3: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --ff-4: Georgia, 'Times New Roman', serif;
       --ff-5: 'Courier New', Courier, monospace;
     }
@@ -3744,337 +3652,21 @@
 
 
     /* =========================================
-       Social Showcase Carousel - 3D Reel Display
+       Social Masonry Grid - Post Gallery
        ========================================= */
 
-    .social-carousel-section {
+    .social-masonry-section {
       position: relative;
       padding: 4rem 0 6rem;
-      overflow: hidden;
       background: var(--bg);
     }
 
-    .social-carousel-wrapper {
-      position: relative;
-      perspective: 1200px;
-      perspective-origin: center center;
-    }
-
-    .social-carousel-track {
-      display: flex;
-      gap: 1.25rem;
-      padding: 2rem 1.5rem 3rem;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x proximity;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      cursor: grab;
-      touch-action: pan-x pan-y;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .social-carousel-track::-webkit-scrollbar {
-      display: none;
-    }
-
-    .social-carousel-track:active {
-      cursor: grabbing;
-    }
-
-    /* Arrow Navigation Buttons */
-    .social-carousel-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      cursor: pointer;
-      z-index: 15;
-      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-      opacity: 0.6;
-    }
-
-    .social-carousel-arrow:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: var(--text);
-      opacity: 1;
-    }
-
-    .social-carousel-arrow:focus {
-      outline: 2px solid var(--primary);
-      outline-offset: 2px;
-    }
-
-    .social-carousel-arrow-left {
-      left: 1rem;
-    }
-
-    .social-carousel-arrow-right {
-      right: 1rem;
-    }
-
-    .social-carousel-arrow svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
-    /* Individual Reel Card */
-    .social-reel-card {
-      flex-shrink: 0;
-      width: 260px;
-      height: 440px;
-      position: relative;
-      scroll-snap-align: center;
-      transform-style: preserve-3d;
-      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  opacity 0.3s ease;
-      will-change: transform;
-    }
-
-    .social-reel-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(8px);
-      border: none;
-      border-radius: 20px;
-      overflow: hidden;
-      transform-style: preserve-3d;
-    }
-
-    /* Subtle inner border only */
-    .social-reel-card-inner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* Remove heavy highlight overlay */
-    .social-reel-card-inner::after {
-      display: none;
-    }
-
-    /* Video/Content Container */
-    .social-reel-content {
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .social-reel-video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Clean Minimal Placeholder */
-    .social-reel-placeholder {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(40, 40, 45, 0.95) 0%,
-        rgba(25, 25, 30, 0.98) 100%
-      );
-    }
-
-    /* Subtle texture overlay */
-    .social-reel-placeholder::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        ellipse at 50% 0%,
-        rgba(255, 255, 255, 0.03) 0%,
-        transparent 60%
-      );
-    }
-
-    /* Reel Overlay UI */
-    .social-reel-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.25rem;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.7) 0%,
-        rgba(0, 0, 0, 0.3) 25%,
-        transparent 50%
-      );
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .social-reel-card.is-center .social-reel-overlay {
-      opacity: 1;
-    }
-
-    .social-reel-username {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 0.25rem;
-    }
-
-    .social-reel-caption {
-      font-size: 0.6875rem;
-      color: rgba(255, 255, 255, 0.75);
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Side action buttons */
-    .social-reel-actions {
-      position: absolute;
-      right: 0.625rem;
-      bottom: 4.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-      opacity: 0.5;
-      transition: opacity 0.3s ease;
-    }
-
-    .social-reel-card.is-center .social-reel-actions {
-      opacity: 1;
-    }
-
-    .social-reel-action-btn {
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.9);
-      border: none;
-      transition: transform 0.2s ease, background 0.2s ease;
-      cursor: pointer;
-    }
-
-    .social-reel-action-btn:hover {
-      transform: scale(1.1);
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .social-reel-action-count {
-      font-size: 0.5625rem;
-      color: rgba(255, 255, 255, 0.8);
+    .social-masonry-header {
       text-align: center;
-      margin-top: 0.125rem;
+      margin-bottom: 2.5rem;
     }
 
-    /* Play indicator - cleaner */
-    .social-reel-play-indicator {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-    }
-
-    .social-reel-card:not(.is-center) .social-reel-play-indicator {
-      opacity: 0.6;
-    }
-
-    .social-reel-card:not(.is-center):hover .social-reel-play-indicator {
-      opacity: 0.9;
-    }
-
-    /* Platform Badge - subtler */
-    .social-reel-platform {
-      position: absolute;
-      top: 0.625rem;
-      left: 0.625rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.75rem;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(4px);
-      font-size: 0.5625rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.85);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    /* Edge Fade Masks - softer */
-    .social-carousel-fade-left,
-    .social-carousel-fade-right {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 80px;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    .social-carousel-fade-left {
-      left: 0;
-      background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
-    }
-
-    .social-carousel-fade-right {
-      right: 0;
-      background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
-    }
-
-    /* Center Card Active State - no heavy glow */
-    .social-reel-card.is-center {
-      z-index: 5;
-    }
-
-    .social-reel-card.is-center .social-reel-card-inner {
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .social-reel-card.is-center .social-reel-card-inner::before {
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Section Header */
-    .social-carousel-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding: 0 1.5rem;
-    }
-
-    .social-carousel-title {
+    .social-masonry-title {
       font-family: 'Geist', sans-serif;
       font-size: 2rem;
       font-weight: 700;
@@ -4082,98 +3674,18 @@
       margin-bottom: 0.5rem;
     }
 
-    .social-carousel-subtitle {
+    .social-masonry-subtitle {
       font-size: 1rem;
       color: var(--muted);
     }
 
-    /* Mobile Responsive */
     @media (max-width: 768px) {
-      .social-carousel-section {
+      .social-masonry-section {
         padding: 3rem 0 4rem;
       }
 
-      .social-carousel-track {
-        gap: 1rem;
-        padding: 1.5rem 1rem 2.5rem;
-      }
-
-      .social-reel-card {
-        width: 220px;
-        height: 380px;
-      }
-
-      .social-carousel-fade-left,
-      .social-carousel-fade-right {
-        width: 40px;
-      }
-
-      .social-carousel-arrow {
-        width: 2rem;
-        height: 2rem;
-      }
-
-      .social-carousel-arrow-left {
-        left: 0.5rem;
-      }
-
-      .social-carousel-arrow-right {
-        right: 0.5rem;
-      }
-
-      .social-carousel-title {
+      .social-masonry-title {
         font-size: 1.5rem;
-      }
-
-      .social-reel-card-inner {
-        border-radius: 16px;
-      }
-
-      .social-reel-content {
-        border-radius: 16px;
-      }
-    }
-
-    /* Large screens */
-    @media (min-width: 1400px) {
-      .social-carousel-track {
-        gap: 1.5rem;
-        padding: 2rem 2rem 3rem;
-      }
-
-      .social-reel-card {
-        width: 300px;
-        height: 500px;
-      }
-
-      .social-carousel-fade-left,
-      .social-carousel-fade-right {
-        width: 120px;
-      }
-
-      .social-carousel-arrow-left {
-        left: 1.5rem;
-      }
-
-      .social-carousel-arrow-right {
-        right: 1.5rem;
-      }
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .social-reel-card {
-        transition: none;
-      }
-
-      .social-carousel-track {
-        scroll-behavior: auto;
-      }
-
-      .social-reel-overlay,
-      .social-reel-actions,
-      .social-reel-play-indicator {
-        transition: none;
       }
     }
 
@@ -4430,7 +3942,7 @@
       font-size: 1rem;
       font-weight: 700;
       color: #0f172a;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin: 0;
       letter-spacing: -0.01em;
       line-height: 1.3;
@@ -4475,7 +3987,7 @@
     .ai-orb-metric-value {
       font-weight: 700;
       font-size: 0.9rem;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -4647,7 +4159,7 @@
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 100px;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.02em;
@@ -4748,7 +4260,7 @@
       transform: translateX(-50%);
       font-size: 28px;
       font-weight: 700;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: #fff;
     }
 
@@ -5063,7 +4575,7 @@
     .wyg-stat-value {
       font-size: 20px;
       font-weight: 700;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .wyg-stat-label {
@@ -5278,7 +4790,7 @@
     }
 
     .hackme-title {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1.75rem;
       font-weight: 700;
       color: #ffffff;
@@ -5487,7 +4999,7 @@
     }
 
     .teamster-title {
-      font-family: 'Geist', sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1.75rem;
       font-weight: 700;
       color: #1a1a1a;
@@ -5684,6 +5196,582 @@
       }
       .about-waves-anchor.about-waves-entered {
         transform: translateY(-50%) scale(0.55) !important;
+      }
+    }
+
+    /* ========================================
+       3D INSTAGRAM PHONE MOCKUP
+       ======================================== */
+
+    .insta-phone-scene {
+      perspective: 1200px;
+      perspective-origin: 60% 50%;
+    }
+
+    .insta-phone-body {
+      position: relative;
+      width: 280px;
+      height: 580px;
+      background: #1a1a1f;
+      border-radius: 40px;
+      border: 3px solid #2a2a32;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      transform: rotateY(-8deg) rotateX(2deg);
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease;
+      animation: instaPhoneEnter 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes instaPhoneEnter {
+      0% {
+        opacity: 0;
+        transform: rotateY(-20deg) rotateX(8deg) translateY(60px) scale(0.9);
+        filter: blur(6px);
+      }
+      60% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateY(-8deg) rotateX(2deg) translateY(0) scale(1);
+        filter: blur(0px);
+      }
+    }
+
+    .insta-phone-body:hover {
+      transform: rotateY(-3deg) rotateX(1deg) scale(1.02);
+    }
+
+    .insta-phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 24px;
+      background: #000;
+      border-radius: 0 0 16px 16px;
+      z-index: 10;
+    }
+
+    .insta-phone-notch::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background: #1c1c2e;
+      border-radius: 50%;
+      border: 1px solid #333;
+    }
+
+    .insta-phone-btn {
+      position: absolute;
+      background: #2a2a32;
+      border-radius: 2px;
+    }
+
+    .insta-phone-btn--vol1 {
+      left: -5px;
+      top: 120px;
+      width: 3px;
+      height: 30px;
+    }
+
+    .insta-phone-btn--vol2 {
+      left: -5px;
+      top: 165px;
+      width: 3px;
+      height: 30px;
+    }
+
+    .insta-phone-btn--power {
+      right: -5px;
+      top: 150px;
+      width: 3px;
+      height: 40px;
+    }
+
+    .insta-phone-screen {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      background: #000;
+      border-radius: 32px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Status bar */
+    .insta-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      z-index: 5;
+    }
+
+    .insta-status-icons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    /* Nav header */
+    .insta-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 14px 8px;
+      z-index: 5;
+    }
+
+    .insta-nav-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    /* Reel viewport */
+    .insta-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .insta-reel-track {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .insta-reel-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .insta-reel-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insta-reel-play-icon {
+      opacity: 0.12;
+    }
+
+    /* Double-tap heart */
+    .insta-doubletap-heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      animation: instaDblHeart 0.9s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes instaDblHeart {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      15% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      30% { transform: translate(-50%, -50%) scale(0.95); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
+    .insta-heart-pop {
+      animation: instaHeartPop 0.35s ease;
+    }
+
+    @keyframes instaHeartPop {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.3); }
+      60% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+
+    /* Right action rail */
+    .insta-action-rail {
+      position: absolute;
+      right: 10px;
+      bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .insta-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .insta-action-btn span {
+      font-size: 10px;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Bottom info overlay */
+    .insta-reel-bottom {
+      position: absolute;
+      bottom: 12px;
+      left: 10px;
+      right: 50px;
+      z-index: 10;
+    }
+
+    .insta-reel-user-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .insta-reel-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      border: 2px solid white;
+      flex-shrink: 0;
+    }
+
+    .insta-reel-uname {
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .insta-follow-pill {
+      font-size: 10px;
+      font-weight: 600;
+      color: white;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 6px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .insta-follow-pill:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .insta-follow-pill.is-following {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .follow-particle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      pointer-events: none;
+      animation: followBurst 0.65s ease-out forwards;
+      transform: scale(var(--s, 1));
+    }
+
+    @keyframes followBurst {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(var(--s, 1));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--px), var(--py)) scale(0);
+      }
+    }
+
+    .insta-reel-cap {
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .insta-reel-music {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Progress bars */
+    .insta-reel-progress {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      right: 6px;
+      display: flex;
+      gap: 3px;
+      z-index: 15;
+      padding-top: 4px;
+    }
+
+    .insta-progress-bar {
+      flex: 1;
+      height: 2px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .insta-progress-bar.done {
+      background: rgba(255,255,255,0.8);
+    }
+
+    .insta-progress-bar.active {
+      background: rgba(255,255,255,0.2);
+      position: relative;
+    }
+
+    .insta-progress-bar.active::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: white;
+      border-radius: 1px;
+      animation: instaProgress 4s linear forwards;
+    }
+
+    @keyframes instaProgress {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* Comments sheet */
+    .insta-comments-sheet {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65%;
+      background: #1c1c1e;
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .insta-comments-sheet.is-open {
+      transform: translateY(0);
+    }
+
+    .insta-comments-handle {
+      width: 36px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      margin: 8px auto 0;
+    }
+
+    .insta-comments-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .insta-comments-head button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .insta-comments-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .insta-comments-body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .insta-comment-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .insta-comment-av {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .insta-comment-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .insta-comment-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .insta-comment-txt {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.3;
+    }
+
+    .insta-comment-time {
+      font-size: 9px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .insta-comment-heart {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .insta-comment-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .insta-comment-input-av {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .insta-comment-input-field {
+      flex: 1;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+    }
+
+    /* Bottom nav */
+    .insta-bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0 12px;
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .insta-nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    .insta-nav-btn:hover {
+      opacity: 0.7;
+    }
+
+    .insta-nav-btn--active svg {
+      opacity: 1;
+    }
+
+    .insta-nav-profile-img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .insta-phone-body {
+        width: 250px;
+        height: 520px;
+        border-radius: 36px;
+      }
+
+      .insta-phone-screen {
+        border-radius: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .insta-phone-body {
+        transform: none;
+        transition: none;
+      }
+
+      .insta-phone-body:hover {
+        transform: none;
+      }
+
+      .insta-doubletap-heart,
+      .insta-heart-pop {
+        animation: none;
+      }
+
+      .insta-progress-bar.active::after {
+        animation: none;
+        width: 100%;
       }
     }
 
@@ -6185,4 +6273,124 @@
 
     [data-theme="dark"] .ai-output-bullet {
       background: #9CA3AF;
+    }
+
+    /* ── Video Dissection Section ── */
+    .vd-phone-wrapper {
+      filter: drop-shadow(0 20px 60px rgba(0,0,0,0.18));
+    }
+
+    /* NLE Timeline */
+    .vd-nle {
+      user-select: none;
+    }
+
+    .vd-clip {
+      will-change: background, border-color;
+    }
+
+    .vd-clip:hover {
+      filter: brightness(1.15);
+    }
+
+    .vd-clip-name {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      pointer-events: none;
+    }
+
+    .vd-playhead-marker {
+      will-change: left;
+      filter: drop-shadow(0 0 4px rgba(238, 51, 51, 0.6));
+    }
+
+    .vd-playhead-line {
+      will-change: left;
+    }
+
+    .vd-play-btn:hover svg {
+      transform: scale(1.2);
+    }
+
+    /* ── Mobile: stack phone + text, scrollable timeline ── */
+    @media (max-width: 768px) {
+      .vd-phone {
+        transform: none !important;
+        width: 200px !important;
+        height: 420px !important;
+        border-radius: 30px !important;
+      }
+
+      .vd-layout {
+        gap: 2rem !important;
+      }
+
+      .vd-text-panel {
+        min-height: auto !important;
+        text-align: left;
+      }
+
+      .vd-text-panel .flex.items-center {
+        justify-content: flex-start;
+      }
+
+      .vd-text-panel p {
+        max-width: 100% !important;
+      }
+
+      .vd-nle {
+        font-size: 0.8em;
+        border-radius: 8px !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .vd-nle-inner {
+        min-width: 600px;
+      }
+
+      .vd-clip-name {
+        font-size: 7px !important;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .vd-phone {
+        width: 160px !important;
+        height: 340px !important;
+        border-radius: 24px !important;
+      }
+
+      .vd-nle {
+        font-size: 0.72em;
+      }
+    }
+
+    /* ── Site-wide mobile left alignment ── */
+    @media (max-width: 768px) {
+      .service-page-hero .space-y-8 {
+        text-align: left;
+      }
+
+      .service-page-hero .grid-cols-3 {
+        text-align: left;
+      }
+
+      .service-page-hero .text-center {
+        text-align: left;
+      }
+
+      /* Section headers on social page */
+      .social-masonry-header {
+        text-align: left;
+      }
+
+      /* Video Dissection section header */
+      .vd-section-header {
+        text-align: left;
+      }
+
+      .vd-section-header .mx-auto {
+        margin-left: 0;
+      }
     }

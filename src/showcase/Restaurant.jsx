@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ChefHat, Wine, Calendar, Users, Phone, MapPin, Star } from 'lucide-react';
 
 const Restaurant = () => {
@@ -101,7 +101,7 @@ const Restaurant = () => {
           <div className="absolute bottom-0 left-0 right-0 p-12">
             <h3 className="font-serif text-5xl text-[#FAF8F3] mb-4 transform transition-all duration-700" 
                 style={{ 
-                  fontFamily: 'Playfair Display, serif',
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
                   opacity: index === carouselIndex ? 1 : 0,
                   transform: index === carouselIndex ? 'translateY(0)' : 'translateY(20px)'
                 }}>
@@ -140,14 +140,14 @@ const Restaurant = () => {
         className="absolute left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-[#1E2D2F]/80 backdrop-blur-sm rounded-full flex items-center justify-center text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-[#D4AF37] hover:text-[#1E2D2F]"
         aria-label="Previous slide"
       >
-        ←
+        â†
       </button>
       <button
         onClick={() => setCarouselIndex((prev) => (prev + 1) % carouselImages.length)}
         className="absolute right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-[#1E2D2F]/80 backdrop-blur-sm rounded-full flex items-center justify-center text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-[#D4AF37] hover:text-[#1E2D2F]"
         aria-label="Next slide"
       >
-        →
+        â†’
       </button>
     </div>
   );
@@ -180,7 +180,7 @@ const Restaurant = () => {
           
           {/* Restaurant Name - Elegant Serif */}
           <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl mb-4 text-[#FAF8F3] tracking-wide" 
-              style={{ fontFamily: 'Playfair Display, serif' }}>
+              style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
             Maison Vert
           </h1>
           
@@ -226,7 +226,7 @@ const Restaurant = () => {
             {/* Chef Story & Philosophy */}
             <div className="space-y-6">
               <h2 className="font-serif text-5xl md:text-6xl text-[#D4AF37] mb-6" 
-                  style={{ fontFamily: 'Playfair Display, serif' }}>
+                  style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Our Philosophy
               </h2>
               
@@ -246,7 +246,7 @@ const Restaurant = () => {
               
               {/* Chef Signature */}
               <div className="pt-8">
-                <p className="font-serif text-2xl text-[#D4AF37] italic" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <p className="font-serif text-2xl text-[#D4AF37] italic" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Chef Alexandre Beaumont
                 </p>
               </div>
@@ -267,7 +267,7 @@ const Restaurant = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="font-serif text-5xl md:text-6xl text-[#D4AF37] mb-4" 
-                style={{ fontFamily: 'Playfair Display, serif' }}>
+                style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Culinary Journey
             </h2>
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-6" />
@@ -300,7 +300,7 @@ const Restaurant = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-3xl" />
                 
                 <h3 className="font-serif text-4xl md:text-5xl text-[#FAF8F3] mb-4" 
-                    style={{ fontFamily: 'Playfair Display, serif' }}>
+                    style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Beef Wellington
                 </h3>
                 
@@ -308,7 +308,7 @@ const Restaurant = () => {
                 
                 <p className="text-[#FAF8F3]/80 text-lg mb-6 leading-relaxed">
                   Our most celebrated dish. Prime Angus tenderloin wrapped in wild mushroom duxelles 
-                  and silky chicken liver pâté, encased in golden puff pastry. Served with roasted 
+                  and silky chicken liver pÃ¢tÃ©, encased in golden puff pastry. Served with roasted 
                   root vegetables and a decadent black truffle jus.
                 </p>
                 
@@ -334,7 +334,7 @@ const Restaurant = () => {
           <div className="mb-16">
             <div className="flex items-center mb-8">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
-              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 First Course
               </h3>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
@@ -355,7 +355,7 @@ const Restaurant = () => {
                   </div>
                   <div className="p-6 md:w-1/2 flex flex-col justify-center">
                     <div className="flex items-start justify-between mb-3">
-                      <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                      <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                         Seared Scallops
                       </h4>
                       <div className="bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-sm font-semibold ml-2">
@@ -363,12 +363,12 @@ const Restaurant = () => {
                       </div>
                     </div>
                     <p className="text-[#FAF8F3]/70 text-sm leading-relaxed mb-4">
-                      Pan-seared diver scallops, cauliflower purée, crispy pancetta, brown butter emulsion, microgreens
+                      Pan-seared diver scallops, cauliflower purÃ©e, crispy pancetta, brown butter emulsion, microgreens
                     </p>
                     <div className="flex items-center space-x-3 text-[#FAF8F3]/50 text-xs">
-                      <span>🌊 Ocean Fresh</span>
-                      <span>•</span>
-                      <span>⭐ Guest Favorite</span>
+                      <span>ðŸŒŠ Ocean Fresh</span>
+                      <span>â€¢</span>
+                      <span>â­ Guest Favorite</span>
                     </div>
                   </div>
                 </div>
@@ -387,7 +387,7 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Foie Gras Torchon
                     </h4>
                     <div className="bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-sm font-semibold ml-2">
@@ -407,7 +407,7 @@ const Restaurant = () => {
           <div className="mb-16">
             <div className="flex items-center mb-8">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
-              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Main Event
               </h3>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
@@ -431,17 +431,17 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Lobster Thermidor
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-xl ml-2">$58</div>
                   </div>
                   <p className="text-[#FAF8F3]/70 text-sm leading-relaxed mb-3">
-                    Atlantic lobster, cognac béchamel, gruyère, tarragon, brioche
+                    Atlantic lobster, cognac bÃ©chamel, gruyÃ¨re, tarragon, brioche
                   </p>
                   <div className="pt-3 border-t border-[#D4AF37]/20">
                     <div className="flex items-center justify-between text-xs text-[#FAF8F3]/50">
-                      <span>🦞 Sustainable Catch</span>
+                      <span>ðŸ¦ž Sustainable Catch</span>
                       <Wine className="w-4 h-4 text-[#D4AF37]/60" />
                     </div>
                   </div>
@@ -461,7 +461,7 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Duck Confit
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-xl ml-2">$46</div>
@@ -497,17 +497,17 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-2xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Truffle Risotto
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-xl ml-2">$52</div>
                   </div>
                   <p className="text-[#FAF8F3]/70 text-sm leading-relaxed mb-3">
-                    Carnaroli rice, Périgord truffle, parmesan, white wine, thyme
+                    Carnaroli rice, PÃ©rigord truffle, parmesan, white wine, thyme
                   </p>
                   <div className="pt-3 border-t border-[#D4AF37]/20">
                     <div className="flex items-center justify-between text-xs text-[#FAF8F3]/50">
-                      <span>🌱 Farm to Table</span>
+                      <span>ðŸŒ± Farm to Table</span>
                       <Wine className="w-4 h-4 text-[#D4AF37]/60" />
                     </div>
                   </div>
@@ -521,7 +521,7 @@ const Restaurant = () => {
           <div>
             <div className="flex items-center mb-8">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
-              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h3 className="px-6 font-serif text-3xl text-[#D4AF37]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Sweet Finale
               </h3>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
@@ -535,15 +535,15 @@ const Restaurant = () => {
                 <div className="relative h-56 overflow-hidden">
                   <img 
                     src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" 
-                    alt="Chocolate Soufflé"
+                    alt="Chocolate SoufflÃ©"
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B] to-transparent" />
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
-                      Chocolate Soufflé
+                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                      Chocolate SoufflÃ©
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-lg ml-2">$18</div>
                   </div>
@@ -559,15 +559,15 @@ const Restaurant = () => {
                 <div className="relative h-56 overflow-hidden">
                   <img 
                     src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80" 
-                    alt="Crème Brûlée"
+                    alt="CrÃ¨me BrÃ»lÃ©e"
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B] to-transparent" />
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
-                      Crème Brûlée
+                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                      CrÃ¨me BrÃ»lÃ©e
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-lg ml-2">$14</div>
                   </div>
@@ -590,13 +590,13 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Tarte Tatin
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-lg ml-2">$16</div>
                   </div>
                   <p className="text-[#FAF8F3]/70 text-sm leading-relaxed">
-                    Caramelized apple, puff pastry, crème fraîche, cinnamon
+                    Caramelized apple, puff pastry, crÃ¨me fraÃ®che, cinnamon
                   </p>
                 </div>
                 <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#D4AF37]/40 rounded-xl transition-all duration-500 pointer-events-none" />
@@ -614,7 +614,7 @@ const Restaurant = () => {
                 </div>
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h4 className="font-serif text-xl text-[#FAF8F3]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                       Opera Cake
                     </h4>
                     <div className="text-[#D4AF37] font-serif text-lg ml-2">$15</div>
@@ -642,7 +642,7 @@ const Restaurant = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="font-serif text-5xl md:text-6xl text-[#D4AF37] mb-4" 
-                style={{ fontFamily: 'Playfair Display, serif' }}>
+                style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               The Maison Vert Experience
             </h2>
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-6" />
@@ -668,7 +668,7 @@ const Restaurant = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1E2D2F] via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="font-serif text-4xl text-[#FAF8F3] mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="font-serif text-4xl text-[#FAF8F3] mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   The Ambiance
                 </h3>
                 <p className="text-[#FAF8F3]/80 leading-relaxed">
@@ -692,7 +692,7 @@ const Restaurant = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1E2D2F] via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="font-serif text-4xl text-[#FAF8F3] mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="font-serif text-4xl text-[#FAF8F3] mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   The Craft
                 </h3>
                 <p className="text-[#FAF8F3]/80 leading-relaxed">
@@ -712,7 +712,7 @@ const Restaurant = () => {
             
             <div className="relative z-10">
               <h3 className="font-serif text-4xl text-center text-[#D4AF37] mb-16" 
-                  style={{ fontFamily: 'Playfair Display, serif' }}>
+                  style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 What Our Guests Say
               </h3>
               
@@ -722,7 +722,7 @@ const Restaurant = () => {
                 <div className="bg-[#2B2B2B]/50 backdrop-blur-sm rounded-2xl p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/40 transition-all duration-500 hover:transform hover:scale-105">
                   <div className="flex items-center mb-6">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-[#D4AF37] text-xl">★</span>
+                      <span key={i} className="text-[#D4AF37] text-xl">â˜…</span>
                     ))}
                   </div>
                   <p className="text-[#FAF8F3]/80 italic leading-relaxed mb-6">
@@ -790,7 +790,7 @@ const Restaurant = () => {
           {/* AN EVENING AT MAISON VERT - Timeline */}
           <div className="mt-24">
             <h3 className="font-serif text-4xl text-center text-[#D4AF37] mb-16" 
-                style={{ fontFamily: 'Playfair Display, serif' }}>
+                style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               An Evening at Maison Vert
             </h3>
             
@@ -805,8 +805,8 @@ const Restaurant = () => {
                 <div className="relative grid md:grid-cols-2 gap-8 items-center">
                   <div className="md:text-right">
                     <div className="bg-[#2B2B2B]/70 backdrop-blur-sm rounded-xl p-6 border border-[#D4AF37]/20 inline-block">
-                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        5:30 PM • Arrival
+                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                        5:30 PM â€¢ Arrival
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
                         You're greeted with a glass of champagne as you're escorted to your table. 
@@ -829,8 +829,8 @@ const Restaurant = () => {
                 <div className="relative grid md:grid-cols-2 gap-8 items-center">
                   <div className="md:order-2">
                     <div className="bg-[#2B2B2B]/70 backdrop-blur-sm rounded-xl p-6 border border-[#D4AF37]/20 inline-block">
-                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        6:00 PM • Amuse-Bouche
+                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                        6:00 PM â€¢ Amuse-Bouche
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
                         A surprise from the chef. A single perfect bite that awakens your palate 
@@ -852,11 +852,11 @@ const Restaurant = () => {
                 <div className="relative grid md:grid-cols-2 gap-8 items-center">
                   <div className="md:text-right">
                     <div className="bg-[#2B2B2B]/70 backdrop-blur-sm rounded-xl p-6 border border-[#D4AF37]/20 inline-block">
-                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        7:00 PM • The Main Event
+                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                        7:00 PM â€¢ The Main Event
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
-                        Your entrée arrives, a work of art on a plate. Every element is intentional, 
+                        Your entrÃ©e arrives, a work of art on a plate. Every element is intentional, 
                         every flavor balanced to perfection.
                       </p>
                     </div>
@@ -875,11 +875,11 @@ const Restaurant = () => {
                 <div className="relative grid md:grid-cols-2 gap-8 items-center">
                   <div className="md:order-2">
                     <div className="bg-[#2B2B2B]/70 backdrop-blur-sm rounded-xl p-6 border border-[#D4AF37]/20 inline-block">
-                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        8:30 PM • The Finale
+                      <h4 className="font-serif text-2xl text-[#D4AF37] mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+                        8:30 PM â€¢ The Finale
                       </h4>
                       <p className="text-[#FAF8F3]/80 leading-relaxed">
-                        Dessert arrives with theatrical flair. Perhaps a soufflé that rises before 
+                        Dessert arrives with theatrical flair. Perhaps a soufflÃ© that rises before 
                         your eyes, or a delicate creation that melts on your tongue.
                       </p>
                     </div>
@@ -920,7 +920,7 @@ const Restaurant = () => {
           {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="font-serif text-5xl md:text-6xl text-[#D4AF37] mb-4" 
-                style={{ fontFamily: 'Playfair Display, serif' }}>
+                style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
               Reserve Your Table
             </h2>
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-6" />
@@ -1028,7 +1028,7 @@ const Restaurant = () => {
             <div className="bg-[#1E2D2F]/60 backdrop-blur-lg rounded-lg p-6 border border-[#D4AF37]/20 flex items-start space-x-4">
               <MapPin className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-[#D4AF37] font-serif text-xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="text-[#D4AF37] font-serif text-xl mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Location
                 </h3>
                 <p className="text-[#FAF8F3]/80 text-sm leading-relaxed">
@@ -1043,7 +1043,7 @@ const Restaurant = () => {
             <div className="bg-[#1E2D2F]/60 backdrop-blur-lg rounded-lg p-6 border border-[#D4AF37]/20 flex items-start space-x-4">
               <Phone className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-[#D4AF37] font-serif text-xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="text-[#D4AF37] font-serif text-xl mb-2" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Hours
                 </h3>
                 <p className="text-[#FAF8F3]/80 text-sm leading-relaxed">
@@ -1069,7 +1069,7 @@ const Restaurant = () => {
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <ChefHat className="w-8 h-8 text-[#D4AF37]" strokeWidth={1.5} />
-                <h3 className="font-serif text-2xl text-[#D4AF37]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h3 className="font-serif text-2xl text-[#D4AF37]" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                   Maison Vert
                 </h3>
               </div>
@@ -1114,16 +1114,16 @@ const Restaurant = () => {
               href="/#work"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E2D2F]/50 backdrop-blur-sm border border-[#D4AF37]/30 text-[#FAF8F3] font-medium text-sm transition-all hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]"
             >
-              ← Back to Recent Transformations
+              â† Back to Recent Transformations
             </a>
           </div>
           
           {/* Copyright & Credit */}
           <div className="text-center text-[#FAF8F3]/50 text-sm">
-            <p>© 2025 Maison Vert. All rights reserved.</p>
+            <p>Â© 2025 Maison Vert. All rights reserved.</p>
             <p className="mt-2 flex items-center justify-center gap-2">
               <Star className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
-              <span>Root Labs Showcase – Restaurant Demo</span>
+              <span>Root Labs Showcase â€“ Restaurant Demo</span>
               <Star className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
             </p>
           </div>
@@ -1132,10 +1132,10 @@ const Restaurant = () => {
 
       {/* ========== CUSTOM CSS ANIMATIONS ========== */}
       <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         
         body {
-          font-family: 'Lato', sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
         }
         
         @keyframes fade-in {
