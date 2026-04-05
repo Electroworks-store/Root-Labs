@@ -3652,6 +3652,78 @@
 
 
     /* =========================================
+       Social Media That Matches You - Purple Section
+       ========================================= */
+
+    .smtm-section {
+      position: relative;
+      width: 100%;
+    }
+
+    .smtm-wave {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      margin-bottom: -1px;
+    }
+
+    .smtm-wave svg {
+      display: block;
+      width: 100%;
+      height: 80px;
+    }
+
+    .smtm-inner {
+      background: #D8B4FE;
+      padding: 5rem 0 6rem;
+      position: relative;
+    }
+
+    .smtm-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    /* Left heading */
+    .smtm-heading {
+      font-family: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: white;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .smtm-heading-accent {
+      color: #7C3AED;
+      font-style: italic;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .smtm-wave svg {
+        height: 50px;
+      }
+
+      .smtm-inner {
+        padding: 3rem 0 4rem;
+      }
+
+      .smtm-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .smtm-heading {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+      }
+    }
+
+    /* =========================================
        Social Masonry Grid - Post Gallery
        ========================================= */
 

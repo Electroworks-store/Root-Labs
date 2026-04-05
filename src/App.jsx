@@ -16,6 +16,8 @@ import TechStore from './showcase/TechStore';
 import Restaurant from './showcase/Restaurant';
 import Masonry from './components/Masonry';
 import WebsitesProcess from './components/WebsitesProcess';
+import FlipCardStack from './components/FlipCardStack';
+import './components/FlipCardStack.css';
 
 // Navigation helper for client-side routing
 function navigate(path) {
@@ -1736,7 +1738,7 @@ function navigate(path) {
     function Contact() {
       const contactData = document.getElementById('contact-data');
       const data = {
-        heading: contactData?.dataset.heading || 'Ready to Reimagine Your Site?',
+        heading: contactData?.dataset.heading || 'Ready to Reimagine Your online presence?',
         subheading: contactData?.dataset.subheading || "Let's chat about transforming your online presence into something remarkable",
         namePlaceholder: contactData?.dataset.nameplaceholder || 'Your Name',
         emailPlaceholder: contactData?.dataset.emailplaceholder || 'Email Address',
@@ -3936,7 +3938,7 @@ function navigate(path) {
         <section
           ref={sectionRef}
           className="py-24 relative overflow-hidden"
-          style={{ background: 'var(--surface)' }}
+          style={{ background: 'var(--bg)' }}
         >
           <div className="max-w-7xl mx-auto px-6">
             {/* Section header */}
@@ -3976,7 +3978,7 @@ function navigate(path) {
                       border: '4px solid #333',
                       position: 'relative',
                       overflow: 'hidden',
-                      boxShadow: '0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05) inset',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.05) inset',
                       transform: isInView
                         ? 'rotateY(-8deg) rotateX(2deg) scale(1)'
                         : 'rotateY(-20deg) rotateX(8deg) scale(0.9)',
@@ -4638,112 +4640,39 @@ function navigate(path) {
           {/* Video Dissection Section */}
           <VideoDissection />
 
-          {/* Features Section - Flowing Wave Layout */}
-          <section className="py-32 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
-            {/* Localized Masked Grid Patches - Orange accent */}
-            <div className="masked-grid masked-grid-orange masked-grid-top-right" aria-hidden="true"></div>
-            <div className="masked-grid masked-grid-orange masked-grid-bottom-left" aria-hidden="true"></div>
-            
-            <div className="max-w-6xl mx-auto px-6 relative z-10">
-              {/* Hero Text */}
-              <div className="text-center mb-24 stagger-item">
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Social Media That<br />Actually Works
-                </h2>
-                <p className="text-2xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
-                  Real engagement. Real growth. Real results.
-                </p>
-              </div>
+          {/* Social Media That Matches You - Purple Feature Section */}
+          <section className="smtm-section relative">
+            {/* Wavy top border */}
+            <div className="smtm-wave" aria-hidden="true">
+              <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,120 L0,60 Q180,0 360,50 T720,40 T1080,55 T1440,30 L1440,120 Z" fill="#D8B4FE" />
+              </svg>
+            </div>
 
-              {/* Flowing Content Sections */}
-              <div className="space-y-32">
-                {/* Section 1 - Content Creation */}
-                <div className="stagger-item" style={{ animationDelay: '0.1s' }}>
-                  <div className="max-w-3xl">
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8" 
-                         style={{ background: 'rgba(255, 122, 45, 0.15)', color: '#FF7A2D', fontSize: '0.875rem', fontWeight: '600' }}>
-                      <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
-                      Content Creation
-                    </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Posts that stop the scroll
-                    </h3>
-                    <p className="text-xl leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
-                      We create content that resonates. Every post, story, and reel is designed to drive engagement and build your brand. From strategy to execution, we handle it all.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      <span className="px-5 py-2 rounded-full text-sm" style={{ background: 'rgba(255, 122, 45, 0.1)', color: 'var(--text)' }}>
-                        Instagram & TikTok
-                      </span>
-                      <span className="px-5 py-2 rounded-full text-sm" style={{ background: 'rgba(255, 122, 45, 0.1)', color: 'var(--text)' }}>
-                        LinkedIn & Twitter
-                      </span>
-                      <span className="px-5 py-2 rounded-full text-sm" style={{ background: 'rgba(255, 122, 45, 0.1)', color: 'var(--text)' }}>
-                        Stories & Reels
-                      </span>
-                    </div>
+            <div className="smtm-inner">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="smtm-layout">
+                  {/* Left: Big bold text */}
+                  <div className="smtm-text stagger-item">
+                    <h2 className="smtm-heading">
+                      SOCIAL MEDIA<br />
+                      THAT<br />
+                      MATCHES<br />
+                      <span className="smtm-heading-accent">YOU</span>
+                    </h2>
                   </div>
-                </div>
 
-                {/* Section 2 - Community Building (Right-aligned) */}
-                <div className="stagger-item flex justify-end" style={{ animationDelay: '0.2s' }}>
-                  <div className="max-w-3xl">
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8" 
-                         style={{ background: 'rgba(138, 61, 230, 0.15)', color: 'var(--primary)', fontSize: '0.875rem', fontWeight: '600' }}>
-                      <div className="w-2 h-2 rounded-full" style={{ background: 'var(--primary)' }} />
-                      Community Management
-                    </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Build real relationships
-                    </h3>
-                    <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-                      We don't just post and ghost. We actively engage with your audience?responding to comments, DMs, and mentions. Building a loyal community that actually cares about your brand.
-                    </p>
+                  {/* Right: Stacked cards */}
+                  <div className="stagger-item" style={{ animationDelay: '0.2s' }}>
+                    <FlipCardStack
+                      interval={4000}
+                      cards={[
+                        { title: 'Scroll-stopping content', text: 'Posts, stories, and reels built to drive engagement across Instagram, TikTok, LinkedIn, and more. Strategy to execution, all handled.', icon: <PenTool className="w-8 h-8" /> },
+                        { title: 'Real relationships', text: "We don't post and ghost. Active engagement with your audience through comments, DMs, and mentions to build a loyal community.", icon: <MessageCircle className="w-8 h-8" /> },
+                        { title: 'Data-driven growth', text: 'Monthly performance reports on follower growth, engagement rates, and real business impact. No guesswork, just results.', icon: <BarChart3 className="w-8 h-8" /> },
+                      ]}
+                    />
                   </div>
-                </div>
-
-                {/* Section 3 - Growth & Analytics */}
-                <div className="stagger-item" style={{ animationDelay: '0.3s' }}>
-                  <div className="max-w-3xl">
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8" 
-                         style={{ background: 'rgba(255, 122, 45, 0.15)', color: '#FF7A2D', fontSize: '0.875rem', fontWeight: '600' }}>
-                      <div className="w-2 h-2 rounded-full" style={{ background: '#FF7A2D' }} />
-                      Growth Strategy
-                    </div>
-                    <h3 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                      Track what matters
-                    </h3>
-                    <p className="text-xl leading-relaxed mb-10" style={{ color: 'var(--muted)' }}>
-                      Data-driven decisions, not guesswork. Monthly performance reports show exactly how your social presence is growing?follower count, engagement rates, and actual business impact.
-                    </p>
-                    <div className="grid grid-cols-3 gap-8">
-                      <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: 'var(--primary)', fontFamily: "'Space Grotesk', sans-serif" }}>5x</div>
-                        <div style={{ color: 'var(--muted)' }}>Growth</div>
-                      </div>
-                      <div>
-                        <div className="text-5xl font-bold mb-2" style={{ color: '#FF7A2D', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
-                        <div style={{ color: 'var(--muted)' }}>Support</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CTA Section */}
-                <div className="text-center stagger-item py-16" style={{ animationDelay: '0.4s' }}>
-                  <a 
-                    href="#pricing" 
-                    className="px-10 py-5 font-bold text-lg inline-flex items-center gap-3 transition-all hover:translate-y-[-1px]"
-                    style={{ 
-                      background: 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)', 
-                      color: 'white',
-                      borderRadius: '9999px',
-                      boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
-                    }}
-                  >
-                    View Pricing Plans
-                    <ArrowRight className="w-6 h-6" />
-                  </a>
                 </div>
               </div>
             </div>

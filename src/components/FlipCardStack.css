@@ -1,0 +1,96 @@
+/* =========================================
+   FlipCardStack - Reusable stacked card carousel
+   ========================================= */
+
+.flip-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-stack-deck {
+  position: relative;
+  width: 340px;
+  height: 400px;
+}
+
+.flip-stack-card {
+  position: absolute;
+  width: 320px;
+  min-height: 360px;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Position 0 = front card */
+.flip-stack-card.flip-stack-pos-0 {
+  z-index: 3;
+  transform: translate(-50%, -50%) rotate(-3deg) scale(1);
+  opacity: 1;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+  color: white;
+}
+
+/* Position 1 = middle card */
+.flip-stack-card.flip-stack-pos-1 {
+  z-index: 2;
+  transform: translate(-46%, -54%) rotate(4deg) scale(0.95);
+  opacity: 1;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Position 2 = back card */
+.flip-stack-card.flip-stack-pos-2 {
+  z-index: 1;
+  transform: translate(-42%, -58%) rotate(8deg) scale(0.9);
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.flip-stack-title {
+  font-family: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: inherit;
+  margin-bottom: 1rem;
+}
+
+.flip-stack-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: inherit;
+  opacity: 0.85;
+  flex: 1;
+}
+
+.flip-stack-icon {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .flip-stack-deck {
+    width: 280px;
+    height: 360px;
+  }
+
+  .flip-stack-card {
+    width: 260px;
+    min-height: 320px;
+    padding: 2rem;
+  }
+}

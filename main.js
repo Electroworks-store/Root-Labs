@@ -924,7 +924,7 @@
     function Contact() {
       const contactData = document.getElementById('contact-data');
       const data = {
-        heading: contactData?.dataset.heading || 'Ready to Reimagine Your Site?',
+        heading: contactData?.dataset.heading || 'Ready to Reimagine Your online presence?',
         subheading: contactData?.dataset.subheading || "Let's chat about transforming your online presence into something remarkable",
         namePlaceholder: contactData?.dataset.nameplaceholder || 'Your Name',
         emailPlaceholder: contactData?.dataset.emailplaceholder || 'Email Address',
