@@ -3125,6 +3125,7 @@ function navigate(path) {
         { id: 5, type: 'landscape', span: 2 },
         { id: 3, type: 'portrait' },
         { id: 4, type: 'portrait' },
+        { id: 6, type: 'portrait', ext: 'webp' },
       ];
 
       const ratioMap = {
@@ -3135,7 +3136,7 @@ function navigate(path) {
 
       const items = posts.map(p => ({
         id: p.id,
-        img: `/socialmedia/post-${p.id}.png?v=2`,
+        img: `/socialmedia/post-${p.id}.${p.ext || 'png'}?v=2`,
         aspectRatio: ratioMap[p.type],
         span: p.span || 1,
         height: 0,
