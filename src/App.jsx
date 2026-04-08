@@ -100,7 +100,6 @@ function navigate(path) {
         if (lower === 'about') return '/#about';
         if (lower === 'home') return '/';
         if (lower === 'websites') return '/websites';
-        if (lower === 'ai') return '/ai';
         if (lower === 'social') return '/social';
         if (lower === 'contact') return '#contact';
         return `#${lower}`;
@@ -419,6 +418,105 @@ function navigate(path) {
             {/* Project Cards Container */}
             <div className="space-y-20">
               
+              {/* SquareShare Card */}
+              <div className="labs-project-card">
+                {/* Project Name - Centered, Big & Bold */}
+                <div className="text-center mb-6">
+                  <span className="project-pill project-pill-lg">
+                    <span style={{ color: '#000000' }}>Square</span>
+                    <span style={{ color: '#666666' }}>Share</span>
+                  </span>
+                </div>
+
+                {/* Apple-style Window - Centered */}
+                <div className="max-w-4xl mx-auto">
+                  <div className="squareshare-window group">
+                    {/* macOS Traffic Light Dots */}
+                    <div className="squareshare-window-header">
+                      <div className="traffic-lights">
+                        <span className="dot dot-red"></span>
+                        <span className="dot dot-yellow"></span>
+                        <span className="dot dot-green"></span>
+                      </div>
+                      <div className="window-title">
+                        <span className="squareshare-window-title-text">squareshare - collections</span>
+                      </div>
+                    </div>
+
+                    {/* Window Content */}
+                    <div className="squareshare-window-content">
+                      {/* Left: Cube pattern + Screenshot */}
+                      <div className="squareshare-preview">
+                        {/* Isometric cube pattern background */}
+                        <svg className="squareshare-cubes" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+                          <defs>
+                            <g id="cube">
+                              <polygon points="25,0 50,12.5 25,25 0,12.5" fill="#d4d4d4" />
+                              <polygon points="0,12.5 25,25 25,50 0,37.5" fill="#b8b8b8" />
+                              <polygon points="25,25 50,12.5 50,37.5 25,50" fill="#c4c4c4" />
+                              <polygon points="25,0 50,12.5 25,25 0,12.5" fill="none" stroke="#fff" strokeWidth="0.5" />
+                              <polygon points="0,12.5 25,25 25,50 0,37.5" fill="none" stroke="#fff" strokeWidth="0.5" />
+                              <polygon points="25,25 50,12.5 50,37.5 25,50" fill="none" stroke="#fff" strokeWidth="0.5" />
+                            </g>
+                          </defs>
+                          <use href="#cube" x="0" y="0" opacity="0.3" />
+                          <use href="#cube" x="50" y="0" opacity="0.2" />
+                          <use href="#cube" x="100" y="0" opacity="0.15" />
+                          <use href="#cube" x="150" y="0" opacity="0.1" />
+                          <use href="#cube" x="25" y="25" opacity="0.25" />
+                          <use href="#cube" x="75" y="25" opacity="0.2" />
+                          <use href="#cube" x="125" y="25" opacity="0.15" />
+                          <use href="#cube" x="0" y="50" opacity="0.2" />
+                          <use href="#cube" x="50" y="50" opacity="0.3" />
+                          <use href="#cube" x="100" y="50" opacity="0.2" />
+                          <use href="#cube" x="150" y="50" opacity="0.15" />
+                          <use href="#cube" x="25" y="75" opacity="0.15" />
+                          <use href="#cube" x="75" y="75" opacity="0.25" />
+                          <use href="#cube" x="125" y="75" opacity="0.2" />
+                          <use href="#cube" x="0" y="100" opacity="0.1" />
+                          <use href="#cube" x="50" y="100" opacity="0.2" />
+                          <use href="#cube" x="100" y="100" opacity="0.3" />
+                          <use href="#cube" x="150" y="100" opacity="0.2" />
+                          <use href="#cube" x="25" y="125" opacity="0.15" />
+                          <use href="#cube" x="75" y="125" opacity="0.2" />
+                          <use href="#cube" x="125" y="125" opacity="0.25" />
+                          <use href="#cube" x="0" y="150" opacity="0.1" />
+                          <use href="#cube" x="50" y="150" opacity="0.15" />
+                          <use href="#cube" x="100" y="150" opacity="0.2" />
+                          <use href="#cube" x="150" y="150" opacity="0.3" />
+                        </svg>
+                        <img 
+                          src={`${import.meta.env.BASE_URL}img/squareshare-screenshot.webp`}
+                          alt="SquareShare Collections" 
+                          className="squareshare-screenshot"
+                        />
+                      </div>
+
+                      {/* Info Content */}
+                      <div className="squareshare-info">
+                        <h3 className="squareshare-title">
+                          Your collections, beautifully shared
+                        </h3>
+
+                        <p className="squareshare-description">
+                          Curate and display your collections with rich artifacts — photos, descriptions, and stories. When you're ready, transform any artifact into a product and sell directly through SquareShare. Built for small businesses and creators who want a storefront without building a store.
+                        </p>
+
+                        <a 
+                          href="#"
+                          className="squareshare-cta"
+                        >
+                          <span>Coming Soon</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* HackMe Lab Card */}
               <div className="labs-project-card">
                 {/* Project Name - Centered, Big & Bold */}
@@ -1265,19 +1363,8 @@ function navigate(path) {
           features: ['Responsive Design', 'Speed Optimization', 'Modern UI/UX', 'SEO-Friendly', 'Custom Animations', 'Performance Audit'],
         },
         {
-          id: 'ai',
-          number: '02',
-          title: 'AI Agents',
-          price: '$299/mo',
-          timeline: '<1s response',
-          description: aiData?.dataset.subheading || '',
-          color: '#38bdf8',
-          link: '/ai',
-          features: ['Customer Support', 'Lead Qualification', 'Multi-Channel Deploy', 'Custom Training', 'CRM Integration', 'Real-time Analytics'],
-        },
-        {
           id: 'social',
-          number: '03',
+          number: '02',
           title: 'Social Media',
           price: '$879/mo',
           timeline: '10 posts/mo',
@@ -1305,8 +1392,8 @@ function navigate(path) {
           const snappedIndex = Math.round(rawIndex);
           const clampedIndex = Math.max(0, Math.min(allServices.length - 1, snappedIndex));
           
-          // Snap rotation to exact 120deg increments
-          setWheelRotation(clampedIndex * 120);
+          // Snap rotation to exact 180deg increments
+          setWheelRotation(clampedIndex * 180);
 
           if (clampedIndex !== prevIndex.current) {
             setContentVisible(false);
@@ -1332,7 +1419,7 @@ function navigate(path) {
 
       // Click handler to jump to a specific service
       const jumpToService = (idx) => {
-        setWheelRotation(idx * 120);
+        setWheelRotation(idx * 180);
         setContentVisible(false);
         setTimeout(() => {
           setActiveIndex(idx);
@@ -1348,7 +1435,7 @@ function navigate(path) {
       const innerR = 150;
       const wheelCx = 350;
       const wheelCy = 350;
-      const sectorAngle = 120;
+      const sectorAngle = 180;
       const gapWidth = 8; // constant-width gap in SVG units
 
       return (
@@ -1367,7 +1454,7 @@ function navigate(path) {
               <p className="text-xs font-bold tracking-[0.3em] mb-2" style={{ color: 'var(--primary)' }}>
                 OUR SERVICES
               </p>
-              <p className="text-base" style={{ color: 'var(--muted)' }}>Three services, limitless results</p>
+              <p className="text-base" style={{ color: 'var(--muted)' }}>Two services, limitless results</p>
             </div>
 
             <div className="wheel-layout">
@@ -2168,45 +2255,85 @@ function navigate(path) {
     function Footer() {
       const footerData = document.getElementById('footer-data');
       const brand = footerData?.dataset.brand || '';
+      const email = footerData?.dataset.email || '';
+      const phone = footerData?.dataset.phone || '';
       const copyright = footerData?.dataset.copyright || '';
-
-      const socials = [
-        { name: 'YouTube', url: 'https://youtube.com/@rootlabs', icon: 'M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z' },
-        { name: 'Instagram', url: 'https://instagram.com/rootlabs.studio', icon: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' }
-      ];
+      const socials = footerData?.dataset.social ? JSON.parse(footerData.dataset.social) : [];
 
       return (
-        <footer className="py-16 px-6">
+        <footer style={{ background: 'rgba(255, 255, 255, 0.05)', borderTop: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)' }} className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col items-center gap-6 text-center">
-              <div className="text-2xl font-bold" style={{ color: 'var(--primary)' }}>
-                {brand}
+            <div className="grid md:grid-cols-3 gap-12 mb-12">
+              {/* Brand & About */}
+              <div>
+                <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--primary)' }}>
+                  {brand}
+                </h3>
+                <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                  Crafting digital experiences that transform businesses and engage audiences.
+                </p>
               </div>
-              
-              {/* Social Links */}
-              <div className="flex gap-6">
-                {socials.map(social => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-all hover:scale-110"
-                    style={{ color: 'var(--muted)' }}
-                    onMouseEnter={(e) => e.target.style.color = 'var(--primary)'}
-                    onMouseLeave={(e) => e.target.style.color = 'var(--muted)'}
-                    aria-label={social.name}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d={social.icon} />
+
+              {/* Contact Info */}
+              <div>
+                <h4 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>Contact</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5" style={{ color: 'var(--primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                  </a>
-                ))}
+                    <a href={`mailto:${email}`} className="text-sm hover:text-primary transition-colors" style={{ color: 'var(--muted)' }}>
+                      {email}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5" style={{ color: 'var(--primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <a href={`tel:${phone}`} className="text-sm hover:text-primary transition-colors" style={{ color: 'var(--muted)' }}>
+                      {phone}
+                    </a>
+                  </div>
+                </div>
               </div>
-              
-              <div className="text-sm max-w-md" style={{ color: 'var(--muted)' }}>
+
+              {/* Social Links */}
+              <div>
+                <h4 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>Follow Us</h4>
+                <div className="flex gap-4">
+                  {socials.map(social => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                      style={{ background: 'rgba(255, 122, 45, 0.1)', color: 'var(--primary)' }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 122, 45, 0.2)' }
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 122, 45, 0.1)'}
+                      aria-label={social.name}
+                    >
+                      {social.name === 'YouTube' && (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                        </svg>
+                      )}
+                      {social.name === 'Instagram' && (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ borderTop: '1px solid var(--glass-border)' }} className="py-6 text-center">
+              <p className="text-sm" style={{ color: 'var(--muted)' }}>
                 {copyright}
-              </div>
+              </p>
             </div>
           </div>
         </footer>
@@ -2775,35 +2902,19 @@ function navigate(path) {
               {/* Centered headline */}
               <div className="text-center space-y-6 stagger-item mb-16">
                 <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Your Brand,
+                  Websites That
                   <span className="block mt-2" style={{ color: 'var(--primary)' }}>
-                    Online
+                    Work For You
                   </span>
                 </h1>
 
                 <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
                   {subheading}
                 </p>
-
-                <div className="flex gap-4 justify-center pt-2">
-                  <a 
-                    href="#pricing"
-                    className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
-                    style={{ 
-                      background: 'var(--primary)',
-                      boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
-                    }}
-                  >
-                    View Pricing
-                  </a>
-                  <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
-                    Contact Us
-                  </a>
-                </div>
               </div>
 
               {/* 3D Cylindrical Carousel */}
-              <div className="cylinder-wrap">
+              <div className="cylinder-wrap" style={{ marginTop: '-2rem' }}>
                 <div className="cylinder-scene">
                   <div className="cylinder-ring">
                     {Array.from({ length: 10 }, (_, idx) => (
@@ -2813,6 +2924,23 @@ function navigate(path) {
                     ))}
                   </div>
                 </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex gap-4 justify-center pt-8">
+                <a 
+                  href="#pricing"
+                  className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
+                  style={{ 
+                    background: 'var(--primary)',
+                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
+                  }}
+                >
+                  View Pricing
+                </a>
+                <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                  Contact Us
+                </a>
               </div>
             </div>
           </section>
@@ -2988,292 +3116,6 @@ function navigate(path) {
     }
 
     // AI Agents Service Page - Futuristic & Dynamic
-    function AIAgentsPage() {
-      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-      const heroRef = useRef(null);
-      const data = document.getElementById('ai-data');
-      const heading = data?.dataset.heading || 'AI Agent Development';
-      const subheading = data?.dataset.subheading || '';
-      const plans = data ? JSON.parse(data.dataset.plans || '[]') : [];
-
-      useEffect(() => {
-        const handleMove = (e) => {
-          if (heroRef.current) {
-            const rect = heroRef.current.getBoundingClientRect();
-            setMousePos({
-              x: ((e.clientX - rect.left) / rect.width - 0.5) * 30,
-              y: ((e.clientY - rect.top) / rect.height - 0.5) * 30
-            });
-          }
-        };
-        window.addEventListener('mousemove', handleMove);
-        return () => window.removeEventListener('mousemove', handleMove);
-      }, []);
-
-      return (
-        <div className="min-h-screen">
-          <FloatingNav />
-          
-          {/* Hero Section */}
-          <section ref={heroRef} className="service-page-hero min-h-screen flex items-center relative overflow-hidden pt-24">
-            {/* Animated Background Blobs */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="blob absolute w-96 h-96 rounded-full" 
-                   style={{ background: 'var(--accent-blue)', top: '10%', right: '5%', opacity: '0.3' }} />
-              <div className="blob absolute w-80 h-80 rounded-full" 
-                   style={{ background: 'var(--mesh-tint)', bottom: '15%', left: '10%', animationDelay: '2s' }} />
-            </div>
-
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                {/* Left: Content */}
-                <div className="space-y-8 stagger-item">
-                  <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
-                    AI Agent
-                    <span className="block mt-2" style={{ color: 'var(--accent-blue)' }}>
-                      Development
-                    </span>
-                  </h1>
-
-                  <p className="text-xl leading-relaxed max-w-lg" style={{ color: 'var(--muted)' }}>
-                    {subheading}
-                  </p>
-
-                  <div className="flex gap-4">
-                    <a 
-                      href="#pricing"
-                      className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
-                      style={{ 
-                        background: 'var(--primary)',
-                        boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
-                      }}
-                    >
-                      View Pricing
-                    </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
-                      Book Demo
-                    </a>
-                  </div>
-
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-6 pt-8">
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.3s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>uptime</div>
-                    </div>
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.4s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>10K+</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>queries/day</div>
-                    </div>
-                    <div className="text-center stagger-item" style={{ animationDelay: '0.5s' }}>
-                      <div className="text-3xl font-bold" style={{ color: 'var(--accent-blue)', fontFamily: "'Space Grotesk', sans-serif" }}>95%</div>
-                      <div className="text-sm" style={{ color: 'var(--muted)' }}>accuracy</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: AI Flow Visual */}
-                <div className="stagger-item hidden md:flex items-center justify-center" style={{ animationDelay: '0.15s' }}>
-                  <AIHeroFlowVisual />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Features Section - Orb + Floating Cards */}
-          <section className="relative overflow-hidden" style={{ background: 'var(--bg)' }}>
-            {/* Ambient background blobs */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-3xl" 
-                   style={{ background: 'radial-gradient(circle, var(--accent-blue) 0%, transparent 70%)' }} />
-              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-3xl" 
-                   style={{ background: 'radial-gradient(circle, var(--primary) 0%, transparent 70%)' }} />
-            </div>
-
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              {/* Section Header */}
-              <div className="text-center pt-24 pb-8 stagger-item">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" 
-                     style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.2)' }}>
-                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent-blue)' }} />
-                  <span className="text-sm font-semibold" style={{ color: 'var(--accent-blue)' }}>Intelligent Automation</span>
-                </div>
-                <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  What Your AI Can Do
-                </h2>
-                <p className="text-xl max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
-                  From customer support to data analysis?powerful capabilities that work 24/7
-                </p>
-              </div>
-
-              {/* Orb + Orbit Cards Layout */}
-              <div className="ai-orb-section">
-                {/* Dot Grid Background - sits behind everything */}
-                <div className="ai-dot-grid" aria-hidden="true"></div>
-                
-                {/* Central Fluid Orb */}
-                <div className="ai-fluid-orb" aria-hidden="true"></div>
-
-                {/* Orbit Cards - inline icon + metric bubble design */}
-                <div className="ai-orb-cards">
-                  <div className="ai-orb-card">
-                    <div className="ai-orb-card-header">
-                      <Zap className="ai-orb-card-icon" />
-                      <h3>Automate Workflows</h3>
-                    </div>
-                    <p>Let your AI handle repetitive tasks so you can focus on what matters.</p>
-                    <div className="ai-orb-metric-bubble">
-                      <span className="ai-orb-metric-value">12h</span>
-                      <span className="ai-orb-metric-label">saved / week</span>
-                    </div>
-                  </div>
-
-                  <div className="ai-orb-card">
-                    <div className="ai-orb-card-header">
-                      <PenTool className="ai-orb-card-icon" />
-                      <h3>Generate Content</h3>
-                    </div>
-                    <p>Draft posts, emails, and ideas in seconds instead of hours.</p>
-                    <div className="ai-orb-metric-bubble">
-                      <span className="ai-orb-metric-value">3x</span>
-                      <span className="ai-orb-metric-label">faster</span>
-                    </div>
-                  </div>
-
-                  <div className="ai-orb-card">
-                    <div className="ai-orb-card-header">
-                      <MessageCircle className="ai-orb-card-icon" />
-                      <h3>Respond to Clients</h3>
-                    </div>
-                    <p>Instantly answer common questions with a personalized AI agent.</p>
-                    <div className="ai-orb-metric-bubble">
-                      <span className="ai-orb-metric-value">95%</span>
-                      <span className="ai-orb-metric-label">FAQs auto</span>
-                    </div>
-                  </div>
-
-                  <div className="ai-orb-card">
-                    <div className="ai-orb-card-header">
-                      <BarChart3 className="ai-orb-card-icon" />
-                      <h3>Understand Data</h3>
-                    </div>
-                    <p>Summarize, explain, and explore your data conversationally.</p>
-                    <div className="ai-orb-metric-bubble">
-                      <span className="ai-orb-metric-value">5x</span>
-                      <span className="ai-orb-metric-label">faster insights</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom CTA - Pill shaped */}
-              <div className="text-center pb-24 stagger-item" style={{ animationDelay: '0.7s' }}>
-                <a 
-                  href="#pricing"
-                  className="inline-flex items-center gap-3 px-10 py-5 font-bold text-lg transition-all hover:translate-y-[-1px]"
-                  style={{ 
-                    background: 'linear-gradient(135deg, var(--accent-blue) 0%, var(--primary) 100%)', 
-                    color: 'white',
-                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)',
-                    borderRadius: '9999px'
-                  }}
-                >
-                  Build Your AI Agent
-                  <ArrowRight className="w-6 h-6" />
-                </a>
-                <p className="mt-4 text-sm" style={{ color: 'var(--muted)' }}>
-                  Start with a free consultation ? No commitment required
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Pricing Preview - AI Page */}
-          <section className="py-24 relative overflow-hidden">
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(138, 61, 230, 0.05) 100%)' }}></div>
-            {/* Masked Grid Patch - Blue accent */}
-            <div className="masked-grid masked-grid-blue masked-grid-bottom-left" aria-hidden="true"></div>
-            
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Flexible AI Pricing
-                </h2>
-                <p className="text-xl" style={{ color: 'var(--muted)' }}>
-                  Scale as you grow with transparent pricing
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                {plans.map((plan, idx) => (
-                  <div key={idx} className={`liquid-card p-8 hover-elastic ${plan.popular ? 'plan-popular-inline' : ''}`} style={{ position: 'relative', overflow: 'visible' }}>
-                    {plan.popular && (
-                      <div 
-                        className="pricing-badge"
-                        style={{ 
-                          position: 'absolute',
-                          top: '0px',
-                          left: '50%',
-                          transform: 'translateX(-50%) translateY(-50%)',
-                          background: 'linear-gradient(135deg, #38bdf8, #8A3DE6)',
-                          color: 'white',
-                          padding: '0.35rem 1rem',
-                          borderRadius: '16px',
-                          fontSize: '0.6875rem',
-                          fontWeight: '700',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                          whiteSpace: 'nowrap',
-                          boxShadow: '0 2px 8px rgba(56, 189, 248, 0.3)'
-                        }}
-                        aria-label="Recommended plan"
-                      >
-                        Most Popular
-                      </div>
-                    )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
-                    <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--accent-blue)' }}>
-                        ${plan.monthly}
-                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
-                      </div>
-                      {plan.setup > 0 && (
-                        <div className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
-                          ${plan.setup} setup
-                        </div>
-                      )}
-                    </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.slice(0, 3).map((feature, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-2" style={{ color: 'var(--text)' }}>
-                          <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--success)' }} />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a 
-                      href="#contact"
-                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
-                      style={{ 
-                        background: plan.popular ? 'var(--primary)' : 'rgba(56, 189, 248, 0.1)',
-                        color: plan.popular ? 'white' : 'var(--accent-blue)',
-                        border: plan.popular ? 'none' : '1px solid var(--glass-border)'
-                      }}
-                    >
-                      Get Started
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <Contact />
-          <Footer />
-        </div>
-      );
-    }
-
     // Social Masonry Grid - Post Gallery
     function SocialMasonryGrid() {
       // aspectRatio = height/width  (portrait A4 ≈ 1.414 | landscape 16:9 ≈ 0.5625 | square = 1)
@@ -3318,108 +3160,6 @@ function navigate(path) {
             />
           </div>
         </section>
-      );
-    }
-
-    // AI Hero Flow Visual Component - Input -> AI -> Output
-    function AIHeroFlowVisual() {
-      return (
-        <div className="ai-hero-flow" aria-label="AI transforms messy input into clean output">
-          {/* SVG Connector Lines */}
-          <svg className="ai-hero-flow-connector" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="connectorGrad1" x1="0%" y1="50%" x2="100%" y2="50%">
-                <stop offset="0%" stopColor="#8A3DE6" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.6" />
-              </linearGradient>
-              <linearGradient id="connectorGrad2" x1="0%" y1="50%" x2="100%" y2="50%">
-                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#8A3DE6" stopOpacity="0.4" />
-              </linearGradient>
-            </defs>
-            {/* Left to Center connector */}
-            <path 
-              className="ai-connector-path ai-connector-path--1"
-              d="M 60 100 Q 110 80, 160 100" 
-              fill="none" 
-              stroke="url(#connectorGrad1)" 
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            {/* Center to Right connector */}
-            <path 
-              className="ai-connector-path ai-connector-path--2"
-              d="M 240 100 Q 290 120, 340 100" 
-              fill="none" 
-              stroke="url(#connectorGrad2)" 
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-
-          <div className="ai-hero-flow-nodes">
-            {/* Left Node: Raw Input (Tangled Yarn) */}
-            <div className="ai-hero-flow-node ai-hero-flow-node--input">
-              <svg className="ai-yarn" viewBox="0 0 60 60" fill="none">
-                <path d="M10 30 Q25 10, 40 25 T55 30" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-                <path d="M15 25 Q30 40, 45 20" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-                <path d="M8 35 Q20 45, 35 30 T50 35" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
-                <path d="M12 40 Q28 20, 48 40" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
-                <path d="M20 15 Q35 35, 50 20" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-                <path d="M5 28 Q22 50, 42 28" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-                <path d="M18 45 Q33 25, 52 42" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
-                <path d="M25 12 Q40 30, 55 18" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
-                <path d="M8 22 Q25 38, 45 22" stroke="#8A3DE6" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-                <path d="M30 48 Q45 30, 58 45" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
-              </svg>
-            </div>
-
-            {/* Center Node: AI Pulse Orb */}
-            <div className="ai-hero-flow-node ai-hero-flow-node--ai">
-              <div className="ai-pulse-orb">
-                <div className="ai-pulse-orb__ring ai-pulse-orb__ring--1"></div>
-                <div className="ai-pulse-orb__ring ai-pulse-orb__ring--2"></div>
-                <div className="ai-pulse-orb__core"></div>
-              </div>
-            </div>
-
-            {/* Right Node: Clean Output (Bullet Lines) */}
-            <div className="ai-hero-flow-node ai-hero-flow-node--output">
-              <div className="ai-output-lines">
-                <div className="ai-output-line ai-output-line--1">
-                  <span className="ai-output-bullet"></span>
-                  <span className="ai-output-bar"></span>
-                </div>
-                <div className="ai-output-line ai-output-line--2">
-                  <span className="ai-output-bullet"></span>
-                  <span className="ai-output-bar ai-output-bar--accent"></span>
-                </div>
-                <div className="ai-output-line ai-output-line--3">
-                  <span className="ai-output-bullet"></span>
-                  <span className="ai-output-bar"></span>
-                </div>
-                <div className="ai-output-line ai-output-line--4">
-                  <span className="ai-output-bullet"></span>
-                  <span className="ai-output-bar"></span>
-                </div>
-                <div className="ai-output-line ai-output-line--5">
-                  <span className="ai-output-bullet"></span>
-                  <span className="ai-output-bar ai-output-bar--short"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile: Simple arrows between stacked nodes */}
-          <div className="ai-hero-flow-mobile-arrows">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-          </div>
-        </div>
       );
     }
 
@@ -3653,13 +3393,6 @@ function navigate(path) {
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                             <span>Original Audio · rootlabs.studio</span>
                           </div>
-                        </div>
-
-                        {/* Progress bars */}
-                        <div className="insta-reel-progress">
-                          {reels.map((_, j) => (
-                            <div key={j} className={`insta-progress-bar ${j === (currentReel % reelsCount) ? 'active' : ''} ${j < (currentReel % reelsCount) ? 'done' : ''}`} />
-                          ))}
                         </div>
                       </div>
                     );
@@ -4666,6 +4399,7 @@ function navigate(path) {
                   <div className="stagger-item" style={{ animationDelay: '0.2s' }}>
                     <FlipCardStack
                       interval={4000}
+                      colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
                       cards={[
                         { title: 'Scroll-stopping content', text: 'Posts, stories, and reels built to drive engagement across Instagram, TikTok, LinkedIn, and more. Strategy to execution, all handled.', icon: <PenTool className="w-8 h-8" /> },
                         { title: 'Real relationships', text: "We don't post and ghost. Active engagement with your audience through comments, DMs, and mentions to build a loyal community.", icon: <MessageCircle className="w-8 h-8" /> },
@@ -4694,7 +4428,7 @@ function navigate(path) {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {plans.map((plan, idx) => (
                   <div key={idx} className={`liquid-card p-8 hover-elastic ${plan.popular ? 'plan-popular-inline' : ''}`} style={{ position: 'relative', overflow: 'visible' }}>
                     {plan.popular && (
@@ -4724,12 +4458,12 @@ function navigate(path) {
                     <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#FF7A2D' }}>
-                        ${plan.monthly}
-                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
+                        ${plan.setup > 0 ? plan.setup : plan.monthly}
+                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>{plan.setup > 0 ? ' setup' : '/mo'}</span>
                       </div>
-                      {plan.setup > 0 && (
+                      {plan.setup > 0 && plan.monthly > 0 && (
                         <div className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
-                          ${plan.setup} setup
+                          ${plan.monthly}/mo
                         </div>
                       )}
                     </div>
@@ -5300,7 +5034,6 @@ function navigate(path) {
       }, []);
 
       if (path === '/websites') return <WebsitesPage />;
-      if (path === '/ai') return <AIAgentsPage />;
       if (path === '/social') return <SocialPage />;
       if (path === '/showcase/gardener') return <GardenerWebsite />;
       if (path === '/showcase/techstore') return <TechStore />;
