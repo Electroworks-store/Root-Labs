@@ -18,6 +18,7 @@ import Masonry from './components/Masonry';
 import WebsitesProcess from './components/WebsitesProcess';
 import FlipCardStack from './components/FlipCardStack';
 import './components/FlipCardStack.css';
+import lomniceLogo from '../img/lomnice.webp';
 
 // Navigation helper for client-side routing
 function navigate(path) {
@@ -2308,9 +2309,9 @@ function navigate(path) {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                      style={{ background: 'rgba(255, 122, 45, 0.1)', color: 'var(--primary)' }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 122, 45, 0.2)' }
-                      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 122, 45, 0.1)'}
+                      style={{ background: 'rgba(128, 128, 128, 0.15)', color: 'var(--primary)' }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(128, 128, 128, 0.25)' }
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(128, 128, 128, 0.15)'}
                       aria-label={social.name}
                     >
                       {social.name === 'YouTube' && (
@@ -2584,6 +2585,159 @@ function navigate(path) {
     */
 
     // Why Us Pricing Section
+    // Client Testimonials Section
+    function Testimonials() {
+      const [activeIdx, setActiveIdx] = useState(0);
+
+      const testimonials = [
+        {
+          name: 'Městys Lomnice',
+          service: 'Social Media Management',
+          quote: 'RootLabs transformed our social media presence completely. Their creative approach to content and consistent posting schedule helped us connect with our community in ways we never thought possible.',
+          logo: lomniceLogo,
+          cardClass: 'testimonial-card-lomnice',
+          stats: [
+            { value: '+600%', label: 'Engagement' },
+            { value: '1K', label: 'New Followers' },
+            { value: '50+', label: 'Posts Created' },
+          ],
+        },
+        {
+          name: 'Your Company',
+          service: 'Website Design',
+          quote: 'Placeholder testimonial text. Share your experience working with RootLabs and how our services helped your business grow and reach new audiences.',
+          logo: null,
+          stats: [
+            { value: '3x', label: 'More Traffic' },
+            { value: '<1s', label: 'Load Time' },
+            { value: '+85%', label: 'Conversions' },
+          ],
+        },
+        {
+          name: 'Another Client',
+          service: 'Brand Strategy',
+          quote: 'Placeholder testimonial text. We\'d love to feature your story here. Get in touch and let us help you achieve your digital goals.',
+          logo: null,
+          stats: [
+            { value: '+200%', label: 'Brand Reach' },
+            { value: '50K', label: 'Impressions' },
+            { value: '12', label: 'Assets Created' },
+          ],
+        },
+      ];
+
+      // Bubble positions spread wide around the card, different per card
+      const bubblePositions = [
+        [
+          { top: '2%', left: '-140px' },
+          { top: '50%', right: '-150px' },
+          { bottom: '5%', left: '-130px' },
+        ],
+        [
+          { top: '8%', right: '-145px' },
+          { bottom: '40%', left: '-140px' },
+          { bottom: '0%', right: '-130px' },
+        ],
+        [
+          { top: '30%', left: '-145px' },
+          { top: '2%', right: '-135px' },
+          { bottom: '10%', right: '-150px' },
+        ],
+      ];
+
+      const cards = testimonials.map((t) => ({
+        title: `"${t.quote}"`,
+        text: '',
+        className: t.cardClass || '',
+        icon: (
+          <div className="testimonial-author">
+            <div>
+              <span className="testimonial-name">{t.name}</span>
+              <span className="testimonial-service">{t.service}</span>
+            </div>
+            <div className={`testimonial-logo-spot${t.logo ? ' has-logo' : ''}`}>
+              {t.logo ? (
+                <img src={t.logo} alt={t.name} className="testimonial-logo-img" />
+              ) : (
+                <span className="testimonial-logo-placeholder">{t.name.charAt(0)}</span>
+              )}
+            </div>
+          </div>
+        ),
+      }));
+
+      const currentStats = testimonials[activeIdx]?.stats || [];
+      const currentPositions = bubblePositions[activeIdx] || bubblePositions[0];
+      const bubbleColors = ['yellow', 'red', 'blue'];
+
+      return (
+        <section className="testimonials-section">
+          {/* Giant background text - hidden on mobile via CSS */}
+          <div className="testimonials-bg-text" aria-hidden="true">
+            <span className="testimonials-bg-line testimonials-bg-left">CLIENT</span>
+            <span className="testimonials-bg-line testimonials-bg-right">TESTIMONIALS</span>
+          </div>
+
+          {/* Mobile header - shown only on mobile via CSS */}
+          <h2 className="testimonials-mobile-header">Client Testimonials</h2>
+
+          <div className="testimonials-container">
+            <div className="testimonials-card-wrapper">
+              {/* Stat bubbles with per-card randomized positions */}
+              {currentStats.map((stat, i) => (
+                <div
+                  key={`stat-${activeIdx}-${i}`}
+                  className={`testimonial-stat-bubble testimonial-stat-color-${bubbleColors[i]}`}
+                  style={currentPositions[i]}
+                >
+                  <span className="testimonial-stat-value">{stat.value}</span>
+                  <span className="testimonial-stat-label">{stat.label}</span>
+                </div>
+              ))}
+
+              <FlipCardStack
+                className="testimonials-flip-stack"
+                interval={0}
+                colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
+                cards={cards}
+                activeIndex={activeIdx}
+                onIndexChange={setActiveIdx}
+              />
+
+              {/* Mobile arrows */}
+              <button
+                className="testimonial-arrow testimonial-arrow-left"
+                onClick={() => { setActiveIdx((activeIdx - 1 + testimonials.length) % testimonials.length); setExpandedCard(null); }}
+                aria-label="Previous testimonial"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="12,4 6,10 12,16" /></svg>
+              </button>
+              <button
+                className="testimonial-arrow testimonial-arrow-right"
+                onClick={() => { setActiveIdx((activeIdx + 1) % testimonials.length); setExpandedCard(null); }}
+                aria-label="Next testimonial"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8,4 14,10 8,16" /></svg>
+              </button>
+
+              {/* Mobile pill bubbles under card */}
+              <div className="testimonials-mobile-pills">
+                {currentStats.map((stat, i) => (
+                  <div
+                    key={`pill-${activeIdx}-${i}`}
+                    className={`testimonial-stat-bubble testimonial-stat-color-${bubbleColors[i]}`}
+                  >
+                    <span className="testimonial-stat-value">{stat.value}</span>
+                    <span className="testimonial-stat-label">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     function WhyUsPricing() {
       const [scrollProgress, setScrollProgress] = useState(0);
       const [activeStep, setActiveStep] = useState(0);
@@ -4508,6 +4662,7 @@ function navigate(path) {
           <Stats />
           {/* <SpotlightStack /> */}
           <WhyUsPricing />
+          <Testimonials />
           {/* <BentoPortfolio /> */}
           <LabsSection />
           <LabsHeadline />

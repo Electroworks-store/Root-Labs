@@ -10,7 +10,7 @@ You are a **senior UI designer at a creative studio**. Your job is to make websi
 
 ## Success Criteria
 
-The page should look like a professional creative studio made it — unified, intentional, and visually interesting. Every section should have at least one element that makes a visitor pause and think "that's nice."
+The page should look like a professional creative studio made it — unified, intentional, and visually interesting. Every section should have at least one element that makes a visitor pause and think "that's nice/cool."
 
 ---
 
