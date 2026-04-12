@@ -62,103 +62,193 @@ function useInView(ref, threshold = 0.2) {
   return isInView;
 }
 
-// Component 1: Vibe Picker
+// Component 1: Vibe Picker — Bento Grid Layout
+function VibeCard({ vibe, className, style, pill }) {
+  return (
+    <div className={`vibe-bento-card ${className || ''}`} style={{ background: vibe.bg, color: vibe.fg, ...style }}>
+      <div className={`vibe-bento-inner${pill ? ' vibe-pill-layout' : ''}`}>
+        {pill ? (
+          // Pill: compact centered layout that respects the oval clip
+          vibe.id === 'brutalism' ? (
+            <div className="vibe-pill-content">
+              <div style={{ width: '100%', height: 3, background: vibe.accent, marginBottom: 8 }} />
+              <div style={{ fontSize: 22, fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>AB</div>
+              <div style={{ width: '70%', height: 3, background: '#000', marginTop: 8, opacity: 0.3 }} />
+            </div>
+          ) : (
+            <div className="vibe-pill-content" style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <svg width="54" height="62" viewBox="0 0 54 62" style={{ position: 'absolute', left: '12%', top: '12%', opacity: 0.9, transform: 'rotate(-20deg)' }}>
+                <path d="M27 2 C40 10 52 22 50 38 C48 52 34 60 27 60 C20 60 6 52 4 38 C2 22 14 10 27 2Z" fill="#A8D08D" />
+                <path d="M27 10 L27 52" stroke="#1B3A2D" strokeWidth="1.5" fill="none" opacity="0.35" />
+                <path d="M18 20 Q27 28 27 28" stroke="#1B3A2D" strokeWidth="1.2" fill="none" opacity="0.25" />
+                <path d="M36 24 Q27 32 27 32" stroke="#1B3A2D" strokeWidth="1.2" fill="none" opacity="0.25" />
+                <path d="M16 34 Q27 40 27 40" stroke="#1B3A2D" strokeWidth="1.2" fill="none" opacity="0.2" />
+              </svg>
+              <svg width="44" height="50" viewBox="0 0 44 50" style={{ position: 'absolute', right: '8%', bottom: '14%', opacity: 0.7, transform: 'rotate(25deg)' }}>
+                <path d="M22 2 C32 8 42 18 40 30 C38 42 28 48 22 48 C16 48 6 42 4 30 C2 18 12 8 22 2Z" fill="#7CB342" />
+                <path d="M22 8 L22 42" stroke="#1B3A2D" strokeWidth="1.3" fill="none" opacity="0.3" />
+                <path d="M14 16 Q22 22 22 22" stroke="#1B3A2D" strokeWidth="1" fill="none" opacity="0.2" />
+                <path d="M30 20 Q22 26 22 26" stroke="#1B3A2D" strokeWidth="1" fill="none" opacity="0.2" />
+              </svg>
+            </div>
+          )
+        ) : vibe.id === 'luxury' ? (
+          // Luxury — gallery art space, refined typography, premium aesthetic
+          <>
+            {/* Gallery room mockup */}
+            <div style={{ flex: 1, position: 'relative', marginBottom: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 55 }}>
+              {/* Framed artwork — white mat with warm accent shadow */}
+              <div style={{ position: 'relative', width: '65%', aspectRatio: '3/4', background: '#F5F0EB', borderRadius: 2, boxShadow: '0 12px 32px rgba(0,0,0,0.25)' }}>
+                {/* Inner frame effect */}
+                <div style={{ position: 'absolute', inset: '8px', background: 'linear-gradient(135deg, #E8D7C3, #D4C4A8)', borderRadius: 1 }} />\n                {/* Accent line */}\n                <div style={{ position: 'absolute', left: '20%', top: '50%', width: '60%', height: 2, background: vibe.accent, opacity: 0.6, borderRadius: 1 }} />\n              </div>\n            </div>\n            {/* Elegant text */}\n            <div style={{ textAlign: 'center', marginBottom: 8 }}>\n              <div style={{ fontSize: 11, fontWeight: 300, color: vibe.accent, letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.65 }}>Collection</div>\n            </div>\n            {/* Subtle divider */}\n            <div style={{ height: 1, width: '40%', margin: '0 auto 8px', background: vibe.accent, opacity: 0.25 }} />\n            {/* Description lines */}\n            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'center', marginBottom: 10 }}>\n              <div style={{ height: 3, width: '55%', background: vibe.fg, opacity: 0.15, borderRadius: 1 }} />\n              <div style={{ height: 3, width: '40%', background: vibe.fg, opacity: 0.08, borderRadius: 1 }} />\n            </div>\n            {/* Bottom geometric accent */}\n            <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'center', gap: 2 }}>\n              <div style={{ width: 6, height: 1.5, background: vibe.accent, opacity: 0.5 }} />\n              <div style={{ width: 3, height: 1.5, background: vibe.accent, opacity: 0.3 }} />\n              <div style={{ width: 6, height: 1.5, background: vibe.accent, opacity: 0.5 }} />\n            </div>\n          </>
+        ) : vibe.id === 'corporate' ? (
+          // Corporate — light seaside village, beige/white/navy
+          <>
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: vibe.fg, letterSpacing: '0.02em', lineHeight: 1 }}>Corporate</div>
+              <div style={{ flex: 1 }} />
+              <div style={{ display: 'flex', gap: 3 }}>
+                <div style={{ width: 4, height: 4, borderRadius: 4, background: vibe.accent }} />
+                <div style={{ width: 4, height: 4, borderRadius: 4, background: vibe.accent3 }} />
+              </div>
+            </div>
+            {/* Blue circles composition */}
+            <div style={{ flex: 1, borderRadius: 10, position: 'relative', overflow: 'hidden', background: '#D8D8D8', marginBottom: 10, minHeight: 60 }}>
+              {/* Top-left circle */}
+              <div style={{ position: 'absolute', width: '45%', height: '90%', left: '-15%', top: '-20%', borderRadius: 9999, background: '#8BB0E0' }} />
+              {/* Top-right circle */}
+              <div style={{ position: 'absolute', width: '40%', height: '80%', right: '-10%', top: '-15%', borderRadius: 9999, background: '#8BB0E0' }} />
+              {/* Bottom-center circle */}
+              <div style={{ position: 'absolute', width: '42%', height: '85%', left: '28%', bottom: '-40%', borderRadius: 9999, background: '#8BB0E0' }} />
+            </div>
+            {/* Text lines */}
+            <div style={{ height: 5, width: '65%', borderRadius: 3, background: vibe.fg, opacity: 0.12, marginBottom: 3 }} />
+            <div style={{ height: 4, width: '50%', borderRadius: 3, background: vibe.fg, opacity: 0.07 }} />
+            {/* CTA */}
+            <div style={{ marginTop: 'auto', paddingTop: 6 }}>
+              <div style={{ width: 65, height: 20, borderRadius: 6, background: vibe.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 24, height: 2.5, borderRadius: 2, background: '#fff', opacity: 0.85 }} />
+              </div>
+            </div>
+          </>
+        ) : vibe.id === 'cosmic' ? (
+          // Cosmic — deep space, stars, nebula gradients
+          <>
+            {/* Title integrated as constellation label */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+              <div style={{ fontSize: 15, fontWeight: 300, color: vibe.accent, letterSpacing: '0.15em', textTransform: 'uppercase', lineHeight: 1 }}>Cosmic</div>
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, ' + vibe.accent + ', transparent)', opacity: 0.3 }} />
+            </div>
+            {/* Nebula blob */}
+            <div style={{ flex: 1, borderRadius: 12, position: 'relative', overflow: 'hidden', background: 'radial-gradient(ellipse at 30% 40%, rgba(199,125,255,0.25), transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(255,107,157,0.2), transparent 55%)', marginBottom: 10 }}>
+              {/* Stars */}
+              {[[12, 18], [45, 28], [78, 12], [25, 65], [60, 50], [88, 72], [35, 42], [70, 35], [15, 80], [55, 75], [90, 25], [42, 90]].map(([x, y], i) => (
+                <div key={i} style={{ position: 'absolute', left: x + '%', top: y + '%', width: i % 3 === 0 ? 3 : 2, height: i % 3 === 0 ? 3 : 2, borderRadius: 9999, background: '#fff', opacity: i % 4 === 0 ? 0.9 : i % 3 === 0 ? 0.6 : 0.35, boxShadow: i % 3 === 0 ? '0 0 4px rgba(255,255,255,0.5)' : 'none' }} />
+              ))}
+              {/* Orbiting ring */}
+              <div style={{ position: 'absolute', top: '25%', left: '15%', width: '70%', height: '50%', borderRadius: 9999, border: '1px solid rgba(199,125,255,0.15)', transform: 'rotate(-15deg)' }} />
+            </div>
+            {/* Text lines */}
+            <div style={{ height: 5, width: '60%', borderRadius: 3, background: 'rgba(232,224,240,0.12)', marginBottom: 3 }} />
+            <div style={{ height: 4, width: '45%', borderRadius: 3, background: 'rgba(232,224,240,0.07)' }} />
+            {/* CTA */}
+            <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+              <div style={{ width: 60, height: 18, borderRadius: 9999, background: 'linear-gradient(90deg, ' + vibe.accent + ', ' + vibe.accent2 + ')', opacity: 0.8, boxShadow: '0 0 14px rgba(199,125,255,0.3)' }} />
+            </div>
+          </>
+        ) : vibe.id === 'editorial' ? (
+          // Editorial — clean typography focus, masthead with name
+          <>
+            {/* Masthead */}
+            <div style={{ textAlign: 'center', borderBottom: '2px solid rgba(0,0,0,0.12)', paddingBottom: 8, marginBottom: 10 }}>
+              <div style={{ fontSize: 18, fontWeight: 300, color: vibe.fg, letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1 }}>Editorial</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
+                <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,0.1)' }} />
+                <div style={{ fontSize: 6, color: vibe.accent, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Vol. 1</div>
+                <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,0.1)' }} />
+              </div>
+            </div>
+            {/* Two-column body */}
+            <div style={{ display: 'flex', gap: 10, flex: 1 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ height: 7, width: '90%', borderRadius: 2, background: 'rgba(0,0,0,0.55)', marginBottom: 6 }} />
+                <div style={{ height: 4, width: '100%', borderRadius: 2, background: 'rgba(0,0,0,0.1)', marginBottom: 3 }} />
+                <div style={{ height: 4, width: '100%', borderRadius: 2, background: 'rgba(0,0,0,0.1)', marginBottom: 3 }} />
+                <div style={{ height: 4, width: '85%', borderRadius: 2, background: 'rgba(0,0,0,0.1)', marginBottom: 3 }} />
+                <div style={{ height: 4, width: '70%', borderRadius: 2, background: 'rgba(0,0,0,0.1)' }} />
+              </div>
+              <div style={{ width: 1, background: 'rgba(0,0,0,0.08)' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ height: 36, borderRadius: 3, background: 'rgba(0,0,0,0.06)', marginBottom: 5 }} />
+                <div style={{ height: 4, width: '90%', borderRadius: 2, background: 'rgba(0,0,0,0.1)', marginBottom: 3 }} />
+                <div style={{ height: 4, width: '75%', borderRadius: 2, background: 'rgba(0,0,0,0.1)' }} />
+              </div>
+            </div>
+            {/* Footer row */}
+            <div style={{ marginTop: 'auto', paddingTop: 8, display: 'flex', gap: 6, alignItems: 'center' }}>
+              <div style={{ width: 12, height: 12, borderRadius: 9999, background: vibe.accent2 }} />
+              <div style={{ height: 3, width: 50, borderRadius: 2, background: 'rgba(0,0,0,0.12)' }} />
+              <div style={{ flex: 1 }} />
+              <div style={{ height: 3, width: 28, borderRadius: 2, background: 'rgba(0,0,0,0.08)' }} />
+            </div>
+          </>
+        ) : vibe.id === 'brutalism' ? (
+          // Brutalism — raw, sharp, high-contrast, no border-radius
+          <>
+            <div style={{ display: 'flex', gap: 0, marginBottom: 10 }}>
+              <div style={{ flex: 1, height: 6, background: '#000' }} />
+              <div style={{ width: 20, height: 6, background: vibe.accent }} />
+            </div>
+            <div style={{ height: '30%', background: '#000', border: '3px solid ' + vibe.accent, marginBottom: 8 }} />
+            <div style={{ height: 10, width: '60%', background: '#000', marginBottom: 4 }} />
+            <div style={{ height: 5, width: '80%', background: 'rgba(0,0,0,0.15)', marginBottom: 3 }} />
+            <div style={{ height: 5, width: '50%', background: 'rgba(0,0,0,0.15)' }} />
+            <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+              <div style={{ width: 65, height: 22, background: vibe.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 7, fontWeight: 900, color: '#FFF', letterSpacing: '0.12em', textTransform: 'uppercase' }}>CLICK</div>
+            </div>
+          </>
+        ) : (
+          // Nature — organic shapes, earthy tones
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12 }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" style={{ opacity: 0.6 }}>
+                <path d="M8 1 C8 1 13 5 13 9 C13 13 8 15 8 15 C8 15 3 13 3 9 C3 5 8 1 8 1Z" fill={vibe.accent} />
+              </svg>
+              <div style={{ flex: 1 }} />
+              <div style={{ width: 5, height: 5, borderRadius: 5, background: vibe.accent3 }} />
+            </div>
+            <div style={{ height: '30%', borderRadius: 12, background: 'linear-gradient(180deg, ' + vibe.accent2 + ', rgba(27,58,45,0.3))', opacity: 0.5, marginBottom: 10 }} />
+            <div style={{ height: 7, width: '55%', borderRadius: 4, background: vibe.accent, opacity: 0.7, marginBottom: 5 }} />
+            <div style={{ height: 4, width: '80%', borderRadius: 3, background: 'rgba(232,240,228,0.12)', marginBottom: 3 }} />
+            <div style={{ height: 4, width: '60%', borderRadius: 3, background: 'rgba(232,240,228,0.08)' }} />
+            <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+              <div style={{ width: 55, height: 20, borderRadius: 9999, background: vibe.accent, opacity: 0.75 }} />
+            </div>
+          </>
+        )}
+      </div>
+      {!['corporate', 'cosmic', 'editorial'].includes(vibe.id) && (
+        <div className="vibe-bento-label" style={
+          vibe.id === 'brutalism' ? { fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' } : undefined
+        }>{vibe.title}</div>
+      )}
+    </div>
+  );
+}
+
 function VibePicker() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef);
+
   const VIBES = [
-    { id: 'luxury', title: 'Luxury', bg: '#0A0A0A', fg: '#F5F1E8', accent: '#D4AF37', accent2: '#1A1A1A', accent3: '#8B7355' },
-    { id: 'playful', title: 'Playful', bg: '#FF6B9D', fg: '#FFF5E1', accent: '#FFD93D', accent2: '#FF8C42' },
-    { id: 'tech', title: 'Tech', bg: '#000814', fg: '#E8F4F8', accent: '#00D9FF', accent2: '#0066FF', accent3: '#6C63FF' },
-    { id: 'editorial', title: 'Editorial', bg: '#F4F4F2', fg: '#1A1A1A', accent: '#7A7A7A', accent2: '#2C2C2C' }
+    { id: 'luxury',    title: 'Luxury',    bg: '#0A0A0A', fg: '#F5F1E8', accent: '#D4AF37', accent2: '#1A1A1A', accent3: '#8B7355' },
+    { id: 'brutalism', title: 'Brutalism',  bg: '#FFFFFF', fg: '#000000', accent: '#FF0000', accent2: '#000000', accent3: '#FFFF00' },
+    { id: 'nature',    title: 'Nature',     bg: '#1B3A2D', fg: '#E8F0E4', accent: '#7CB342', accent2: '#3E6B48', accent3: '#A8D08D' },
+    { id: 'corporate', title: 'Corporate',  bg: '#FAF7F2', fg: '#2C3E6B', accent: '#5B7FA6', accent2: '#E8DDD0', accent3: '#8FA4C4' },
+    { id: 'cosmic',    title: 'Cosmic',     bg: '#0B0B1A', fg: '#E8E0F0', accent: '#C77DFF', accent2: '#FF6B9D', accent3: '#7B2FBE' },
+    { id: 'editorial', title: 'Editorial',  bg: '#F4F4F2', fg: '#1A1A1A', accent: '#7A7A7A', accent2: '#2C2C2C' }
   ];
-
-  /* Predefined offsets for deterministic 'random' placement per card.
-     Mobile/tablet/desktop positions avoid runtime layout shifts. */
-  const initialPositions = [
-    { top: '4%', left: '6%', md: { top: '6%', left: '4%' }, lg: { top: '2%', left: '4%' } },
-    { top: '20%', left: '58%', md: { top: '18%', left: '56%' }, lg: { top: '12%', left: '58%' } },
-    { top: '46%', left: '18%', md: { top: '46%', left: '20%' }, lg: { top: '42%', left: '22%' } },
-    { top: '38%', left: '70%', md: { top: '36%', left: '72%' }, lg: { top: '34%', left: '74%' } }
-  ];
-
-  // State for draggable positions (in pixels)
-  const [cardPositions, setCardPositions] = useState(() => 
-    initialPositions.map(pos => ({ x: 0, y: 0, isDragging: false }))
-  );
-  const [draggedCard, setDraggedCard] = useState(null);
-  const dragStart = useRef({ x: 0, y: 0, cardX: 0, cardY: 0 });
-  const canvasRef = useRef(null);
-
-  // Handle drag start
-  const handleDragStart = (e, index) => {
-    e.preventDefault();
-    const isTouch = e.type === 'touchstart';
-    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
-
-    setDraggedCard(index);
-    dragStart.current = {
-      x: clientX,
-      y: clientY,
-      cardX: cardPositions[index].x,
-      cardY: cardPositions[index].y
-    };
-
-    setCardPositions(prev => prev.map((pos, i) => 
-      i === index ? { ...pos, isDragging: true } : pos
-    ));
-  };
-
-  // Handle drag move
-  const handleDragMove = (e) => {
-    if (draggedCard === null) return;
-    
-    const isTouch = e.type === 'touchmove';
-    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
-
-    const deltaX = clientX - dragStart.current.x;
-    const deltaY = clientY - dragStart.current.y;
-
-    setCardPositions(prev => prev.map((pos, i) => 
-      i === draggedCard 
-        ? { ...pos, x: dragStart.current.cardX + deltaX, y: dragStart.current.cardY + deltaY }
-        : pos
-    ));
-  };
-
-  // Handle drag end
-  const handleDragEnd = () => {
-    if (draggedCard === null) return;
-    
-    setCardPositions(prev => prev.map((pos, i) => 
-      i === draggedCard ? { ...pos, isDragging: false } : pos
-    ));
-    setDraggedCard(null);
-  };
-
-  // Add global event listeners for drag
-  useEffect(() => {
-    const handleMouseMove = (e) => handleDragMove(e);
-    const handleMouseUp = () => handleDragEnd();
-    const handleTouchMove = (e) => handleDragMove(e);
-    const handleTouchEnd = () => handleDragEnd();
-
-    if (draggedCard !== null) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [draggedCard, cardPositions]);
 
   return (
     <section
@@ -167,152 +257,21 @@ function VibePicker() {
       className="webproc webproc-vibe py-20 relative"
       aria-label="Choose a vibe"
     >
-      <div className="max-w-7xl mx-auto px-6 relative" style={{ minHeight: 480 }}>
-        <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", textAlign: 'center' }}>
-          First we choose the <span className="font-accent brand-accent">vibe</span>
-        </h2>
-
-        <div ref={canvasRef} className="vibe-canvas relative" style={{ height: 400 }}>
-          {VIBES.map((vibe, i) => {
-            const pos = initialPositions[i];
-            const ref = useRef(null);
-            const currentPos = cardPositions[i];
-            
-            // Disable parallax when dragging
-            useParallax(ref, { depth: currentPos.isDragging ? 0 : (i % 3) * 0.03 + 0.01 });
-
-            const baseStyle = {
-              position: 'absolute',
-              width: 220,
-              minWidth: 200,
-              height: 220,
-              borderRadius: 18,
-              boxShadow: currentPos.isDragging 
-                ? '0 20px 60px rgba(14,14,14,0.25)' 
-                : '0 12px 40px rgba(14,14,14,0.08)',
-              transformOrigin: 'center',
-              transition: currentPos.isDragging 
-                ? 'box-shadow 200ms ease' 
-                : 'transform 350ms cubic-bezier(.22,.9,.35,1), box-shadow 350ms ease',
-              top: `calc(${pos.top} + ${currentPos.y}px)`,
-              left: `calc(${pos.left} + ${currentPos.x}px)`,
-              overflow: 'hidden',
-              background: vibe.bg,
-              color: vibe.fg,
-              cursor: currentPos.isDragging ? 'grabbing' : 'grab',
-              zIndex: currentPos.isDragging ? 1000 : i,
-              userSelect: 'none',
-              touchAction: 'none'
-            };
-
-            return (
-              <div
-                key={vibe.id}
-                ref={ref}
-                className={`float-card hover-elastic web-vibe-card vibe-${vibe.id}`}
-                style={baseStyle}
-                role="img"
-                aria-label={vibe.title}
-                tabIndex={0}
-                onMouseDown={(e) => handleDragStart(e, i)}
-                onTouchStart={(e) => handleDragStart(e, i)}
-                onMouseEnter={e => !currentPos.isDragging && (e.currentTarget.style.transform = 'translateY(-6px) rotate(-2deg) scale(1.03)')}
-                onMouseLeave={e => !currentPos.isDragging && (e.currentTarget.style.transform = '')}
-              >
-                <div style={{ padding: 12 }}>
-                  {/* tiny header */}
-                  <div className="mock-header" style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10 }}>
-                    <div style={{ width: 42, height: 8, borderRadius: 6, background: vibe.id === 'playful' ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.08)' }} />
-                    <div style={{ flex: 1, height: 8, borderRadius: 6, background: vibe.id === 'playful' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.04)' }} />
-                    <div style={{ width: 8, height: 8, borderRadius: 8, background: vibe.accent }} />
-                  </div>
-
-                  {/* content block */}
-                  {vibe.id === 'luxury' ? (
-                    <>
-                      {/* Clean minimal luxury card */}
-                      <div className="mock-card" style={{ marginTop: 8, borderRadius: 8, padding: 14, background: 'rgba(255,255,255,0.03)', marginBottom: 8 }}>
-                        {/* Simple image placeholder */}
-                        <div style={{ height: 70, borderRadius: 6, background: 'rgba(245,241,232,0.06)', marginBottom: 12 }} />
-                        
-                        {/* Clean title */}
-                        <div style={{ height: 12, width: '60%', borderRadius: 3, background: vibe.accent, marginBottom: 8, opacity: 0.85 }} />
-                        <div style={{ height: 6, width: '85%', borderRadius: 2, background: 'rgba(245,241,232,0.12)', marginBottom: 4 }} />
-                        <div style={{ height: 6, width: '55%', borderRadius: 2, background: 'rgba(245,241,232,0.08)' }} />
-                      </div>
-                      
-                      {/* Minimal button */}
-                      <div style={{ marginTop: 12, marginBottom: 28 }}>
-                        <div style={{ width: 80, height: 26, borderRadius: 4, background: vibe.accent, opacity: 0.9 }} />
-                      </div>
-                    </>
-                  ) : vibe.id === 'tech' ? (
-                    <>
-                      {/* Clean minimal tech card */}
-                      <div className="mock-card" style={{ marginTop: 8, borderRadius: 10, padding: 12, background: 'rgba(0,217,255,0.04)', marginBottom: 8 }}>
-                        {/* Simple dashboard preview */}
-                        <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-                          <div style={{ width: 48, height: 48, borderRadius: 8, background: vibe.accent, opacity: 0.85 }} />
-                          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'center' }}>
-                            <div style={{ height: 8, width: '80%', borderRadius: 3, background: vibe.accent, opacity: 0.7 }} />
-                            <div style={{ height: 6, width: '55%', borderRadius: 2, background: 'rgba(232,244,248,0.15)' }} />
-                          </div>
-                        </div>
-                        
-                        {/* Simple data bars */}
-                        <div style={{ display: 'flex', gap: 5, alignItems: 'flex-end', height: 32 }}>
-                          <div style={{ flex: 1, height: '55%', background: vibe.accent2, borderRadius: '3px 3px 0 0', opacity: 0.7 }} />
-                          <div style={{ flex: 1, height: '80%', background: vibe.accent, borderRadius: '3px 3px 0 0', opacity: 0.85 }} />
-                          <div style={{ flex: 1, height: '45%', background: vibe.accent3, borderRadius: '3px 3px 0 0', opacity: 0.6 }} />
-                          <div style={{ flex: 1, height: '65%', background: vibe.accent2, borderRadius: '3px 3px 0 0', opacity: 0.7 }} />
-                        </div>
-                      </div>
-                      
-                      {/* Minimal button */}
-                      <div style={{ marginTop: 12, marginBottom: 28 }}>
-                        <div style={{ width: 90, height: 26, borderRadius: 6, background: vibe.accent, opacity: 0.85 }} />
-                      </div>
-                    </>
-                  ) : vibe.id === 'playful' ? (
-                    <>
-                      <div className="mock-card" style={{ marginTop: 6, borderRadius: 16, padding: 12, background: 'rgba(255,255,255,0.25)', boxShadow: '0 4px 12px rgba(255,107,157,0.15)' }}>
-                        <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-                          <div style={{ width: 48, height: 48, borderRadius: 12, background: vibe.accent }} />
-                          <div style={{ width: 48, height: 48, borderRadius: 12, background: vibe.accent2 }} />
-                          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#FF6B9D' }} />
-                        </div>
-                        <div style={{ height: 22, borderRadius: 8, background: 'rgba(255,255,255,0.5)', marginBottom: 8 }} />
-                        <div style={{ height: 14, width: '85%', borderRadius: 6, background: 'rgba(255,255,255,0.35)' }} />
-                      </div>
-                      <div style={{ marginTop: 12, display: 'flex', gap: 8, justifyContent: 'space-between', marginBottom: 28 }}>
-                        <div style={{ width: 90, height: 32, borderRadius: 9999, background: vibe.accent, boxShadow: '0 4px 12px rgba(255,217,61,0.4)' }} />
-                        <div style={{ width: 32, height: 32, borderRadius: 9999, background: vibe.accent2 }} />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={{ marginTop: 8, marginBottom: 8 }}>
-                        <div style={{ height: 52, borderRadius: 6, background: 'rgba(0,0,0,0.08)', marginBottom: 8, border: '1px solid rgba(0,0,0,0.06)' }} />
-                        <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
-                          <div style={{ flex: 1, height: 12, borderRadius: 4, background: 'rgba(0,0,0,0.75)' }} />
-                          <div style={{ width: 60, height: 12, borderRadius: 4, background: 'rgba(0,0,0,0.15)' }} />
-                        </div>
-                        <div style={{ height: 8, width: '90%', borderRadius: 4, background: 'rgba(0,0,0,0.12)', marginBottom: 4 }} />
-                        <div style={{ height: 8, width: '78%', borderRadius: 4, background: 'rgba(0,0,0,0.12)', marginBottom: 4 }} />
-                        <div style={{ height: 8, width: '65%', borderRadius: 4, background: 'rgba(0,0,0,0.12)' }} />
-                      </div>
-                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 10 }}>
-                        <div style={{ width: 18, height: 18, borderRadius: 9999, background: vibe.accent2 }} />
-                        <div style={{ height: 6, width: 80, borderRadius: 4, background: 'rgba(0,0,0,0.2)' }} />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div className="vibe-caption" style={{ position: 'absolute', bottom: 8, left: 12, fontSize: 12, opacity: 0.85, fontWeight: 600, textShadow: vibe.id === 'playful' ? '0 1px 3px rgba(0,0,0,0.15)' : 'none' }}>{vibe.title}</div>
-              </div>
-            );
-          })}
+      <div className={`vibe-bento-grid${isInView ? ' vibe-in-view' : ''}`}>
+        {/* Row 1: wide Luxury + heading + Brutalism pill */}
+        <VibeCard vibe={VIBES[0]} className="vbg-wide vibe-slide-left" />
+        <div className="vbg-heading vibe-slide-left">
+          <h2>
+            First we choose the <span className="font-accent brand-accent">vibe</span>
+          </h2>
         </div>
+        <VibeCard vibe={VIBES[1]} className="vbg-pill-top vibe-bento-pill vibe-slide-right" pill />
+
+        {/* Row 2: Nature pill + Playful + Tech + Editorial */}
+        <VibeCard vibe={VIBES[2]} className="vbg-pill-bot vibe-bento-pill vibe-slide-left" pill />
+        <VibeCard vibe={VIBES[3]} className="vbg-sq1 vibe-slide-right" />
+        <VibeCard vibe={VIBES[4]} className="vbg-sq2 vibe-slide-left" />
+        <VibeCard vibe={VIBES[5]} className="vbg-sq3 vibe-slide-right" />
       </div>
     </section>
   );
@@ -408,7 +367,7 @@ function ColorBubbles() {
               width: '90px',
               height: '90px',
               left: '62%',
-              top: '85%',
+              top: '110%',
               borderRadius: '9999px',
               background: '#FF6B35',
               willChange: 'transform',
@@ -451,18 +410,33 @@ function ColorBubbles() {
 // (Small, self-contained Bubble component removed - replaced by inline render in ColorBubbles)
 
 // Component 3: Font Carousel - Clean Minimal Design (Apple-inspired)
+const CAROUSEL_FONTS_URL = 'https://fonts.googleapis.com/css2?family=Sarina&family=Abril+Fatface&family=Pacifico&family=Righteous&display=swap';
+let carouselFontsLoaded = false;
+
 function FontCarouselWord() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef);
   const [activeFont, setActiveFont] = useState(0);
+  const [fontsReady, setFontsReady] = useState(false);
   
   // Showcase fonts for the design process demo
   const fonts = [
-    { key: 'geist', label: 'Geist', fam: "'Geist', sans-serif" },
-    { key: 'inter', label: 'Inter', fam: "'Inter', sans-serif" },
-    { key: 'playfair', label: 'Playfair', fam: "'Playfair Display', serif" },
-    { key: 'space', label: 'Space Grotesk', fam: "'Space Grotesk', sans-serif" }
+    { key: 'sarina', label: 'Sarina', fam: "'Sarina', cursive" },
+    { key: 'abril', label: 'Abril Fatface', fam: "'Abril Fatface', serif" },
+    { key: 'pacifico', label: 'Pacifico', fam: "'Pacifico', cursive" },
+    { key: 'righteous', label: 'Righteous', fam: "'Righteous', sans-serif" }
   ];
+
+  // Lazy-load carousel fonts only when section is near viewport
+  useEffect(() => {
+    if (!isInView || carouselFontsLoaded) return;
+    carouselFontsLoaded = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = CAROUSEL_FONTS_URL;
+    link.onload = () => setFontsReady(true);
+    document.head.appendChild(link);
+  }, [isInView]);
 
   // Auto-cycle fonts with crossfade (respects prefers-reduced-motion)
   useEffect(() => {
@@ -499,7 +473,7 @@ function FontCarouselWord() {
         lineHeight: 1.1,
         textAlign: 'center'
       }}>
-        And finally a{' '}
+        And a{' '}
         <span style={{ position: 'relative', display: 'inline-block' }}>
           {fonts.map((font, i) => (
             <span
@@ -570,7 +544,7 @@ function ResponsivenessShowcase() {
     <section ref={sectionRef} className={`resp-showcase py-24 ${visible ? 'resp-visible' : ''}`}>
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-          Responsiveness
+          And finnally we make it Responsive
         </h2>
         <p className="text-lg mb-16 max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
           Every page we build looks pixel-perfect across all screen sizes.

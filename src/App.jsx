@@ -1948,7 +1948,7 @@ function navigate(path) {
 
       if (submitStatus === 'success') {
         return (
-          <section id="contact" className="contact-section py-32 px-6" style={{ background: 'var(--surface)' }}>
+          <section id="contact" className="contact-section py-32 md:px-6" style={{ background: 'var(--surface)' }}>
             {/* Decorative Wave Background - 3 soft curved layers */}
             <div className="contact-waves-bg" aria-hidden="true">
               <svg className="wave-svg wave-svg--light" viewBox="0 0 1440 320" preserveAspectRatio="none">
@@ -1962,8 +1962,8 @@ function navigate(path) {
               </svg>
             </div>
             
-            <div className="max-w-4xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
-              <div className="contact-card liquid-card" style={{ padding: '48px', textAlign: 'center' }}>
+            <div className="w-full md:max-w-4xl md:mx-auto" style={{ position: 'relative', zIndex: 1 }}>
+              <div className="contact-card liquid-card" style={{ padding: 'clamp(24px, 5vw, 48px)', textAlign: 'center' }}>
                 <div 
                   ref={successRef}
                   tabIndex={-1}
@@ -2011,7 +2011,7 @@ function navigate(path) {
       }
 
       return (
-        <section id="contact" className="contact-section py-24 px-6" style={{ background: 'var(--surface)' }}>
+        <section id="contact" className="contact-section py-24 md:px-6" style={{ background: 'var(--surface)' }}>
           {/* Decorative Wave Background - 3 soft curved layers */}
           <div className="contact-waves-bg" aria-hidden="true">
             <svg className="wave-svg wave-svg--light" viewBox="0 0 1440 320" preserveAspectRatio="none">
@@ -2025,7 +2025,7 @@ function navigate(path) {
             </svg>
           </div>
           
-          <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="w-full md:max-w-5xl md:mx-auto" style={{ position: 'relative', zIndex: 1 }}>
             {/* Header */}
             <div className="contact-hero text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
@@ -2037,7 +2037,7 @@ function navigate(path) {
             </div>
 
             {/* Form Card */}
-            <div className="contact-card liquid-card max-w-2xl mx-auto" style={{ padding: '40px' }}>
+            <div className="contact-card liquid-card w-full md:max-w-2xl md:mx-auto" style={{ padding: 'clamp(24px, 5vw, 40px)' }}>
               <form ref={formRef} onSubmit={handleSubmit} noValidate>
                 <div className="space-y-6">
                   {/* Service Selector */}
@@ -3082,19 +3082,34 @@ function navigate(path) {
 
               {/* CTA Buttons */}
               <div className="flex gap-4 justify-center pt-8">
-                <a 
-                  href="#pricing"
-                  className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('pricing');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px] cursor-pointer"
                   style={{ 
                     background: 'var(--primary)',
-                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
+                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)',
+                    border: 'none'
                   }}
                 >
                   View Pricing
-                </a>
-                <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                </button>
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('contact');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px] cursor-pointer"
+                  style={{ border: 'none', background: 'transparent' }}
+                >
                   Contact Us
-                </a>
+                </button>
               </div>
             </div>
           </section>
@@ -3184,7 +3199,7 @@ function navigate(path) {
           <WebsitesProcess />
 
           {/* Pricing Preview - Websites Page */}
-          <section className="py-24 relative overflow-hidden">
+          <section id="pricing" className="py-24 relative overflow-hidden">
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}></div>
             {/* Masked Grid Patch - Purple accent */}
             <div className="masked-grid masked-grid-purple masked-grid-top-right" aria-hidden="true"></div>
@@ -3229,12 +3244,12 @@ function navigate(path) {
                     <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
                     <div className="mb-6">
                       <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>
-                        ${plan.monthly}
-                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>/mo</span>
+                        ${plan.setup}
+                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}> setup</span>
                       </div>
-                      {plan.setup > 0 && (
+                      {plan.monthly > 0 && (
                         <div className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
-                          ${plan.setup} setup
+                          + ${plan.monthly}/mo
                         </div>
                       )}
                     </div>
@@ -3248,7 +3263,7 @@ function navigate(path) {
                     </ul>
                     <a 
                       href="#contact"
-                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
+                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center pricing-get-started"
                       style={{ 
                         background: plan.popular ? 'var(--primary)' : 'rgba(138, 61, 230, 0.1)',
                         color: plan.popular ? 'white' : 'var(--primary)',
@@ -4632,7 +4647,7 @@ function navigate(path) {
                     </ul>
                     <a 
                       href="#contact"
-                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center"
+                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center pricing-get-started"
                       style={{ 
                         background: plan.popular ? '#FF7A2D' : 'rgba(255, 122, 45, 0.1)',
                         color: plan.popular ? 'white' : '#FF7A2D',

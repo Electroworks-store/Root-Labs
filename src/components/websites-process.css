@@ -4,10 +4,123 @@
   color: var(--text);
 }
 
-/* Vibe area */
-.webproc-vibe .vibe-canvas {
-  pointer-events: none; /* isolated visuals; keyboard focus on cards only */
+/* Vibe Bento Grid — named areas for guaranteed placement */
+.vibe-bento-grid {
+  display: grid;
+  grid-template-areas:
+    "wide  wide  wide  wide  head  head  head  head  head  head  ptop  ptop"
+    "pbot  pbot  sq1   sq1   sq1   sq2   sq2   sq2   sq3   sq3   sq3   sq3";
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 155px 220px;
+  gap: 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
+
+/* Area assignments */
+.vbg-wide     { grid-area: wide; }
+.vbg-heading  { grid-area: head; }
+.vbg-pill-top { grid-area: ptop; }
+.vbg-pill-bot { grid-area: pbot; }
+.vbg-sq1      { grid-area: sq1; }
+.vbg-sq2      { grid-area: sq2; }
+.vbg-sq3      { grid-area: sq3; }
+
+/* Shared card styling — thick rounded border */
+.vibe-bento-card {
+  border-radius: 20px;
+  border: 4px solid rgba(160, 160, 170, 0.45);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vibe-bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+}
+
+.vibe-bento-inner {
+  padding: 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vibe-pill-layout {
+  padding: 20% 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.vibe-pill-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vibe-bento-label {
+  position: absolute;
+  bottom: 10px;
+  left: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  letter-spacing: 0.03em;
+}
+
+/* Pills: center the label */
+.vibe-bento-pill .vibe-bento-label {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18%;
+  white-space: nowrap;
+}
+
+/* Heading cell */
+.vbg-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.vbg-heading h2 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--text);
+}
+
+/* Pills — fully rounded */
+.vibe-bento-pill {
+  border-radius: 9999px;
+}
+
+/* Slide-in animations */
+.vibe-slide-left,
+.vibe-slide-right {
+  opacity: 0;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.vibe-slide-left  { transform: translateX(-60px); }
+.vibe-slide-right { transform: translateX(60px); }
+
+.vibe-in-view .vibe-slide-left,
+.vibe-in-view .vibe-slide-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger the cards */
+.vibe-in-view .vbg-wide      { transition-delay: 0s; }
+.vibe-in-view .vbg-heading    { transition-delay: 0.08s; }
+.vibe-in-view .vbg-pill-top   { transition-delay: 0.16s; }
+.vibe-in-view .vbg-pill-bot   { transition-delay: 0.1s; }
+.vibe-in-view .vbg-sq1        { transition-delay: 0.18s; }
+.vibe-in-view .vbg-sq2        { transition-delay: 0.26s; }
+.vibe-in-view .vbg-sq3        { transition-delay: 0.34s; }
 
 .float-card {
   pointer-events: auto;
@@ -15,20 +128,24 @@
   overflow: hidden;
 }
 
-.web-vibe-card:focus {
-  outline: none;
-  box-shadow: 0 0 0 6px var(--focus-ring-alpha);
-}
-
-.webproc .vibe-caption {
-  background: rgba(0,0,0,0.04);
-  padding: 4px 8px;
-  border-radius: 999px;
-}
-
-.vibe-playful .vibe-caption {
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(4px);
+/* Mobile: simplified layout */
+@media (max-width: 768px) {
+  .vibe-bento-grid {
+    grid-template-areas:
+      "head  head"
+      "sq1   sq2"
+      "sq3   sq3";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 10px;
+  }
+  .vbg-wide,
+  .vbg-pill-top,
+  .vbg-pill-bot {
+    display: none;
+  }
+  .vbg-heading h2 { font-size: 1.6rem; }
+  .vbg-sq1, .vbg-sq2, .vbg-sq3 { min-height: 170px; }
 }
 
 /* Color bubbles */
@@ -110,21 +227,6 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .web-vibe-card { 
-    width: 180px !important; 
-    height: 180px !important;
-  }
-  .webproc-vibe .vibe-canvas { height: 440px; }
-}
-
-@media (max-width: 640px) {
-  .web-vibe-card { 
-    width: 150px !important; 
-    height: 150px !important;
-  }
-  .webproc-vibe .vibe-canvas { height: 340px; }
-}
 
 /* ─── Responsiveness Showcase ───────────────────────── */
 .resp-showcase { overflow: hidden; }

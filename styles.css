@@ -1560,7 +1560,7 @@
 
     .price-number {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(2.75rem, 4vw, 3.25rem);
+      font-size: clamp(3.25rem, 5vw, 3.75rem);
       font-weight: 700;
       color: var(--primary);
       line-height: 1;
@@ -1568,24 +1568,26 @@
     }
 
     .price-small {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--muted);
       font-weight: 500;
-      margin-top: 0.25rem;
+      margin-top: 0.375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .price-monthly {
-      font-size: 1.125rem;
-      color: var(--text);
-      font-weight: 600;
-      margin-top: 0.75rem;
+      font-size: 0.925rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 1rem;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .price-monthly-label {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       color: var(--muted);
-      font-weight: 500;
+      font-weight: 400;
     }
 
     /* Features - Simplified */
@@ -1627,23 +1629,68 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       text-transform: capitalize;
       box-shadow: 0 2px 8px rgba(138, 61, 230, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
     }
 
     .pricing-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(138, 61, 230, 0.3);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(138, 61, 230, 0.4);
+    }
+
+    .pricing-cta:hover::after {
+      opacity: 1;
     }
 
     .pricing-cta:active {
-      transform: translateY(0);
+      transform: translateY(-1px) scale(1);
+      box-shadow: 0 4px 12px rgba(138, 61, 230, 0.3);
     }
 
     .pricing-cta:focus-visible {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
+    }
+
+    /* Get Started buttons in pricing sections */
+    .pricing-get-started {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-get-started::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .pricing-get-started:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(138, 61, 230, 0.25);
+    }
+
+    .pricing-get-started:hover::after {
+      opacity: 1;
+    }
+
+    .pricing-get-started:active {
+      transform: translateY(-1px) scale(1);
+      box-shadow: 0 4px 12px rgba(138, 61, 230, 0.15);
     }
 
     .pricing-secondary {
@@ -2880,17 +2927,17 @@
     }
 
     .plan-setup {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .plan-monthly {
       font-size: 2.5rem;
       font-weight: 700;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: var(--primary);
       line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-monthly {
+      font-size: 1rem;
+      color: var(--muted);
       margin-bottom: 0.5rem;
     }
 
@@ -2938,15 +2985,35 @@
       font-weight: 600;
       font-size: 1rem;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       border: none;
       cursor: pointer;
       text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-cta-button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
     }
 
     .plan-cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(138, 61, 230, 0.4);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(138, 61, 230, 0.45);
+    }
+
+    .plan-cta-button:hover::after {
+      opacity: 1;
+    }
+
+    .plan-cta-button:active {
+      transform: translateY(-1px) scale(1);
+      box-shadow: 0 4px 12px rgba(138, 61, 230, 0.3);
     }
 
     /* Service Page Styles */
