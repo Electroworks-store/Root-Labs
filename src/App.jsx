@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useRef } from 'react';
-import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send, Bookmark, MoreVertical, Home, Search, Plus, Bell, User } from 'lucide-react';
+import { Check, ArrowRight, ArrowLeft, X, Circle, Zap, PenTool, MessageCircle, BarChart3, Heart, Share2, Send, Bookmark, MoreVertical, Home, Search, Plus, Bell, User, ChevronDown } from 'lucide-react';
+import { gsap, ScrollTrigger } from './gsap-config';
 import heroLogo from '../img/Rootlabs-logo-xbg.png';
 import favicon from '../img/rootlabs-favicon.png';
 import sakura1 from '../img/sakura1.webp';
@@ -19,6 +20,10 @@ import WebsitesProcess from './components/WebsitesProcess';
 import FlipCardStack from './components/FlipCardStack';
 import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
+import logoClean from '../img/Rootlabs-logo-xbg.png';
+import logoPixelated from '../img/logo-pixelated-black.png';
+import logoGif from '../img/logo-pixelated-black.gif';
+import rlLogoSvg from '../img/RL-logo.svg';
 
 // Navigation helper for client-side routing
 function navigate(path) {
@@ -253,10 +258,8 @@ function navigate(path) {
       );
     }
 
-    // Animated Hero Section
+    // Animated Hero Section — "digital roots." pixelation morph
     function Hero() {
-      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-      const heroRef = useRef(null);
       const heroData = document.getElementById('hero-data');
       const data = {
         badge: heroData?.dataset.badge || '',
@@ -265,70 +268,251 @@ function navigate(path) {
         subtitle: heroData?.dataset.subtitle || '',
         btnPrimary: heroData?.dataset.btnprimary || '',
         btnSecondary: heroData?.dataset.btnsecondary || '',
-        cardNumber: heroData?.dataset.cardnumber || '',
-        cardSubtitle: heroData?.dataset.cardsubtitle || '',
-        cardText: heroData?.dataset.cardtext || ''
       };
 
+      const [phase, setPhase] = useState('init');
+      // init → enter → artsy → morphing → final
+      const canvasRef = useRef(null);
+      const sizerRef = useRef(null);
+      const morphRef = useRef(null);
+      const drawRef = useRef(null);
+      const logoRevealRef = useRef(null);
+
+      // SVG draw-reveal animation for logo
       useEffect(() => {
-        const handleMove = (e) => {
-          if (heroRef.current) {
-            const rect = heroRef.current.getBoundingClientRect();
-            setMousePos({
-              x: ((e.clientX - rect.left) / rect.width - 0.5) * 30,
-              y: ((e.clientY - rect.top) / rect.height - 0.5) * 30
-            });
-          }
-        };
-        window.addEventListener('mousemove', handleMove);
-        return () => window.removeEventListener('mousemove', handleMove);
+        if (!drawRef.current || !logoRevealRef.current) return;
+        const paths = drawRef.current.querySelectorAll('circle, line');
+        paths.forEach(p => {
+          const len = p.getTotalLength ? p.getTotalLength() : 600;
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        });
+        // Draw the decorative frame
+        gsap.to(paths, {
+          strokeDashoffset: 0,
+          duration: 1.8,
+          stagger: 0.25,
+          ease: 'power2.inOut',
+          delay: 0.3,
+        });
+        // Fade in the actual logo after frame draws
+        gsap.fromTo(logoRevealRef.current,
+          { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out', delay: 1.6 }
+        );
+        // Fade out the decorative strokes after logo appears
+        gsap.to(paths, {
+          opacity: 0.15,
+          duration: 1.5,
+          delay: 2.8,
+          ease: 'power1.in',
+        });
       }, []);
 
+      // Entrance timeline
+      useEffect(() => {
+        const t1 = setTimeout(() => setPhase('enter'), 100);
+        const t2 = setTimeout(() => setPhase('artsy'), 600);
+        const t3 = setTimeout(() => setPhase('morphing'), 2200);
+        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+      }, []);
+
+      // Canvas pixelation morph: artsy font → Helvetica Neue
+      useEffect(() => {
+        if (phase !== 'morphing') return;
+        const canvas = canvasRef.current;
+        const sizer = sizerRef.current;
+        const container = morphRef.current;
+        if (!canvas || !sizer || !container) { setPhase('final'); return; }
+
+        let rafId;
+        let cancelled = false;
+
+        document.fonts.ready.then(() => {
+          if (cancelled) return;
+
+          const rect = container.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          canvas.style.width = rect.width + 'px';
+          canvas.style.height = rect.height + 'px';
+
+          const ctx = canvas.getContext('2d');
+          ctx.scale(dpr, dpr);
+
+          const fontSize = parseFloat(window.getComputedStyle(sizer).fontSize);
+          const w = rect.width;
+          const h = rect.height;
+          const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#8A3DE6';
+          const text = data.title2;
+
+          function makeSource(font) {
+            const c = document.createElement('canvas');
+            c.width = w * dpr; c.height = h * dpr;
+            const s = c.getContext('2d');
+            s.scale(dpr, dpr);
+            s.font = font;
+            s.fillStyle = primary;
+            s.textAlign = 'center';
+            s.textBaseline = 'middle';
+            s.fillText(text, w / 2, h / 2);
+            return c;
+          }
+
+          const src1 = makeSource(`italic 700 ${fontSize}px 'Playfair Display', serif`);
+          const src2 = makeSource(`700 ${fontSize}px 'Helvetica Neue', Helvetica, Arial, sans-serif`);
+          const temp = document.createElement('canvas');
+
+          const duration = 1400;
+          const maxPixel = 24;
+          let start = null;
+
+          function frame(now) {
+            if (cancelled) return;
+            if (!start) start = now;
+            const t = Math.min((now - start) / duration, 1);
+            // Ease-in-out cubic
+            const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            // Bell-curve pixel size: 1 → max → 1
+            const pixelSize = 1 + (maxPixel - 1) * Math.sin(ease * Math.PI);
+            const blend = ease;
+
+            const sw = Math.max(1, Math.round((w * dpr) / pixelSize));
+            const sh = Math.max(1, Math.round((h * dpr) / pixelSize));
+            temp.width = sw; temp.height = sh;
+            const tctx = temp.getContext('2d');
+            tctx.clearRect(0, 0, sw, sh);
+            tctx.globalAlpha = 1 - blend;
+            tctx.drawImage(src1, 0, 0, src1.width, src1.height, 0, 0, sw, sh);
+            tctx.globalAlpha = blend;
+            tctx.drawImage(src2, 0, 0, src2.width, src2.height, 0, 0, sw, sh);
+
+            ctx.clearRect(0, 0, w, h);
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(temp, 0, 0, sw, sh, 0, 0, w, h);
+
+            if (t < 1) rafId = requestAnimationFrame(frame);
+            else setPhase('final');
+          }
+
+          rafId = requestAnimationFrame(frame);
+        });
+
+        return () => { cancelled = true; if (rafId) cancelAnimationFrame(rafId); };
+      }, [phase, data.title2]);
+
+      const vis = (minPhase) => {
+        const order = ['init', 'enter', 'artsy', 'morphing', 'final'];
+        return order.indexOf(phase) >= order.indexOf(minPhase);
+      };
+
       return (
-        <section ref={heroRef} className="min-h-screen flex items-center relative overflow-hidden pt-32 pb-20">
-          {/* Animated Background Blobs */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="blob absolute w-96 h-96 rounded-full" 
-                 style={{ background: 'var(--mesh-tint)', top: '10%', left: '10%' }} />
-            <div className="blob absolute w-80 h-80 rounded-full" 
-                 style={{ background: 'var(--mesh-secondary)', bottom: '20%', right: '15%', animationDelay: '2s' }} />
+        <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
+          style={{ paddingTop: 'clamp(7rem, 14vh, 12rem)', paddingBottom: 'clamp(5rem, 10vh, 10rem)' }}>
+
+          {/* Logo Draw-Reveal — decorative frame draws, then logo fades in */}
+          <div className="hero-draw-container">
+            <svg
+              ref={drawRef}
+              className="hero-draw-svg"
+              viewBox="0 0 300 300"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Outer circle */}
+              <circle cx="150" cy="150" r="140" stroke="var(--primary)" strokeWidth="1" fill="none" opacity="0.5" />
+              {/* Inner circle */}
+              <circle cx="150" cy="150" r="110" stroke="var(--primary)" strokeWidth="0.7" fill="none" opacity="0.35" />
+              {/* Cross lines */}
+              <line x1="150" y1="5" x2="150" y2="295" stroke="var(--primary)" strokeWidth="0.5" opacity="0.2" />
+              <line x1="5" y1="150" x2="295" y2="150" stroke="var(--primary)" strokeWidth="0.5" opacity="0.2" />
+              {/* Diagonal accents */}
+              <line x1="50" y1="50" x2="250" y2="250" stroke="var(--primary)" strokeWidth="0.4" opacity="0.15" />
+              <line x1="250" y1="50" x2="50" y2="250" stroke="var(--primary)" strokeWidth="0.4" opacity="0.15" />
+              {/* Corner dots */}
+              <circle cx="150" cy="10" r="3" stroke="var(--primary)" strokeWidth="1" fill="none" opacity="0.4" />
+              <circle cx="150" cy="290" r="3" stroke="var(--primary)" strokeWidth="1" fill="none" opacity="0.4" />
+              <circle cx="10" cy="150" r="3" stroke="var(--primary)" strokeWidth="1" fill="none" opacity="0.4" />
+              <circle cx="290" cy="150" r="3" stroke="var(--primary)" strokeWidth="1" fill="none" opacity="0.4" />
+            </svg>
+            <img
+              ref={logoRevealRef}
+              src={rlLogoSvg}
+              alt="Root Labs"
+              className="hero-draw-logo"
+            />
           </div>
-          
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
-            {/* Left: Text Content */}
-            <div className="space-y-6 stagger-item">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
+
+          <div className="max-w-6xl mx-auto px-6 w-full flex flex-col items-center text-center relative z-10">
+
+            {/* "We build your" */}
+            <div className={`hero-enter ${vis('enter') ? 'hero-entered' : ''}`}>
+              <span className="text-[clamp(1.25rem,3.5vw,2.5rem)] font-light tracking-wide block mb-2"
+                style={{ color: 'var(--muted)', fontFamily: "'Geist', sans-serif" }}>
                 {data.title1}
-                <span className="block mt-2" style={{ color: 'var(--primary)' }}>
-                  {data.title2}
-                </span>
+              </span>
+            </div>
+
+            {/* "digital roots." — morph container */}
+            <div ref={morphRef} className={`hero-enter hero-morph-wrap ${vis('artsy') ? 'hero-entered' : ''}`}>
+              {/* Final Helvetica text — also acts as sizing reference */}
+              <h1 ref={sizerRef} className="hero-morph-sizer"
+                style={{
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+                  fontWeight: 700, lineHeight: 1.1,
+                  color: 'var(--primary)',
+                  opacity: phase === 'final' ? 1 : 0,
+                  transition: 'opacity 0.12s ease',
+                }}>
+                {data.title2}
               </h1>
 
-              <p className="text-lg leading-relaxed max-w-lg" style={{ color: 'var(--muted)' }}>
+              {/* Artsy font overlay (Playfair Display Italic) */}
+              {phase === 'artsy' && (
+                <h1 className="hero-morph-overlay"
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontStyle: 'italic',
+                    fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+                    fontWeight: 700, lineHeight: 1.1,
+                    color: 'var(--primary)',
+                  }}>
+                  {data.title2}
+                </h1>
+              )}
+
+              {/* Pixelation canvas */}
+              <canvas ref={canvasRef}
+                style={{
+                  position: 'absolute', top: 0, left: 0,
+                  display: phase === 'morphing' ? 'block' : 'none',
+                  pointerEvents: 'none',
+                }} />
+            </div>
+
+            {/* Subtitle */}
+            <div className={`hero-enter ${vis('final') ? 'hero-entered' : ''}`} style={{ transitionDelay: '0.15s' }}>
+              <p className="text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto mt-10"
+                style={{ color: 'var(--muted)' }}>
                 {data.subtitle}
               </p>
+            </div>
 
-              <div className="flex gap-4 pt-2">
-                <a href="#work" className="glow-on-hover relative px-7 py-4 rounded-full text-white font-semibold text-base inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
-                        style={{ 
-                          background: 'var(--primary)',
-                          boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
-                        }}>
+            {/* CTA buttons */}
+            <div className={`hero-enter ${vis('final') ? 'hero-entered' : ''}`} style={{ transitionDelay: '0.35s' }}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+                <a href="#work"
+                  className="glow-on-hover relative px-8 py-5 rounded-full text-white font-semibold text-lg inline-flex items-center justify-center transition-all duration-300 hover:translate-y-[-1px]"
+                  style={{ background: 'var(--primary)', boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)' }}>
                   <span className="relative z-10">{data.btnPrimary}</span>
                 </a>
-                    <a href="#pricing" className="btn-glass px-7 py-4 text-base inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                <a href="#pricing"
+                  className="btn-glass px-8 py-5 text-lg inline-flex items-center justify-center transition-all duration-300 hover:translate-y-[-1px]">
                   {data.btnSecondary}
                 </a>
               </div>
-            </div>
-            
-            {/* Right: Hero visual */}
-            <div className="relative flex items-center justify-center hero-logo-column" style={{ minHeight: 420 }}>
-              <img
-                src={`${import.meta.env.BASE_URL}img/hero-right.png`}
-                alt=""
-                className="hero-right-img"
-              />
             </div>
           </div>
         </section>
@@ -400,11 +584,75 @@ function navigate(path) {
 
     // Labs & Experiments Section - HackMe Lab
     function LabsSection() {
+      const sectionRef = useRef(null);
+
+      useEffect(() => {
+        if (!sectionRef.current) return;
+        const cards = sectionRef.current.querySelectorAll('.labs-project-card');
+        const header = sectionRef.current.querySelector('.labs-header');
+        const triggers = [];
+
+        // Animate section header
+        if (header) {
+          const kids = header.children;
+          gsap.set(kids, { y: 40, opacity: 0 });
+          triggers.push(ScrollTrigger.create({
+            trigger: header,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => {
+              gsap.to(kids, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out',
+              });
+            },
+          }));
+        }
+
+        // Stagger each card with alternating directions
+        cards.forEach((card, i) => {
+          const direction = i % 2 === 0 ? -1 : 1;
+          gsap.set(card, { x: 80 * direction, y: 60, opacity: 0 });
+
+          const win = card.querySelector('[class$="-window"]');
+          if (win) gsap.set(win, { scale: 0.92, opacity: 0 });
+
+          triggers.push(ScrollTrigger.create({
+            trigger: card,
+            start: 'top 88%',
+            once: true,
+            onEnter: () => {
+              gsap.to(card, {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: 'power3.out',
+              });
+              if (win) {
+                gsap.to(win, {
+                  scale: 1,
+                  opacity: 1,
+                  duration: 1.1,
+                  ease: 'power3.out',
+                  delay: 0.15,
+                });
+              }
+            },
+          }));
+        });
+
+        return () => triggers.forEach(t => t.kill());
+      }, []);
+
       return (
-        <section id="labs" className="py-24 px-6" style={{ background: 'var(--surface)' }}>
+        <section ref={sectionRef} id="work" className="py-24 px-6" style={{ background: 'var(--surface)' }}>
           <div className="max-w-6xl mx-auto">
             {/* Section Header - Left Aligned */}
-            <div className="mb-16 text-left">
+            <div className="labs-header mb-16 text-left">
               <p className="text-xs font-bold mb-4 tracking-[0.3em]" style={{ color: 'var(--primary)' }}>
                 LABS & EXPERIMENTS
               </p>
@@ -2382,64 +2630,60 @@ function navigate(path) {
     function Stats() {
       const statsData = document.getElementById('stats-data');
       const stats = statsData ? JSON.parse(statsData.dataset.stats || '[]') : [];
-      const [hasAnimated, setHasAnimated] = useState(false);
       const [counts, setCounts] = useState(stats.map(() => 0));
       const sectionRef = useRef(null);
+      const hasAnimated = useRef(false);
 
       useEffect(() => {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting && !hasAnimated) {
-                setHasAnimated(true);
-                // Animate all counters
-                stats.forEach((stat, index) => {
-                  animateCount(index, stat.number);
-                });
-              }
+        if (!sectionRef.current || stats.length === 0) return;
+
+        const trigger = ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: 'top 75%',
+          once: true,
+          onEnter: () => {
+            if (hasAnimated.current) return;
+            hasAnimated.current = true;
+
+            stats.forEach((stat, index) => {
+              const obj = { val: 0 };
+              gsap.to(obj, {
+                val: stat.number,
+                duration: 2.2,
+                ease: 'power2.out',
+                delay: index * 0.15,
+                onUpdate: () => {
+                  setCounts(prev => {
+                    const next = [...prev];
+                    next[index] = Math.round(obj.val);
+                    return next;
+                  });
+                },
+              });
+            });
+
+            // Stagger the stat items in
+            gsap.from(sectionRef.current.querySelectorAll('.stat-item'), {
+              y: 50,
+              opacity: 0,
+              duration: 0.9,
+              stagger: 0.12,
+              ease: 'back.out(1.4)',
+            });
+
+            // Animate the decorative lines
+            gsap.from(sectionRef.current.querySelectorAll('.stat-line'), {
+              scaleX: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: 'power3.out',
+              delay: 0.2,
             });
           },
-          { threshold: 0.3 }
-        );
+        });
 
-        if (sectionRef.current) {
-          observer.observe(sectionRef.current);
-        }
-
-        return () => {
-          if (sectionRef.current) {
-            observer.unobserve(sectionRef.current);
-          }
-        };
-      }, [hasAnimated]);
-
-      const animateCount = (index, target) => {
-        const duration = 2000; // 2 seconds
-        const steps = 60;
-        const increment = target / steps;
-        let current = 0;
-        let step = 0;
-
-        const timer = setInterval(() => {
-          step++;
-          current = Math.min(current + increment, target);
-          
-          setCounts(prev => {
-            const newCounts = [...prev];
-            newCounts[index] = Math.floor(current);
-            return newCounts;
-          });
-
-          if (step >= steps || current >= target) {
-            setCounts(prev => {
-              const newCounts = [...prev];
-              newCounts[index] = target;
-              return newCounts;
-            });
-            clearInterval(timer);
-          }
-        }, duration / steps);
-      };
+        return () => trigger.kill();
+      }, [stats.length]);
 
       const statColors = [
         '#8A3DE6', // Purple
@@ -2457,14 +2701,14 @@ function navigate(path) {
                 return (
                   <div 
                     key={idx} 
-                    className="group relative text-center"
+                    className="stat-item group relative text-center"
                   >
                     {/* Number container with line centered over number only */}
                     <div className="relative inline-block mb-8">
                       {/* Decorative line on top - centered over the number */}
                       <div 
-                        className="h-1 w-16 mb-6 mx-auto rounded-full transition-all duration-500 group-hover:w-full"
-                        style={{ background: color }}
+                        className="stat-line h-1 w-16 mb-6 mx-auto rounded-full transition-all duration-500 group-hover:w-full"
+                        style={{ background: color, transformOrigin: 'center' }}
                       />
                       
                       {/* Number - Outlined style matching process numbers */}
@@ -4673,7 +4917,7 @@ function navigate(path) {
       return (
         <div className="min-h-screen">
           <FloatingNav />
-          <Hero />
+          <HeroLab11Page />
           <Stats />
           {/* <SpotlightStack /> */}
           <WhyUsPricing />
@@ -5129,6 +5373,312 @@ function navigate(path) {
                 <span className="text-sm font-medium">Template Ready for Implementation</span>
               </div>
             </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       HeroLab11Page  –  /hero11
+       Brutalist typographic hero. Massive wordmark, minimal elements.
+    ════════════════════════════════════════════════════════════ */
+    function HeroLab11Page() {
+      const containerRef = useRef(null);
+      const [logoPhase, setLogoPhase] = useState('hidden'); // hidden | slideIn | pixelate | done
+      const logoCanvasRef = useRef(null);
+      const logoContainerRef = useRef(null);
+
+      // Trigger slide-in after 4s
+      // Trigger slide-in after 3s
+      useEffect(() => {
+        const t = setTimeout(() => setLogoPhase('slideIn'), 3000);
+        return () => clearTimeout(t);
+      }, []);
+
+      // Slide in from right (desktop) or bottom (mobile), then trigger pixelate
+      useEffect(() => {
+        if (logoPhase !== 'slideIn') return;
+        const container = logoContainerRef.current;
+        if (!container) return;
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (isMobile) {
+          gsap.fromTo(container,
+            { y: 220, opacity: 1 },
+            {
+              y: 0,
+              duration: 0.85,
+              ease: 'power3.out',
+              onComplete: () => setLogoPhase('pixelate'),
+            }
+          );
+        } else {
+          gsap.fromTo(container,
+            { x: 340, opacity: 1 },
+            {
+              x: 0,
+              duration: 0.85,
+              ease: 'power3.out',
+              onComplete: () => setLogoPhase('pixelate'),
+            }
+          );
+        }
+      }, [logoPhase]);
+
+      // Canvas pixel dissolve: logoPixelated (black) → heroLogo (color)
+      useEffect(() => {
+        if (logoPhase !== 'pixelate') return;
+        const canvas = logoCanvasRef.current;
+        const container = logoContainerRef.current;
+        if (!canvas || !container) { setLogoPhase('done'); return; }
+        let rafId, cancelled = false;
+        function loadImg(src) {
+          return new Promise(resolve => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(img);
+            img.src = src;
+            if (img.complete && img.naturalWidth > 0) resolve(img);
+          });
+        }
+        Promise.all([loadImg(logoPixelated), loadImg(heroLogo)]).then(([pixImg, cleanImg]) => {
+          if (cancelled) return;
+          const rect = container.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          const w = rect.width, h = rect.height;
+          if (!w || !h) { setLogoPhase('done'); return; }
+          canvas.width = w * dpr; canvas.height = h * dpr;
+          canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+          const ctx = canvas.getContext('2d');
+          ctx.scale(dpr, dpr);
+
+          function imgToCanvas(img) {
+            const c = document.createElement('canvas');
+            c.width = w * dpr; c.height = h * dpr;
+            const s = c.getContext('2d');
+            s.scale(dpr, dpr);
+            const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+            const iw = img.naturalWidth * scale, ih = img.naturalHeight * scale;
+            s.drawImage(img, (w - iw) / 2, (h - ih) / 2, iw, ih);
+            return c;
+          }
+
+          const src1 = imgToCanvas(pixImg);
+          const src2 = imgToCanvas(cleanImg);
+          const temp = document.createElement('canvas');
+          const duration = 1400, maxPixel = 28;
+          let start = null;
+
+          function frame(now) {
+            if (cancelled) return;
+            if (!start) start = now;
+            const t = Math.min((now - start) / duration, 1);
+            const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            const pixelSize = 1 + (maxPixel - 1) * Math.sin(ease * Math.PI);
+            const blend = ease;
+            const sw = Math.max(1, Math.round((w * dpr) / pixelSize));
+            const sh = Math.max(1, Math.round((h * dpr) / pixelSize));
+            temp.width = sw; temp.height = sh;
+            const tctx = temp.getContext('2d');
+            tctx.clearRect(0, 0, sw, sh);
+            tctx.globalAlpha = 1 - blend;
+            tctx.drawImage(src1, 0, 0, src1.width, src1.height, 0, 0, sw, sh);
+            tctx.globalAlpha = blend;
+            tctx.drawImage(src2, 0, 0, src2.width, src2.height, 0, 0, sw, sh);
+            ctx.clearRect(0, 0, w, h);
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(temp, 0, 0, sw, sh, 0, 0, w, h);
+            if (t < 1) rafId = requestAnimationFrame(frame);
+            else setLogoPhase('done');
+          }
+          rafId = requestAnimationFrame(frame);
+        });
+        return () => { cancelled = true; if (rafId) cancelAnimationFrame(rafId); };
+      }, [logoPhase]);
+
+      useEffect(() => {
+        if (!containerRef.current) return;
+        const ctx = gsap.context(() => {
+          // Letter reveal — each letter clips up from behind its mask
+          const topLetters = containerRef.current.querySelectorAll('.h11-word-top .h11-char');
+          const botLetters = containerRef.current.querySelectorAll('.h11-word-bot .h11-char');
+          const rule = containerRef.current.querySelector('.h11-rule');
+          const midContent = containerRef.current.querySelectorAll('.h11-mid-fade');
+          const idx = containerRef.current.querySelector('.h11-index');
+
+          // Top word: letters slide up
+          gsap.set(topLetters, { yPercent: 110 });
+          gsap.to(topLetters, {
+            yPercent: 0,
+            duration: 0.9,
+            stagger: 0.045,
+            ease: 'power4.out',
+            delay: 0.1,
+          });
+
+          // Bottom word: letters slide up (slightly later)
+          gsap.set(botLetters, { yPercent: 110 });
+          gsap.to(botLetters, {
+            yPercent: 0,
+            duration: 0.9,
+            stagger: 0.045,
+            ease: 'power4.out',
+            delay: 0.35,
+          });
+
+          // Horizontal rule draws from left
+          if (rule) {
+            gsap.fromTo(rule,
+              { scaleX: 0, transformOrigin: 'left center' },
+              { scaleX: 1, duration: 1.2, ease: 'power3.inOut', delay: 0.6 }
+            );
+          }
+
+          // Mid row content fades in
+          gsap.set(midContent, { opacity: 0, y: 14 });
+          gsap.to(midContent, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power3.out',
+            delay: 1.0,
+          });
+
+          // Period: rotate with momentum + SVG morph square → circle
+          // Appears AFTER all text animations complete (~2.1s total)
+          const period = containerRef.current.querySelector('.h11-period-svg');
+          if (period) {
+            const rect = period.querySelector('rect');
+            let isAnimating = false; // Debounce flag for hover
+            
+            // Hide initially, fade in after text completes
+            gsap.set(period, { opacity: 0 });
+            gsap.to(period, {
+              opacity: 1,
+              duration: 0.5,
+              ease: 'power2.out',
+              delay: 2.1,
+            });
+            
+            // Stretchy/bouncy rotation (1080°) with elastic ease — longer duration
+            gsap.to(period, {
+              rotation: 1080,
+              duration: 5.8,
+              ease: 'elastic.out(1, 0.5)',
+              delay: 2.1,
+            });
+            
+            // Stretchy/bouncy SVG morph: square → circle — longer duration
+            if (rect) {
+              gsap.fromTo(rect,
+                { attr: { rx: 0, ry: 0 } },
+                { attr: { rx: 20, ry: 20 }, duration: 5.8, ease: 'elastic.out(1, 0.6)', delay: 2.1 }
+              );
+            }
+
+            // Hover: jump up and bounce back (only one bounce at a time)
+            period.addEventListener('mouseenter', () => {
+              if (isAnimating) return; // Debounce: ignore if already animating
+              isAnimating = true;
+              
+              gsap.to(period, {
+                y: -20,
+                duration: 0.3,
+                ease: 'power2.out',
+                onComplete: () => {
+                  gsap.to(period, {
+                    y: 0,
+                    duration: 0.7,
+                    ease: 'bounce.out',
+                    onComplete: () => {
+                      isAnimating = false; // Allow hover again
+                    },
+                  });
+                },
+              });
+            });
+          }
+        }, containerRef);
+
+        return () => ctx.revert();
+      }, []);
+
+      const splitWord = (word, extraClass) => (
+        <span className={`h11-word ${extraClass || ''}`}>
+          {word.split('').map((ch, i) => (
+            <span className="h11-char-wrap" key={i}>
+              <span className="h11-char">{ch}</span>
+            </span>
+          ))}
+        </span>
+      );
+
+      return (
+        <div className="h11" ref={containerRef}>
+          {/* Top: DIGITAL */}
+          <div className="h11-row-top">
+            {splitWord('DIGITAL', 'h11-word-top')}
+            <div className="h11-rule" />
+          </div>
+
+          {/* Mid: body text */}
+          <div className="h11-mid">
+            <div className="h11-mid-row">
+              <p className="h11-body h11-mid-fade">
+                We create unique foundations for your business.<br />
+                Strategic design and code, built to scale.
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom: ROOTS */}
+          <div className="h11-row-bot">
+            {splitWord('ROOTS', 'h11-word-bot')}
+            <svg
+              className="h11-period-svg"
+              viewBox="0 0 40 40"
+              width="40"
+              height="40"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{
+                display: 'inline-block',
+                marginLeft: '0.1em',
+                verticalAlign: 'text-bottom',
+                willChange: 'transform, opacity',
+                cursor: 'pointer',
+              }}
+            >
+              <rect x="4" y="4" width="32" height="32" fill="var(--primary)" rx="0" ry="0" />
+            </svg>
+          </div>
+
+          {/* Corner index label */}
+          <span className="h11-index">© 2026</span>
+
+          {/* Large overlapping logo — slide in + pixel dissolve entrance */}
+          <div ref={logoContainerRef} className="h11-big-logo" style={{ opacity: logoPhase === 'hidden' ? 0 : 1 }}>
+            {/* Black pixelated PNG — visible during slideIn, hidden once canvas takes over */}
+            <img
+              src={logoPixelated}
+              alt=""
+              className="h11-big-logo-img"
+              style={{ opacity: (logoPhase === 'slideIn') ? 1 : 0, transition: 'none' }}
+              draggable={false}
+            />
+            {/* Clean color PNG — shown after dissolve completes */}
+            <img
+              src={heroLogo}
+              alt="Root Labs"
+              className="h11-big-logo-img"
+              style={{ opacity: logoPhase === 'done' ? 1 : 0, transition: 'none', position: 'absolute', inset: 0 }}
+              draggable={false}
+            />
+            {/* Canvas handles full dissolve: logoPixelated → heroLogo */}
+            <canvas
+              ref={logoCanvasRef}
+              className="h11-big-logo-canvas"
+              style={{ display: logoPhase === 'pixelate' ? 'block' : 'none' }}
+            />
           </div>
         </div>
       );
