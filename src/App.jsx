@@ -258,7 +258,7 @@ function navigate(path) {
       );
     }
 
-    // Animated Hero Section — "digital roots." pixelation morph
+    // Animated Hero Section — simple slide-up entrance
     function Hero() {
       const heroData = document.getElementById('hero-data');
       const data = {
@@ -270,11 +270,6 @@ function navigate(path) {
         btnSecondary: heroData?.dataset.btnsecondary || '',
       };
 
-      const [phase, setPhase] = useState('init');
-      // init → enter → artsy → morphing → final
-      const canvasRef = useRef(null);
-      const sizerRef = useRef(null);
-      const morphRef = useRef(null);
       const drawRef = useRef(null);
       const logoRevealRef = useRef(null);
 
@@ -308,104 +303,6 @@ function navigate(path) {
           ease: 'power1.in',
         });
       }, []);
-
-      // Entrance timeline
-      useEffect(() => {
-        const t1 = setTimeout(() => setPhase('enter'), 100);
-        const t2 = setTimeout(() => setPhase('artsy'), 600);
-        const t3 = setTimeout(() => setPhase('morphing'), 2200);
-        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-      }, []);
-
-      // Canvas pixelation morph: artsy font → Helvetica Neue
-      useEffect(() => {
-        if (phase !== 'morphing') return;
-        const canvas = canvasRef.current;
-        const sizer = sizerRef.current;
-        const container = morphRef.current;
-        if (!canvas || !sizer || !container) { setPhase('final'); return; }
-
-        let rafId;
-        let cancelled = false;
-
-        document.fonts.ready.then(() => {
-          if (cancelled) return;
-
-          const rect = container.getBoundingClientRect();
-          const dpr = window.devicePixelRatio || 1;
-          canvas.width = rect.width * dpr;
-          canvas.height = rect.height * dpr;
-          canvas.style.width = rect.width + 'px';
-          canvas.style.height = rect.height + 'px';
-
-          const ctx = canvas.getContext('2d');
-          ctx.scale(dpr, dpr);
-
-          const fontSize = parseFloat(window.getComputedStyle(sizer).fontSize);
-          const w = rect.width;
-          const h = rect.height;
-          const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#8A3DE6';
-          const text = data.title2;
-
-          function makeSource(font) {
-            const c = document.createElement('canvas');
-            c.width = w * dpr; c.height = h * dpr;
-            const s = c.getContext('2d');
-            s.scale(dpr, dpr);
-            s.font = font;
-            s.fillStyle = primary;
-            s.textAlign = 'center';
-            s.textBaseline = 'middle';
-            s.fillText(text, w / 2, h / 2);
-            return c;
-          }
-
-          const src1 = makeSource(`italic 700 ${fontSize}px 'Playfair Display', serif`);
-          const src2 = makeSource(`700 ${fontSize}px 'Helvetica Neue', Helvetica, Arial, sans-serif`);
-          const temp = document.createElement('canvas');
-
-          const duration = 1400;
-          const maxPixel = 24;
-          let start = null;
-
-          function frame(now) {
-            if (cancelled) return;
-            if (!start) start = now;
-            const t = Math.min((now - start) / duration, 1);
-            // Ease-in-out cubic
-            const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            // Bell-curve pixel size: 1 → max → 1
-            const pixelSize = 1 + (maxPixel - 1) * Math.sin(ease * Math.PI);
-            const blend = ease;
-
-            const sw = Math.max(1, Math.round((w * dpr) / pixelSize));
-            const sh = Math.max(1, Math.round((h * dpr) / pixelSize));
-            temp.width = sw; temp.height = sh;
-            const tctx = temp.getContext('2d');
-            tctx.clearRect(0, 0, sw, sh);
-            tctx.globalAlpha = 1 - blend;
-            tctx.drawImage(src1, 0, 0, src1.width, src1.height, 0, 0, sw, sh);
-            tctx.globalAlpha = blend;
-            tctx.drawImage(src2, 0, 0, src2.width, src2.height, 0, 0, sw, sh);
-
-            ctx.clearRect(0, 0, w, h);
-            ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(temp, 0, 0, sw, sh, 0, 0, w, h);
-
-            if (t < 1) rafId = requestAnimationFrame(frame);
-            else setPhase('final');
-          }
-
-          rafId = requestAnimationFrame(frame);
-        });
-
-        return () => { cancelled = true; if (rafId) cancelAnimationFrame(rafId); };
-      }, [phase, data.title2]);
-
-      const vis = (minPhase) => {
-        const order = ['init', 'enter', 'artsy', 'morphing', 'final'];
-        return order.indexOf(phase) >= order.indexOf(minPhase);
-      };
 
       return (
         <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden"
@@ -447,53 +344,28 @@ function navigate(path) {
           <div className="max-w-6xl mx-auto px-6 w-full flex flex-col items-center text-center relative z-10">
 
             {/* "We build your" */}
-            <div className={`hero-enter ${vis('enter') ? 'hero-entered' : ''}`}>
+            <div className="hero-enter hero-entered">
               <span className="text-[clamp(1.25rem,3.5vw,2.5rem)] font-light tracking-wide block mb-2"
                 style={{ color: 'var(--muted)', fontFamily: "'Geist', sans-serif" }}>
                 {data.title1}
               </span>
             </div>
 
-            {/* "digital roots." — morph container */}
-            <div ref={morphRef} className={`hero-enter hero-morph-wrap ${vis('artsy') ? 'hero-entered' : ''}`}>
-              {/* Final Helvetica text — also acts as sizing reference */}
-              <h1 ref={sizerRef} className="hero-morph-sizer"
-                style={{
-                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                  fontSize: 'clamp(3.5rem, 10vw, 9rem)',
-                  fontWeight: 700, lineHeight: 1.1,
-                  color: 'var(--primary)',
-                  opacity: phase === 'final' ? 1 : 0,
-                  transition: 'opacity 0.12s ease',
-                }}>
+            {/* "digital roots." — simple heading with slide-up */}
+            <div className="hero-enter hero-entered">
+              <h1 style={{
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                fontSize: 'clamp(3.5rem, 10vw, 9rem)',
+                fontWeight: 700,
+                lineHeight: 1.1,
+                color: 'var(--primary)',
+              }}>
                 {data.title2}
               </h1>
-
-              {/* Artsy font overlay (Playfair Display Italic) */}
-              {phase === 'artsy' && (
-                <h1 className="hero-morph-overlay"
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontStyle: 'italic',
-                    fontSize: 'clamp(3.5rem, 10vw, 9rem)',
-                    fontWeight: 700, lineHeight: 1.1,
-                    color: 'var(--primary)',
-                  }}>
-                  {data.title2}
-                </h1>
-              )}
-
-              {/* Pixelation canvas */}
-              <canvas ref={canvasRef}
-                style={{
-                  position: 'absolute', top: 0, left: 0,
-                  display: phase === 'morphing' ? 'block' : 'none',
-                  pointerEvents: 'none',
-                }} />
             </div>
 
             {/* Subtitle */}
-            <div className={`hero-enter ${vis('final') ? 'hero-entered' : ''}`} style={{ transitionDelay: '0.15s' }}>
+            <div className="hero-enter hero-entered" style={{ transitionDelay: '0.15s' }}>
               <p className="text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto mt-10"
                 style={{ color: 'var(--muted)' }}>
                 {data.subtitle}
@@ -501,7 +373,7 @@ function navigate(path) {
             </div>
 
             {/* CTA buttons */}
-            <div className={`hero-enter ${vis('final') ? 'hero-entered' : ''}`} style={{ transitionDelay: '0.35s' }}>
+            <div className="hero-enter hero-entered" style={{ transitionDelay: '0.35s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
                 <a href="#work"
                   className="glow-on-hover relative px-8 py-5 rounded-full text-white font-semibold text-lg inline-flex items-center justify-center transition-all duration-300 hover:translate-y-[-1px]"
@@ -842,7 +714,7 @@ function navigate(path) {
                 {/* Project Name - Centered, Big & Bold */}
                 <div className="text-center mb-6">
                   <span className="project-pill project-pill-lg">
-                    <span style={{ color: '#0070F3' }}>Teamster</span>
+                    <span style={{ color: '#0070F3' }}>TeamsterX</span>
                   </span>
                 </div>
 
@@ -857,7 +729,7 @@ function navigate(path) {
                         <span className="dot dot-green"></span>
                       </div>
                       <div className="window-title">
-                        <span className="teamster-window-title-text">teamster - workspace</span>
+                        <span className="teamster-window-title-text">teamsterx - workspace</span>
                       </div>
                     </div>
 
@@ -867,7 +739,7 @@ function navigate(path) {
                       <div className="teamster-preview">
                         <img 
                           src={`${import.meta.env.BASE_URL}img/teamster.png`}
-                          alt="Teamster Workspace" 
+                          alt="TeamsterX Workspace" 
                           className="teamster-screenshot"
                         />
                       </div>
@@ -883,12 +755,12 @@ function navigate(path) {
                         </p>
 
                         <a 
-                          href="https://electroworks-store.github.io/Teamsterx/index.html" 
+                          href="https://teamsterx.com" 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="teamster-cta"
                         >
-                          <span>Open Teamster</span>
+                          <span>Open TeamsterX</span>
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                             <polyline points="15 3 21 3 21 9"></polyline>
@@ -3282,12 +3154,67 @@ function navigate(path) {
         return () => window.removeEventListener('mousemove', handleMove);
       }, []);
 
+      // Entrance animation — letter by letter slide-up for headline, then carousel and bottom
+      useEffect(() => {
+        const headline = heroRef.current?.querySelector('.wsp-hero-headline');
+        const carousel = heroRef.current?.querySelector('.wsp-hero-carousel');
+        const bottom = heroRef.current?.querySelector('.wsp-hero-bottom');
+        
+        if (!headline || !carousel || !bottom) return;
+        
+        // Animate headline letters
+        const letters = headline.querySelectorAll('[data-letter]');
+        if (letters.length > 0) {
+          gsap.set(letters, { opacity: 0, y: 45, filter: 'blur(12px)' });
+          gsap.to(letters, {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.8,
+            ease: 'cubic.out',
+            stagger: 0.05,
+            delay: 0.1,
+          });
+        }
+        
+        // Animate carousel after headline
+        gsap.set(carousel, { opacity: 0, y: 45, filter: 'blur(12px)' });
+        gsap.to(carousel, {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1,
+          ease: 'expo.out',
+          delay: letters.length * 0.05 + 0.8,
+        });
+        
+        // Animate bottom after carousel
+        gsap.set(bottom, { opacity: 0, y: 45, filter: 'blur(12px)' });
+        gsap.to(bottom, {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1,
+          ease: 'expo.out',
+          delay: letters.length * 0.05 + 1.8,
+        });
+      }, []);
+
+      // Helper to render text as individual letter spans
+      const renderLetters = (text) => {
+        return text.split('').map((char, idx) => (
+          <span key={idx} data-letter style={{ display: 'inline-block' }}>
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        ));
+      };
+
       return (
         <div className="min-h-screen">
           <FloatingNav />
           
           {/* Hero Section — Centered headline + carousel */}
-          <section ref={heroRef} className="service-page-hero relative overflow-hidden pt-32 pb-16">
+          <section ref={heroRef} className="service-page-hero relative overflow-hidden pt-24 pb-8">
             {/* Animated Background Blobs */}
             <div className="absolute inset-0 overflow-hidden">
               <div className="blob absolute w-96 h-96 rounded-full" 
@@ -3296,23 +3223,18 @@ function navigate(path) {
                    style={{ background: 'var(--mesh-secondary)', bottom: '10%', right: '10%', animationDelay: '2s' }} />
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              {/* Centered headline */}
-              <div className="text-center space-y-6 stagger-item mb-16">
-                <h1 className="text-5xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Websites That
-                  <span className="block mt-2" style={{ color: 'var(--primary)' }}>
-                    Work For You
-                  </span>
-                </h1>
-
-                <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
-                  {subheading}
-                </p>
+            <div className="wsp-hero-inner">
+              {/* Giant typographic headline — sits behind the carousel */}
+              <div className="wsp-hero-headline" aria-hidden="false">
+                <div className="wsp-hl-line">{renderLetters('WEBSITES THAT')}</div>
+                <div className="wsp-hl-line wsp-hl-line-2">
+                  <span className="wsp-hl-show">{renderLetters('SHOW')}</span>
+                  <span className="wsp-hl-you">{renderLetters('YOU')}</span>
+                </div>
               </div>
 
-              {/* 3D Cylindrical Carousel */}
-              <div className="cylinder-wrap" style={{ marginTop: '-2rem' }}>
+              {/* 3D Cylindrical Carousel — layered above headline */}
+              <div className="cylinder-wrap wsp-hero-carousel">
                 <div className="cylinder-scene">
                   <div className="cylinder-ring">
                     {Array.from({ length: 10 }, (_, idx) => (
@@ -3324,36 +3246,31 @@ function navigate(path) {
                 </div>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex gap-4 justify-center pt-8">
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('pricing');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px] cursor-pointer"
-                  style={{ 
-                    background: 'var(--primary)',
-                    boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)',
-                    border: 'none'
-                  }}
-                >
-                  View Pricing
-                </button>
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('contact');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px] cursor-pointer"
-                  style={{ border: 'none', background: 'transparent' }}
-                >
-                  Contact Us
-                </button>
+              {/* Bottom row: paragraph left, CTAs right */}
+              <div className="wsp-hero-bottom">
+                <p className="wsp-hero-copy">
+                  Stop settling for generic templates. We design cool, highly creative websites tailored exactly to your brand's unique edge. We will transform your outdated site into a sleek, conversion-focused machine. By integrating smart AI workflows, we deliver custom, high-quality digital experiences faster and more affordably than traditional agencies.
+                </p>
+                <div className="wsp-hero-ctas">
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById('pricing');
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="glow-on-hover wsp-btn-primary cursor-pointer"
+                  >
+                    View Pricing
+                  </button>
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById('contact');
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="wsp-btn-secondary cursor-pointer"
+                  >
+                    Contact Us
+                  </button>
+                </div>
               </div>
             </div>
           </section>
