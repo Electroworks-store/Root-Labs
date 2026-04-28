@@ -8,9 +8,181 @@
   <link rel="apple-touch-icon" href="./img/Rootlabs-logo-xbg.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <!-- Tailwind CDN (requested fallback) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #rl-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      pointer-events: none;
+      background: transparent;
+    }
+    /* Two panels that together cover the screen and meet at 50%.
+       On exit, top panel slides up and bottom panel slides down (split cut). */
+    .rl-loader__panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      will-change: transform;
+      transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .rl-loader__panel--top    { clip-path: inset(0 0 50% 0); }
+    .rl-loader__panel--bottom { clip-path: inset(50% 0 0 0); }
+    #rl-loader.rl-loader-exit .rl-loader__panel--top    { transform: translateY(-100%); }
+    #rl-loader.rl-loader-exit .rl-loader__panel--bottom { transform: translateY(100%); }
+
+    .rl-loader__wordmark {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-end;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: clamp(56px, 12vw, 168px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #000;
+      white-space: nowrap;
+    }
+
+    /* Baseline letter reveal: each char clips at its own baseline,
+       inner glyph rises from below the baseline into place. */
+    .rl-char {
+      display: inline-block;
+      overflow: visible;
+      /* Only mask below the element's bottom edge — glyph is free to show
+         in all other directions once it rises into place */
+      clip-path: inset(-200% -20px 0 -20px);
+      vertical-align: bottom;
+      line-height: 1;
+      padding-bottom: 0.06em; /* room for descenders/visual breathing */
+      position: relative;
+      z-index: 20;
+    }
+    .rl-char--o-logo {
+      z-index: 5 !important; /* o-logo sits below all other letters */
+      overflow: visible !important;
+    }
+    .rl-char--space { width: 0.28em; }
+    .rl-char__inner {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: rl-rise 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    @keyframes rl-rise {
+      0%   { transform: translateY(110%); }
+      100% { transform: translateY(0); }
+    }
+
+    /* The "o" with the filled purple rounded square and white "o" on top */
+    .rl-o-stack {
+      position: relative;
+      display: inline-block;
+    }
+    .rl-o-square {
+      position: absolute;
+      top: 58%; /* ← adjust this to move the square up/down */
+      left: 50%; /* ← adjust this to move the square left/right */
+      width: 0.78em;
+      height: 0.78em;
+      aspect-ratio: 1 / 1;
+      background: #8A3DE6;
+      border-radius: 28%;
+      transform: translate(-50%, -50%) rotate(20deg) scale(0);
+      transform-origin: center;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      animation:
+        rl-square-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.05s forwards,
+        rl-square-rock 2.6s ease-in-out 1.85s infinite;
+    }
+    .rl-o-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #ffffff;
+      z-index: 11;
+      pointer-events: none;
+      transform-origin: 50% 65%;
+      transform: rotate(-540deg) scale(0);
+      opacity: 0;
+      animation: rl-o-spin-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.25s forwards;
+    }
+    @keyframes rl-square-in {
+      0%   { transform: translate(-50%, -50%) rotate(-90deg) scale(0); opacity: 0; }
+      60%  { opacity: 1; }
+      100% { transform: translate(-50%, -50%) rotate(20deg) scale(1); opacity: 1; }
+    }
+    @keyframes rl-o-spin-in {
+      0%   { transform: rotate(-540deg) scale(0); opacity: 0; }
+      60%  { opacity: 1; }
+      100% { transform: rotate(0deg) scale(1); opacity: 1; }
+    }
+    @keyframes rl-square-rock {
+      0%   { transform: translate(-50%, -50%) rotate(17deg) scale(1); }
+      50%  { transform: translate(-50%, -50%) rotate(23deg) scale(1); }
+      100% { transform: translate(-50%, -50%) rotate(17deg) scale(1); }
+    }
+
+    .rl-loader__dot {
+      display: inline-block;
+      width: 0.18em;
+      height: 0.18em;
+      border-radius: 50%;
+      background: #8A3DE6;
+      margin-left: 0.06em;
+      margin-bottom: 0.15em;
+      will-change: transform, opacity;
+      transform: translate3d(0, -3em, 0);
+      opacity: 0;
+      animation:
+        rl-dot-move 1.25s linear forwards,
+        rl-dot-fade 0.15s linear forwards;
+    }
+    /*
+     * Realistic projectile bounce.
+     * - Falling segments use easeInQuad (y = t^2) to simulate gravity accelerating the dot down.
+     * - Rising segments use easeOutQuad (y = 1 - (1 - t)^2) to simulate it decelerating against gravity.
+     * - Each successive bounce loses ~75% of its peak height (restitution coefficient ~0.5).
+     * - Segment durations follow t ∝ sqrt(h), so higher bounces take longer than smaller ones.
+     */
+    @keyframes rl-dot-move {
+      /* Initial fall from -3em → 0 (gravity accelerates) */
+      0%    { transform: translate3d(0, -3em, 0);   animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+      40%   { transform: translate3d(0, 0, 0);      animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+      /* Bounce 1 up to -0.75em then back down */
+      57%   { transform: translate3d(0, -0.75em, 0);animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+      74%   { transform: translate3d(0, 0, 0);      animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+      /* Bounce 2 up to -0.18em then back down */
+      83%   { transform: translate3d(0, -0.18em, 0);animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+      92%   { transform: translate3d(0, 0, 0);      animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+      /* Bounce 3 up to -0.04em then settle */
+      96%   { transform: translate3d(0, -0.04em, 0);animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+      100%  { transform: translate3d(0, 0, 0); }
+    }
+    @keyframes rl-dot-fade {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rl-char__inner,
+      .rl-loader__dot,
+      .rl-o-square { animation: none !important; transform: none !important; }
+      .rl-loader__panel { transition: opacity 0.3s linear; }
+      #rl-loader.rl-loader-exit .rl-loader__panel { opacity: 0; transform: none; }
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation Data -->
@@ -223,6 +395,87 @@
        ]'>
   </div>
 
+  <div id="rl-loader" aria-hidden="true">
+    <div class="rl-loader__panel rl-loader__panel--top">
+      <div class="rl-loader__wordmark">
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.05s">R</span></span>
+        <span class="rl-char rl-char--o-logo"><span class="rl-char__inner" style="animation-delay:.15s"><span class="rl-o-stack">o<span class="rl-o-square"></span><span class="rl-o-top">o</span></span></span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.25s">o</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.35s">t</span></span>
+        <span class="rl-char rl-char--space"></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.50s">L</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.60s">a</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.70s">b</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.80s">s</span></span>
+        <span class="rl-loader__dot" style="animation-delay:1.0s"></span>
+      </div>
+    </div>
+    <div class="rl-loader__panel rl-loader__panel--bottom" aria-hidden="true">
+      <div class="rl-loader__wordmark">
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.05s">R</span></span>
+        <span class="rl-char rl-char--o-logo"><span class="rl-char__inner" style="animation-delay:.15s"><span class="rl-o-stack">o<span class="rl-o-square"></span><span class="rl-o-top">o</span></span></span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.25s">o</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.35s">t</span></span>
+        <span class="rl-char rl-char--space"></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.50s">L</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.60s">a</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.70s">b</span></span>
+        <span class="rl-char"><span class="rl-char__inner" style="animation-delay:.80s">s</span></span>
+        <span class="rl-loader__dot" style="animation-delay:1.0s"></span>
+      </div>
+    </div>
+  </div>
+
   <div id="root"></div>
-  
+
+  <script>
+    (function () {
+      var MIN_DISPLAY_MS = 2100; // give the entry animation time to play
+      var EXIT_MS = 900;         // matches CSS transition duration
+      var start = Date.now();
+
+      // Show the loader on every hard load/reload.
+      // Skip it only when navigating within the SPA in the same session.
+      // We detect a hard load via the Navigation Timing API:
+      //   'navigate' = first visit, 'reload' = F5/Cmd+R — both show the loader.
+      //   'back_forward' via the navbar hash change — skip it.
+      var navType = '';
+      try {
+        var navEntry = performance.getEntriesByType('navigation')[0];
+        navType = navEntry ? navEntry.type : '';
+      } catch(e) {}
+
+      var isHardLoad = (navType === 'navigate' || navType === 'reload' || navType === '');
+
+      if (!isHardLoad) {
+        // SPA internal navigation — remove loader instantly
+        var loaderEl = document.getElementById('rl-loader');
+        if (loaderEl && loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
+        return;
+      }
+
+      function hideLoader() {
+        var loader = document.getElementById('rl-loader');
+        if (!loader) return;
+        if (loader.dataset.exiting === '1') return;
+        var elapsed = Date.now() - start;
+        var wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+        setTimeout(function () {
+          loader.dataset.exiting = '1';
+          loader.classList.add('rl-loader-exit');
+          setTimeout(function () {
+            if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+          }, EXIT_MS + 50);
+        }, wait);
+      }
+      if (document.readyState === 'complete') {
+        hideLoader();
+      } else {
+        window.addEventListener('load', hideLoader);
+      }
+      // Safety fallback in case 'load' never fires
+      setTimeout(hideLoader, 7000);
+    })();
+  </script>
+
   <script type="module" src="./src/main.jsx"></script>

@@ -1,0 +1,561 @@
+/* ====================================================================
+   Horizontal Creation Process — sideways-scroll storyboard.
+   Compact panels (multiple visible at once) connected by wavy purple line.
+   ==================================================================== */
+
+.hproc {
+  position: relative;
+  background: #F5F2EC;
+  color: #0A0A0A;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+/* Outer wrapper sets the scrub length */
+.hproc__outer {
+  position: relative;
+  width: 100%;
+}
+
+/* Sticky stage that pins while horizontal track translates */
+.hproc__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Wavy purple connector line — spans the full track */
+.hproc__waves {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.hproc__waves svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hproc__waves path {
+  fill: none;
+  stroke: #8A3DE6;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Track laid out in a single horizontal row */
+.hproc__track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 320px;
+  height: auto;
+  width: max-content;
+  padding: 0 18vw;
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+}
+
+/* Each panel is compact — multiple visible at once */
+.hproc__panel {
+  position: relative;
+  flex: 0 0 auto;
+  width: 680px;
+  height: 100vh;
+  padding: 30px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Wave arcs UP for this panel → anchor content to the BOTTOM */
+.hproc__panel--below {
+  align-items: flex-end;
+  padding-bottom: 9vh;
+}
+
+/* Wave dips DOWN for this panel → anchor content to the TOP */
+.hproc__panel--above {
+  align-items: flex-start;
+  padding-top: 9vh;
+}
+
+.hproc__panel-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* Body copy shared across panels */
+.hproc p.body {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #0A0A0A;
+  opacity: 0.78;
+  max-width: 240px;
+  margin: 0;
+}
+
+/* ============================== */
+/* Panel 1 — Creation Process     */
+/* ============================== */
+.hproc__cp-layout {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.hproc__cp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 90px);
+  grid-template-rows: repeat(2, 90px);
+  gap: 14px;
+  flex-shrink: 0;
+}
+.hproc__cp-tile {
+  border-radius: 18px;
+  background: #8A3DE6;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+}
+.hproc__cp-tile:hover {
+  transform: scale(1.12) rotate(-3deg);
+  box-shadow: 0 8px 24px rgba(138,61,230,0.35);
+}
+.hproc__cp-tile--yellow { background: #FFD93D; }
+.hproc__cp-tile--yellow:hover {
+  box-shadow: 0 8px 24px rgba(255,217,61,0.45);
+}
+.hproc__cp-title {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* ============================== */
+/* Panel 2 — Brand & Strategy     */
+/* ============================== */
+.hproc__bs-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 320px;
+}
+.hproc__bs-pencil {
+  width: 110px;
+  height: 110px;
+  display: block;
+  align-self: flex-start;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  transform-origin: 80% 80%;
+}
+.hproc__bs-pencil:hover {
+  transform: rotate(-20deg) scale(1.12);
+}
+.hproc__bs-title {
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+}
+
+/* ============================== */
+/* Panel 3 — Just for now (todo)  */
+/* ============================== */
+.hproc__jfn-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 320px;
+}
+.hproc__jfn-title {
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+}
+.hproc__sticky {
+  width: 140px;
+  background: #FFF1A0;
+  border-radius: 3px;
+  padding: 16px 14px 18px;
+  box-shadow:
+    1px 4px 14px rgba(0,0,0,0.12),
+    inset 0 -8px 10px rgba(0,0,0,0.04);
+  font-family: 'Inter', sans-serif;
+  transform: rotate(-3deg);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+}
+.hproc__sticky:hover {
+  transform: rotate(0deg) scale(1.06) translateY(-6px);
+  box-shadow: 2px 12px 28px rgba(0,0,0,0.18);
+}
+.hproc__sticky::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 64px;
+  height: 12px;
+  background: rgba(160, 160, 160, 0.5);
+  border-radius: 2px;
+}
+.hproc__sticky h4 {
+  font-size: 13px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+.hproc__sticky ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hproc__sticky li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #1a1a1a;
+}
+.hproc__sticky li .box {
+  width: 10px;
+  height: 10px;
+  border: 1.4px solid #1a1a1a;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.hproc__sticky li.done .box { background: #1a1a1a; }
+.hproc__sticky li.done span { text-decoration: line-through; opacity: 0.5; }
+
+/* ============================== */
+/* Panel 4 — Color                */
+/* ============================== */
+.hproc__color-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-top: 22vh;
+}
+.hproc__wheel {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  /* 12 hard segments of 30° each, starting from 12 o’clock */
+  background: conic-gradient(
+    from -90deg,
+    #4B3F8C   0deg  30deg,
+    #3B6FCC  30deg  60deg,
+    #3B9AE1  60deg  90deg,
+    #38C5C0  90deg 120deg,
+    #4CAF50 120deg 150deg,
+    #8BC34A 150deg 180deg,
+    #FFD93D 180deg 210deg,
+    #FFA726 210deg 240deg,
+    #FF7043 240deg 270deg,
+    #F44336 270deg 300deg,
+    #E91E63 300deg 330deg,
+    #9C27B0 330deg 360deg
+  );
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+}
+.hproc__wheel:hover {
+  transform: rotate(90deg) scale(1.08);
+  box-shadow: 0 8px 32px rgba(138,61,230,0.3);
+}
+/* White donut hole — bigger center */
+.hproc__wheel::after {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  background: #F5F2EC;
+  border-radius: 50%;
+  z-index: 1;
+}
+/* "Color" label centered inside the hole */
+.hproc__wheel-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  color: #0A0A0A;
+}
+
+/* ============================== */
+/* Panel 5 — Font                 */
+/* ============================== */
+.hproc__font-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.hproc__font-words {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+  line-height: 0.88;
+}
+/* Sans — Inter, heavy, largest */
+.hproc__font-words .fw-sans {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 96px;
+  color: #0A0A0A;
+  letter-spacing: -0.05em;
+  cursor: default;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.2s;
+  display: block;
+}
+.hproc__font-words .fw-sans:hover {
+  transform: skewX(-6deg) scale(1.04);
+  color: #8A3DE6;
+}
+/* Serif — Playfair Display, italic, mid */
+.hproc__font-words .fw-serif {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 80px;
+  color: #0A0A0A;
+  letter-spacing: -0.02em;
+  cursor: default;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.2s;
+  display: block;
+}
+.hproc__font-words .fw-serif:hover {
+  transform: skewX(4deg) translateX(8px);
+  color: #8A3DE6;
+}
+/* Mono — Space Mono, smallest, clearly different texture */
+.hproc__font-words .fw-mono {
+  font-family: 'Space Mono', monospace;
+  font-weight: 400;
+  font-size: 52px;
+  color: #0A0A0A;
+  letter-spacing: -0.03em;
+  cursor: default;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.2s, letter-spacing 0.25s;
+  display: block;
+}
+.hproc__font-words .fw-mono:hover {
+  letter-spacing: 0.04em;
+  color: #8A3DE6;
+}
+.hproc__phone {
+  width: 120px;
+  height: 220px;
+  background: #1a1a1a;
+  border-radius: 20px;
+  border: 3px solid #0A0A0A;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  position: relative;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hproc__phone::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 5px;
+  background: #0A0A0A;
+  border-radius: 9999px;
+}
+.hproc__phone-bar {
+  height: 5px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.18);
+}
+.hproc__phone-bar.t { width: 40%; background: rgba(255,255,255,0.28); }
+.hproc__phone-bar.h { height: 60px; background: rgba(255,255,255,0.06); border-radius: 5px; margin: 3px 0; }
+.hproc__phone-bar.s { width: 65%; }
+.hproc__phone-bar.m { width: 88%; }
+.hproc__phone-bar.x { width: 50%; }
+
+/* ============================== */
+/* Panel 6 — Responsiveness       */
+/* ============================== */
+.hproc__resp-title {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+.hproc__resp-layout {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+/* Constrain the browser mockup width within the panel */
+.hproc__resp-browser {
+  width: 320px;
+  max-width: 100%;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.hproc__resp-browser:hover {
+  transform: scale(1.04) translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* ============================== */
+/* Panel 7 — Layout               */
+/* ============================== */
+.hproc__layout-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.hproc__layout-stack {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: 60px 60px;
+  gap: 10px;
+}
+.hproc__layout-stack > div {
+  background: #0A0A0A;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.2s;
+}
+.hproc__layout-stack > div:hover {
+  transform: scale(1.12);
+  background: #8A3DE6;
+}
+.hproc__layout-stack > div.tall {
+  grid-row: span 2;
+  height: 130px;
+}
+.hproc__layout-title {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* ============================== */
+/* Panel 8 — Make it unique       */
+/* ============================== */
+.hproc__unique-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  position: relative;
+  padding: 20px 0;
+  max-width: 500px;
+}
+.hproc__unique-title {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-align: left;
+  color: #0A0A0A;
+}
+.hproc__unique-body {
+  font-size: 16px;
+  font-weight: 400;
+  color: #555;
+  line-height: 1.55;
+  max-width: 340px;
+}
+.hproc__sakura {
+  position: absolute;
+  display: block;
+  line-height: 0;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.hproc__sakura--tr {
+  width: 130px;
+  height: 130px;
+  top: -80px;
+  right: -100px;
+  transform: rotate(12deg);
+}
+.hproc__sakura--tr:hover {
+  transform: rotate(25deg) scale(1.15);
+}
+.hproc__sakura--bl {
+  width: 80px;
+  height: 80px;
+  bottom: -60px;
+  left: -50px;
+  transform: rotate(-20deg);
+}
+.hproc__sakura--bl:hover {
+  transform: rotate(-35deg) scale(1.15);
+}
+.hproc__sakura--mr {
+  width: 60px;
+  height: 60px;
+  top: 60px;
+  right: -50px;
+  transform: rotate(30deg);
+}
+.hproc__sakura--mr:hover {
+  transform: rotate(50deg) scale(1.2);
+}
+
+/* ============================== */
+/* Mobile fallback (vertical)     */
+/* ============================== */
+@media (max-width: 900px) {
+  .hproc__outer { height: auto !important; }
+  .hproc__stage {
+    position: relative;
+    height: auto;
+    display: block;
+  }
+  .hproc__track {
+    flex-direction: column;
+    width: 100%;
+    transform: none !important;
+    padding: 0 24px;
+  }
+  .hproc__panel {
+    width: 100%;
+    min-height: auto;
+    padding: 50px 0;
+  }
+  .hproc__waves { display: none; }
+}

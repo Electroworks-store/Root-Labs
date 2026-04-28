@@ -17,6 +17,7 @@ import TechStore from './showcase/TechStore';
 import Restaurant from './showcase/Restaurant';
 import Masonry from './components/Masonry';
 import WebsitesProcess from './components/WebsitesProcess';
+import HorizontalProcess from './components/HorizontalProcess';
 import FlipCardStack from './components/FlipCardStack';
 import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
@@ -863,7 +864,10 @@ function navigate(path) {
       const isTransitioning = useRef(false);
       const lastScrollTime = useRef(0);
       const accumulatedDelta = useRef(0);
+      const exitDelta = useRef(0); // extra delta needed to leave the last slide
+      const isExiting = useRef(false); // true once exit threshold met — stops blocking scroll
       const SCROLL_THRESHOLD = 120; // pixels of scroll needed to trigger a slide change
+      const EXIT_THRESHOLD = 320;   // extra pixels needed to scroll past the last slide
 
       const slides = [
         { img: sakura1, name: 'Idea Stage', description: 'Every great project starts with a spark. We brainstorm, sketch, and explore all creative directions before committing to a path forward.' },
@@ -880,7 +884,11 @@ function navigate(path) {
           ([entry]) => {
             const locked = entry.isIntersecting && entry.intersectionRatio > 0.8;
             setIsLocked(locked);
-            if (!locked) accumulatedDelta.current = 0;
+            if (!locked) {
+              accumulatedDelta.current = 0;
+              exitDelta.current = 0;
+              isExiting.current = false;
+            }
           },
           { threshold: [0.8, 1] }
         );
@@ -895,10 +903,31 @@ function navigate(path) {
           const direction = e.deltaY > 0 ? 1 : -1;
           const nextIndex = activeIndex + direction;
 
-          // At boundaries, let page scroll naturally
-          if (nextIndex < 0 || nextIndex > slides.length - 1) {
+          // At the first slide scrolling up — let page scroll naturally
+          if (nextIndex < 0) {
             accumulatedDelta.current = 0;
+            exitDelta.current = 0;
             return;
+          }
+
+          // At the last slide scrolling down — require extra intentional scroll before exiting
+          if (nextIndex > slides.length - 1) {
+            // Once the exit threshold was already met, don't block anymore
+            if (isExiting.current) return;
+            e.preventDefault();
+            exitDelta.current += Math.abs(e.deltaY);
+            if (exitDelta.current >= EXIT_THRESHOLD) {
+              isExiting.current = true;
+              exitDelta.current = 0;
+              accumulatedDelta.current = 0;
+            }
+            return;
+          }
+
+          // Reset exit state when scrolling back up from last slide
+          if (direction < 0) {
+            exitDelta.current = 0;
+            isExiting.current = false;
           }
 
           // Always prevent default when inside the gallery range
@@ -936,8 +965,16 @@ function navigate(path) {
 
           const direction = delta > 0 ? 1 : -1;
           const nextIndex = activeIndex + direction;
-          if (nextIndex < 0 || nextIndex > slides.length - 1) return;
+          if (nextIndex < 0) return;
 
+          // Last slide: require a longer swipe (120px) to exit forward
+          if (nextIndex > slides.length - 1) {
+            if (Math.abs(delta) < 120) return;
+            exitDelta.current = 0;
+            return; // release to natural scroll
+          }
+
+          exitDelta.current = 0;
           lastScrollTime.current = Date.now();
           isTransitioning.current = true;
           setActiveIndex(nextIndex);
@@ -1379,7 +1416,7 @@ function navigate(path) {
               <div className="space-y-0">
                 {[
                   { name: 'Adrian', role: 'Full stack dev', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
-                  { name: 'Viktor', role: 'Design & brand', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
+                  { name: 'Viktor', role: 'Design & production specialist', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
                   { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
                 ].map((member, idx) => (
                   <div 
@@ -3357,7 +3394,7 @@ function navigate(path) {
           </section>
 
           {/* Design Process Showcase */}
-          <WebsitesProcess />
+          <HorizontalProcess />
 
           {/* Pricing Preview - Websites Page */}
           <section id="pricing" className="py-24 relative overflow-hidden">
