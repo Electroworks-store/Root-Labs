@@ -19,6 +19,7 @@ import Masonry from './components/Masonry';
 import WebsitesProcess from './components/WebsitesProcess';
 import HorizontalProcess from './components/HorizontalProcess';
 import FlipCardStack from './components/FlipCardStack';
+import WhatYouGet from './components/WhatYouGet';
 import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
 import logoClean from '../img/Rootlabs-logo-xbg.png';
@@ -3313,85 +3314,7 @@ function navigate(path) {
           </section>
 
           {/* What You Get */}
-          <section className="py-28 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
-            <div className="max-w-6xl mx-auto px-6 relative z-10">
-              
-              {/* Two-column layout: left text, right mockup visual */}
-              <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
-                {/* Left: message */}
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--primary)' }}>
-                    What you get
-                  </p>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Geist', sans-serif" }}>
-                    A website that actually
-                    <span className="block" style={{ color: 'var(--primary)' }}>represents you</span>
-                  </h2>
-                  <p className="text-lg mb-4" style={{ color: 'var(--muted)', lineHeight: '1.7' }}>
-                    Not a template with your logo slapped on. A custom-built space where people come to see your brand, understand your story, and trust what you offer.
-                  </p>
-                  <p className="text-lg" style={{ color: 'var(--muted)', lineHeight: '1.7' }}>
-                    Every detail is intentional. The colors, the layout, the flow. All designed to feel like <em>you</em>.
-                  </p>
-                </div>
-
-                {/* Right: browser mockup */}
-                <div className="wyg-brand-visual">
-                  <div className="wyg-brand-browser">
-                    <div className="wyg-brand-browser-bar">
-                      <span className="wdot wdot-r" /><span className="wdot wdot-y" /><span className="wdot wdot-g" />
-                      <div className="wyg-brand-url-bar">
-                        <span>yourbrand.com</span>
-                      </div>
-                    </div>
-                    <div className="wyg-brand-screen">
-                      <div className="wyg-brand-page">
-                        <div className="wyg-bp-nav">
-                          <div className="wyg-bp-logo" />
-                          <div className="wyg-bp-links"><span /><span /><span /></div>
-                        </div>
-                        <div className="wyg-bp-hero">
-                          <div className="wyg-bp-tagline" />
-                          <div className="wyg-bp-subtitle" />
-                          <div className="wyg-bp-cta" />
-                        </div>
-                        <div className="wyg-bp-features">
-                          <div className="wyg-bp-feat" />
-                          <div className="wyg-bp-feat" />
-                          <div className="wyg-bp-feat" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Three value points */}
-              <div className="grid md:grid-cols-3 gap-10">
-                <div className="wyg-value-card">
-                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>01</div>
-                  <h3 className="text-lg font-semibold mb-2">Designed for your brand</h3>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                    Every layout, color, and interaction starts from who you are. No recycled templates, no generic pages.
-                  </p>
-                </div>
-                <div className="wyg-value-card">
-                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>02</div>
-                  <h3 className="text-lg font-semibold mb-2">Built to be visited</h3>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                    Fast, smooth, and structured so people actually enjoy being on your site and keep coming back.
-                  </p>
-                </div>
-                <div className="wyg-value-card">
-                  <div className="wyg-value-num" style={{ color: 'var(--primary)' }}>03</div>
-                  <h3 className="text-lg font-semibold mb-2">Yours to keep</h3>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                    Clean code, full ownership, no page-builder lock-in. A site that grows with your business.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+          <WhatYouGet />
 
           {/* Design Process Showcase */}
           <HorizontalProcess />

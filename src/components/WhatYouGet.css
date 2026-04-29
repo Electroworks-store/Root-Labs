@@ -1,0 +1,186 @@
+/* ====================================================================
+   What do you get? — floating feature gallery
+   ==================================================================== */
+
+.wyg {
+  position: relative;
+  background: var(--bg, #F5F2EC);
+  padding: 120px 24px 140px;
+  overflow: hidden;
+}
+
+.wyg__inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.wyg__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(40px, 6vw, 78px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-align: center;
+  color: #0A0A0A;
+  margin: 0;
+  max-width: 440px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating stage --------------------------------------------------- */
+.wyg__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(560px, 86vh, 780px);
+}
+
+.wyg__item {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Media tile (the image) ------------------------------------------ */
+.wyg__media {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+  filter: saturate(0.85);
+}
+.wyg__item:hover .wyg__media {
+  transform: scale(1.05);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  filter: saturate(1) brightness(1.04);
+}
+.wyg__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tile size variants ---------------------------------------------- */
+.wyg__item--sm .wyg__media { width: 130px; height: 170px; }
+.wyg__item--md .wyg__media { width: 180px; height: 230px; }
+.wyg__item--lg .wyg__media { width: 240px; height: 180px; }
+
+/* Hover-revealed copy (absolutely positioned outside image) ------- */
+.wyg__copy {
+  position: absolute;
+  top: 50%;
+  width: 200px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  pointer-events: none;
+}
+.wyg__item--text-right .wyg__copy {
+  left: calc(100% + 18px);
+  transform: translate(-8px, -50%);
+  text-align: left;
+}
+.wyg__item--text-left .wyg__copy {
+  right: calc(100% + 18px);
+  transform: translate(8px, -50%);
+  text-align: right;
+}
+.wyg__item:hover .wyg__copy,
+.wyg__item:focus-within .wyg__copy {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.wyg__heading {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #0A0A0A;
+  margin: 0 0 6px;
+}
+.wyg__body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #0A0A0A;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Mobile fallback list (hidden on desktop) ------------------------ */
+.wyg__title-mobile {
+  display: none;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(36px, 9vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-align: center;
+  color: #0A0A0A;
+  margin: 0 0 36px;
+}
+.wyg__list {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+  flex-direction: column;
+}
+.wyg__list-item {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.wyg__list-item img {
+  width: 110px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* Responsive ------------------------------------------------------ */
+@media (max-width: 1200px) {
+  .wyg__item--sm .wyg__media { width: 110px; height: 145px; }
+  .wyg__item--md .wyg__media { width: 150px; height: 195px; }
+  .wyg__item--lg .wyg__media { width: 200px; height: 150px; }
+  .wyg__copy { width: 170px; }
+  .wyg__heading { font-size: 18px; }
+  .wyg__body { font-size: 12px; }
+}
+
+@media (max-width: 1024px) {
+  .wyg__title {
+    font-size: clamp(32px, 5vw, 60px);
+    max-width: 360px;
+  }
+  .wyg__stage {
+    height: clamp(500px, 80vh, 700px);
+  }
+  .wyg__item--sm .wyg__media { width: 96px; height: 128px; }
+  .wyg__item--md .wyg__media { width: 130px; height: 170px; }
+  .wyg__item--lg .wyg__media { width: 170px; height: 130px; }
+  .wyg__copy { width: 150px; }
+}
+
+@media (max-width: 900px) {
+  .wyg { padding: 80px 20px 90px; }
+  .wyg__stage { display: none; }
+  .wyg__title-mobile { display: block; }
+  .wyg__list { display: flex; }
+  .wyg__copy {
+    /* In list view, always show copy */
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
