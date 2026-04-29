@@ -1984,7 +1984,7 @@ function navigate(path) {
     function Contact() {
       const contactData = document.getElementById('contact-data');
       const data = {
-        heading: contactData?.dataset.heading || 'Ready to Reimagine Your online presence?',
+        heading: contactData?.dataset.heading || 'Plant the idea. We\'ll build the rest.',
         subheading: contactData?.dataset.subheading || "Let's chat about transforming your online presence into something remarkable",
         namePlaceholder: contactData?.dataset.nameplaceholder || 'Your Name',
         emailPlaceholder: contactData?.dataset.emailplaceholder || 'Email Address',
@@ -2186,7 +2186,7 @@ function navigate(path) {
           <div className="w-full md:max-w-5xl md:mx-auto" style={{ position: 'relative', zIndex: 1 }}>
             {/* Header */}
             <div className="contact-hero text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif", color: '#8A3DE6' }}>
                 {data.heading}
               </h2>
               <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
@@ -3320,80 +3320,65 @@ function navigate(path) {
           <HorizontalProcess />
 
           {/* Pricing Preview - Websites Page */}
-          <section id="pricing" className="py-24 relative overflow-hidden">
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(138, 61, 230, 0.05) 0%, rgba(56, 189, 248, 0.05) 100%)' }}></div>
-            {/* Masked Grid Patch - Purple accent */}
-            <div className="masked-grid masked-grid-purple masked-grid-top-right" aria-hidden="true"></div>
-            
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Simple, Transparent Pricing
-                </h2>
-                <p className="text-xl" style={{ color: 'var(--muted)' }}>
-                  Choose the plan that fits your needs
-                </p>
+          <section id="pricing" className="rl-pricing-section">
+            <div className="rl-pricing-container">
+              <div className="rl-pricing-header">
+                <div className="rl-pricing-eyebrow">Packages</div>
+                <h2 className="rl-pricing-title">Pick your <em>root</em>.</h2>
+                <p className="rl-pricing-subtitle">Choose the plan that fits your needs.</p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="rl-pricing-grid">
                 {plans.map((plan, idx) => (
-                  <div key={idx} className={`liquid-card p-8 hover-elastic ${plan.popular ? 'plan-popular-inline' : ''}`} style={{ position: 'relative', overflow: 'visible' }}>
-                    {plan.popular && (
-                      <div 
-                        className="pricing-badge"
-                        style={{ 
-                          position: 'absolute',
-                          top: '0px',
-                          left: '50%',
-                          transform: 'translateX(-50%) translateY(-50%)',
-                          background: 'linear-gradient(135deg, #8A3DE6, #38bdf8)',
-                          color: 'white',
-                          padding: '0.35rem 1rem',
-                          borderRadius: '16px',
-                          fontSize: '0.6875rem',
-                          fontWeight: '700',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                          whiteSpace: 'nowrap',
-                          boxShadow: '0 2px 8px rgba(138, 61, 230, 0.3)'
-                        }}
-                        aria-label="Recommended plan"
-                      >
-                        Most Popular
-                      </div>
-                    )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
-                    <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--primary)' }}>
-                        ${plan.setup}
-                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}> setup</span>
-                      </div>
-                      {plan.monthly > 0 && (
-                        <div className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
-                          + ${plan.monthly}/mo
-                        </div>
-                      )}
+                  <article
+                    key={idx}
+                    className={`rl-pricing-card ${plan.popular ? 'rl-pricing-card--featured' : ''}`}
+                    style={{ '--i': idx }}
+                    onClick={(ev) => {
+                      const grid = ev.currentTarget.parentElement;
+                      if (!grid || !grid.classList.contains('is-flipped')) return;
+                      if (ev.target.closest('a, button')) return;
+                      ev.currentTarget.classList.toggle('is-face-down');
+                    }}
+                  >
+                    <div className="rl-pricing-card-inner">
+                    <div className="rl-pricing-card-back" aria-hidden="true">
+                      <span className="rl-pricing-card-back-flourish rl-fl-tl" />
+                      <span className="rl-pricing-card-back-flourish rl-fl-tr" />
+                      <span className="rl-pricing-card-back-flourish rl-fl-bl" />
+                      <span className="rl-pricing-card-back-flourish rl-fl-br" />
+                      <span className="rl-pricing-card-back-medallion">R</span>
                     </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.slice(0, 3).map((feature, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-2" style={{ color: 'var(--text)' }}>
-                          <Check className="w-5 h-5" style={{ color: 'var(--success)' }} />
-                          <span className="text-sm">{feature}</span>
-                        </li>
+                    <div className="rl-pricing-card-front">
+                    <h3 className="rl-pricing-name">{plan.name}</h3>
+
+                    <div className="rl-pricing-price-row">
+                      <span className="rl-pricing-price">${plan.setup.toLocaleString()}</span>
+                      <span className="rl-pricing-suffix">/ project</span>
+                    </div>
+                    <p className="rl-pricing-tagline">
+                      {plan.monthly > 0
+                        ? `+ $${plan.monthly}/mo optional maintenance.`
+                        : 'One-time investment, fully owned by you.'}
+                    </p>
+
+                    <hr className="rl-pricing-divider" />
+
+                    <ul className="rl-pricing-features">
+                      {plan.features.slice(0, 4).map((feature, fIdx) => (
+                        <li key={fIdx}>{feature}</li>
                       ))}
                     </ul>
-                    <a 
+
+                    <a
                       href="#contact"
-                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center pricing-get-started"
-                      style={{ 
-                        background: plan.popular ? 'var(--primary)' : 'rgba(138, 61, 230, 0.1)',
-                        color: plan.popular ? 'white' : 'var(--primary)',
-                        border: plan.popular ? 'none' : '1px solid var(--glass-border)'
-                      }}
+                      className={`rl-pricing-cta ${plan.popular ? 'rl-pricing-cta--dark' : ''}`}
                     >
-                      Get Started
+                      {plan.cta || 'Start now'}
                     </a>
-                  </div>
+                    </div>
+                    </div>
+                  </article>
                 ))}
               </div>
             </div>
@@ -4704,81 +4689,71 @@ function navigate(path) {
           </section>
 
           {/* Pricing Preview - Social Page */}
-          <section className="py-24 relative overflow-hidden">
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255, 122, 45, 0.05) 0%, rgba(138, 61, 230, 0.05) 100%)' }}></div>
-            {/* Masked Grid Patch - Orange accent */}
-            <div className="masked-grid masked-grid-orange masked-grid-top-right" aria-hidden="true"></div>
-            
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Geist', sans-serif" }}>
-                  Grow Your Social Presence
-                </h2>
-                <p className="text-xl" style={{ color: 'var(--muted)' }}>
-                  Plans designed to scale with your business
-                </p>
+          <section className="rl-pricing-section rl-pricing-section--social">
+            <div className="rl-pricing-container">
+              <div className="rl-pricing-header">
+                <div className="rl-pricing-eyebrow">Packages</div>
+                <h2 className="rl-pricing-title">Grow your <em>presence</em>.</h2>
+                <p className="rl-pricing-subtitle">Plans designed to scale with your business.</p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {plans.map((plan, idx) => (
-                  <div key={idx} className={`liquid-card p-8 hover-elastic ${plan.popular ? 'plan-popular-inline' : ''}`} style={{ position: 'relative', overflow: 'visible' }}>
-                    {plan.popular && (
-                      <div 
-                        className="pricing-badge"
-                        style={{ 
-                          position: 'absolute',
-                          top: '0px',
-                          left: '50%',
-                          transform: 'translateX(-50%) translateY(-50%)',
-                          background: 'linear-gradient(135deg, #8A3DE6, #FF7A2D)',
-                          color: 'white',
-                          padding: '0.35rem 1rem',
-                          borderRadius: '16px',
-                          fontSize: '0.6875rem',
-                          fontWeight: '700',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                          whiteSpace: 'nowrap',
-                          boxShadow: '0 2px 8px rgba(138, 61, 230, 0.3)'
-                        }}
-                        aria-label="Recommended plan"
-                      >
-                        Most Popular
-                      </div>
-                    )}
-                    <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Geist', sans-serif" }}>{plan.name}</h3>
-                    <div className="mb-6">
-                      <div className="text-4xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#FF7A2D' }}>
-                        ${plan.setup > 0 ? plan.setup : plan.monthly}
-                        <span className="text-lg font-normal" style={{ color: 'var(--muted)' }}>{plan.setup > 0 ? ' setup' : '/mo'}</span>
-                      </div>
-                      {plan.setup > 0 && plan.monthly > 0 && (
-                        <div className="text-sm mt-1" style={{ color: 'var(--muted)' }}>
-                          ${plan.monthly}/mo
-                        </div>
-                      )}
-                    </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.slice(0, 3).map((feature, fIdx) => (
-                        <li key={fIdx} className="flex items-start gap-2" style={{ color: 'var(--text)' }}>
-                          <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--success)' }} />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a 
-                      href="#contact"
-                      className="w-full py-3 rounded-full font-semibold transition-all inline-flex items-center justify-center pricing-get-started"
-                      style={{ 
-                        background: plan.popular ? '#FF7A2D' : 'rgba(255, 122, 45, 0.1)',
-                        color: plan.popular ? 'white' : '#FF7A2D',
-                        border: plan.popular ? 'none' : '1px solid var(--glass-border)'
+              <div className="rl-pricing-grid rl-pricing-grid--two">
+                {plans.map((plan, idx) => {
+                  const headlineMonthly = plan.monthly > 0;
+                  return (
+                    <article
+                      key={idx}
+                      className={`rl-pricing-card ${plan.popular ? 'rl-pricing-card--featured' : ''}`}
+                      style={{ '--i': idx }}
+                      onClick={(ev) => {
+                        const grid = ev.currentTarget.parentElement;
+                        if (!grid || !grid.classList.contains('is-flipped')) return;
+                        if (ev.target.closest('a, button')) return;
+                        ev.currentTarget.classList.toggle('is-face-down');
                       }}
                     >
-                      Get Started
-                    </a>
-                  </div>
-                ))}
+                      <div className="rl-pricing-card-inner">
+                      <div className="rl-pricing-card-back" aria-hidden="true">
+                        <span className="rl-pricing-card-back-flourish rl-fl-tl" />
+                        <span className="rl-pricing-card-back-flourish rl-fl-tr" />
+                        <span className="rl-pricing-card-back-flourish rl-fl-bl" />
+                        <span className="rl-pricing-card-back-flourish rl-fl-br" />
+                        <span className="rl-pricing-card-back-medallion">R</span>
+                      </div>
+                      <div className="rl-pricing-card-front">
+                      <h3 className="rl-pricing-name">{plan.name}</h3>
+
+                      <div className="rl-pricing-price-row">
+                        <span className="rl-pricing-price">
+                          ${headlineMonthly ? plan.monthly.toLocaleString() : plan.setup.toLocaleString()}
+                        </span>
+                        <span className="rl-pricing-suffix">{headlineMonthly ? '/ month' : '/ project'}</span>
+                      </div>
+                      <p className="rl-pricing-tagline">
+                        {plan.setup > 0 && plan.monthly > 0
+                          ? `+ $${plan.setup} one-time setup.`
+                          : 'No setup fees. Cancel anytime.'}
+                      </p>
+
+                      <hr className="rl-pricing-divider" />
+
+                      <ul className="rl-pricing-features">
+                        {plan.features.slice(0, 4).map((feature, fIdx) => (
+                          <li key={fIdx}>{feature}</li>
+                        ))}
+                      </ul>
+
+                      <a
+                        href="#contact"
+                        className={`rl-pricing-cta ${plan.popular ? 'rl-pricing-cta--dark' : ''}`}
+                      >
+                        {plan.cta || 'Start now'}
+                      </a>
+                      </div>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -5641,6 +5616,47 @@ function navigate(path) {
 
     // Main App
     function App() {
+      useEffect(() => {
+        const initialized = new WeakSet();
+
+        function setup(grid) {
+          if (initialized.has(grid)) return;
+          initialized.add(grid);
+
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                const cards = grid.querySelectorAll('.rl-pricing-card');
+                const count = cards.length || 3;
+                // Stage 1 — deal the cards out from the centered stack on the
+                // next frame so the initial (hidden, stacked) state paints
+                // before the transition begins.
+                requestAnimationFrame(() => {
+                  grid.classList.add('is-dealt');
+                });
+                // Stage 2 — once every card has finished its 0.6s deal
+                // (last card starts at (count-1) * 150ms), flip them face-up.
+                const dealDuration = 600 + (count - 1) * 150 + 80;
+                setTimeout(() => {
+                  grid.classList.add('is-flipped');
+                }, dealDuration);
+                io.disconnect();
+              }
+            });
+          }, { threshold: 0.2 });
+          io.observe(grid);
+        }
+
+        document.querySelectorAll('.rl-pricing-grid').forEach(setup);
+
+        const mo = new MutationObserver(() => {
+          document.querySelectorAll('.rl-pricing-grid').forEach(setup);
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+
+        return () => mo.disconnect();
+      }, []);
+
       return <Router />;
     }
 
