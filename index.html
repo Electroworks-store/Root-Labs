@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- Tailwind CDN (requested fallback) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -183,8 +184,8 @@
       #rl-loader.rl-loader-exit .rl-loader__panel { opacity: 0; transform: none; }
     }
   </style>
-  <script type="module" crossorigin src="./assets/index-BEn4K5dQ.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DKv7mRyK.css">
+  <script type="module" crossorigin src="./assets/index-Cgz6NNCJ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CgeiStp7.css">
 </head>
 <body>
   <!-- Navigation Data -->
@@ -290,7 +291,7 @@
   
   <!-- Contact Section Data -->
   <div id="contact-data"
-       data-heading="Ready to Reimagine Your online presence?"
+       data-heading="Plant the idea. We'll build the rest."
        data-subheading="Let's chat about transforming your online presence into something remarkable"
        data-nameplaceholder="Your Name"
        data-emailplaceholder="Email Address"
@@ -371,8 +372,8 @@
        data-subheading="Transform your outdated site into a conversion machine. Fast, affordable, AI-powered."
        data-plans='[
          {"name": "Refresh", "setup": 300, "monthly": 0, "annual": 0, "features": ["Single page redesign", "Mobile responsive design", "1 week delivery, launch faster", "2 revision rounds", "Monthly updates & fixes"], "cta": "Get started", "popular": false},
-         {"name": "Full Rebuild", "setup": 600, "monthly": 20, "annual": 240, "features": ["Complete multi-page site", "Custom animations & interactions", "2 week delivery", "Unlimited revisions", "Optional $20/mo maintenance"], "cta": "Start project", "popular": true},
-         {"name": "Enterprise", "setup": 1200, "monthly": 80, "annual": 960, "features": ["Complex web applications", "Custom backend integration", "Dedicated team & timeline", "White-glove service", "24/7 support & maintenance"], "cta": "Contact us", "popular": false}
+         {"name": "Full Rebuild", "setup": 800, "monthly": 20, "annual": 240, "features": ["Complete multi-page site", "Custom animations & interactions", "2 week delivery", "Unlimited revisions", "Optional $20/mo maintenance"], "cta": "Start project", "popular": true},
+         {"name": "Enterprise", "setup": 1500, "monthly": 80, "annual": 960, "features": ["Complex web applications", "Custom backend integration", "Dedicated team & timeline", "White-glove service", "24/7 support & maintenance"], "cta": "Contact us", "popular": false}
        ]'>
   </div>
 
@@ -447,14 +448,22 @@
         navType = navEntry ? navEntry.type : '';
       } catch(e) {}
 
+      // Show loader only on the very first visit of this browser session.
+      // Subsequent reloads / SPA navigations skip it entirely.
+      var alreadyShown = false;
+      try { alreadyShown = sessionStorage.getItem('rl-loader-shown') === '1'; } catch(e) {}
+
       var isHardLoad = (navType === 'navigate' || navType === 'reload' || navType === '');
 
-      if (!isHardLoad) {
-        // SPA internal navigation — remove loader instantly
+      if (alreadyShown || !isHardLoad) {
+        // Already seen in this session (or SPA internal nav) — remove instantly
         var loaderEl = document.getElementById('rl-loader');
         if (loaderEl && loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
         return;
       }
+
+      // Mark as shown immediately so any reload during this session skips it
+      try { sessionStorage.setItem('rl-loader-shown', '1'); } catch(e) {}
 
       function hideLoader() {
         var loader = document.getElementById('rl-loader');
@@ -479,4 +488,4 @@
       setTimeout(hideLoader, 7000);
     })();
   </script>
-
+
