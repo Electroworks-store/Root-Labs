@@ -23,7 +23,7 @@
   top: 0;
   height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: stretch;
 }
@@ -79,6 +79,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible;
 }
 
 /* Wave arcs UP for this panel → anchor content to the BOTTOM */
@@ -109,6 +110,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  overflow: visible;
 }
 
 /* Body copy shared across panels */
@@ -590,118 +592,83 @@
 }
 
 /* ============================== */
-/* Panel 5 — Font (3-D carousel)  */
+/* Panel 5 — Font (Typography)    */
 /* ============================== */
 .hproc__font-layout {
   display: flex;
   align-items: center;
-  gap: 56px;
+  justify-content: flex-start;
+  /* The callout balloons up out of the layout — let the panel breathe */
+  padding-top: 90px;
 }
-
-/* Scene: provides the CSS perspective context */
-.hproc__font-scene {
-  perspective: 700px;
-  width: 200px;
-  height: 260px;
-  flex-shrink: 0;
-  position: relative;
-}
-
-/* Carousel: the 3-D stage that spins */
-.hproc__font-carousel {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  animation: font-carousel-spin 12s linear infinite;
-  position: relative;
-}
-.hproc__font-scene:hover .hproc__font-carousel {
-  animation-play-state: paused;
-}
-@keyframes font-carousel-spin {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
-}
-
-/* Individual font cards positioned around the Y axis */
-.hproc__font-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 148px;
-  height: 186px;
-  margin: -93px 0 0 -74px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1.5px solid rgba(0, 0, 0, 0.08);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.12),
-    0 1px 0 rgba(255, 255, 255, 0.9) inset;
-  backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 20px 16px;
-  /* CSS custom property drives each card's angle */
-  transform: rotateY(calc(var(--card-index) * 90deg)) translateZ(172px);
-}
-.hproc__font-card__sample {
-  font-size: 70px;
-  line-height: 1;
-  color: #0A0A0A;
-  display: block;
-}
-.hproc__font-card__label {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #0A0A0A;
-  letter-spacing: 0.01em;
-}
-.hproc__font-card__sub {
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(0, 0, 0, 0.42);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* Right-side info column */
 .hproc__font-info {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 260px;
+  gap: 18px;
+  max-width: 420px;
 }
+
+/* Heading wrapper: relative anchor for both the highlighter and callout */
+.hproc__font-heading-wrap {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  padding: 6px 14px 4px;
+  overflow: visible;
+}
+
+/* Yellow marker swipe behind the heading */
+.hproc__font-highlight {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 105%;
+  height: 110%;
+  transform: translateY(-50%) rotate(-1.5deg);
+  z-index: 0;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Serif heading sits on top of the highlight */
 .hproc__font-title {
-  font-size: 40px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: 76px;
   line-height: 1.0;
+  letter-spacing: -0.02em;
   color: #0A0A0A;
 }
 
-/* Handwritten note — Caveat text + wavy purple underline */
-.hproc__font-note {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  margin-top: 4px;
+/* Callout — sits above the right side of the heading */
+.hproc__font-callout.hproc__cp-callout {
+  top: -95px;
+  right: -240px;
+  z-index: 10;
 }
-.hproc__font-note-text {
-  font-family: 'Caveat', 'Kalam', cursive;
-  font-size: 20px;
-  font-weight: 600;
-  color: #8A3DE6;
-  line-height: 1.2;
+.hproc__font-callout .hproc__cp-callout-arrow {
+  align-self: flex-start;
+  margin-left: -10px;
+  margin-top: -2px;
+  height: 90px;
 }
-.hproc__font-note-squiggle {
-  width: 160px;
-  height: 12px;
-  display: block;
+
+/* Body copy under the heading — let it breathe wider than the default 280px */
+.hproc__font-info .body {
+  max-width: 360px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Responsive scaling */
+@media (max-width: 1300px) {
+  .hproc__font-title { font-size: 62px; }
+  .hproc__font-info  { max-width: 360px; }
+  .hproc__font-info .body { max-width: 320px; font-size: 14px; }
+  .hproc__font-callout.hproc__cp-callout { top: -85px; right: -220px; }
 }
 
 /* ============================== */
@@ -714,56 +681,338 @@
   line-height: 0.95;
 }
 .hproc__resp-layout {
-  max-width: 320px;
+  max-width: 780px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 44px;
+  margin-top: 60px;
+}
+.hproc__resp-text {
+  max-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
-/* Constrain the browser mockup width within the panel */
+
+/* Outer wrapper — provides space for the cursor to overshoot the frame */
 .hproc__resp-browser {
-  width: 320px;
+  position: relative;
+  flex-shrink: 0;
+  width: 380px;
   max-width: 100%;
-  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
-  cursor: pointer;
+  padding: 0 20px 22px 0;     /* room for cursor overshoot */
 }
-.hproc__resp-browser:hover {
-  transform: scale(1.04) translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+
+/* === Morphing browser frame ============================================ */
+.hproc__morph-frame {
+  position: relative;
+  width: 380px;
+  height: 240px;
+  background: #141414;
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  overflow: visible;
+  container-type: inline-size;
+  animation: hproc-morph-cycle 11s linear infinite;
+}
+
+/* Variable-speed morph: easing is baked into keyframe timing.
+   Bunched stops = deceleration/acceleration, sparse = fast travel. */
+@keyframes hproc-morph-cycle {
+  /* — desktop hold — */
+  0%    { width: 380px; }
+  10%   { width: 380px; }
+  /* — ease out, glide to tablet — */
+  14%   { width: 355px; }
+  20%   { width: 248px; }
+  24%   { width: 241px; }
+  26%   { width: 240px; }
+  /* — tablet hold — */
+  38%   { width: 240px; }
+  /* — quick snap to phone — */
+  42%   { width: 185px; }
+  45%   { width: 153px; }
+  47%   { width: 150px; }
+  /* — phone hold — */
+  60%   { width: 150px; }
+  /* — slow elastic expand back to desktop — */
+  68%   { width: 220px; }
+  76%   { width: 330px; }
+  83%   { width: 374px; }
+  87%   { width: 386px; }   /* subtle overshoot */
+  91%   { width: 376px; }
+  95%   { width: 380px; }
+  100%  { width: 380px; }
+}
+
+/* === Browser chrome bar =============================================== */
+.hproc__morph-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 8px;
+  background: #f3f0ea;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+.hproc__morph-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.hproc__morph-dot--r { background: #FF5F57; }
+.hproc__morph-dot--y { background: #FEBC2E; }
+.hproc__morph-dot--g { background: #28C840; }
+
+.hproc__morph-url {
+  flex: 1;
+  height: 12px;
+  margin-left: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 0;
+}
+.hproc__morph-url span {
+  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-size: 7px;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* === Page content area ================================================ */
+.hproc__morph-page {
+  height: 100%;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Nav row */
+.hproc__morph-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hproc__morph-logo {
+  width: 32px;
+  height: 9px;
+  border-radius: 20px;
+  background: #7C6AF7;
+  flex-shrink: 0;
+}
+.hproc__morph-links {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+}
+.hproc__morph-links span {
+  width: 20px;
+  height: 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+}
+.hproc__morph-links span:first-child {
+  background: rgba(124, 106, 247, 0.55);
+}
+.hproc__morph-burger {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: auto;
+}
+.hproc__morph-burger span {
+  width: 12px;
+  height: 1.5px;
+  background: #ffffff;
+  border-radius: 1px;
+}
+
+/* Hero block */
+.hproc__morph-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hproc__morph-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+.hproc__morph-subline {
+  height: 4px;
+  width: 70%;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 2px;
+  margin-top: 4px;
+}
+.hproc__morph-cta {
+  align-self: flex-start;
+  padding: 5px 12px;
+  background: #7C6AF7;
+  border-radius: 20px;
+  margin-top: 6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Card grid */
+.hproc__morph-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: auto;
+}
+.hproc__morph-card {
+  aspect-ratio: 1.6 / 1;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* === Container-query breakpoints ====================================== */
+/* Tablet — 2-up grid, links shrink                                       */
+@container (max-width: 260px) {
+  .hproc__morph-grid { grid-template-columns: repeat(2, 1fr); }
+  .hproc__morph-links span { width: 14px; }
+  .hproc__morph-links span:nth-child(3) { display: none; }
+  .hproc__morph-heading { font-size: 15px; }
+}
+/* Phone — burger menu, single column, larger CTA                         */
+@container (max-width: 180px) {
+  .hproc__morph-page { padding: 9px; gap: 7px; }
+  .hproc__morph-links { display: none; }
+  .hproc__morph-burger { display: flex; }
+  .hproc__morph-grid { grid-template-columns: 1fr; gap: 5px; }
+  .hproc__morph-card { aspect-ratio: 3 / 1; }
+  .hproc__morph-heading { font-size: 13px; }
+  .hproc__morph-cta { align-self: stretch; text-align: center; }
+  .hproc__morph-url span { font-size: 6px; }
+}
+
+/* === Decorative resize grip in the bottom-right corner ================= */
+.hproc__morph-grip {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 11px;
+  height: 11px;
+  background:
+    linear-gradient(135deg,
+      transparent 0 60%,
+      rgba(255,255,255,0.30) 60% 68%,
+      transparent 68% 76%,
+      rgba(255,255,255,0.30) 76% 84%,
+      transparent 84% 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* === Fake cursor — tip is positioned exactly at the bottom-right corner = */
+/* Tip is at (3,2) in 24×24 viewBox, scaled to 22px: ≈ (2.75, 1.83) px     */
+/* right  = -(22 - 2.75) ≈ -19px  |  bottom = -(22 - 1.83) ≈ -20px         */
+.hproc__morph-cursor {
+  position: absolute;
+  bottom: -18px;
+  right: -14px;
+  width: 20px;
+  height: 20px;
+  z-index: 100;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.20));
+  transform-origin: top left;
+  animation: hproc-cursor-press 11s linear infinite;
+}
+.hproc__morph-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes hproc-cursor-press {
+  0%,   9%   { transform: scale(1); }
+  10%,  12%  { transform: scale(0.82); }   /* press → tablet drag */
+  13%,  37%  { transform: scale(1); }
+  38%,  40%  { transform: scale(0.82); }   /* press → phone drag */
+  41%,  59%  { transform: scale(1); }
+  60%,  62%  { transform: scale(0.82); }   /* press → expand back */
+  63%,  100% { transform: scale(1); }
+}
+
+/* === Reduced motion: disable the loop ================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hproc__morph-frame,
+  .hproc__morph-cursor { animation: none; }
 }
 
 /* ============================== */
 /* Panel 7 — Layout               */
 /* ============================== */
+
+/* layout-row fills the full panel height so the SVG can cover it end-to-end */
 .hproc__layout-row {
+  position: relative;
+  width: 100%;
+  /* panel is 100vh, --below has 9vh padding-bottom; subtract both paddings */
+  height: calc(100vh - 18px);
+  overflow: visible;
+}
+
+/* SVG absolutely fills the row, then bleeds 160px off each horizontal edge
+   so the arc path exits the panel on both sides                            */
+.hproc__layout-arc {
+  position: absolute;
+  top: 0;
+  left: -160px;
+  width: calc(100% + 320px);
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hproc__layout-tile {
+  transition: opacity 0.2s ease;
+}
+
+/* Text sits at the bottom-left of the row, above the arc */
+.hproc__layout-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
+  max-width: 420px;
 }
-.hproc__layout-stack {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  grid-template-rows: 60px 60px;
-  gap: 10px;
-}
-.hproc__layout-stack > div {
-  background: #0A0A0A;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.2s;
-}
-.hproc__layout-stack > div:hover {
-  transform: scale(1.12);
-  background: #8A3DE6;
-}
-.hproc__layout-stack > div.tall {
-  grid-row: span 2;
-  height: 130px;
-}
+
 .hproc__layout-title {
-  font-size: 40px;
+  font-size: 88px;
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
 }
 
 /* ============================== */

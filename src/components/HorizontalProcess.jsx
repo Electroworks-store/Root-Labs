@@ -83,11 +83,12 @@ export default function HorizontalProcess() {
     const cpCallouts = allPanels[0]?.querySelectorAll('[data-cp="callout"]');
     const sticky     = allPanels[1]?.querySelector('.hproc__sticky');
     const wheel      = allPanels[2]?.querySelector('.hproc__wheel');
-    const fontScene  = allPanels[3]?.querySelector('.hproc__font-scene');
-    const fontInfo   = allPanels[3]?.querySelectorAll('.hproc__font-title, .hproc__font-info .body, .hproc__font-note-text');
-    const todoCard   = allPanels[1]?.querySelector('.hproc__ios-todo');
+    const fontScene     = allPanels[3]?.querySelector('.hproc__font-heading-wrap');
+    const fontInfo      = allPanels[3]?.querySelectorAll('.hproc__font-callout, .hproc__font-info .body');
+    const fontHighlight = allPanels[3]?.querySelectorAll('[data-fp="hl"]');
+    const todoCard      = allPanels[1]?.querySelector('.hproc__ios-todo');
     const browser    = allPanels[4]?.querySelector('.hproc__resp-browser');
-    const blocks     = allPanels[5]?.querySelectorAll('.hproc__layout-stack > div');
+    const blocks     = allPanels[5]?.querySelectorAll('.hproc__layout-tile');
     const uniqueTitle = allPanels[6]?.querySelector('.hproc__unique-title');
     const flowers    = allPanels[6]?.querySelectorAll('.hproc__sakura');
 
@@ -105,11 +106,12 @@ export default function HorizontalProcess() {
     if (cpCallouts?.length) gsap.set(cpCallouts, { y: 16, opacity: 0 });
     if (sticky)           gsap.set(sticky,       { y: -50, opacity: 0 });
     if (wheel)            gsap.set(wheel,        { rotation: -180, scale: 0, opacity: 0 });
-    if (fontScene)        gsap.set(fontScene,    { y: 40, opacity: 0 });
-    if (fontInfo?.length) gsap.set(fontInfo,     { y: 20, opacity: 0 });
-    if (todoCard)         gsap.set(todoCard,     { y: 44, opacity: 0, scale: 0.88 });
+    if (fontScene)           gsap.set(fontScene,      { y: 40, opacity: 0 });
+    if (fontHighlight?.length) gsap.set(fontHighlight, { strokeDasharray: 460, strokeDashoffset: 460 });
+    if (fontInfo?.length)     gsap.set(fontInfo,       { y: 20, opacity: 0 });
+    if (todoCard)             gsap.set(todoCard,       { y: 44, opacity: 0, scale: 0.88 });
     if (browser)          gsap.set(browser,      { y: 30, opacity: 0 });
-    if (blocks?.length)   gsap.set(blocks,       { scale: 0, opacity: 0 });
+    if (blocks?.length)   gsap.set(blocks,       { opacity: 0 });
     if (uniqueTitle)      gsap.set(uniqueTitle,  { y: 30, opacity: 0 });
     if (flowers?.length)  gsap.set(flowers,      { scale: 0, opacity: 0 });
 
@@ -157,6 +159,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (fontScene) { gsap.killTweensOf(fontScene); gsap.to(fontScene, { y: 0, opacity: 1, duration: 0.7, ease: 'back.out(1.4)', clearProps: 'transform,opacity' }); }
+        if (fontHighlight?.length) { gsap.killTweensOf(fontHighlight); gsap.to(fontHighlight, { strokeDashoffset: 0, duration: 0.82, stagger: 0.2, delay: 0.7, ease: 'power2.out' }); }
         if (fontInfo?.length) { gsap.killTweensOf(fontInfo); inText(fontInfo); }
       },
       () => {
@@ -164,7 +167,7 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); inText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { scale: 1, opacity: 1, duration: 0.45, stagger: 0.08, ease: 'back.out(1.7)', clearProps: 'transform,opacity' }); }
+        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { opacity: 1, duration: 0.45, stagger: 0.06, ease: 'power2.out' }); }
         if (p7Text?.length) { gsap.killTweensOf(p7Text); inText(p7Text); }
       },
       () => {
@@ -194,6 +197,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (fontScene) { gsap.killTweensOf(fontScene); gsap.to(fontScene, { y: 40, opacity: 0, duration: 0.3, ease: 'power2.in' }); }
+        if (fontHighlight?.length) { gsap.killTweensOf(fontHighlight); gsap.to(fontHighlight, { strokeDashoffset: 460, duration: 0.25, ease: 'power2.in' }); }
         if (fontInfo?.length) { gsap.killTweensOf(fontInfo); outText(fontInfo); }
       },
       () => {
@@ -201,7 +205,7 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); outText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { scale: 0, opacity: 0, duration: 0.2, stagger: 0.05, ease: 'power2.in' }); }
+        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { opacity: 0, duration: 0.2, stagger: 0.04, ease: 'power2.in' }); }
         if (p7Text?.length) { gsap.killTweensOf(p7Text); outText(p7Text); }
       },
       () => {
@@ -661,7 +665,7 @@ function PanelColor() {
             <span className="hproc__wheel-label">Color</span>
           </div>
           <p className="body" style={{ textAlign: 'center' }}>
-            Stop settling for generic templates. We design cool, highly.
+            Colors shape emotion, trust, and action. Cool blues calm and stabilize. Warm oranges energize and inspire. Strategic palettes guide users and reinforce your brand.
           </p>
         </div>
       </div>
@@ -669,68 +673,63 @@ function PanelColor() {
   );
 }
 
-const FONT_CARDS = [
-  { sample: 'Aa', label: 'Inter',    sub: 'Sans-serif', family: "'Inter', sans-serif",         weight: 900, style: 'normal' },
-  { sample: 'Aa', label: 'Playfair', sub: 'Serif',      family: "'Playfair Display', serif",    weight: 700, style: 'italic' },
-  { sample: 'Aa', label: 'Mono',     sub: 'Monospace',  family: "'Space Mono', monospace",      weight: 400, style: 'normal' },
-  { sample: 'Aa', label: 'Caveat',   sub: 'Script',     family: "'Caveat', cursive",            weight: 600, style: 'normal' },
-];
-
 function PanelFont() {
   return (
     <div className="hproc__panel hproc__panel--below">
       <div className="hproc__panel-inner">
         <div className="hproc__font-layout">
-
-          {/* 3-D rotating carousel */}
-          <div className="hproc__font-scene" aria-hidden="true">
-            <div className="hproc__font-carousel">
-              {FONT_CARDS.map((f, i) => (
-                <div
-                  key={i}
-                  className="hproc__font-card"
-                  style={{ '--card-index': i }}
-                >
-                  <span
-                    className="hproc__font-card__sample"
-                    style={{ fontFamily: f.family, fontWeight: f.weight, fontStyle: f.style }}
-                  >
-                    {f.sample}
-                  </span>
-                  <span className="hproc__font-card__label">{f.label}</span>
-                  <span className="hproc__font-card__sub">{f.sub}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: title + body + handwritten note */}
           <div className="hproc__font-info">
-            <div className="hproc__font-title">Typography</div>
-            <p className="body">
-              The right typeface carries emotion before a word is read.
-              We pair fonts that feel completely intentional.
-            </p>
-            <div className="hproc__font-note">
-              <span className="hproc__font-note-text">sets the mood instantly ✦</span>
+
+            {/* Heading with hand-painted highlighter swipe behind it */}
+            <div className="hproc__font-heading-wrap">
               <svg
-                className="hproc__font-note-squiggle"
-                viewBox="0 0 160 12"
-                fill="none"
+                className="hproc__font-highlight"
+                viewBox="0 0 420 110"
+                preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
+                {/* Two overlapping marker passes for an uneven, hand-drawn feel */}
                 <path
-                  d="M 2 6 C 20 2, 40 10, 60 6 C 80 2, 100 10, 120 6 C 140 2, 155 8, 158 6"
-                  stroke="#8A3DE6"
-                  strokeWidth="1.8"
+                  data-fp="hl"
+                  d="M 14 58 C 80 50, 180 66, 290 54 C 350 47, 390 60, 408 56"
+                  stroke="#FFD93D"
+                  strokeWidth="62"
                   strokeLinecap="round"
                   fill="none"
+                  opacity="0.78"
+                />
+                <path
+                  data-fp="hl"
+                  d="M 22 64 C 120 70, 220 50, 320 62 C 360 67, 388 56, 402 60"
+                  stroke="#FFD93D"
+                  strokeWidth="54"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.55"
                 />
               </svg>
-            </div>
-          </div>
+              <h3 className="hproc__font-title">Typography</h3>
 
+              {/* Hand-drawn callout — above right side of heading, arrow curves left to connect */}
+              <CpCallout
+                className="hproc__font-callout"
+                text="sets the whole tone"
+                arrow="curveDownLeft"
+                pathD="M 50 4 C 38 28, 18 55, 2 73"
+                headPos={{ x: 2, y: 73, rot: 25 }}
+                dotPos={{ cx: 28, cy: 40 }}
+              />
+            </div>
+
+            <p className="body">
+              Type carries meaning before a single word is read. The right
+              pairing builds trust, sets rhythm, and gives your brand its
+              unmistakable voice. The wrong one quietly undermines
+              everything around it.
+            </p>
+
+          </div>
         </div>
       </div>
     </div>
@@ -742,40 +741,63 @@ function PanelResponsiveness() {
     <div className="hproc__panel hproc__panel--above">
       <div className="hproc__panel-inner">
         <div className="hproc__resp-layout">
-          <div className="hproc__resp-title">Responsiveness</div>
-          <p className="body">
-            Stop settling for generic templates. We design cool, highly.
-          </p>
-          <div className="wyg-brand-visual hproc__resp-browser">
-            <div className="wyg-brand-browser">
-              <div className="wyg-brand-browser-bar">
-                <span className="wdot wdot-r" />
-                <span className="wdot wdot-y" />
-                <span className="wdot wdot-g" />
-                <div className="wyg-brand-url-bar">
-                  <span>yourbrand.com</span>
-                </div>
-              </div>
-              <div className="wyg-brand-screen">
-                <div className="wyg-brand-page">
-                  <div className="wyg-bp-nav">
-                    <div className="wyg-bp-logo" />
-                    <div className="wyg-bp-links"><span /><span /><span /></div>
+
+          {/* Left: morphing device frame */}
+          <div className="hproc__resp-browser">
+            <div className="hproc__morph-frame">
+
+              {/* Live page content (responds via @container queries) */}
+              <div className="hproc__morph-page">
+                <div className="hproc__morph-nav">
+                  <div className="hproc__morph-logo" />
+                  <div className="hproc__morph-links">
+                    <span /><span /><span />
                   </div>
-                  <div className="wyg-bp-hero">
-                    <div className="wyg-bp-tagline" />
-                    <div className="wyg-bp-subtitle" />
-                    <div className="wyg-bp-cta" />
-                  </div>
-                  <div className="wyg-bp-features">
-                    <div className="wyg-bp-feat" />
-                    <div className="wyg-bp-feat" />
-                    <div className="wyg-bp-feat" />
+                  <div className="hproc__morph-burger" aria-hidden="true">
+                    <span /><span /><span />
                   </div>
                 </div>
+
+                <div className="hproc__morph-hero">
+                  <div className="hproc__morph-heading">Build Beautiful<br />Websites</div>
+                  <div className="hproc__morph-subline" />
+                  <div className="hproc__morph-cta">Get Started</div>
+                </div>
+
+                <div className="hproc__morph-grid">
+                  <div className="hproc__morph-card" />
+                  <div className="hproc__morph-card" />
+                  <div className="hproc__morph-card" />
+                </div>
               </div>
+
+              {/* Fake cursor — tip sits on the bottom-right corner */}
+              <div className="hproc__morph-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <path
+                    d="M5.5 3.2 L5.5 17.5 L9.3 13.9 L12.1 19.4 L13.9 18.6 L11.1 13.1 L16.6 13.1 Z"
+                    fill="#ffffff"
+                    stroke="#1a1a1a"
+                    strokeWidth="0.85"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+
             </div>
           </div>
+
+          {/* Right: title + body text */}
+          <div className="hproc__resp-text">
+            <div className="hproc__resp-title">Responsiveness</div>
+            <p className="body">
+              One site, every screen. Layouts reflow, type scales, and content
+              re-stacks so your brand feels purpose-built whether it lands on a
+              27 inch monitor or a phone in someone&rsquo;s pocket.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -783,21 +805,95 @@ function PanelResponsiveness() {
 }
 
 function PanelLayout() {
+  const pathRef   = useRef(null);
+  const tilesRef  = useRef([]);
+  const TILE_COUNT = 13;
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+
+    let raf = 0;
+    const start = performance.now();
+
+    const tick = (now) => {
+      const t = (now - start) / 1000;
+
+      // Single smooth arc — two control points wobble on independent sine phases
+      // so the curve breathes organically without repeating
+      const cp1x =  80 + Math.cos(t * 0.31 + 1.0) * 40;
+      const cp1y = 100 + Math.sin(t * 0.47)        * 60;
+      const cp2x = 600 + Math.cos(t * 0.27 + 2.2)  * 40;
+      const cp2y = 100 + Math.sin(t * 0.39 + 1.6)  * 60;
+
+      // Path goes well off-screen left (-180) and off-screen right (860)
+      const d = `M -180 870 C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, 860 855`;
+      path.setAttribute('d', d);
+
+      const total = path.getTotalLength();
+      // KEY FIX: span = total / count → tiles always perfectly fill the arc,
+      // no gaps ever, regardless of how the path morphs.
+      const span = total / TILE_COUNT;
+      const flow  = (t * 26) % total;
+
+      tilesRef.current.forEach((el, i) => {
+        if (!el) return;
+        const u  = (i * span + flow) % total;
+        const p  = path.getPointAtLength(u);
+        const p2 = path.getPointAtLength(Math.min(u + 2, total - 0.1));
+        const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
+        const sway  = Math.sin(t * 1.2 + i * 0.88) * 2.5;
+        el.setAttribute(
+          'transform',
+          `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${(angle + sway).toFixed(2)})`
+        );
+      });
+
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <div className="hproc__panel hproc__panel--below">
       <div className="hproc__panel-inner">
         <div className="hproc__layout-row">
-          <div className="hproc__layout-stack">
-            <div />
-            <div />
-            <div className="tall" />
-            <div />
-            <div />
+
+          {/* Full-panel SVG — arc extends off both side edges */}
+          <svg
+            className="hproc__layout-arc"
+            viewBox="0 0 680 840"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            {/* Guide path — coords outside viewBox are fine, overflow:visible */}
+            <path
+              ref={pathRef}
+              d="M -180 870 C 80 100, 600 100, 860 855"
+              fill="none"
+              stroke="none"
+            />
+            {Array.from({ length: TILE_COUNT }).map((_, i) => (
+              <g
+                key={i}
+                className="hproc__layout-tile"
+                ref={(el) => (tilesRef.current[i] = el)}
+              >
+                {/* Placeholder rect — swap for <image> when real assets ready */}
+                <rect x={-36} y={-22} width={72} height={44} rx={6} fill="#0A0A0A" />
+              </g>
+            ))}
+          </svg>
+
+          <div className="hproc__layout-text">
+            <div className="hproc__layout-title">Layout</div>
+            <p className="body">
+              Stop settling for generic templates. We design cool, highly
+              custom layouts that frame your content with intent.
+            </p>
           </div>
-          <div className="hproc__layout-title">Layout</div>
-          <p className="body">
-            Stop settling for generic templates. We design cool, highly.
-          </p>
+
         </div>
       </div>
     </div>
