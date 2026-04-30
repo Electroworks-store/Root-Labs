@@ -69,7 +69,6 @@
   z-index: 2;
 }
 
-/* Each panel is compact — multiple visible at once */
 .hproc__panel {
   position: relative;
   flex: 0 0 auto;
@@ -967,53 +966,144 @@
 }
 
 /* ============================== */
-/* Panel 7 — Layout               */
+/* Panel 7 — Layout (assembling rotating-cards mock)               */
 /* ============================== */
-
-/* layout-row fills the full panel height so the SVG can cover it end-to-end */
 .hproc__layout-row {
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
   width: 100%;
-  /* panel is 100vh, --below has 9vh padding-bottom; subtract both paddings */
-  height: calc(100vh - 18px);
-  overflow: visible;
+  max-width: 880px;
 }
 
-/* SVG absolutely fills the row, then bleeds 160px off each horizontal edge
-   so the arc path exits the panel on both sides                            */
-.hproc__layout-arc {
+/* The white rounded "card" that gets assembled */
+.hproc__la-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 360px;
+  min-height: 230px;
+  padding: 24px 22px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.18),
+              0 4px 12px -4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  overflow: visible;
+}
+.hproc__la-card-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 175px;
+  flex-shrink: 0;
+}
+
+.hproc__la-cardtitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: #0A0A0A;
+}
+.hproc__la-cardbody {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #0A0A0A;
+  opacity: 0.72;
+}
+.hproc__la-cta {
+  align-self: flex-start;
+  margin-top: auto;
+  margin-bottom: 10px;
+  padding: 7px 14px;
+  background: #0A0A0A;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Right side of the card: dashed orbit + 2 mountain images */
+.hproc__la-orbit {
+  position: relative;
+  flex: 1;
+  min-width: 130px;
+  align-self: stretch;
+}
+.hproc__la-circle {
   position: absolute;
-  top: 0;
-  left: -160px;
-  width: calc(100% + 320px);
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+  border: 1.5px dashed rgba(10, 10, 10, 0.32);
+  border-radius: 50%;
+}
+.hproc__la-img {
+  position: absolute;
+  width: 78px;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.22);
+  background: #F5F2EC;
+}
+.hproc__la-img svg {
+  display: block;
+  width: 100%;
   height: 100%;
-  overflow: visible;
-  pointer-events: none;
+}
+.hproc__la-img--1 {
+  top: 8%;
+  right: -6%;
+}
+.hproc__la-img--2 {
+  bottom: 8%;
+  left: -6%;
 }
 
-.hproc__layout-tile {
-  transition: opacity 0.2s ease;
-}
-
-/* Text sits at the bottom-left of the row, above the arc */
+/* Big "Layout" heading + body to the right */
 .hproc__layout-text {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
-  max-width: 420px;
+  max-width: 360px;
 }
-
 .hproc__layout-title {
-  font-size: 88px;
+  font-size: 84px;
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.9;
 }
+
+/* Fake drag cursor — GSAP sets x/y each frame */
+.hproc__la-drag-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
+  transform-origin: 0 0;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.28));
+}
+.hproc__la-drag-cursor svg { display: block; }
 
 /* ============================== */
 /* Panel 8 — Make it unique       */
@@ -1026,6 +1116,7 @@
   position: relative;
   padding: 20px 0;
   max-width: 500px;
+  margin-top: -60px;
 }
 .hproc__unique-title {
   font-size: 72px;

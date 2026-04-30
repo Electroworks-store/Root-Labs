@@ -31,9 +31,13 @@ export default function HorizontalProcess() {
     if (mq.matches) return;
 
     const getDistance = () => track.scrollWidth - window.innerWidth;
+    // Extra scroll distance after the horizontal pan completes — the stage
+    // stays pinned (no x movement) so the last panel ("make it unique")
+    // lingers on screen before the section unpins.
+    const TAIL_DWELL = 700;
 
     const setHeight = () => {
-      outer.style.height = `${getDistance() + window.innerHeight}px`;
+      outer.style.height = `${getDistance() + TAIL_DWELL + window.innerHeight}px`;
     };
     setHeight();
 
@@ -46,10 +50,18 @@ export default function HorizontalProcess() {
         start: 'top top',
         end: () => `+=${getDistance()}`,
         scrub: 1,
-        pin: stage,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
       },
+    });
+
+    // ── Pin the stage for the full pan + tail dwell ────────────────
+    const pinST = ScrollTrigger.create({
+      trigger: outer,
+      start: 'top top',
+      end: () => `+=${getDistance() + TAIL_DWELL}`,
+      pin: stage,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
     });
 
     // ── Path draw-on-scroll ─────────────────────────────────────────
@@ -88,7 +100,14 @@ export default function HorizontalProcess() {
     const fontHighlight = allPanels[3]?.querySelectorAll('[data-fp="hl"]');
     const todoCard      = allPanels[1]?.querySelector('.hproc__ios-todo');
     const browser    = allPanels[4]?.querySelector('.hproc__resp-browser');
-    const blocks     = allPanels[5]?.querySelectorAll('.hproc__layout-tile');
+    const layoutCard      = allPanels[5]?.querySelector('.hproc__la-card');
+    const layoutCardTitle = allPanels[5]?.querySelector('.hproc__la-cardtitle');
+    const layoutCardBody  = allPanels[5]?.querySelector('.hproc__la-cardbody');
+    const layoutCta       = allPanels[5]?.querySelector('.hproc__la-cta');
+    const layoutCircle    = allPanels[5]?.querySelector('.hproc__la-circle');
+    const layoutImg1      = allPanels[5]?.querySelector('.hproc__la-img--1');
+    const layoutImg2      = allPanels[5]?.querySelector('.hproc__la-img--2');
+    const layoutCursor    = allPanels[5]?.querySelector('.hproc__la-drag-cursor');
     const uniqueTitle = allPanels[6]?.querySelector('.hproc__unique-title');
     const flowers    = allPanels[6]?.querySelectorAll('.hproc__sakura');
 
@@ -111,7 +130,14 @@ export default function HorizontalProcess() {
     if (fontInfo?.length)     gsap.set(fontInfo,       { y: 20, opacity: 0 });
     if (todoCard)             gsap.set(todoCard,       { y: 44, opacity: 0, scale: 0.88 });
     if (browser)          gsap.set(browser,      { y: 30, opacity: 0 });
-    if (blocks?.length)   gsap.set(blocks,       { opacity: 0 });
+    if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+    if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90, rotation: -8 });
+    if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140, rotation: 6 });
+    if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160, rotation: -14, scale: 0.85 });
+    if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+    if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+    if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+    if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
     if (uniqueTitle)      gsap.set(uniqueTitle,  { y: 30, opacity: 0 });
     if (flowers?.length)  gsap.set(flowers,      { scale: 0, opacity: 0 });
 
@@ -123,6 +149,7 @@ export default function HorizontalProcess() {
     if (p7Text?.length)   gsap.set(p7Text,       { y: 20, opacity: 0 });
     if (uniqueBody)       gsap.set(uniqueBody,   { y: 20, opacity: 0 });
 
+    let laBuildTl = null;
     const inText  = (els) => gsap.to(els, { y: 0,  opacity: 1, duration: 0.5,  stagger: 0.07, delay: 0.12, ease: 'power3.out',  clearProps: 'transform,opacity' });
     const outText = (els) => gsap.to(els, { y: 20, opacity: 0, duration: 0.25, stagger: 0.04,             ease: 'power2.in' });
 
@@ -167,8 +194,78 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); inText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { opacity: 1, duration: 0.45, stagger: 0.06, ease: 'power2.out' }); }
-        if (p7Text?.length) { gsap.killTweensOf(p7Text); inText(p7Text); }
+        // Kill any previous build run
+        if (laBuildTl) { laBuildTl.kill(); laBuildTl = null; }
+
+        // Restore panel opacity before running the build sequence
+        const panelInner5 = allPanels[5]?.querySelector('.hproc__panel-inner');
+        if (panelInner5) gsap.set(panelInner5, { opacity: 1 });
+
+        // Snap card container to final position so child getBoundingClientRect is accurate
+        if (layoutCard) { gsap.killTweensOf(layoutCard); gsap.set(layoutCard, { y: 0, scale: 1 }); }
+        if (layoutCursor) gsap.set(layoutCursor, { opacity: 0, x: 0, y: 0, scale: 1 });
+
+        const ctr = allPanels[5]?.querySelector('.hproc__layout-row');
+        if (!ctr || !layoutCursor) {
+          // Fallback: no cursor, just fly-in
+          if (layoutCard) gsap.to(layoutCard, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+          [layoutImg1, layoutCircle, layoutImg2, layoutCardTitle, layoutCardBody, layoutCta]
+            .forEach((el, i) => el && gsap.to(el, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: 0.8, delay: 0.3 + i * 0.12, ease: 'power3.out', clearProps: 'transform,opacity' }));
+          if (p7Text?.length) inText(p7Text);
+          return;
+        }
+
+        // Measure all scattered positions relative to container (measurements happen
+        // synchronously here, before any tweens fire, so all elements are still scattered)
+        const cRect = ctr.getBoundingClientRect();
+        const elCenter = (el) => {
+          const r = el.getBoundingClientRect();
+          return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+        };
+
+        // [element, scatterX, scatterY] — must match the gsap.set values in initial state
+        const items = [
+          [layoutImg1,      -260, -160],
+          [layoutCircle,     240, -200],
+          [layoutImg2,       280,  180],
+          [layoutCardTitle, -180,  -90],
+          [layoutCardBody,  -220,  140],
+          [layoutCta,        110,  160],
+        ].filter(([el]) => el);
+
+        const moves = items.map(([el, sx, sy]) => {
+          const from = elCenter(el);
+          return { el, from, to: { x: from.x - sx, y: from.y - sy } };
+        });
+
+        const DUR    = 0.42;  // drag duration per element
+        const TRAVEL = 0.14;  // cursor travel time between elements
+
+        laBuildTl = gsap.timeline();
+
+        // Card canvas fades in first while cursor is off-screen
+        laBuildTl.to(layoutCard, { opacity: 1, duration: 0.25, delay: 0.08, ease: 'power2.out' });
+
+        // Title + body slide in right away, before the drag sequence
+        if (p7Text?.length) {
+          laBuildTl.to(p7Text, { y: 0, opacity: 1, duration: 0.55, stagger: 0.1, ease: 'power3.out', clearProps: 'transform,opacity' }, '<0.05');
+        }
+
+        moves.forEach(({ el, from, to }) => {
+          laBuildTl
+            // Cursor moves to scattered element position
+            .to(layoutCursor, { x: from.x, y: from.y, opacity: 1, duration: TRAVEL, ease: 'power2.inOut' })
+            // Press down
+            .to(layoutCursor, { scale: 0.76, duration: 0.07, ease: 'power2.in' })
+            // Drag cursor and element together to natural position
+            .to(layoutCursor, { x: to.x, y: to.y, duration: DUR, ease: 'power2.inOut' })
+            .to(el, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: DUR, ease: 'power2.inOut', clearProps: 'transform,opacity' }, '<')
+            // Release
+            .to(layoutCursor, { scale: 1, duration: 0.08, ease: 'back.out(2.5)' });
+        });
+
+        // Cursor fades out
+        laBuildTl.to(layoutCursor, { opacity: 0, duration: 0.22, ease: 'power2.out' });
       },
       () => {
         if (uniqueTitle) { gsap.killTweensOf(uniqueTitle); gsap.to(uniqueTitle, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity' }); }
@@ -205,7 +302,36 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); outText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { opacity: 0, duration: 0.2, stagger: 0.04, ease: 'power2.in' }); }
+        // Fade out the whole panel, then instantly scatter elements under the hood
+        const panelInner5 = allPanels[5]?.querySelector('.hproc__panel-inner');
+        if (laBuildTl) { laBuildTl.kill(); laBuildTl = null; }
+        if (panelInner5) {
+          gsap.to(panelInner5, {
+            opacity: 0,
+            duration: 0.45,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              // Scatter elements while invisible so replaying looks correct
+              if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+              if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+              if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+              if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+              if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+              if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90,  rotation: -8 });
+              if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140,  rotation: 6 });
+              if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160,  rotation: -14, scale: 0.85 });
+            },
+          });
+        } else {
+          if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+          if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+          if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+          if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+          if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+          if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90,  rotation: -8 });
+          if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140,  rotation: 6 });
+          if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160,  rotation: -14, scale: 0.85 });
+        }
         if (p7Text?.length) { gsap.killTweensOf(p7Text); outText(p7Text); }
       },
       () => {
@@ -283,6 +409,7 @@ export default function HorizontalProcess() {
       drawTween.kill();
       progressST.kill();
       panel0ST.kill();
+      pinST.kill();
       window.removeEventListener('resize', onResize);
     };
   }, []);
@@ -804,93 +931,80 @@ function PanelResponsiveness() {
   );
 }
 
+/* On-brand abstract placeholder — cream backdrop with bold geometric shapes
+   in the site's purple / yellow / black palette. Compositions use balanced
+   asymmetry: one anchor shape with smaller counter-weights for visual rhythm. */
+function BrandCard({ variant = 'a' }) {
+  if (variant === 'b') {
+    // Anchor: large yellow disc on the right.
+    // Counter-weights: stacked purple bars on the left + small black square.
+    return (
+      <svg viewBox="0 0 130 85" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="130" height="85" fill="#F5F2EC" />
+        <circle cx="92" cy="42.5" r="26" fill="#FFD93D" />
+        <rect x="14" y="22" width="34" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="34" width="22" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="46" width="28" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="60" width="10" height="10" rx="2" fill="#0A0A0A" />
+      </svg>
+    );
+  }
+  // Anchor: large purple half-circle on the left.
+  // Counter-weights: yellow dot upper-right + black bar across the bottom.
+  return (
+    <svg viewBox="0 0 130 85" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="130" height="85" fill="#F5F2EC" />
+      <path d="M 0 14 A 34 34 0 0 1 0 82 Z" fill="#7C6AF7" />
+      <circle cx="96" cy="26" r="11" fill="#FFD93D" />
+      <rect x="48" y="60" width="68" height="5" rx="2.5" fill="#0A0A0A" />
+    </svg>
+  );
+}
+
 function PanelLayout() {
-  const pathRef   = useRef(null);
-  const tilesRef  = useRef([]);
-  const TILE_COUNT = 13;
-
-  useEffect(() => {
-    const path = pathRef.current;
-    if (!path) return;
-
-    let raf = 0;
-    const start = performance.now();
-
-    const tick = (now) => {
-      const t = (now - start) / 1000;
-
-      // Single smooth arc — two control points wobble on independent sine phases
-      // so the curve breathes organically without repeating
-      const cp1x =  80 + Math.cos(t * 0.31 + 1.0) * 40;
-      const cp1y = 100 + Math.sin(t * 0.47)        * 60;
-      const cp2x = 600 + Math.cos(t * 0.27 + 2.2)  * 40;
-      const cp2y = 100 + Math.sin(t * 0.39 + 1.6)  * 60;
-
-      // Path goes well off-screen left (-180) and off-screen right (860)
-      const d = `M -180 870 C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, 860 855`;
-      path.setAttribute('d', d);
-
-      const total = path.getTotalLength();
-      // KEY FIX: span = total / count → tiles always perfectly fill the arc,
-      // no gaps ever, regardless of how the path morphs.
-      const span = total / TILE_COUNT;
-      const flow  = (t * 26) % total;
-
-      tilesRef.current.forEach((el, i) => {
-        if (!el) return;
-        const u  = (i * span + flow) % total;
-        const p  = path.getPointAtLength(u);
-        const p2 = path.getPointAtLength(Math.min(u + 2, total - 0.1));
-        const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
-        const sway  = Math.sin(t * 1.2 + i * 0.88) * 2.5;
-        el.setAttribute(
-          'transform',
-          `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${(angle + sway).toFixed(2)})`
-        );
-      });
-
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
   return (
     <div className="hproc__panel hproc__panel--below">
       <div className="hproc__panel-inner">
         <div className="hproc__layout-row">
 
-          {/* Full-panel SVG — arc extends off both side edges */}
-          <svg
-            className="hproc__layout-arc"
-            viewBox="0 0 680 840"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {/* Guide path — coords outside viewBox are fine, overflow:visible */}
-            <path
-              ref={pathRef}
-              d="M -180 870 C 80 100, 600 100, 860 855"
-              fill="none"
-              stroke="none"
-            />
-            {Array.from({ length: TILE_COUNT }).map((_, i) => (
-              <g
-                key={i}
-                className="hproc__layout-tile"
-                ref={(el) => (tilesRef.current[i] = el)}
-              >
-                {/* Placeholder rect — swap for <image> when real assets ready */}
-                <rect x={-36} y={-22} width={72} height={44} rx={6} fill="#0A0A0A" />
-              </g>
-            ))}
-          </svg>
+          {/* Assembling card on the left */}
+          <div className="hproc__la-card">
+            <div className="hproc__la-card-left">
+              <h3 className="hproc__la-cardtitle">Image<br />Carousel</h3>
+              <p className="hproc__la-cardbody">
+                Showcase your work in style. Images orbit smoothly, keeping visitors engaged.
+              </p>
+              <button type="button" className="hproc__la-cta">See Examples</button>
+            </div>
 
+            <div className="hproc__la-orbit">
+              <div className="hproc__la-circle" aria-hidden="true" />
+              <div className="hproc__la-img hproc__la-img--1"><BrandCard variant="a" /></div>
+              <div className="hproc__la-img hproc__la-img--2"><BrandCard variant="b" /></div>
+            </div>
+          </div>
+
+          {/* Fake drag cursor — GSAP moves this around the panel */}
+          <div className="hproc__la-drag-cursor" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26">
+              <path
+                d="M5.5 3 L5.5 18 L9.2 14.2 L12 20 L14 19 L11.2 13.2 L16.8 13.2 Z"
+                fill="#ffffff"
+                stroke="#1a1a1a"
+                strokeWidth="0.85"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+
+          {/* Big title + body to the right of the card */}
           <div className="hproc__layout-text">
             <div className="hproc__layout-title">Layout</div>
             <p className="body">
-              Stop settling for generic templates. We design cool, highly
-              custom layouts that frame your content with intent.
+              Every page has a story. We craft bespoke layouts that guide
+              the eye, create breathing room, and make your content feel
+              like it belongs exactly where it is.
             </p>
           </div>
 
@@ -973,7 +1087,9 @@ function PanelUnique() {
           </span>
           <div className="hproc__unique-title">Make it unique</div>
           <p className="hproc__unique-body">
-            Stop settling for generic templates.<br />We design cool, highly personalised websites.
+            Your brand is one of a kind. Your website should be too.
+            We layer in custom illustrations, motion, and details that
+            make visitors stop, look twice, and remember you.
           </p>
         </div>
       </div>
