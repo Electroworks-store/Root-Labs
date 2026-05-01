@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react';
 import React from 'react';
 import { gsap, ScrollTrigger } from '../gsap-config';
-import sakura1 from '../../img/sakura1.webp';
-import sakura2 from '../../img/sakura2.webp';
-import beaker from '../../img/beaker.webp';
+import beakerSketch1 from '../../img/beakersketch1.webp';
+import beakerSketch2 from '../../img/beakersketch2.webp';
+import beakerSketch3 from '../../img/beakersketch3.webp';
+import beakerFrame1 from '../../img/beaker1.webp';
+import beakerFrame2 from '../../img/beaker2.webp';
+import beakerFrame3 from '../../img/beaker3.webp';
+import beakerFrame4 from '../../img/beaker4.webp';
 import './HorizontalProcess.css';
 
 /**
@@ -109,7 +113,7 @@ export default function HorizontalProcess() {
     const layoutImg2      = allPanels[5]?.querySelector('.hproc__la-img--2');
     const layoutCursor    = allPanels[5]?.querySelector('.hproc__la-drag-cursor');
     const uniqueTitle = allPanels[6]?.querySelector('.hproc__unique-title');
-    const flowers    = allPanels[6]?.querySelectorAll('.hproc__sakura');
+    const uniqueSequence = allPanels[6]?.querySelectorAll('.hproc__unique-step, .hproc__unique-arrow');
 
     // --- collect text elements ---
     const p1Title    = allPanels[0]?.querySelector('.hproc__cp-title');
@@ -138,8 +142,8 @@ export default function HorizontalProcess() {
     if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
     if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
     if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
-    if (uniqueTitle)      gsap.set(uniqueTitle,  { y: 30, opacity: 0 });
-    if (flowers?.length)  gsap.set(flowers,      { scale: 0, opacity: 0 });
+    if (uniqueTitle)      gsap.set(uniqueTitle,    { y: 30, opacity: 0 });
+    if (uniqueSequence?.length) gsap.set(uniqueSequence, { y: 22, opacity: 0 });
 
     // --- initial hidden state (text) ---
     if (p1Title)          gsap.set(p1Title,      { y: 20, opacity: 0 });
@@ -269,7 +273,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (uniqueTitle) { gsap.killTweensOf(uniqueTitle); gsap.to(uniqueTitle, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity' }); }
-        if (flowers?.length) { gsap.killTweensOf(flowers); gsap.to(flowers, { scale: 1, opacity: 1, duration: 0.5, stagger: 0.12, delay: 0.2, ease: 'back.out(1.7)', clearProps: 'transform,opacity' }); }
+        if (uniqueSequence?.length) { gsap.killTweensOf(uniqueSequence); gsap.to(uniqueSequence, { y: 0, opacity: 1, duration: 0.55, stagger: 0.09, delay: 0.18, ease: 'power3.out', clearProps: 'transform,opacity' }); }
         if (uniqueBody) { gsap.killTweensOf(uniqueBody); inText(uniqueBody); }
       },
     ];
@@ -336,7 +340,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (uniqueTitle) { gsap.killTweensOf(uniqueTitle); gsap.to(uniqueTitle, { y: 30, opacity: 0, duration: 0.3, ease: 'power2.in' }); }
-        if (flowers?.length) { gsap.killTweensOf(flowers); gsap.to(flowers, { scale: 0, opacity: 0, duration: 0.25, stagger: 0.06, ease: 'power2.in' }); }
+        if (uniqueSequence?.length) { gsap.killTweensOf(uniqueSequence); gsap.to(uniqueSequence, { y: 22, opacity: 0, duration: 0.25, stagger: 0.04, ease: 'power2.in' }); }
         if (uniqueBody) { gsap.killTweensOf(uniqueBody); outText(uniqueBody); }
       },
     ];
@@ -441,7 +445,7 @@ export default function HorizontalProcess() {
 function Waves({ pathRef }) {
   const panels = 7;
   const width = panels * 100;
-  const midY = 50;
+  const midY = 60;
   const amp = 26;
   // How far horizontally the control points sit from each segment boundary.
   // Placing them at ~37% of the segment width produces a natural sine shape.
@@ -1014,57 +1018,82 @@ function PanelLayout() {
   );
 }
 
-/* Cherry blossom SVG — 5 rounded petals + stamen dots */
-function CherryBlossom({ size = 100 }) {
+function UniqueFlowArrow() {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
+      className="hproc__unique-arrow"
+      viewBox="0 0 150 42"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* 5 petals rotated around centre */}
-      {[0, 72, 144, 216, 288].map((deg) => (
-        <ellipse
-          key={deg}
-          cx="50"
-          cy="26"
-          rx="13"
-          ry="20"
-          fill="#F9A8C4"
-          transform={`rotate(${deg} 50 50)`}
-        />
-      ))}
-      {/* Lighter inner petal highlight */}
-      {[0, 72, 144, 216, 288].map((deg) => (
-        <ellipse
-          key={`h${deg}`}
-          cx="50"
-          cy="30"
-          rx="7"
-          ry="11"
-          fill="#FDD0DF"
-          transform={`rotate(${deg} 50 50)`}
-        />
-      ))}
-      {/* Centre circle */}
-      <circle cx="50" cy="50" r="9" fill="#F472A0" />
-      {/* Stamen dots */}
-      {[0, 60, 120, 180, 240, 300].map((deg) => {
-        const rad = (deg * Math.PI) / 180;
-        return (
-          <circle
-            key={`s${deg}`}
-            cx={50 + 6 * Math.cos(rad)}
-            cy={50 + 6 * Math.sin(rad)}
-            r="1.8"
-            fill="#C2185B"
-          />
-        );
-      })}
+      <path
+        d="M 4 24 C 33 19, 66 20, 96 21 C 115 22, 129 20, 142 18"
+        stroke="#0A0A0A"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M 124 9 C 132 12, 139 15, 145 18 C 137 22, 130 26, 123 31"
+        stroke="#0A0A0A"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
+  );
+}
+
+function AnimatedUniqueBeaker() {
+  const beakerFrames = [beakerFrame1, beakerFrame2, beakerFrame3, beakerFrame4];
+  const [frame, setFrame] = React.useState(0);
+  const loadedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    let active = true;
+    const images = beakerFrames.map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+
+    Promise.all(images.map((img) => (
+      img.decode
+        ? img.decode().catch(() => {})
+        : new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          })
+    ))).then(() => {
+      if (active) loadedRef.current = true;
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (loadedRef.current) {
+        setFrame((prev) => (prev + 1) % beakerFrames.length);
+      }
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="hproc__unique-animated-beaker" aria-hidden="true">
+      {beakerFrames.map((src, index) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`hproc__unique-animated-frame${frame === index ? ' is-active' : ''}`}
+        />
+      ))}
+    </span>
   );
 }
 
@@ -1073,19 +1102,24 @@ function PanelUnique() {
     <div className="hproc__panel hproc__panel--center">
       <div className="hproc__panel-inner">
         <div className="hproc__unique-layout">
-          {/* Large flower — top right */}
-          <span className="hproc__sakura hproc__sakura--tr" aria-hidden="true">
-            <CherryBlossom size={130} />
-          </span>
-          {/* Medium flower — bottom left */}
-          <span className="hproc__sakura hproc__sakura--bl" aria-hidden="true">
-            <CherryBlossom size={80} />
-          </span>
-          {/* Small flower — mid right accent */}
-          <span className="hproc__sakura hproc__sakura--mr" aria-hidden="true">
-            <CherryBlossom size={60} />
-          </span>
           <div className="hproc__unique-title">Make it unique</div>
+          <div className="hproc__unique-flow" aria-hidden="true">
+            <span className="hproc__unique-step hproc__unique-step--sketch hproc__unique-step--sketch1">
+              <img src={beakerSketch1} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch1" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--sketch hproc__unique-step--sketch2">
+              <img src={beakerSketch2} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch2" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--digital hproc__unique-step--sketch3">
+              <img src={beakerSketch3} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch3" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--digital hproc__unique-step--animated">
+              <AnimatedUniqueBeaker />
+            </span>
+          </div>
           <p className="hproc__unique-body">
             Your brand is one of a kind. Your website should be too.
             We layer in custom illustrations, motion, and details that

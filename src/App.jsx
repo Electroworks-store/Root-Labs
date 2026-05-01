@@ -24,7 +24,6 @@ import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
 import logoClean from '../img/Rootlabs-logo-xbg.png';
 import logoPixelated from '../img/logo-pixelated-black.png';
-import logoGif from '../img/logo-pixelated-black.gif';
 import rlLogoSvg from '../img/RL-logo.svg';
 
 // Navigation helper for client-side routing
