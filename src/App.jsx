@@ -13,6 +13,9 @@ import beaker2 from '../img/beaker2.webp';
 import beaker3 from '../img/beaker3.webp';
 import beaker4 from '../img/beaker4.webp';
 import GardenerWebsite from './showcase/Gardener';
+import Hero2Section from './components/Hero2Section';
+import HeroWipe from './components/HeroWipe';
+import WhyUs from './components/WhyUs';
 import TechStore from './showcase/TechStore';
 import Restaurant from './showcase/Restaurant';
 import Masonry from './components/Masonry';
@@ -4768,10 +4771,10 @@ function navigate(path) {
       return (
         <div className="min-h-screen">
           <FloatingNav />
-          <HeroLab11Page />
+          <HeroWipe />
+          <WhyUs />
           <Stats />
           {/* <SpotlightStack /> */}
-          <WhyUsPricing />
           <Testimonials />
           {/* <BentoPortfolio /> */}
           <LabsSection />
