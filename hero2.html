@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Roots — Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<!-- Larken via Bunny Fonts -->
+<link
+  href="https://fonts.bunny.net/css?family=larken:400,500"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --ink: #141212;
+    --muted: #6b6358;
+    --purple: #8a3de6;
+    --purple-soft: #b069ff;
+    --purple-deep: #6a26c0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Soft paper-grain wash */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(255, 252, 245, 0.6), transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(240, 230, 215, 0.4), transparent 60%);
+    z-index: 0;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 4.5rem);
+    z-index: 1;
+  }
+
+  /* Tree branch — lowered so it sits partially over the ROOTS text */
+  .tree {
+    position: absolute;
+    top: 2%;
+    right: -4%;
+    width: clamp(680px, 88vw, 1400px);
+    max-width: 115%;
+    height: auto;
+    pointer-events: none;
+    z-index: 4; /* above ROOTS so branch covers T and S */
+    transform-origin: top right;
+    opacity: 0;
+    animation: treeFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  }
+
+  .tree img {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  @keyframes treeFadeIn {
+    from { opacity: 0; transform: translate(20px, -10px) scale(1.02); }
+    to   { opacity: 1; transform: translate(0, 0) scale(1); }
+  }
+
+  /* Typography wrapper */
+  .hero-content {
+    position: relative;
+    z-index: 2; /* below tree so branch overlaps ROOTS */
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-family: "Larken", "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.4rem, 5.6vw, 4.6rem);
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: clamp(0.8rem, 2.4vw, 1.8rem);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .roots {
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(5rem, 22vw, 22rem);
+    line-height: 0.95;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    letter-spacing: -0.02em;
+    user-select: none;
+  }
+
+  .roots span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: letterIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .roots span:nth-child(1) { animation-delay: 0.55s; }
+  .roots span:nth-child(2) { animation-delay: 0.63s; }
+  .roots span:nth-child(3) { animation-delay: 0.71s; }
+  .roots span:nth-child(4) { animation-delay: 0.79s; }
+  .roots span:nth-child(5) { animation-delay: 0.87s; }
+
+  @keyframes letterIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Bottom row */
+  .hero-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
+    transform: translateY(10px);
+  }
+
+  .module-tag {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .lede {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 400px;
+    text-align: right;
+  }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    .tree {
+      top: 0;
+      right: 0;
+      width: 100%;
+      opacity: 0.95;
+    }
+    .roots {
+      font-size: clamp(4rem, 24vw, 9rem);
+    }
+    .eyebrow {
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+    .hero-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .lede {
+      text-align: left;
+      max-width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow,
+    .roots span,
+    .hero-footer,
+    .tree {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+  /* Falling petals layer — above everything for immersive foreground drift */
+  .petals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+
+  /* Typography sits below petals so leaves drift in front of text */
+  .hero-content {
+    z-index: 2 !important;
+  }
+  .hero-footer {
+    z-index: 3 !important;
+  }
+</style>
+</head>
+<body>
+  <main class="hero" role="banner">
+    <!-- Sakura branch illustration -->
+    <div class="tree" aria-hidden="true">
+      <img src="img/Sakura%20branch.svg" alt="" />
+    </div>
+
+    <!-- Falling petals layer (GSAP-driven) -->
+    <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <h2 class="eyebrow">Build your digital</h2>
+      <h1 class="roots" aria-label="ROOTS">
+        <span data-letter="R">R</span><span data-letter="O">O</span><span data-letter="O">O</span><span data-letter="T">T</span><span data-letter="S">S</span>
+      </h1>
+    </div>
+
+    <div class="hero-footer">
+      <div class="module-tag">MÓDULO 1</div>
+      <p class="lede">We create unique foundations for your business.
+        Strategic design and code, built to scale.</p>
+    </div>
+  </main>
+
+  <!-- Matter.js (physics) + GSAP (DOM sync) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var COLORS = ['#7B4FBF', '#9B6FD4', '#B088E8'];
+      var PETAL_PATHS = [
+        'M10 0 C14 4, 18 10, 10 20 C2 10, 6 4, 10 0 Z',
+        'M10 1 C15 5, 17 12, 10 19 C3 12, 5 5, 10 1 Z',
+        'M10 0 C13 6, 19 11, 10 20 C1 11, 7 6, 10 0 Z'
+      ];
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      var TARGET = 38;        // target active count
+      var MAX = 45;           // hard cap
+      var REST_RECYCLE_MS = 15000;
+
+      // Wrap each char of "Build your digital" in <span data-letter>
+      function wrapLetters(el) {
+        if (!el || el.dataset.wrapped === '1') return;
+        var text = el.textContent;
+        var frag = document.createDocumentFragment();
+        for (var i = 0; i < text.length; i++) {
+          var ch = text.charAt(i);
+          if (ch === ' ') {
+            frag.appendChild(document.createTextNode(' '));
+          } else {
+            var span = document.createElement('span');
+            span.textContent = ch;
+            span.dataset.letter = ch;
+            span.style.display = 'inline-block';
+            frag.appendChild(span);
+          }
+        }
+        el.innerHTML = '';
+        el.appendChild(frag);
+        el.dataset.wrapped = '1';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        wrapLetters(document.querySelector('.eyebrow'));
+        // Wait for entrance animations to finish (~1.5s) AND fonts to load,
+        // so getBoundingClientRect() returns accurate glyph metrics.
+        var fontsReady = (document.fonts && document.fonts.ready)
+          ? document.fonts.ready
+          : Promise.resolve();
+        var entranceDone = new Promise(function (res) { setTimeout(res, 1700); });
+        Promise.all([fontsReady, entranceDone]).then(function () {
+          // One rAF after fonts are ready guarantees layout/paint has flushed
+          // before we measure getBoundingClientRect() for collider building.
+          requestAnimationFrame(initPhysics);
+        });
+      });
+
+      function initPhysics() {
+        if (typeof Matter === 'undefined' || typeof gsap === 'undefined') return;
+        var container = document.getElementById('petals');
+        if (!container) return;
+        var heroEl = document.querySelector('.hero');
+        if (!heroEl) return;
+
+        var Engine = Matter.Engine,
+            Runner = Matter.Runner,
+            Bodies = Matter.Bodies,
+            Body = Matter.Body,
+            Composite = Matter.Composite,
+            Events = Matter.Events;
+
+        var engine = Engine.create();
+        engine.gravity.y = 0.08;
+        engine.gravity.scale = 0.0015;
+
+        var runner = Runner.create();
+        Runner.run(runner, engine);
+
+        var petals = [];        // {body, el, setX, setY, setR, size, lastMove, spawnTime}
+        var staticBodies = [];
+        var nextSpawnAt = 0; // timestamp for next staggered spawn
+
+        // Collision categories
+        //   0x0001 = walls / ground (default)
+        //   0x0002 = letter colliders (ROOTS + eyebrow)
+        // Physical petals collide with both; ghost petals only with 0x0001.
+        var CAT_DEFAULT = 0x0001;
+        var CAT_LETTERS = 0x0002;
+        var LETTER_FILTER = { category: CAT_LETTERS, mask: 0xFFFFFFFF };
+
+        function clearStatics() {
+          for (var i = 0; i < staticBodies.length; i++) {
+            Composite.remove(engine.world, staticBodies[i]);
+          }
+          staticBodies.length = 0;
+        }
+
+        function buildStatics() {
+          clearStatics();
+          var w = window.innerWidth;
+          var heroBottom = heroEl.getBoundingClientRect().bottom;
+
+          // Walls + ground (invisible). Ground sits exactly at the hero's bottom edge
+          // so petals come to rest on the section boundary, not the viewport.
+          staticBodies.push(Bodies.rectangle(-50, heroBottom / 2, 100, heroBottom * 3, { isStatic: true }));
+          staticBodies.push(Bodies.rectangle(w + 50, heroBottom / 2, 100, heroBottom * 3, { isStatic: true }));
+          staticBodies.push(Bodies.rectangle(w / 2, heroBottom + 30, w * 2, 60, { isStatic: true }));
+
+          // Text is purely decorative — no letter collision bodies.
+
+          Composite.add(engine.world, staticBodies);
+        }
+
+        function spawnPetal() {
+          if (petals.length >= MAX) return;
+          // ~60% physical (lands on letters), ~40% ghost (passes through)
+          var isPhysical = Math.random() < 0.6;
+          var size = Math.round(gsap.utils.random(12, 26));
+          var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+          var pathD = PETAL_PATHS[Math.floor(Math.random() * PETAL_PATHS.length)];
+          var opacity = isPhysical
+            ? +gsap.utils.random(0.6, 0.9, 0.01)
+            : +gsap.utils.random(0.3, 0.55, 0.01);
+
+          var svg = document.createElementNS(SVG_NS, 'svg');
+          svg.setAttribute('viewBox', '0 0 20 20');
+          svg.setAttribute('width', size);
+          svg.setAttribute('height', size);
+          svg.setAttribute('class', 'petal');
+
+          var path = document.createElementNS(SVG_NS, 'path');
+          path.setAttribute('d', pathD);
+          path.setAttribute('fill', color);
+          path.setAttribute('stroke', color);
+          path.setAttribute('stroke-opacity', '0.3');
+          path.setAttribute('stroke-width', '0.5');
+          svg.appendChild(path);
+          svg.style.opacity = opacity;
+          container.appendChild(svg);
+
+          // Center origin so x/y target the body center
+          gsap.set(svg, { xPercent: -50, yPercent: -50, x: -100, y: -100 });
+
+          // Build a small irregular convex polygon (5–7 vertices)
+          var n = Math.floor(gsap.utils.random(5, 8));
+          var verts = [];
+          var r = size / 2;
+          for (var k = 0; k < n; k++) {
+            var ang = (k / n) * Math.PI * 2;
+            var rr = r * gsap.utils.random(0.7, 1.0);
+            verts.push({ x: Math.cos(ang) * rr, y: Math.sin(ang) * rr });
+          }
+          var x = gsap.utils.random(0, window.innerWidth);
+          var y = -30 - Math.random() * 40;
+          // Ghost petals only collide with walls/ground (CAT_DEFAULT),
+          // physical petals collide with everything including letters.
+          var petalFilter = isPhysical
+            ? { category: CAT_DEFAULT, mask: 0xFFFFFFFF }
+            : { category: CAT_DEFAULT, mask: CAT_DEFAULT };
+          var body = Bodies.fromVertices(x, y, [verts], {
+            frictionAir: 0.04,
+            friction: 0.8,
+            restitution: 0.05,
+            density: 0.0008,
+            collisionFilter: petalFilter
+          }, true);
+          if (!body) {
+            body = Bodies.circle(x, y, size / 2, {
+              frictionAir: 0.04, friction: 0.8, restitution: 0.05, density: 0.0008,
+              collisionFilter: petalFilter
+            });
+          }
+          // Small random initial drift
+          Body.setVelocity(body, { x: gsap.utils.random(-1.2, 1.2), y: gsap.utils.random(0, 0.6) });
+          Body.setAngularVelocity(body, gsap.utils.random(-0.05, 0.05));
+          Composite.add(engine.world, body);
+
+          petals.push({
+            body: body,
+            el: svg,
+            setX: gsap.quickSetter(svg, 'x', 'px'),
+            setY: gsap.quickSetter(svg, 'y', 'px'),
+            setR: gsap.quickSetter(svg, 'rotation', 'deg'),
+            size: size,
+            baseOpacity: opacity,
+            lastMove: performance.now(),
+            spawnTime: performance.now(),
+            fadeTimer: null,
+            fading: false
+          });
+        }
+
+        function removePetal(p) {
+          if (p.fadeTimer) { clearTimeout(p.fadeTimer); p.fadeTimer = null; }
+          gsap.killTweensOf(p.el);
+          Composite.remove(engine.world, p.body);
+          if (p.el && p.el.parentNode) p.el.parentNode.removeChild(p.el);
+        }
+
+        // Initial build + seed a small burst; the rest trickle in naturally
+        buildStatics();
+        var initBurst = Math.min(5, TARGET);
+        for (var i = 0; i < initBurst; i++) spawnPetal();
+        nextSpawnAt = performance.now() + 300;
+
+        // Sync DOM to physics each frame, plus recycling
+        Events.on(engine, 'afterUpdate', function () {
+          var now = performance.now();
+          var heroBottom = heroEl.getBoundingClientRect().bottom;
+          var REST_SPEED = 0.35;
+          var GROUND_BAND = 60; // how close to ground counts as "at the bottom"
+
+          for (var i = petals.length - 1; i >= 0; i--) {
+            var p = petals[i];
+            var b = p.body;
+            p.setX(b.position.x);
+            p.setY(b.position.y);
+            p.setR(b.angle * 57.2957795); // rad → deg
+
+            var moving = b.speed > REST_SPEED;
+            if (moving) p.lastMove = now;
+
+            // Schedule fade once a petal reaches the hero bottom and is at rest.
+            // Cancel the timer immediately if the petal gets disturbed (e.g. wind).
+            var atBottom = b.position.y > heroBottom - GROUND_BAND;
+            if (atBottom && !moving && !p.fading && !p.fadeTimer) {
+              (function (petal) {
+                petal.fadeTimer = setTimeout(function () {
+                  petal.fadeTimer = null;
+                  // Re-check the petal is still at rest before fading
+                  if (petal.body.speed > REST_SPEED) return;
+                  petal.fading = true;
+                  gsap.to(petal.el, {
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: 'power1.inOut',
+                    onComplete: function () {
+                      var k = petals.indexOf(petal);
+                      if (k >= 0) {
+                        removePetal(petal);
+                        petals.splice(k, 1);
+                        // Spawn a fresh replacement to keep the count stable
+                        spawnPetal();
+                      }
+                    }
+                  });
+                }, 1000);
+              })(p);
+            } else if ((moving || !atBottom) && p.fadeTimer) {
+              // Got blown back into the air — cancel pending fade
+              clearTimeout(p.fadeTimer);
+              p.fadeTimer = null;
+            }
+
+            // Safety net: petal somehow fell beyond the hero (shouldn't happen)
+            if (b.position.y > heroBottom + 200) {
+              removePetal(p);
+              petals.splice(i, 1);
+            }
+          }
+
+          // Cap at MAX — remove oldest settled first if we somehow overshoot
+          if (petals.length > MAX) {
+            var settled = petals
+              .map(function (p, idx) { return { p: p, idx: idx, age: now - p.lastMove }; })
+              .filter(function (o) { return o.age > 1500; })
+              .sort(function (a, b) { return b.age - a.age; });
+            while (petals.length > MAX && settled.length) {
+              var item = settled.shift();
+              var k = petals.indexOf(item.p);
+              if (k >= 0) {
+                removePetal(item.p);
+                petals.splice(k, 1);
+              }
+            }
+          }
+
+          // Staggered natural spawn — one petal at a time, random interval
+          if (petals.length < TARGET && now >= nextSpawnAt) {
+            spawnPetal();
+            // 100–500 ms gap, biased towards shorter gaps for a natural cluster feel
+            nextSpawnAt = now + 100 + Math.random() * Math.random() * 400;
+          }
+        });
+
+        // ----- Cursor wind interaction -----
+        var lastPt = null, lastPtTime = 0;
+        var WIND_RADIUS = 120;
+
+        function applyWind(x, y, vx, vy) {
+          var speed = Math.hypot(vx, vy);
+          if (speed < 0.05) return;
+          var force = Math.min(0.012, 0.0009 * speed);
+          for (var i = 0; i < petals.length; i++) {
+            var b = petals[i].body;
+            var dx = b.position.x - x;
+            var dy = b.position.y - y;
+            var dist = Math.hypot(dx, dy);
+            if (dist < WIND_RADIUS && dist > 0.5) {
+              var falloff = 1 - dist / WIND_RADIUS;
+              var f = force * falloff;
+              Body.applyForce(b, b.position, {
+                x: (dx / dist) * f,
+                y: (dy / dist) * f - 0.0006 * falloff * speed // a little upward lift
+              });
+            }
+          }
+        }
+
+        function onPointerMove(e) {
+          var pt = e.touches && e.touches[0] ? e.touches[0] : e;
+          if (typeof pt.clientX !== 'number') return;
+          var x = pt.clientX, y = pt.clientY;
+          var t = performance.now();
+          if (lastPt) {
+            var dt = Math.max(1, t - lastPtTime);
+            var vx = (x - lastPt.x) * (16 / dt);
+            var vy = (y - lastPt.y) * (16 / dt);
+            applyWind(x, y, vx, vy);
+          }
+          lastPt = { x: x, y: y };
+          lastPtTime = t;
+        }
+
+        window.addEventListener('mousemove', onPointerMove, { passive: true });
+        window.addEventListener('touchmove', onPointerMove, { passive: true });
+
+        // ----- Resize: rebuild static colliders -----
+        var resizeT;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeT);
+          resizeT = setTimeout(buildStatics, 200);
+        });
+
+        // ----- Visibility: pause physics when tab is hidden -----
+        var running = true;
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden && running) {
+            Runner.stop(runner);
+            running = false;
+          } else if (!document.hidden && !running) {
+            Runner.run(runner, engine);
+            running = true;
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
