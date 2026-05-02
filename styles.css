@@ -283,6 +283,31 @@
       box-shadow: inset 0 0 0 2px rgba(138, 61, 230, 0.18), 0 0 0 3px var(--focus-ring-alpha);
     }
     
+    /* Social page btn-glass override */
+    .btn-glass-social:hover {
+      box-shadow: inset 0 0 0 2.5px rgba(255, 122, 45, 0.4) !important;
+      background: rgba(255, 122, 45, 0.08) !important;
+    }
+    
+    .btn-glass-social:focus {
+      box-shadow: inset 0 0 0 2px rgba(255, 122, 45, 0.25), 0 0 0 3px var(--focus-ring-alpha) !important;
+    }
+    
+    /* Social page — override btn-glass to orange */
+    .rl-pricing-section--social .btn-glass {
+      box-shadow: inset 0 0 0 2px rgba(255, 122, 45, 0.25);
+      color: #FF7A2D;
+    }
+    
+    .rl-pricing-section--social .btn-glass:hover {
+      box-shadow: inset 0 0 0 2.5px rgba(255, 122, 45, 0.4);
+      background: rgba(255, 122, 45, 0.08);
+    }
+    
+    .rl-pricing-section--social .btn-glass:focus {
+      box-shadow: inset 0 0 0 2px rgba(255, 122, 45, 0.25), 0 0 0 3px var(--focus-ring-alpha);
+    }
+    
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        Hero 11 â€” Brutalist typographic
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
@@ -7652,6 +7677,48 @@
   -webkit-background-clip: text;
   background-clip: text;
 }
+/* Social page eyebrow — orange */
+.rl-pricing-section--social .rl-pricing-eyebrow {
+  color: #FF7A2D;
+}
+/* Social page featured card glow — orange */
+.rl-pricing-section--social .rl-pricing-card--featured .rl-pricing-card-front {
+  border-color: rgba(255, 122, 45, 0.35);
+  box-shadow:
+    0 1px 2px rgba(15, 17, 22, 0.04),
+    0 22px 48px -20px rgba(255, 122, 45, 0.38);
+}
+/* Social page bullet points — orange */
+.rl-pricing-section--social .rl-pricing-features li::before {
+  background-color: rgba(255, 122, 45, 0.13);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF7A2D' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+}
+/* Social page CTAs — white/black */
+.rl-pricing-section--social .rl-pricing-cta {
+  background: #ffffff;
+  color: #111418;
+  border: 1px solid rgba(15, 17, 22, 0.14);
+}
+.rl-pricing-section--social .rl-pricing-cta:hover {
+  background: #f5f5f5;
+  color: #111418;
+  box-shadow: 0 10px 22px rgba(15, 17, 22, 0.1);
+}
+.rl-pricing-section--social .rl-pricing-cta--dark {
+  background: #0c0d10;
+  color: #ffffff;
+  border-color: #0c0d10;
+}
+.rl-pricing-section--social .rl-pricing-cta--dark:hover {
+  background: #1a1c22;
+  box-shadow: 0 12px 26px rgba(12, 13, 16, 0.35);
+}
+/* Social page pricing card hover glow — orange */
+.rl-pricing-section--social .rl-pricing-grid.is-flipped .rl-pricing-card:hover .rl-pricing-card-front {
+  box-shadow:
+    0 1px 2px rgba(15, 17, 22, 0.06),
+    0 30px 60px -22px rgba(255, 122, 45, 0.4);
+}
 .rl-pricing-subtitle {
   margin: 1rem auto 0;
   max-width: 540px;
@@ -7659,6 +7726,7 @@
   color: #6c6f78;
   line-height: 1.55;
 }
+/* Social page CTAs — now handled in the block above */
 .rl-pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

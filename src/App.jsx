@@ -4606,13 +4606,13 @@ function navigate(path) {
                       href="#pricing"
                       className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
                       style={{ 
-                        background: 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)',
+                        background: 'linear-gradient(135deg, #FF7A2D 0%, #FB923C 100%)',
                         boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                       }}
                     >
                       View Pricing
                     </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                    <a href="#contact" className="btn-glass btn-glass-social px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]" style={{ boxShadow: 'inset 0 0 0 2px rgba(255, 122, 45, 0.25)', color: '#FF7A2D' }}>
                       Get Started
                     </a>
                   </div>
