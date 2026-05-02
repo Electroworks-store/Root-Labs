@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react';
 import React from 'react';
 import { gsap, ScrollTrigger } from '../gsap-config';
-import sakura1 from '../../img/sakura1.webp';
-import sakura2 from '../../img/sakura2.webp';
-import beaker from '../../img/beaker.webp';
+import beakerSketch1 from '../../img/beakersketch1.webp';
+import beakerSketch2 from '../../img/beakersketch2.webp';
+import beakerSketch3 from '../../img/beakersketch3.webp';
+import beakerFrame1 from '../../img/beaker1.webp';
+import beakerFrame2 from '../../img/beaker2.webp';
+import beakerFrame3 from '../../img/beaker3.webp';
+import beakerFrame4 from '../../img/beaker4.webp';
 import './HorizontalProcess.css';
 
 /**
@@ -31,9 +35,13 @@ export default function HorizontalProcess() {
     if (mq.matches) return;
 
     const getDistance = () => track.scrollWidth - window.innerWidth;
+    // Extra scroll distance after the horizontal pan completes — the stage
+    // stays pinned (no x movement) so the last panel ("make it unique")
+    // lingers on screen before the section unpins.
+    const TAIL_DWELL = 700;
 
     const setHeight = () => {
-      outer.style.height = `${getDistance() + window.innerHeight}px`;
+      outer.style.height = `${getDistance() + TAIL_DWELL + window.innerHeight}px`;
     };
     setHeight();
 
@@ -46,10 +54,18 @@ export default function HorizontalProcess() {
         start: 'top top',
         end: () => `+=${getDistance()}`,
         scrub: 1,
-        pin: stage,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
       },
+    });
+
+    // ── Pin the stage for the full pan + tail dwell ────────────────
+    const pinST = ScrollTrigger.create({
+      trigger: outer,
+      start: 'top top',
+      end: () => `+=${getDistance() + TAIL_DWELL}`,
+      pin: stage,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
     });
 
     // ── Path draw-on-scroll ─────────────────────────────────────────
@@ -83,13 +99,21 @@ export default function HorizontalProcess() {
     const cpCallouts = allPanels[0]?.querySelectorAll('[data-cp="callout"]');
     const sticky     = allPanels[1]?.querySelector('.hproc__sticky');
     const wheel      = allPanels[2]?.querySelector('.hproc__wheel');
-    const fontScene  = allPanels[3]?.querySelector('.hproc__font-scene');
-    const fontInfo   = allPanels[3]?.querySelectorAll('.hproc__font-title, .hproc__font-info .body, .hproc__font-note-text');
-    const todoCard   = allPanels[1]?.querySelector('.hproc__ios-todo');
+    const fontScene     = allPanels[3]?.querySelector('.hproc__font-heading-wrap');
+    const fontInfo      = allPanels[3]?.querySelectorAll('.hproc__font-callout, .hproc__font-info .body');
+    const fontHighlight = allPanels[3]?.querySelectorAll('[data-fp="hl"]');
+    const todoCard      = allPanels[1]?.querySelector('.hproc__ios-todo');
     const browser    = allPanels[4]?.querySelector('.hproc__resp-browser');
-    const blocks     = allPanels[5]?.querySelectorAll('.hproc__layout-stack > div');
+    const layoutCard      = allPanels[5]?.querySelector('.hproc__la-card');
+    const layoutCardTitle = allPanels[5]?.querySelector('.hproc__la-cardtitle');
+    const layoutCardBody  = allPanels[5]?.querySelector('.hproc__la-cardbody');
+    const layoutCta       = allPanels[5]?.querySelector('.hproc__la-cta');
+    const layoutCircle    = allPanels[5]?.querySelector('.hproc__la-circle');
+    const layoutImg1      = allPanels[5]?.querySelector('.hproc__la-img--1');
+    const layoutImg2      = allPanels[5]?.querySelector('.hproc__la-img--2');
+    const layoutCursor    = allPanels[5]?.querySelector('.hproc__la-drag-cursor');
     const uniqueTitle = allPanels[6]?.querySelector('.hproc__unique-title');
-    const flowers    = allPanels[6]?.querySelectorAll('.hproc__sakura');
+    const uniqueSequence = allPanels[6]?.querySelectorAll('.hproc__unique-step, .hproc__unique-arrow');
 
     // --- collect text elements ---
     const p1Title    = allPanels[0]?.querySelector('.hproc__cp-title');
@@ -105,13 +129,21 @@ export default function HorizontalProcess() {
     if (cpCallouts?.length) gsap.set(cpCallouts, { y: 16, opacity: 0 });
     if (sticky)           gsap.set(sticky,       { y: -50, opacity: 0 });
     if (wheel)            gsap.set(wheel,        { rotation: -180, scale: 0, opacity: 0 });
-    if (fontScene)        gsap.set(fontScene,    { y: 40, opacity: 0 });
-    if (fontInfo?.length) gsap.set(fontInfo,     { y: 20, opacity: 0 });
-    if (todoCard)         gsap.set(todoCard,     { y: 44, opacity: 0, scale: 0.88 });
+    if (fontScene)           gsap.set(fontScene,      { y: 40, opacity: 0 });
+    if (fontHighlight?.length) gsap.set(fontHighlight, { strokeDasharray: 460, strokeDashoffset: 460 });
+    if (fontInfo?.length)     gsap.set(fontInfo,       { y: 20, opacity: 0 });
+    if (todoCard)             gsap.set(todoCard,       { y: 44, opacity: 0, scale: 0.88 });
     if (browser)          gsap.set(browser,      { y: 30, opacity: 0 });
-    if (blocks?.length)   gsap.set(blocks,       { scale: 0, opacity: 0 });
-    if (uniqueTitle)      gsap.set(uniqueTitle,  { y: 30, opacity: 0 });
-    if (flowers?.length)  gsap.set(flowers,      { scale: 0, opacity: 0 });
+    if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+    if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90, rotation: -8 });
+    if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140, rotation: 6 });
+    if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160, rotation: -14, scale: 0.85 });
+    if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+    if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+    if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+    if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+    if (uniqueTitle)      gsap.set(uniqueTitle,    { y: 30, opacity: 0 });
+    if (uniqueSequence?.length) gsap.set(uniqueSequence, { y: 22, opacity: 0 });
 
     // --- initial hidden state (text) ---
     if (p1Title)          gsap.set(p1Title,      { y: 20, opacity: 0 });
@@ -121,6 +153,7 @@ export default function HorizontalProcess() {
     if (p7Text?.length)   gsap.set(p7Text,       { y: 20, opacity: 0 });
     if (uniqueBody)       gsap.set(uniqueBody,   { y: 20, opacity: 0 });
 
+    let laBuildTl = null;
     const inText  = (els) => gsap.to(els, { y: 0,  opacity: 1, duration: 0.5,  stagger: 0.07, delay: 0.12, ease: 'power3.out',  clearProps: 'transform,opacity' });
     const outText = (els) => gsap.to(els, { y: 20, opacity: 0, duration: 0.25, stagger: 0.04,             ease: 'power2.in' });
 
@@ -157,6 +190,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (fontScene) { gsap.killTweensOf(fontScene); gsap.to(fontScene, { y: 0, opacity: 1, duration: 0.7, ease: 'back.out(1.4)', clearProps: 'transform,opacity' }); }
+        if (fontHighlight?.length) { gsap.killTweensOf(fontHighlight); gsap.to(fontHighlight, { strokeDashoffset: 0, duration: 0.82, stagger: 0.2, delay: 0.7, ease: 'power2.out' }); }
         if (fontInfo?.length) { gsap.killTweensOf(fontInfo); inText(fontInfo); }
       },
       () => {
@@ -164,12 +198,82 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); inText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { scale: 1, opacity: 1, duration: 0.45, stagger: 0.08, ease: 'back.out(1.7)', clearProps: 'transform,opacity' }); }
-        if (p7Text?.length) { gsap.killTweensOf(p7Text); inText(p7Text); }
+        // Kill any previous build run
+        if (laBuildTl) { laBuildTl.kill(); laBuildTl = null; }
+
+        // Restore panel opacity before running the build sequence
+        const panelInner5 = allPanels[5]?.querySelector('.hproc__panel-inner');
+        if (panelInner5) gsap.set(panelInner5, { opacity: 1 });
+
+        // Snap card container to final position so child getBoundingClientRect is accurate
+        if (layoutCard) { gsap.killTweensOf(layoutCard); gsap.set(layoutCard, { y: 0, scale: 1 }); }
+        if (layoutCursor) gsap.set(layoutCursor, { opacity: 0, x: 0, y: 0, scale: 1 });
+
+        const ctr = allPanels[5]?.querySelector('.hproc__layout-row');
+        if (!ctr || !layoutCursor) {
+          // Fallback: no cursor, just fly-in
+          if (layoutCard) gsap.to(layoutCard, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+          [layoutImg1, layoutCircle, layoutImg2, layoutCardTitle, layoutCardBody, layoutCta]
+            .forEach((el, i) => el && gsap.to(el, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: 0.8, delay: 0.3 + i * 0.12, ease: 'power3.out', clearProps: 'transform,opacity' }));
+          if (p7Text?.length) inText(p7Text);
+          return;
+        }
+
+        // Measure all scattered positions relative to container (measurements happen
+        // synchronously here, before any tweens fire, so all elements are still scattered)
+        const cRect = ctr.getBoundingClientRect();
+        const elCenter = (el) => {
+          const r = el.getBoundingClientRect();
+          return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+        };
+
+        // [element, scatterX, scatterY] — must match the gsap.set values in initial state
+        const items = [
+          [layoutImg1,      -260, -160],
+          [layoutCircle,     240, -200],
+          [layoutImg2,       280,  180],
+          [layoutCardTitle, -180,  -90],
+          [layoutCardBody,  -220,  140],
+          [layoutCta,        110,  160],
+        ].filter(([el]) => el);
+
+        const moves = items.map(([el, sx, sy]) => {
+          const from = elCenter(el);
+          return { el, from, to: { x: from.x - sx, y: from.y - sy } };
+        });
+
+        const DUR    = 0.42;  // drag duration per element
+        const TRAVEL = 0.14;  // cursor travel time between elements
+
+        laBuildTl = gsap.timeline();
+
+        // Card canvas fades in first while cursor is off-screen
+        laBuildTl.to(layoutCard, { opacity: 1, duration: 0.25, delay: 0.08, ease: 'power2.out' });
+
+        // Title + body slide in right away, before the drag sequence
+        if (p7Text?.length) {
+          laBuildTl.to(p7Text, { y: 0, opacity: 1, duration: 0.55, stagger: 0.1, ease: 'power3.out', clearProps: 'transform,opacity' }, '<0.05');
+        }
+
+        moves.forEach(({ el, from, to }) => {
+          laBuildTl
+            // Cursor moves to scattered element position
+            .to(layoutCursor, { x: from.x, y: from.y, opacity: 1, duration: TRAVEL, ease: 'power2.inOut' })
+            // Press down
+            .to(layoutCursor, { scale: 0.76, duration: 0.07, ease: 'power2.in' })
+            // Drag cursor and element together to natural position
+            .to(layoutCursor, { x: to.x, y: to.y, duration: DUR, ease: 'power2.inOut' })
+            .to(el, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1, duration: DUR, ease: 'power2.inOut', clearProps: 'transform,opacity' }, '<')
+            // Release
+            .to(layoutCursor, { scale: 1, duration: 0.08, ease: 'back.out(2.5)' });
+        });
+
+        // Cursor fades out
+        laBuildTl.to(layoutCursor, { opacity: 0, duration: 0.22, ease: 'power2.out' });
       },
       () => {
         if (uniqueTitle) { gsap.killTweensOf(uniqueTitle); gsap.to(uniqueTitle, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity' }); }
-        if (flowers?.length) { gsap.killTweensOf(flowers); gsap.to(flowers, { scale: 1, opacity: 1, duration: 0.5, stagger: 0.12, delay: 0.2, ease: 'back.out(1.7)', clearProps: 'transform,opacity' }); }
+        if (uniqueSequence?.length) { gsap.killTweensOf(uniqueSequence); gsap.to(uniqueSequence, { y: 0, opacity: 1, duration: 0.55, stagger: 0.09, delay: 0.18, ease: 'power3.out', clearProps: 'transform,opacity' }); }
         if (uniqueBody) { gsap.killTweensOf(uniqueBody); inText(uniqueBody); }
       },
     ];
@@ -194,6 +298,7 @@ export default function HorizontalProcess() {
       },
       () => {
         if (fontScene) { gsap.killTweensOf(fontScene); gsap.to(fontScene, { y: 40, opacity: 0, duration: 0.3, ease: 'power2.in' }); }
+        if (fontHighlight?.length) { gsap.killTweensOf(fontHighlight); gsap.to(fontHighlight, { strokeDashoffset: 460, duration: 0.25, ease: 'power2.in' }); }
         if (fontInfo?.length) { gsap.killTweensOf(fontInfo); outText(fontInfo); }
       },
       () => {
@@ -201,12 +306,41 @@ export default function HorizontalProcess() {
         if (p6Text?.length) { gsap.killTweensOf(p6Text); outText(p6Text); }
       },
       () => {
-        if (blocks?.length) { gsap.killTweensOf(blocks); gsap.to(blocks, { scale: 0, opacity: 0, duration: 0.2, stagger: 0.05, ease: 'power2.in' }); }
+        // Fade out the whole panel, then instantly scatter elements under the hood
+        const panelInner5 = allPanels[5]?.querySelector('.hproc__panel-inner');
+        if (laBuildTl) { laBuildTl.kill(); laBuildTl = null; }
+        if (panelInner5) {
+          gsap.to(panelInner5, {
+            opacity: 0,
+            duration: 0.45,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              // Scatter elements while invisible so replaying looks correct
+              if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+              if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+              if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+              if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+              if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+              if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90,  rotation: -8 });
+              if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140,  rotation: 6 });
+              if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160,  rotation: -14, scale: 0.85 });
+            },
+          });
+        } else {
+          if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+          if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 60, scale: 0.94 });
+          if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, x: -260, y: -160, rotation: -15, scale: 0.8 });
+          if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, x: 240,  y: -200, scale: 0.55, rotation: -30 });
+          if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, x: 280,  y: 180,  rotation: 18,  scale: 0.8 });
+          if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, x: -180, y: -90,  rotation: -8 });
+          if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, x: -220, y: 140,  rotation: 6 });
+          if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, x: 110,  y: 160,  rotation: -14, scale: 0.85 });
+        }
         if (p7Text?.length) { gsap.killTweensOf(p7Text); outText(p7Text); }
       },
       () => {
         if (uniqueTitle) { gsap.killTweensOf(uniqueTitle); gsap.to(uniqueTitle, { y: 30, opacity: 0, duration: 0.3, ease: 'power2.in' }); }
-        if (flowers?.length) { gsap.killTweensOf(flowers); gsap.to(flowers, { scale: 0, opacity: 0, duration: 0.25, stagger: 0.06, ease: 'power2.in' }); }
+        if (uniqueSequence?.length) { gsap.killTweensOf(uniqueSequence); gsap.to(uniqueSequence, { y: 22, opacity: 0, duration: 0.25, stagger: 0.04, ease: 'power2.in' }); }
         if (uniqueBody) { gsap.killTweensOf(uniqueBody); outText(uniqueBody); }
       },
     ];
@@ -279,6 +413,7 @@ export default function HorizontalProcess() {
       drawTween.kill();
       progressST.kill();
       panel0ST.kill();
+      pinST.kill();
       window.removeEventListener('resize', onResize);
     };
   }, []);
@@ -310,7 +445,7 @@ export default function HorizontalProcess() {
 function Waves({ pathRef }) {
   const panels = 7;
   const width = panels * 100;
-  const midY = 50;
+  const midY = 60;
   const amp = 26;
   // How far horizontally the control points sit from each segment boundary.
   // Placing them at ~37% of the segment width produces a natural sine shape.
@@ -661,7 +796,7 @@ function PanelColor() {
             <span className="hproc__wheel-label">Color</span>
           </div>
           <p className="body" style={{ textAlign: 'center' }}>
-            Stop settling for generic templates. We design cool, highly.
+            Colors shape emotion, trust, and action. Cool blues calm and stabilize. Warm oranges energize and inspire. Strategic palettes guide users and reinforce your brand.
           </p>
         </div>
       </div>
@@ -669,68 +804,63 @@ function PanelColor() {
   );
 }
 
-const FONT_CARDS = [
-  { sample: 'Aa', label: 'Inter',    sub: 'Sans-serif', family: "'Inter', sans-serif",         weight: 900, style: 'normal' },
-  { sample: 'Aa', label: 'Playfair', sub: 'Serif',      family: "'Playfair Display', serif",    weight: 700, style: 'italic' },
-  { sample: 'Aa', label: 'Mono',     sub: 'Monospace',  family: "'Space Mono', monospace",      weight: 400, style: 'normal' },
-  { sample: 'Aa', label: 'Caveat',   sub: 'Script',     family: "'Caveat', cursive",            weight: 600, style: 'normal' },
-];
-
 function PanelFont() {
   return (
     <div className="hproc__panel hproc__panel--below">
       <div className="hproc__panel-inner">
         <div className="hproc__font-layout">
-
-          {/* 3-D rotating carousel */}
-          <div className="hproc__font-scene" aria-hidden="true">
-            <div className="hproc__font-carousel">
-              {FONT_CARDS.map((f, i) => (
-                <div
-                  key={i}
-                  className="hproc__font-card"
-                  style={{ '--card-index': i }}
-                >
-                  <span
-                    className="hproc__font-card__sample"
-                    style={{ fontFamily: f.family, fontWeight: f.weight, fontStyle: f.style }}
-                  >
-                    {f.sample}
-                  </span>
-                  <span className="hproc__font-card__label">{f.label}</span>
-                  <span className="hproc__font-card__sub">{f.sub}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: title + body + handwritten note */}
           <div className="hproc__font-info">
-            <div className="hproc__font-title">Typography</div>
-            <p className="body">
-              The right typeface carries emotion before a word is read.
-              We pair fonts that feel completely intentional.
-            </p>
-            <div className="hproc__font-note">
-              <span className="hproc__font-note-text">sets the mood instantly ✦</span>
+
+            {/* Heading with hand-painted highlighter swipe behind it */}
+            <div className="hproc__font-heading-wrap">
               <svg
-                className="hproc__font-note-squiggle"
-                viewBox="0 0 160 12"
-                fill="none"
+                className="hproc__font-highlight"
+                viewBox="0 0 420 110"
+                preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
+                {/* Two overlapping marker passes for an uneven, hand-drawn feel */}
                 <path
-                  d="M 2 6 C 20 2, 40 10, 60 6 C 80 2, 100 10, 120 6 C 140 2, 155 8, 158 6"
-                  stroke="#8A3DE6"
-                  strokeWidth="1.8"
+                  data-fp="hl"
+                  d="M 14 58 C 80 50, 180 66, 290 54 C 350 47, 390 60, 408 56"
+                  stroke="#FFD93D"
+                  strokeWidth="62"
                   strokeLinecap="round"
                   fill="none"
+                  opacity="0.78"
+                />
+                <path
+                  data-fp="hl"
+                  d="M 22 64 C 120 70, 220 50, 320 62 C 360 67, 388 56, 402 60"
+                  stroke="#FFD93D"
+                  strokeWidth="54"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.55"
                 />
               </svg>
-            </div>
-          </div>
+              <h3 className="hproc__font-title">Typography</h3>
 
+              {/* Hand-drawn callout — above right side of heading, arrow curves left to connect */}
+              <CpCallout
+                className="hproc__font-callout"
+                text="sets the whole tone"
+                arrow="curveDownLeft"
+                pathD="M 50 4 C 38 28, 18 55, 2 73"
+                headPos={{ x: 2, y: 73, rot: 25 }}
+                dotPos={{ cx: 28, cy: 40 }}
+              />
+            </div>
+
+            <p className="body">
+              Type carries meaning before a single word is read. The right
+              pairing builds trust, sets rhythm, and gives your brand its
+              unmistakable voice. The wrong one quietly undermines
+              everything around it.
+            </p>
+
+          </div>
         </div>
       </div>
     </div>
@@ -742,43 +872,96 @@ function PanelResponsiveness() {
     <div className="hproc__panel hproc__panel--above">
       <div className="hproc__panel-inner">
         <div className="hproc__resp-layout">
-          <div className="hproc__resp-title">Responsiveness</div>
-          <p className="body">
-            Stop settling for generic templates. We design cool, highly.
-          </p>
-          <div className="wyg-brand-visual hproc__resp-browser">
-            <div className="wyg-brand-browser">
-              <div className="wyg-brand-browser-bar">
-                <span className="wdot wdot-r" />
-                <span className="wdot wdot-y" />
-                <span className="wdot wdot-g" />
-                <div className="wyg-brand-url-bar">
-                  <span>yourbrand.com</span>
-                </div>
-              </div>
-              <div className="wyg-brand-screen">
-                <div className="wyg-brand-page">
-                  <div className="wyg-bp-nav">
-                    <div className="wyg-bp-logo" />
-                    <div className="wyg-bp-links"><span /><span /><span /></div>
+
+          {/* Left: morphing device frame */}
+          <div className="hproc__resp-browser">
+            <div className="hproc__morph-frame">
+
+              {/* Live page content (responds via @container queries) */}
+              <div className="hproc__morph-page">
+                <div className="hproc__morph-nav">
+                  <div className="hproc__morph-logo" />
+                  <div className="hproc__morph-links">
+                    <span /><span /><span />
                   </div>
-                  <div className="wyg-bp-hero">
-                    <div className="wyg-bp-tagline" />
-                    <div className="wyg-bp-subtitle" />
-                    <div className="wyg-bp-cta" />
-                  </div>
-                  <div className="wyg-bp-features">
-                    <div className="wyg-bp-feat" />
-                    <div className="wyg-bp-feat" />
-                    <div className="wyg-bp-feat" />
+                  <div className="hproc__morph-burger" aria-hidden="true">
+                    <span /><span /><span />
                   </div>
                 </div>
+
+                <div className="hproc__morph-hero">
+                  <div className="hproc__morph-heading">Build Beautiful<br />Websites</div>
+                  <div className="hproc__morph-subline" />
+                  <div className="hproc__morph-cta">Get Started</div>
+                </div>
+
+                <div className="hproc__morph-grid">
+                  <div className="hproc__morph-card" />
+                  <div className="hproc__morph-card" />
+                  <div className="hproc__morph-card" />
+                </div>
               </div>
+
+              {/* Fake cursor — tip sits on the bottom-right corner */}
+              <div className="hproc__morph-cursor" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                  <path
+                    d="M5.5 3.2 L5.5 17.5 L9.3 13.9 L12.1 19.4 L13.9 18.6 L11.1 13.1 L16.6 13.1 Z"
+                    fill="#ffffff"
+                    stroke="#1a1a1a"
+                    strokeWidth="0.85"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+
             </div>
           </div>
+
+          {/* Right: title + body text */}
+          <div className="hproc__resp-text">
+            <div className="hproc__resp-title">Responsiveness</div>
+            <p className="body">
+              One site, every screen. Layouts reflow, type scales, and content
+              re-stacks so your brand feels purpose-built whether it lands on a
+              27 inch monitor or a phone in someone&rsquo;s pocket.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
+  );
+}
+
+/* On-brand abstract placeholder — cream backdrop with bold geometric shapes
+   in the site's purple / yellow / black palette. Compositions use balanced
+   asymmetry: one anchor shape with smaller counter-weights for visual rhythm. */
+function BrandCard({ variant = 'a' }) {
+  if (variant === 'b') {
+    // Anchor: large yellow disc on the right.
+    // Counter-weights: stacked purple bars on the left + small black square.
+    return (
+      <svg viewBox="0 0 130 85" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="130" height="85" fill="#F5F2EC" />
+        <circle cx="92" cy="42.5" r="26" fill="#FFD93D" />
+        <rect x="14" y="22" width="34" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="34" width="22" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="46" width="28" height="6" rx="3" fill="#7C6AF7" />
+        <rect x="14" y="60" width="10" height="10" rx="2" fill="#0A0A0A" />
+      </svg>
+    );
+  }
+  // Anchor: large purple half-circle on the left.
+  // Counter-weights: yellow dot upper-right + black bar across the bottom.
+  return (
+    <svg viewBox="0 0 130 85" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="130" height="85" fill="#F5F2EC" />
+      <path d="M 0 14 A 34 34 0 0 1 0 82 Z" fill="#7C6AF7" />
+      <circle cx="96" cy="26" r="11" fill="#FFD93D" />
+      <rect x="48" y="60" width="68" height="5" rx="2.5" fill="#0A0A0A" />
+    </svg>
   );
 }
 
@@ -787,74 +970,130 @@ function PanelLayout() {
     <div className="hproc__panel hproc__panel--below">
       <div className="hproc__panel-inner">
         <div className="hproc__layout-row">
-          <div className="hproc__layout-stack">
-            <div />
-            <div />
-            <div className="tall" />
-            <div />
-            <div />
+
+          {/* Assembling card on the left */}
+          <div className="hproc__la-card">
+            <div className="hproc__la-card-left">
+              <h3 className="hproc__la-cardtitle">Image<br />Carousel</h3>
+              <p className="hproc__la-cardbody">
+                Showcase your work in style. Images orbit smoothly, keeping visitors engaged.
+              </p>
+              <button type="button" className="hproc__la-cta">See Examples</button>
+            </div>
+
+            <div className="hproc__la-orbit">
+              <div className="hproc__la-circle" aria-hidden="true" />
+              <div className="hproc__la-img hproc__la-img--1"><BrandCard variant="a" /></div>
+              <div className="hproc__la-img hproc__la-img--2"><BrandCard variant="b" /></div>
+            </div>
           </div>
-          <div className="hproc__layout-title">Layout</div>
-          <p className="body">
-            Stop settling for generic templates. We design cool, highly.
-          </p>
+
+          {/* Fake drag cursor — GSAP moves this around the panel */}
+          <div className="hproc__la-drag-cursor" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26">
+              <path
+                d="M5.5 3 L5.5 18 L9.2 14.2 L12 20 L14 19 L11.2 13.2 L16.8 13.2 Z"
+                fill="#ffffff"
+                stroke="#1a1a1a"
+                strokeWidth="0.85"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+
+          {/* Big title + body to the right of the card */}
+          <div className="hproc__layout-text">
+            <div className="hproc__layout-title">Layout</div>
+            <p className="body">
+              Every page has a story. We craft bespoke layouts that guide
+              the eye, create breathing room, and make your content feel
+              like it belongs exactly where it is.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
   );
 }
 
-/* Cherry blossom SVG — 5 rounded petals + stamen dots */
-function CherryBlossom({ size = 100 }) {
+function UniqueFlowArrow() {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
+      className="hproc__unique-arrow"
+      viewBox="0 0 150 42"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* 5 petals rotated around centre */}
-      {[0, 72, 144, 216, 288].map((deg) => (
-        <ellipse
-          key={deg}
-          cx="50"
-          cy="26"
-          rx="13"
-          ry="20"
-          fill="#F9A8C4"
-          transform={`rotate(${deg} 50 50)`}
-        />
-      ))}
-      {/* Lighter inner petal highlight */}
-      {[0, 72, 144, 216, 288].map((deg) => (
-        <ellipse
-          key={`h${deg}`}
-          cx="50"
-          cy="30"
-          rx="7"
-          ry="11"
-          fill="#FDD0DF"
-          transform={`rotate(${deg} 50 50)`}
-        />
-      ))}
-      {/* Centre circle */}
-      <circle cx="50" cy="50" r="9" fill="#F472A0" />
-      {/* Stamen dots */}
-      {[0, 60, 120, 180, 240, 300].map((deg) => {
-        const rad = (deg * Math.PI) / 180;
-        return (
-          <circle
-            key={`s${deg}`}
-            cx={50 + 6 * Math.cos(rad)}
-            cy={50 + 6 * Math.sin(rad)}
-            r="1.8"
-            fill="#C2185B"
-          />
-        );
-      })}
+      <path
+        d="M 4 24 C 33 19, 66 20, 96 21 C 115 22, 129 20, 142 18"
+        stroke="#0A0A0A"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M 124 9 C 132 12, 139 15, 145 18 C 137 22, 130 26, 123 31"
+        stroke="#0A0A0A"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
+  );
+}
+
+function AnimatedUniqueBeaker() {
+  const beakerFrames = [beakerFrame1, beakerFrame2, beakerFrame3, beakerFrame4];
+  const [frame, setFrame] = React.useState(0);
+  const loadedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    let active = true;
+    const images = beakerFrames.map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+
+    Promise.all(images.map((img) => (
+      img.decode
+        ? img.decode().catch(() => {})
+        : new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          })
+    ))).then(() => {
+      if (active) loadedRef.current = true;
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (loadedRef.current) {
+        setFrame((prev) => (prev + 1) % beakerFrames.length);
+      }
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="hproc__unique-animated-beaker" aria-hidden="true">
+      {beakerFrames.map((src, index) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`hproc__unique-animated-frame${frame === index ? ' is-active' : ''}`}
+        />
+      ))}
+    </span>
   );
 }
 
@@ -863,21 +1102,28 @@ function PanelUnique() {
     <div className="hproc__panel hproc__panel--center">
       <div className="hproc__panel-inner">
         <div className="hproc__unique-layout">
-          {/* Large flower — top right */}
-          <span className="hproc__sakura hproc__sakura--tr" aria-hidden="true">
-            <CherryBlossom size={130} />
-          </span>
-          {/* Medium flower — bottom left */}
-          <span className="hproc__sakura hproc__sakura--bl" aria-hidden="true">
-            <CherryBlossom size={80} />
-          </span>
-          {/* Small flower — mid right accent */}
-          <span className="hproc__sakura hproc__sakura--mr" aria-hidden="true">
-            <CherryBlossom size={60} />
-          </span>
           <div className="hproc__unique-title">Make it unique</div>
+          <div className="hproc__unique-flow" aria-hidden="true">
+            <span className="hproc__unique-step hproc__unique-step--sketch hproc__unique-step--sketch1">
+              <img src={beakerSketch1} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch1" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--sketch hproc__unique-step--sketch2">
+              <img src={beakerSketch2} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch2" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--digital hproc__unique-step--sketch3">
+              <img src={beakerSketch3} alt="" className="hproc__unique-beaker-img hproc__unique-beaker-img--sketch3" />
+            </span>
+            <UniqueFlowArrow />
+            <span className="hproc__unique-step hproc__unique-step--digital hproc__unique-step--animated">
+              <AnimatedUniqueBeaker />
+            </span>
+          </div>
           <p className="hproc__unique-body">
-            Stop settling for generic templates.<br />We design cool, highly personalised websites.
+            Your brand is one of a kind. Your website should be too.
+            We layer in custom illustrations, motion, and details that
+            make visitors stop, look twice, and remember you.
           </p>
         </div>
       </div>
