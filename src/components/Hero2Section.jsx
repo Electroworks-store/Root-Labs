@@ -24,7 +24,7 @@ const HERO2_STYLES = `
   z-index: 1;
   background: var(--h2-bg);
   color: var(--h2-ink);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   box-sizing: border-box;
@@ -85,10 +85,10 @@ const HERO2_STYLES = `
 
 /* "Build your digital" subtitle */
 .h2-eyebrow {
-  font-family: "Larken", "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: clamp(2.4rem, 5.6vw, 4.6rem);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   line-height: 1.05;
   color: var(--h2-ink);
   margin-bottom: clamp(0.8rem, 2.4vw, 1.8rem);
@@ -103,8 +103,8 @@ const HERO2_STYLES = `
 
 /* Giant ROOTS heading */
 .h2-roots {
-  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-  font-weight: 500;
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
   font-size: clamp(5rem, 22vw, 22rem);
   line-height: 0.95;
   color: var(--h2-ink);
@@ -112,7 +112,7 @@ const HERO2_STYLES = `
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   user-select: none;
   margin: 0;
   padding: 0;
@@ -152,7 +152,7 @@ const HERO2_STYLES = `
 }
 
 .h2-module-tag {
-  font-family: "Inter", sans-serif;
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
@@ -161,7 +161,7 @@ const HERO2_STYLES = `
 }
 
 .h2-lede {
-  font-family: "Inter", sans-serif;
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-size: 0.92rem;
   line-height: 1.5;
@@ -602,7 +602,7 @@ export default function Hero2Section() {
       <div className="h2-petals" ref={petalsRef} aria-hidden="true" />
 
       <div className="h2-content">
-        <h2 className="h2-eyebrow" ref={eyebrowRef}>Build your digital</h2>
+        <h2 className="h2-eyebrow" ref={eyebrowRef}>We build your digital</h2>
         <h1 className="h2-roots" aria-label="ROOTS">
           <span data-letter="R">R</span>
           <span data-letter="O">O</span>
@@ -613,7 +613,7 @@ export default function Hero2Section() {
       </div>
 
       <div className="h2-footer">
-        <div className="h2-module-tag">MÓDULO 1</div>
+        <div className="h2-module-tag">VERSION 1.8</div>
         <p className="h2-lede">
           We create unique foundations for your&nbsp;business.<br />
           Strategic design and code, built to scale.

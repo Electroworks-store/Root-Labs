@@ -199,7 +199,7 @@ function CardInner({ item, index }) {
               key={j}
               style={{
                 ...s.pip,
-                background: j === index ? item.tagColor : 'rgba(0,0,0,0.15)',
+                background: j === index ? '#7F77DD' : 'rgba(127,119,221,0.25)',
                 width: j === index ? '26px' : '10px',
               }}
             />
@@ -297,7 +297,7 @@ const s = {
 
   cardInner: {
     height: '100%',
-    padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+    padding: 'clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.75rem, 3.5vw, 2.75rem) clamp(2.5rem, 5vw, 4rem)',
     display: 'flex',
     flexDirection: 'column',
     boxSizing: 'border-box',
