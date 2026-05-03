@@ -1384,7 +1384,7 @@ function navigate(path) {
             const circles = [
               { cx: cx - spread * 0.87, cy: cy - spread * 0.5, label: 'Creativity', lx: -68, ly: -55, color: [138, 61, 230] },   // purple
               { cx: cx + spread * 0.87, cy: cy - spread * 0.5, label: 'Quality', lx: 68, ly: -55, color: [56, 132, 248] },     // blue
-              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [20, 184, 166] },                               // teal
+              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [255, 193, 7] },                               // yellow
             ];
 
             return (
