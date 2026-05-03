@@ -3596,10 +3596,10 @@ function navigate(path) {
       };
 
       const reels = [
-        { id: 1, username: 'rootlabs.studio', caption: 'How we redesigned this site in 48h ✨', likes: '12.4K', comments: '234', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)' },
-        { id: 2, username: 'rootlabs.studio', caption: 'Client reaction to their new brand 🔥', likes: '24.1K', comments: '412', gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)' },
-        { id: 3, username: 'rootlabs.studio', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%)' },
-        { id: 4, username: 'rootlabs.studio', caption: 'Design trends you NEED in 2026', likes: '15.2K', comments: '287', gradient: 'linear-gradient(135deg, #0c1220 0%, #1a3a5c 100%)' },
+        { id: 1, username: 'rootlabs.studio', caption: 'How we redesigned this site in 48h ✨', likes: '12.4K', comments: '234', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)', video: 'assets/videos/Rootlabs starts - web.mov' },
+        { id: 2, username: 'rootlabs.studio', caption: 'Client reaction to their new brand 🔥', likes: '24.1K', comments: '412', gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)', video: 'assets/videos/Recording day - web.mov' },
+        { id: 3, username: 'rootlabs.studio', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%)', image: 'img/Sent it.webp' },
+        { id: 4, username: 'rootlabs.studio', caption: 'Design trends you NEED in 2026', likes: '15.2K', comments: '287', gradient: 'linear-gradient(135deg, #0c1220 0%, #1a3a5c 100%)', video: 'assets/videos/Roots of our tree.mov' },
       ];
       const reelsCount = reels.length;
       // Extended array for infinite scroll: original + first reel copy at end
@@ -3750,7 +3750,23 @@ function navigate(path) {
                     return (
                       <div key={`reel-${i}`} className="insta-reel-slide">
                         <div className="insta-reel-bg" style={{ background: r.gradient }}>
-                          <svg className="insta-reel-play-icon" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.08)">
+                          {r.video && (
+                            <video
+                              src={r.video}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
+                          )}
+                          {r.image && (
+                            <img
+                              src={r.image}
+                              alt=""
+                              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+                            />
+                          )}
+                          <svg className="insta-reel-play-icon" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.08)" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 1 }}>
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
