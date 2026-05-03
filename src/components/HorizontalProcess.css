@@ -116,7 +116,7 @@
 /* Body copy shared across panels */
 .hproc p.body {
   font-family: 'Inter', sans-serif;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.6;
   color: #0A0A0A;
   opacity: 0.78;
@@ -659,7 +659,7 @@
 /* Body copy under the heading — let it breathe wider than the default 280px */
 .hproc__font-info .body {
   max-width: 360px;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.65;
 }
 
@@ -667,7 +667,7 @@
 @media (max-width: 1300px) {
   .hproc__font-title { font-size: 62px; }
   .hproc__font-info  { max-width: 360px; }
-  .hproc__font-info .body { max-width: 320px; font-size: 14px; }
+  .hproc__font-info .body { max-width: 320px; font-size: 16px; }
   .hproc__font-callout.hproc__cp-callout { top: -85px; right: -220px; }
 }
 
@@ -1229,7 +1229,7 @@
 .hproc__unique-body {
   align-self: center;
   margin: 50px auto 0;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 400;
   color: #0A0A0A;
   line-height: 1.35;
@@ -1277,7 +1277,7 @@
   .hproc__unique-body {
     margin-top: 42px;
     margin-left: 86px;
-    font-size: 23px;
+    font-size: 20px;
     max-width: 640px;
   }
 }
@@ -1511,7 +1511,7 @@
   .hproc__unique-body {
     align-self: center;
     margin: 24px 0 0;
-    font-size: 18px;
+    font-size: 16px;
     width: min(100%, 560px);
     padding: 0 20px;
     max-width: 560px;
@@ -1588,7 +1588,7 @@
   .hproc__unique-arrow path { stroke-width: 7; }
   .hproc__unique-body {
     margin-top: 18px;
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.45;
     padding: 0 16px;
   }
