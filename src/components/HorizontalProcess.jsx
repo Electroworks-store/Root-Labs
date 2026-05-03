@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { gsap, ScrollTrigger } from '../gsap-config';
 import beakerSketch1 from '../../img/beakersketch1.webp';
@@ -23,6 +23,8 @@ export default function HorizontalProcess() {
   const stageRef = useRef(null);
   const trackRef = useRef(null);
   const pathRef  = useRef(null);
+  const [mobilePanel, setMobilePanel] = useState(0);
+  const PANEL_COUNT = 7;
 
   useEffect(() => {
     const track = trackRef.current;
@@ -31,66 +33,12 @@ export default function HorizontalProcess() {
     const path  = pathRef.current;
     if (!track || !stage || !outer || !path) return;
 
-    const mq = window.matchMedia('(max-width: 900px)');
-    if (mq.matches) return;
-
-    const getDistance = () => track.scrollWidth - window.innerWidth;
-    // Extra scroll distance after the horizontal pan completes — the stage
-    // stays pinned (no x movement) so the last panel ("make it unique")
-    // lingers on screen before the section unpins.
-    const TAIL_DWELL = 700;
-
-    const setHeight = () => {
-      outer.style.height = `${getDistance() + TAIL_DWELL + window.innerHeight}px`;
-    };
-    setHeight();
-
-    // ── Horizontal pan ──────────────────────────────────────────────
-    const tween = gsap.to(track, {
-      x: () => -getDistance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: outer,
-        start: 'top top',
-        end: () => `+=${getDistance()}`,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      },
+    // Kill any stale triggers from a previous React StrictMode double-invoke
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.trigger === outer || st.pin === stage) st.kill();
     });
 
-    // ── Pin the stage for the full pan + tail dwell ────────────────
-    const pinST = ScrollTrigger.create({
-      trigger: outer,
-      start: 'top top',
-      end: () => `+=${getDistance() + TAIL_DWELL}`,
-      pin: stage,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    });
-
-    // ── Path draw-on-scroll ─────────────────────────────────────────
-    // getTotalLength() returns the length in SVG user units; because
-    // the SVG uses preserveAspectRatio="none" it scales, but
-    // strokeDasharray/Offset are in the same user-unit space so the
-    // ratio stays correct regardless of screen size.
-    const len = path.getTotalLength();
-    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-
-    const drawTween = gsap.to(path, {
-      strokeDashoffset: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: outer,
-        start: 'top top',
-        end: () => `+=${getDistance()}`,
-        scrub: 0.3,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    // ── Panel animations driven by the line's actual draw progress ───
-    // The line tip sits at (progress × track.scrollWidth) in track-space.
-    // Each panel fires its enter/exit when that tip crosses its left edge.
+    // ── Collect elements + initial states + animations (shared mobile & desktop) ─
     const allPanels = Array.from(track.querySelectorAll('.hproc__panel'));
 
     // --- collect visual elements ---
@@ -205,7 +153,25 @@ export default function HorizontalProcess() {
         const panelInner5 = allPanels[5]?.querySelector('.hproc__panel-inner');
         if (panelInner5) gsap.set(panelInner5, { opacity: 1 });
 
-        // Snap card container to final position so child getBoundingClientRect is accurate
+        // ── Mobile: small scatter + staggered fly-in (cursor drag not suited to touch) ──
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          if (layoutCard)      gsap.set(layoutCard,      { opacity: 0, y: 24,  scale: 0.97 });
+          if (layoutCardTitle) gsap.set(layoutCardTitle, { opacity: 0, y: 16,  x: 0, rotation: 0 });
+          if (layoutCardBody)  gsap.set(layoutCardBody,  { opacity: 0, y: 16,  x: 0, rotation: 0 });
+          if (layoutCta)       gsap.set(layoutCta,       { opacity: 0, y: 12,  x: 0, rotation: 0, scale: 1 });
+          if (layoutCircle)    gsap.set(layoutCircle,    { opacity: 0, y: 10,  x: 0, scale: 1, rotation: 0 });
+          if (layoutImg1)      gsap.set(layoutImg1,      { opacity: 0, y: -12, x: 0, rotation: 0, scale: 1 });
+          if (layoutImg2)      gsap.set(layoutImg2,      { opacity: 0, y: 12,  x: 0, rotation: 0, scale: 1 });
+          if (layoutCursor)    gsap.set(layoutCursor,    { opacity: 0 });
+          if (layoutCard) gsap.to(layoutCard, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'power3.out' });
+          [layoutImg1, layoutCircle, layoutImg2, layoutCardTitle, layoutCardBody, layoutCta]
+            .filter(Boolean)
+            .forEach((el, i) => gsap.to(el, { opacity: 1, y: 0, duration: 0.5, delay: 0.1 + i * 0.07, ease: 'power3.out', clearProps: 'transform,opacity' }));
+          if (p7Text?.length) inText(p7Text);
+          return;
+        }
+
+        // Snap card to final y for accurate child measurements (opacity stays 0)
         if (layoutCard) { gsap.killTweensOf(layoutCard); gsap.set(layoutCard, { y: 0, scale: 1 }); }
         if (layoutCursor) gsap.set(layoutCursor, { opacity: 0, x: 0, y: 0, scale: 1 });
 
@@ -345,7 +311,109 @@ export default function HorizontalProcess() {
       },
     ];
 
-    // --- single progress watcher tied to the same scroll range ---
+    // ── Defined early so GSAP refresh callbacks always have it in scope ─────
+    const getDistance = () => track.scrollWidth - window.innerWidth;
+    const TAIL_DWELL = 700;
+
+    // ── Mobile: swipe carousel with per-panel animations ────────────────────
+    const mq = window.matchMedia('(max-width: 900px)');
+    if (mq.matches) {
+      enterFns[0]?.();
+      let lastPanel = 0;
+      let rafId     = null;
+      let prevLeft  = -1;
+
+      const commit = () => {
+        rafId = null;
+        const idx = Math.min(
+          Math.round(track.scrollLeft / track.clientWidth),
+          PANEL_COUNT - 1
+        );
+        setMobilePanel(idx);
+        if (idx !== lastPanel) {
+          enterFns[idx]?.();
+          lastPanel = idx;
+        }
+      };
+
+      // Poll every animation frame; commit as soon as scrollLeft stops changing.
+      // This fires the moment snap settles — no fixed timeout needed.
+      const poll = () => {
+        if (track.scrollLeft === prevLeft) {
+          commit();
+        } else {
+          prevLeft = track.scrollLeft;
+          rafId = requestAnimationFrame(poll);
+        }
+      };
+
+      // scroll: kicks off polling (only one rAF chain at a time)
+      const onScroll = () => {
+        if (!rafId) {
+          prevLeft = track.scrollLeft;
+          rafId = requestAnimationFrame(poll);
+        }
+      };
+
+      // scrollend: authoritative on modern browsers — cancel any pending poll
+      const onScrollEnd = () => {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        commit();
+      };
+
+      track.addEventListener('scroll',    onScroll,    { passive: true });
+      track.addEventListener('scrollend', onScrollEnd, { passive: true });
+      return () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        track.removeEventListener('scroll',    onScroll);
+        track.removeEventListener('scrollend', onScrollEnd);
+      };
+    }
+
+    // ── Desktop: ScrollTrigger horizontal pan ───────────────────────────────
+    const setHeight = () => {
+      outer.style.height = `${getDistance() + TAIL_DWELL + window.innerHeight}px`;
+    };
+    setHeight();
+
+    // ── Horizontal pan ──────────────────────────────────────────────
+    const tween = gsap.to(track, {
+      x: () => -getDistance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: outer,
+        start: 'top top',
+        end: () => `+=${getDistance()}`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    // ── Pin the stage for the full pan + tail dwell ────────────────
+    const pinST = ScrollTrigger.create({
+      trigger: outer,
+      start: 'top top',
+      end: () => `+=${getDistance() + TAIL_DWELL}`,
+      pin: stage,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    });
+
+    // ── Path draw-on-scroll ─────────────────────────────────────────
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+
+    const drawTween = gsap.to(path, {
+      strokeDashoffset: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: outer,
+        start: 'top top',
+        end: () => `+=${getDistance()}`,
+        scrub: 0.3,
+        invalidateOnRefresh: true,
+      },
+    });
     // Threshold: fire when the drawn line has crossed into a panel.
     // First three panels trigger earlier (line just touches them) so the
     // initial reveal feels punchy; later panels wait until ~25% in.
@@ -432,6 +500,18 @@ export default function HorizontalProcess() {
             <PanelResponsiveness />
             <PanelLayout />
             <PanelUnique />
+          </div>
+          <div className="hproc__dots" aria-hidden="true">
+            {Array.from({ length: PANEL_COUNT }, (_, i) => (
+              <button
+                key={i}
+                className={`hproc__dot${mobilePanel === i ? ' is-active' : ''}`}
+                onClick={() => {
+                  trackRef.current?.scrollTo({ left: i * trackRef.current.clientWidth, behavior: 'smooth' });
+                }}
+                aria-label={`Go to panel ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
