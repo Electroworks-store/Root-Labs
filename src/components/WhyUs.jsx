@@ -199,7 +199,7 @@ function CardInner({ item, index }) {
               key={j}
               style={{
                 ...s.pip,
-                background: j === index ? item.tagColor : 'rgba(0,0,0,0.15)',
+                background: j === index ? '#7F77DD' : 'rgba(127,119,221,0.25)',
                 width: j === index ? '26px' : '10px',
               }}
             />
@@ -262,9 +262,9 @@ const s = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 'clamp(3.5rem, 7vw, 5.5rem) clamp(1.5rem, 6vw, 4rem) clamp(3.5rem, 6vw, 5rem)',
+    padding: 'clamp(2.25rem, 4.5vw, 3.75rem) clamp(1.5rem, 6vw, 4rem) clamp(2.25rem, 4vw, 3.25rem)',
     boxSizing: 'border-box',
-    gap: 'clamp(2rem, 4vw, 3.5rem)',
+    gap: 'clamp(1.25rem, 2.5vw, 2.25rem)',
   },
 
   /* Header inside sticky frame */
@@ -297,7 +297,7 @@ const s = {
 
   cardInner: {
     height: '100%',
-    padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+    padding: 'clamp(2rem, 3.5vw, 3rem) clamp(2rem, 3.5vw, 3rem) clamp(2rem, 3.5vw, 3rem)',
     display: 'flex',
     flexDirection: 'column',
     boxSizing: 'border-box',

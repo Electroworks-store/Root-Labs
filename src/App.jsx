@@ -784,12 +784,12 @@ function navigate(path) {
     }
 
     // Animated beaker that cycles through 4 frames
+    // Animated beaker logo for Labs section
     function AnimatedBeakerLabs() {
       const beakerFrames = [beaker1, beaker2, beaker3, beaker4];
       const [frame, setFrame] = useState(0);
       const loadedRef = useRef(false);
 
-      // Preload all beaker images into browser cache before starting animation
       useEffect(() => {
         const images = beakerFrames.map(src => {
           const img = new Image();
@@ -803,56 +803,183 @@ function navigate(path) {
 
       useEffect(() => {
         const interval = setInterval(() => {
-          if (loadedRef.current) {
-            setFrame(prev => (prev + 1) % beakerFrames.length);
-          }
+          if (loadedRef.current) setFrame(prev => (prev + 1) % beakerFrames.length);
         }, 400);
         return () => clearInterval(interval);
       }, []);
 
       return (
-        <h2 className="font-bold tracking-tight select-none" style={{ fontFamily: "'Geist', sans-serif", color: 'var(--text)', lineHeight: 1, fontSize: 'clamp(6rem, 11vw, 10rem)', display: 'inline-flex', alignItems: 'flex-end', whiteSpace: 'nowrap' }}>
-          <span>L</span>
-          <span style={{ display: 'inline-block', width: '0.7em', height: '1em', position: 'relative', zIndex: 10, flexShrink: 0 }}>
-            {beakerFrames.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt=""
-                style={{
-                  width: '8em',
-                  height: '8em',
-                  objectFit: 'contain',
-                  objectPosition: 'center bottom',
-                  position: 'absolute',
-                  bottom: '2.52em',
-                  left: '50%',
-                  transform: 'translateX(-50%) scale(1.6)',
-                  visibility: frame === i ? 'visible' : 'hidden',
-                  zIndex: 100
-                }}
-              />
-            ))}
-          </span>
-          <span>bs</span>
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {beakerFrames.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              style={{
+                width: 'clamp(180px, 22vw, 320px)',
+                height: 'auto',
+                objectFit: 'contain',
+                display: frame === i ? 'block' : 'none',
+              }}
+            />
+          ))}
+        </div>
       );
     }
 
-    // Labs Headline Section — big "Labs" with flask icon
+    // Labs Headline Section — bottle mix & pour acrostic animation
+    const LABS_WORDS = [
+      { accent: 'L', rest: 'aunch' },
+      { accent: 'A', rest: 'dapt'  },
+      { accent: 'B', rest: 'reak'  },
+      { accent: 'S', rest: 'hip'   },
+    ];
+
+    const LABS_KEYFRAMES = `
+      @keyframes labsBottleShake {
+        0%   { transform: rotate(0deg) translateX(0); }
+        10%  { transform: rotate(-14deg) translateX(-8px); }
+        25%  { transform: rotate(16deg) translateX(9px); }
+        40%  { transform: rotate(-12deg) translateX(-6px); }
+        55%  { transform: rotate(13deg) translateX(7px); }
+        70%  { transform: rotate(-8deg) translateX(-4px); }
+        85%  { transform: rotate(6deg) translateX(3px); }
+        100% { transform: rotate(0deg) translateX(0); }
+      }
+      @keyframes labsBottlePour {
+        from { transform: rotate(0deg) translateX(0) translateY(0); }
+        to   { transform: rotate(-42deg) translateX(-18px) translateY(-12px); }
+      }
+      @keyframes labsBottleReturn {
+        from { transform: rotate(-42deg) translateX(-18px) translateY(-12px); }
+        to   { transform: rotate(0deg) translateX(0) translateY(0); }
+      }
+      @keyframes labsLetterPour {
+        0%   { opacity: 0; transform: translateY(-90px) scale(0.25) rotate(-20deg); }
+        55%  { opacity: 1; transform: translateY(10px) scale(1.12) rotate(3deg); }
+        78%  { transform: translateY(-4px) scale(0.96) rotate(-1deg); }
+        100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+      }
+    `;
+
     function LabsHeadline() {
+      // idle → mixing → pouring → done  (fires once, never reverses)
+      const [phase, setPhase] = useState('idle');
+      const sectionRef = useRef(null);
+
+      useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              observer.disconnect();
+              setTimeout(() => {
+                setPhase('mixing');
+                setTimeout(() => {
+                  setPhase('pouring');
+                  setTimeout(() => setPhase('done'), LABS_WORDS.length * 200 + 900);
+                }, 1300);
+              }, 300);
+            }
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+      }, []);
+
+      const isPouring = phase === 'pouring' || phase === 'done';
+
+      const bottleAnim =
+        phase === 'mixing'                    ? 'labsBottleShake 1.2s ease-in-out forwards' :
+        phase === 'pouring' || phase === 'done' ? 'labsBottlePour 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards' :
+        'none';
+
       return (
-        <section className="py-32 px-6" style={{ background: 'var(--bg)' }}>
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center labs-headline-grid">
-            {/* Left: Description */}
-            <div className="labs-headline-text">
-              <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-                We're a small team that loves to experiment. We mix cutting-edge AI with raw human creativity to build things that feel fresh, fast, and a little unexpected.
-              </p>
-            </div>
-            {/* Right: Big "Labs" with beaker image */}
-            <div className="flex items-center justify-center md:justify-end labs-headline-beaker">
+        <section
+          ref={sectionRef}
+          style={{ background: '#F5F4F0', padding: 'clamp(5rem, 10vw, 9rem) clamp(1.5rem, 6vw, 4rem)' }}
+        >
+          <style>{LABS_KEYFRAMES}</style>
+          <div style={{
+            maxWidth: '900px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 'clamp(2rem, 4vw, 4rem)',
+          }}>
+            {/* Bottle — shakes, tilts to pour, then fades away */}
+            <div style={{
+              animation: bottleAnim,
+              transformOrigin: 'bottom center',
+              opacity: phase === 'done' ? 0 : 1,
+              transition: phase === 'done' ? 'opacity 0.6s ease 0.4s' : 'none',
+              pointerEvents: 'none',
+            }}>
               <AnimatedBeakerLabs />
+            </div>
+
+            {/* Acrostic — letters pour in one by one */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15em', alignItems: 'flex-start' }}>
+              {LABS_WORDS.map(({ accent, rest }, i) => {
+                const delay = i * 200;
+                return (
+                  <div
+                    key={accent}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      fontSize: 'clamp(4rem, 6vw, 6rem)',
+                      fontWeight: 500,
+                      lineHeight: 1.1,
+                      fontFamily: "'Helvetica Now', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                    }}
+                  >
+                    {/* Accent letter — drops in with bouncy pour keyframe */}
+                    <span style={{
+                      color: '#534AB7',
+                      flexShrink: 0,
+                      display: 'inline-block',
+                      animation: isPouring ? `labsLetterPour 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms both` : 'none',
+                      opacity: isPouring ? undefined : 0,
+                    }}>
+                      {accent}
+                    </span>
+                    {/* Rest of word — slides in after letter lands */}
+                    <span style={{
+                      color: '#1a1917',
+                      overflow: 'hidden',
+                      display: 'inline-block',
+                      maxWidth: isPouring ? '8ch' : '0ch',
+                      whiteSpace: 'nowrap',
+                      transition: isPouring
+                        ? `max-width 0.55s cubic-bezier(0.4, 0, 0.2, 1) ${delay + 320}ms`
+                        : 'none',
+                    }}>
+                      {rest}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {/* Tagline */}
+              <p style={{
+                marginTop: '1.5rem',
+                fontSize: '14px',
+                color: '#6B6563',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                lineHeight: 1.6,
+                maxWidth: '36ch',
+                opacity: isPouring ? 1 : 0,
+                transform: isPouring ? 'translateY(0)' : 'translateY(8px)',
+                transition: isPouring
+                  ? `opacity 0.6s ease ${LABS_WORDS.length * 200 + 600}ms, transform 0.6s ease ${LABS_WORDS.length * 200 + 600}ms`
+                  : 'none',
+              }}>
+                We mix cutting-edge AI with raw human creativity to build things that feel fresh, fast, and a little unexpected.
+              </p>
             </div>
           </div>
         </section>
@@ -3469,10 +3596,10 @@ function navigate(path) {
       };
 
       const reels = [
-        { id: 1, username: 'rootlabs.studio', caption: 'How we redesigned this site in 48h ✨', likes: '12.4K', comments: '234', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)' },
-        { id: 2, username: 'rootlabs.studio', caption: 'Client reaction to their new brand 🔥', likes: '24.1K', comments: '412', gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)' },
-        { id: 3, username: 'rootlabs.studio', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%)' },
-        { id: 4, username: 'rootlabs.studio', caption: 'Design trends you NEED in 2026', likes: '15.2K', comments: '287', gradient: 'linear-gradient(135deg, #0c1220 0%, #1a3a5c 100%)' },
+        { id: 1, username: 'rootlabs.studio', caption: 'How we redesigned this site in 48h ✨', likes: '12.4K', comments: '234', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)', video: 'assets/videos/Rootlabs starts - web.mov' },
+        { id: 2, username: 'rootlabs.studio', caption: 'Client reaction to their new brand 🔥', likes: '24.1K', comments: '412', gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)', video: 'assets/videos/Recording day - web.mov' },
+        { id: 3, username: 'rootlabs.studio', caption: 'POV: Your website finally converts 💰', likes: '31.8K', comments: '523', gradient: 'linear-gradient(135deg, #1a1a2e 0%, #4a1942 100%)', image: 'img/Sent it.webp' },
+        { id: 4, username: 'rootlabs.studio', caption: 'Design trends you NEED in 2026', likes: '15.2K', comments: '287', gradient: 'linear-gradient(135deg, #0c1220 0%, #1a3a5c 100%)', video: 'assets/videos/Roots of our tree.mov' },
       ];
       const reelsCount = reels.length;
       // Extended array for infinite scroll: original + first reel copy at end
@@ -3623,7 +3750,23 @@ function navigate(path) {
                     return (
                       <div key={`reel-${i}`} className="insta-reel-slide">
                         <div className="insta-reel-bg" style={{ background: r.gradient }}>
-                          <svg className="insta-reel-play-icon" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.08)">
+                          {r.video && (
+                            <video
+                              src={r.video}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
+                          )}
+                          {r.image && (
+                            <img
+                              src={r.image}
+                              alt=""
+                              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+                            />
+                          )}
+                          <svg className="insta-reel-play-icon" width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.08)" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 1 }}>
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
