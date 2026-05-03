@@ -1545,9 +1545,10 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
+                  { name: 'Adrian', role: 'CEO', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
                   { name: 'Viktor', role: 'Design & production specialist', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
+                  { name: 'Štěpán', role: 'AI Automation Specialist', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` },
+                  { name: 'David', role: 'CTO', tagline: '"Makes it scale"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/DD_avatar.webp` }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -1588,7 +1589,8 @@ function navigate(path) {
                           alt={member.name}
                           className="w-14 h-14 lg:w-16 lg:h-16 rounded-full object-cover flex-shrink-0"
                           style={{
-                            border: '2px solid var(--glass-border)'
+                            border: '2px solid var(--glass-border)',
+                            objectPosition: (idx === 1 || idx === 2) ? 'center 35%' : 'center center'
                           }}
                         />
                       </div>
@@ -1601,7 +1603,8 @@ function navigate(path) {
                         alt={member.name}
                         className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                         style={{
-                          border: '2px solid var(--glass-border)'
+                          border: '2px solid var(--glass-border)',
+                          objectPosition: (idx === 1 || idx === 2) ? 'center 35%' : 'center center'
                         }}
                       />
                       <p 
