@@ -19,8 +19,8 @@ const HERO2_STYLES = `
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  justify-content: flex-end;
+  padding: clamp(1rem, 2vw, 2rem) clamp(2rem, 5vw, 4.5rem) clamp(2rem, 5vw, 4.5rem) clamp(2rem, 5vw, 4.5rem);
   z-index: 1;
   background: var(--h2-bg);
   color: var(--h2-ink);
@@ -70,104 +70,106 @@ const HERO2_STYLES = `
   to   { opacity: 1; transform: translate(0, 0) scale(1); }
 }
 
-/* Typography wrapper */
 .h2-content {
-  position: relative;
-  z-index: 2 !important;
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* "Build your digital" subtitle */
-.h2-eyebrow {
-  font-family: "Larken", serif;
-  font-weight: 400;
-  font-size: clamp(2.4rem, 5.6vw, 4.6rem);
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-  color: var(--h2-ink);
-  margin-bottom: clamp(0.8rem, 2.4vw, 1.8rem);
-  opacity: 0;
-  transform: translateY(10px);
-  animation: h2fadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
-}
-
-@keyframes h2fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Giant ROOTS heading */
-.h2-roots {
-  font-family: "Larken", serif;
-  font-weight: 500;
-  font-size: clamp(5rem, 22vw, 22rem);
-  line-height: 0.95;
-  color: var(--h2-ink);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  letter-spacing: -0.04em;
-  user-select: none;
-  margin: 0;
-  padding: 0;
-}
-
-.h2-roots span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: h2letterIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-.h2-roots span:nth-child(1) { animation-delay: 0.55s; }
-.h2-roots span:nth-child(2) { animation-delay: 0.63s; }
-.h2-roots span:nth-child(3) { animation-delay: 0.71s; }
-.h2-roots span:nth-child(4) { animation-delay: 0.79s; }
-.h2-roots span:nth-child(5) { animation-delay: 0.87s; }
-
-@keyframes h2letterIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Bottom row */
-.h2-footer {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4.5rem);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
-  z-index: 3 !important;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: h2fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
+  left: clamp(2.5rem, 8.85vw, 8rem);
+  right: clamp(2.5rem, 9vw, 8.5rem);
+  bottom: clamp(4.5rem, 9.5vh, 5.6rem);
+  z-index: 3;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "heading heading"
+    "actions copy";
+  align-items: end;
+  column-gap: clamp(2rem, 6vw, 8rem);
+  row-gap: clamp(0.9rem, 2vw, 1.4rem);
 }
 
-.h2-module-tag {
-  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.h2-heading {
+  grid-area: heading;
+  margin: 0 0 clamp(0.8rem, 1.8vw, 1.6rem) -0.5rem;
   color: var(--h2-ink);
+  font-family: "Helvetica Neue", Helvetica, "Geist", Arial, sans-serif;
+  letter-spacing: -0.055em;
 }
 
-.h2-lede {
-  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: var(--h2-muted);
-  max-width: 400px;
+.h2-heading-top,
+.h2-heading-main {
+  display: block;
+}
+
+.h2-heading-top {
+  margin-bottom: clamp(1rem, 2.4vw, 1.7rem);
+  font-size: clamp(3rem, 5.15vw, 4.7rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.052em;
+}
+
+.h2-heading-main {
+  font-size: clamp(6rem, 13vw, 12.4rem);
+  font-weight: 700;
+  line-height: 0.82;
+  white-space: nowrap;
+}
+
+.h2-copy {
+  grid-area: copy;
+  max-width: 100%;
+  margin: 0;
+  color: rgba(20, 18, 18, 0.5);
+  font-family: "Helvetica Neue", Helvetica, "Geist", Arial, sans-serif;
+  font-size: clamp(0.85rem, 0.98vw, 0.95rem);
+  font-weight: 400;
+  line-height: 1.45;
   text-align: right;
+  justify-self: end;
+}
+
+.h2-actions {
+  grid-area: actions;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.h2-button {
+  min-height: 42px;
+  padding: 0 1.65rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Helvetica Neue", Helvetica, "Geist", Arial, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.h2-button:hover {
+  transform: translateY(-1px);
+}
+
+.h2-button-primary {
+  background: #8A3DE6;
+  color: #fff;
+  border: 1px solid #8A3DE6;
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.13);
+}
+
+.h2-button-secondary {
+  background: transparent;
+  color: rgba(20, 18, 18, 0.74);
+  border: 1px solid rgba(20, 18, 18, 0.18);
+  font-weight: 500;
+}
+
+.h2-button-secondary:hover {
+  border-color: rgba(20, 18, 18, 0.34);
 }
 
 /* Falling petals layer */
@@ -195,26 +197,45 @@ const HERO2_STYLES = `
     width: 100%;
     opacity: 0.95;
   }
-  .h2-roots {
-    font-size: clamp(4rem, 24vw, 9rem);
+.h2-content {
+    left: clamp(1.25rem, 6vw, 2rem);
+    right: clamp(1.25rem, 6vw, 2rem);
+    bottom: clamp(3rem, 7vh, 4.5rem);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "heading"
+      "actions"
+      "copy";
+    row-gap: 1rem;
   }
-  .h2-eyebrow {
-    font-size: clamp(2rem, 8vw, 3rem);
-  }
-  .h2-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .h2-lede {
+  .h2-copy {
     text-align: left;
+  }
+  .h2-heading-top {
+    margin-bottom: 0.75rem;
+    font-size: clamp(2.25rem, 10vw, 3.25rem);
+  }
+  .h2-heading-main {
+    font-size: clamp(3.5rem, 18vw, 5.25rem);
+    line-height: 0.9;
+    white-space: normal;
+  }
+  .h2-copy {
     max-width: 100%;
+    font-size: 0.9rem;
+  }
+  .h2-actions {
+    justify-self: end;
+    gap: 0.75rem;
+  }
+  .h2-button {
+    min-height: 40px;
+    padding: 0 1.1rem;
+    font-size: 0.8rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .h2-eyebrow,
-  .h2-roots span,
-  .h2-footer,
   .h2-tree {
     opacity: 1 !important;
     transform: none !important;
@@ -243,8 +264,8 @@ function initPhysics(heroEl, container) {
   const { Engine, Runner, Bodies, Body, Composite, Events } = window.Matter;
 
   const engine = Engine.create();
-  engine.gravity.y = 0.08;
-  engine.gravity.scale = 0.0028;
+  engine.gravity.y = 0.05;
+  engine.gravity.scale = 0.0018;
 
   const runner = Runner.create();
   Runner.run(runner, engine);
@@ -315,26 +336,28 @@ function initPhysics(heroEl, container) {
       ? { category: CAT_DEFAULT, mask: 0xFFFFFFFF }
       : { category: CAT_DEFAULT, mask: CAT_DEFAULT };
 
+    const airFriction = gsap.utils.random(0.045, 0.11);
+
     let body = Bodies.fromVertices(x, y, [verts], {
-      frictionAir: 0.04,
+      frictionAir: airFriction,
       friction: 0.8,
       restitution: 0.05,
-      density: 0.0008,
+      density: gsap.utils.random(0.0005, 0.0012),
       collisionFilter: petalFilter,
     }, true);
 
     if (!body) {
       body = Bodies.circle(x, y, size / 2, {
-        frictionAir: 0.04,
+        frictionAir: airFriction,
         friction: 0.8,
         restitution: 0.05,
-        density: 0.0008,
+        density: gsap.utils.random(0.0005, 0.0012),
         collisionFilter: petalFilter,
       });
     }
 
-    Body.setVelocity(body, { x: gsap.utils.random(-1.2, 1.2), y: gsap.utils.random(0, 0.6) });
-    Body.setAngularVelocity(body, gsap.utils.random(-0.05, 0.05));
+    Body.setVelocity(body, { x: gsap.utils.random(-2.8, 2.8), y: gsap.utils.random(0.2, 1.2) });
+    Body.setAngularVelocity(body, gsap.utils.random(-0.12, 0.12));
     Composite.add(engine.world, body);
 
     petals.push({
@@ -516,7 +539,6 @@ function initPhysics(heroEl, container) {
 export default function Hero2Section() {
   const heroRef = useRef(null);
   const petalsRef = useRef(null);
-  const eyebrowRef = useRef(null);
 
   // Inject scoped styles once
   useEffect(() => {
@@ -540,30 +562,7 @@ export default function Hero2Section() {
       const container = petalsRef.current;
       if (!heroEl || !container) return;
 
-      // Wrap eyebrow chars in inline spans (legacy — no collision bodies,
-      // but keeps parity with the standalone hero2.html version)
-      const eyebrow = eyebrowRef.current;
-      if (eyebrow && !eyebrow.dataset.wrapped) {
-        const text = eyebrow.textContent;
-        const frag = document.createDocumentFragment();
-        for (let i = 0; i < text.length; i++) {
-          const ch = text[i];
-          if (ch === ' ') {
-            frag.appendChild(document.createTextNode(' '));
-          } else {
-            const span = document.createElement('span');
-            span.textContent = ch;
-            span.dataset.letter = ch;
-            span.style.display = 'inline-block';
-            frag.appendChild(span);
-          }
-        }
-        eyebrow.innerHTML = '';
-        eyebrow.appendChild(frag);
-        eyebrow.dataset.wrapped = '1';
-      }
-
-      // Wait for fonts + entrance animations (~1.7 s) before measuring layout
+      // Wait for branch entrance before measuring layout.
       const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
       const entranceDone = new Promise(res => setTimeout(res, 1700));
       Promise.all([fontsReady, entranceDone]).then(() => {
@@ -598,27 +597,23 @@ export default function Hero2Section() {
         <img src="/img/Sakura%20branch.svg" alt="" />
       </div>
 
-      {/* Falling petals (Matter.js-driven) */}
-      <div className="h2-petals" ref={petalsRef} aria-hidden="true" />
-
       <div className="h2-content">
-        <h2 className="h2-eyebrow" ref={eyebrowRef}>We build your digital</h2>
-        <h1 className="h2-roots" aria-label="ROOTS">
-          <span data-letter="R">R</span>
-          <span data-letter="O">O</span>
-          <span data-letter="O">O</span>
-          <span data-letter="T">T</span>
-          <span data-letter="S">S</span>
+        <h1 className="h2-heading">
+          <span className="h2-heading-top">We build your</span>
+          <span className="h2-heading-main">Digital Roots</span>
         </h1>
-      </div>
-
-      <div className="h2-footer">
-        <div className="h2-module-tag">VERSION 1.8</div>
-        <p className="h2-lede">
-          We create unique foundations for your&nbsp;business.<br />
+        <p className="h2-copy">
+          We create unique foundations for your business.<br />
           Strategic design and code, built to scale.
         </p>
+        <div className="h2-actions" aria-label="Hero calls to action">
+          <a href="#contact" className="h2-button h2-button-primary">Get Started</a>
+          <a href="#work" className="h2-button h2-button-secondary">See Our Work</a>
+        </div>
       </div>
+
+      {/* Falling petals (Matter.js-driven) */}
+      <div className="h2-petals" ref={petalsRef} aria-hidden="true" />
     </main>
   );
 }

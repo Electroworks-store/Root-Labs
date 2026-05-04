@@ -2668,32 +2668,206 @@ function navigate(path) {
       );
     }
 
-    // Stats Counter Section
+    // Stats / Proof Section
+    const METRICS_STYLES = `
+      .metrics-section {
+        position: relative;
+        min-height: clamp(34rem, 76vh, 48rem);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.46fr) minmax(0, 1fr);
+        align-items: center;
+        column-gap: clamp(2rem, 6vw, 7rem);
+        padding: clamp(4rem, 8vw, 7rem) clamp(3rem, 8vw, 9rem);
+        background: #f8f8f7;
+        overflow: hidden;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      .metrics-stat {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+      }
+      .metrics-stat--left {
+        align-items: flex-start;
+      }
+      .metrics-stat--right {
+        align-items: flex-start;
+      }
+      .metrics-number-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.2em;
+        line-height: 0.82;
+        white-space: nowrap;
+      }
+      .metrics-num {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(6rem, 12vw, 12rem);
+        font-weight: 600;
+        line-height: 0.82;
+        letter-spacing: -0.075em;
+        color: #000;
+        font-variant-numeric: tabular-nums;
+      }
+      .metrics-unit {
+        color: #8A3DE6;
+        font-size: clamp(4rem, 7.4vw, 7rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.06em;
+      }
+      .metrics-unit--years {
+        transform: translateY(-0.14em);
+      }
+      .metrics-unit--plus {
+        transform: translateY(-0.02em);
+      }
+      .metrics-label {
+        margin-top: clamp(1rem, 2vw, 1.5rem);
+        font-size: clamp(2.15rem, 4vw, 4rem);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.055em;
+        color: rgba(0, 0, 0, 0.84);
+        white-space: nowrap;
+      }
+      .metrics-carousel {
+        position: relative;
+        justify-self: center;
+        width: clamp(5.8rem, 9vw, 8.8rem);
+        height: min(78vh, 39rem);
+        overflow: hidden;
+      }
+      .metrics-carousel::before,
+      .metrics-carousel::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        z-index: 2;
+        width: min(24rem, 30vw);
+        height: 15%;
+        pointer-events: none;
+        transform: translateX(-50%);
+      }
+      .metrics-carousel::before {
+        top: 0;
+        background: linear-gradient(to bottom, #f8f8f7 0%, rgba(248, 248, 247, 0.96) 25%, rgba(248, 248, 247, 0) 100%);
+      }
+      .metrics-carousel::after {
+        bottom: 0;
+        background: linear-gradient(to top, #f8f8f7 0%, rgba(248, 248, 247, 0.96) 25%, rgba(248, 248, 247, 0) 100%);
+      }
+      .metrics-icon-track {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(1.9rem, 4vh, 3rem);
+        animation: metricsIconLoop 13s linear infinite;
+        will-change: transform;
+      }
+      .metrics-icon-placeholder {
+        width: clamp(4.4rem, 7vw, 6.7rem);
+        aspect-ratio: 1 / 1;
+        flex: 0 0 auto;
+        border-radius: clamp(1.05rem, 1.8vw, 1.55rem);
+        overflow: hidden;
+      }
+      .metrics-icon-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      @keyframes metricsIconLoop {
+        from { transform: translateY(-50%); }
+        to { transform: translateY(0); }
+      }
+      @media (max-width: 980px) {
+        .metrics-section {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          row-gap: clamp(1.25rem, 5vw, 2.25rem);
+          min-height: auto;
+          padding: clamp(2.5rem, 10vw, 4rem) 1.5rem;
+          text-align: center;
+        }
+        .metrics-stat,
+        .metrics-stat--left,
+        .metrics-stat--right {
+          align-items: center;
+        }
+        .metrics-carousel {
+          order: 2;
+          height: clamp(12rem, 42vh, 16rem);
+          width: clamp(4.8rem, 18vw, 6.5rem);
+        }
+        .metrics-stat--left { order: 1; }
+        .metrics-stat--right { order: 3; }
+        .metrics-num {
+          font-size: clamp(5.8rem, 26vw, 9rem);
+        }
+        .metrics-unit {
+          font-size: clamp(2.9rem, 13vw, 4.6rem);
+        }
+        .metrics-label {
+          white-space: normal;
+          margin-top: clamp(0.6rem, 2vw, 1rem);
+          font-size: clamp(1.65rem, 8vw, 3rem);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .metrics-icon-track { animation: none; }
+      }
+    `;
+
+    const DEFAULT_METRICS = [
+      { number: 3, suffix: 'y', label: 'Of experience' },
+      { number: 20, suffix: '+', label: 'Websites redesigned' },
+    ];
+
+    const METRIC_LOGOS = [
+      '/logos/logo1.webp',
+      '/logos/logo2.webp',
+      '/logos/logo3.webp',
+      '/logos/logo4.webp',
+      '/logos/logo5.webp',
+      '/logos/logo6.webp',
+    ];
+
     function Stats() {
       const statsData = document.getElementById('stats-data');
-      const stats = statsData ? JSON.parse(statsData.dataset.stats || '[]') : [];
+      const parsedStats = statsData ? JSON.parse(statsData.dataset.stats || '[]') : [];
+      const stats = parsedStats.length ? parsedStats : DEFAULT_METRICS;
       const [counts, setCounts] = useState(stats.map(() => 0));
       const sectionRef = useRef(null);
       const hasAnimated = useRef(false);
 
       useEffect(() => {
+        let styleEl = document.querySelector('style[data-metrics-styles]');
+        if (!styleEl) {
+          styleEl = document.createElement('style');
+          styleEl.setAttribute('data-metrics-styles', '');
+          document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = METRICS_STYLES;
+
         if (!sectionRef.current || stats.length === 0) return;
 
         const trigger = ScrollTrigger.create({
           trigger: sectionRef.current,
-          start: 'top 75%',
+          start: 'top 80%',
           once: true,
           onEnter: () => {
             if (hasAnimated.current) return;
             hasAnimated.current = true;
-
             stats.forEach((stat, index) => {
               const obj = { val: 0 };
               gsap.to(obj, {
                 val: stat.number,
-                duration: 2.2,
-                ease: 'power2.out',
-                delay: index * 0.15,
+                duration: 1.8,
+                ease: 'power3.out',
+                delay: index * 0.1,
                 onUpdate: () => {
                   setCounts(prev => {
                     const next = [...prev];
@@ -2703,111 +2877,48 @@ function navigate(path) {
                 },
               });
             });
-
-            // Stagger the stat items in
-            gsap.from(sectionRef.current.querySelectorAll('.stat-item'), {
-              y: 50,
+            gsap.from(sectionRef.current.querySelectorAll('.metrics-stat'), {
               opacity: 0,
-              duration: 0.9,
-              stagger: 0.12,
-              ease: 'back.out(1.4)',
-            });
-
-            // Animate the decorative lines
-            gsap.from(sectionRef.current.querySelectorAll('.stat-line'), {
-              scaleX: 0,
+              y: 24,
               duration: 0.7,
-              stagger: 0.12,
+              stagger: 0.1,
               ease: 'power3.out',
-              delay: 0.2,
             });
           },
         });
-
         return () => trigger.kill();
       }, [stats.length]);
 
-      const statColors = [
-        '#8A3DE6', // Purple
-        '#38bdf8', // Blue
-        '#8A3DE6', // Purple
-        '#38bdf8'  // Blue (was green)
-      ];
+      const carouselItems = [...METRIC_LOGOS, ...METRIC_LOGOS];
+      const experienceStat = stats[0] || DEFAULT_METRICS[0];
+      const projectStat = stats[1] || DEFAULT_METRICS[1];
 
       return (
-        <section ref={sectionRef} className="stats-section py-20">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 gap-8 justify-items-center max-w-3xl mx-auto">
-              {stats.map((stat, idx) => {
-                const color = statColors[idx % statColors.length];
-                return (
-                  <div 
-                    key={idx} 
-                    className="stat-item group relative text-center"
-                  >
-                    {/* Number container with line centered over number only */}
-                    <div className="relative inline-block mb-8">
-                      {/* Decorative line on top - centered over the number */}
-                      <div 
-                        className="stat-line h-1 w-16 mb-6 mx-auto rounded-full transition-all duration-500 group-hover:w-full"
-                        style={{ background: color, transformOrigin: 'center' }}
-                      />
-                      
-                      {/* Number - Outlined style matching process numbers */}
-                      <div className="relative inline-flex justify-center">
-                        <div 
-                          className="text-[5rem] md:text-[7rem] font-bold leading-none transition-all duration-300 group-hover:scale-105"
-                          style={{ 
-                            fontFamily: "'Space Grotesk', sans-serif",
-                            WebkitTextStroke: `2.5px ${color}`,
-                            WebkitTextFillColor: 'transparent',
-                            backgroundImage: `radial-gradient(circle, ${color}20 0%, ${color}15 100%)`,
-                            WebkitBackgroundClip: 'text',
-                            backgroundClip: 'text',
-                            color: 'transparent'
-                          }}
-                        >
-                          {counts[idx]}
-                        </div>
-                        {stat.suffix && (
-                          <div 
-                            className="absolute left-full bottom-2 text-[2rem] md:text-[2.5rem] font-bold leading-none ml-1 transition-all duration-300 group-hover:scale-105"
-                            style={{ 
-                              fontFamily: "'Space Grotesk', sans-serif",
-                              WebkitTextStroke: `1.5px ${color}`,
-                              WebkitTextFillColor: 'transparent',
-                              backgroundImage: `radial-gradient(circle, ${color}20 0%, ${color}15 100%)`,
-                              WebkitBackgroundClip: 'text',
-                              backgroundClip: 'text',
-                              color: 'transparent'
-                            }}
-                          >
-                            {stat.suffix}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    
-                    {/* Label */}
-                    <div 
-                      className="text-sm uppercase tracking-wider font-medium"
-                      style={{ color: 'var(--muted)' }}
-                    >
-                      {stat.label}
-                    </div>
-                    
-                    {/* Hover glow effect */}
-                    <div 
-                      className="absolute -inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"
-                      style={{
-                        background: `radial-gradient(circle at center, ${color}08 0%, transparent 70%)`,
-                        filter: 'blur(20px)'
-                      }}
-                    />
-                  </div>
-                );
-              })}
+        <section ref={sectionRef} className="metrics-section">
+          <div className="metrics-stat metrics-stat--left">
+            <div className="metrics-number-row">
+              <span className="metrics-num">{counts[0]}</span>
+              <span className="metrics-unit metrics-unit--years">{experienceStat.suffix}</span>
             </div>
+            <div className="metrics-label">{experienceStat.label}</div>
+          </div>
+
+          <div className="metrics-carousel" aria-hidden="true">
+            <div className="metrics-icon-track">
+              {carouselItems.map((src, index) => (
+                <span key={index} className="metrics-icon-placeholder">
+                  <img src={src} alt="" draggable="false" />
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="metrics-stat metrics-stat--right">
+            <div className="metrics-number-row">
+              <span className="metrics-num">{counts[1]}</span>
+              <span className="metrics-unit metrics-unit--plus">{projectStat.suffix}</span>
+            </div>
+            <div className="metrics-label">{projectStat.label}</div>
           </div>
         </section>
       );
