@@ -1384,7 +1384,7 @@ function navigate(path) {
             const circles = [
               { cx: cx - spread * 0.87, cy: cy - spread * 0.5, label: 'Creativity', lx: -68, ly: -55, color: [138, 61, 230] },   // purple
               { cx: cx + spread * 0.87, cy: cy - spread * 0.5, label: 'Quality', lx: 68, ly: -55, color: [56, 132, 248] },     // blue
-              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [20, 184, 166] },                               // teal
+              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [255, 193, 7] },                               // yellow
             ];
 
             return (
@@ -1545,9 +1545,10 @@ function navigate(path) {
 
               <div className="space-y-0">
                 {[
-                  { name: 'Adrian', role: 'Full stack dev', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
+                  { name: 'Adrian', role: 'CEO', tagline: '"Builds different"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Adrian_avatar.png` },
                   { name: 'Viktor', role: 'Design & production specialist', tagline: '"Made it look good"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Viky_avatar.png` },
-                  { name: 'Štěpán', role: 'Growth & strategy', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png`}
+                  { name: 'Štěpán', role: 'AI Automation Specialist', tagline: '"Kept it from falling apart"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/Nepik_avatar.png` },
+                  { name: 'David', role: 'CTO', tagline: '"Makes it scale"', color: 'var(--primary)', avatar: `${import.meta.env.BASE_URL}img/DD_avatar.webp` }
                 ].map((member, idx) => (
                   <div 
                     key={idx}
@@ -1588,7 +1589,8 @@ function navigate(path) {
                           alt={member.name}
                           className="w-14 h-14 lg:w-16 lg:h-16 rounded-full object-cover flex-shrink-0"
                           style={{
-                            border: '2px solid var(--glass-border)'
+                            border: '2px solid var(--glass-border)',
+                            objectPosition: (idx === 1 || idx === 2) ? 'center 35%' : 'center center'
                           }}
                         />
                       </div>
@@ -1601,7 +1603,8 @@ function navigate(path) {
                         alt={member.name}
                         className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                         style={{
-                          border: '2px solid var(--glass-border)'
+                          border: '2px solid var(--glass-border)',
+                          objectPosition: (idx === 1 || idx === 2) ? 'center 35%' : 'center center'
                         }}
                       />
                       <p 
@@ -4752,13 +4755,13 @@ function navigate(path) {
                       href="#pricing"
                       className="glow-on-hover relative px-8 py-4 rounded-full text-white font-semibold text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]"
                       style={{ 
-                        background: 'linear-gradient(135deg, #FF7A2D 0%, var(--primary) 100%)',
+                        background: 'linear-gradient(135deg, #FF7A2D 0%, #FB923C 100%)',
                         boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)'
                       }}
                     >
                       View Pricing
                     </a>
-                    <a href="#contact" className="btn-glass px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]">
+                    <a href="#contact" className="btn-glass btn-glass-social px-8 py-4 text-lg inline-flex items-center transition-all duration-300 hover:translate-y-[-1px]" style={{ boxShadow: 'inset 0 0 0 2px rgba(255, 122, 45, 0.25)', color: '#FF7A2D' }}>
                       Get Started
                     </a>
                   </div>

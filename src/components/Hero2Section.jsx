@@ -85,7 +85,7 @@ const HERO2_STYLES = `
 
 /* "Build your digital" subtitle */
 .h2-eyebrow {
-  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Larken", serif;
   font-weight: 400;
   font-size: clamp(2.4rem, 5.6vw, 4.6rem);
   letter-spacing: -0.025em;
@@ -103,8 +103,8 @@ const HERO2_STYLES = `
 
 /* Giant ROOTS heading */
 .h2-roots {
-  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-family: "Larken", serif;
+  font-weight: 500;
   font-size: clamp(5rem, 22vw, 22rem);
   line-height: 0.95;
   color: var(--h2-ink);

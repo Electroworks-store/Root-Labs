@@ -23,6 +23,7 @@
   top: 0;
   height: 100vh;
   width: 100%;
+  background: #F5F2EC;
   overflow: visible;
   display: flex;
   align-items: stretch;
@@ -115,7 +116,7 @@
 /* Body copy shared across panels */
 .hproc p.body {
   font-family: 'Inter', sans-serif;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.6;
   color: #0A0A0A;
   opacity: 0.78;
@@ -145,7 +146,7 @@
   right: -235px;
   z-index: 5;
   transform: rotate(20deg);
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 13px;
   font-weight: 500;
   color: #4A4A4A;
@@ -222,7 +223,7 @@
   flex-direction: column;
   gap: 2px;
   padding-top: 4px;
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 10px;
   line-height: 1.25;
   color: #4A4A4A;
@@ -252,9 +253,9 @@
 }
 .hproc__cp-callout-box {
   position: relative;
-  font-family: 'Caveat', 'Kalam', cursive;
+  font-family: 'Kalam', cursive;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 400;
   color: #0A0A0A;
   padding: 10px 22px;
   white-space: nowrap;
@@ -427,7 +428,7 @@
   flex: 1;
 }
 .hproc__ios-todo__badge {
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 10px;
   font-weight: 600;
   color: #1a1a1a;
@@ -511,7 +512,7 @@
 
 /* "done" pill on completed rows */
 .hproc__ios-todo__check-pill {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -634,7 +635,7 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Larken', serif;
   font-weight: 700;
   font-size: 76px;
   line-height: 1.0;
@@ -658,7 +659,7 @@
 /* Body copy under the heading — let it breathe wider than the default 280px */
 .hproc__font-info .body {
   max-width: 360px;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.65;
 }
 
@@ -666,7 +667,7 @@
 @media (max-width: 1300px) {
   .hproc__font-title { font-size: 62px; }
   .hproc__font-info  { max-width: 360px; }
-  .hproc__font-info .body { max-width: 320px; font-size: 14px; }
+  .hproc__font-info .body { max-width: 320px; font-size: 16px; }
   .hproc__font-callout.hproc__cp-callout { top: -85px; right: -220px; }
 }
 
@@ -780,7 +781,7 @@
   min-width: 0;
 }
 .hproc__morph-url span {
-  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 7px;
   color: rgba(0, 0, 0, 0.45);
   letter-spacing: 0.02em;
@@ -848,7 +849,7 @@
   gap: 5px;
 }
 .hproc__morph-heading {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Larken', serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 1.05;
@@ -1228,7 +1229,7 @@
 .hproc__unique-body {
   align-self: center;
   margin: 50px auto 0;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 400;
   color: #0A0A0A;
   line-height: 1.35;
@@ -1276,135 +1277,365 @@
   .hproc__unique-body {
     margin-top: 42px;
     margin-left: 86px;
-    font-size: 23px;
+    font-size: 20px;
     max-width: 640px;
   }
 }
 
+/* Dot indicators — hidden on desktop, shown via mobile query */
+.hproc__dots { display: none; }
+
 /* ============================== */
-/* Mobile fallback (vertical)     */
+/* Mobile swipe carousel          */
 /* ============================== */
 @media (max-width: 900px) {
-  .hproc__outer { height: auto !important; }
+  .hproc__outer {
+    height: auto !important;
+    overflow: hidden;
+  }
+
   .hproc__stage {
     position: relative;
-    height: auto;
+    height: 100svh;
+    /* svh fallback */
+    min-height: 100vh;
+    overflow: hidden;
     display: block;
   }
+
+  /* Horizontal snap track */
   .hproc__track {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     transform: none !important;
-    padding: 0 24px;
+    padding: 0;
+    gap: 0;
   }
+
+  .hproc__track::-webkit-scrollbar { display: none; }
+
+  /* Each panel is one full viewport wide */
   .hproc__panel {
+    flex: 0 0 100%;
     width: 100%;
-    min-height: auto;
-    padding: 50px 0;
+    height: 100%;
+    min-height: 0;
+    scroll-snap-align: start;
+    overflow: visible;
+    padding: 48px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
+
+  .hproc__panel--above,
+  .hproc__panel--below,
+  .hproc__panel--center {
+    align-items: center;
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
+
   .hproc__waves { display: none; }
+
+  /* ── Creation Process panel ──────────────────────── */
+  .hproc__cp-stage {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    gap: 20px;
+    padding: 12px 8px;
+    transform: none;
+  }
+
+  .hproc__cp-chip { display: none; }
+
+  .hproc__cp-board { --cell: 68px; --gap: 7px; }
+
+  .hproc__cp-title {
+    font-size: 56px;
+    text-align: center;
+    position: static;
+  }
+
+  /* Hide handwritten callouts — they overflow outside the panel */
+  .hproc__cp-callout { display: none; }
+
+  /* ── JustForNow panel ────────────────────────────── */
+  .hproc__jfn-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  /* ── Font panel ──────────────────────────────────── */
+  .hproc__font-layout { padding-top: 70px; }
+  .hproc__font-title { font-size: 56px; }
+  .hproc__font-callout.hproc__cp-callout { display: none; }
+
+  /* ── Responsiveness panel ────────────────────────── */
+  .hproc__resp-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .hproc__resp-browser { width: 280px; }
+
+  /* Re-scale morph keyframes to fit mobile (~0.74× of desktop 380px) */
+  @keyframes hproc-morph-cycle {
+    0%    { width: 280px; }
+    10%   { width: 280px; }
+    14%   { width: 261px; }
+    20%   { width: 182px; }
+    24%   { width: 177px; }
+    26%   { width: 175px; }
+    38%   { width: 175px; }
+    42%   { width: 135px; }
+    45%   { width: 112px; }
+    47%   { width: 110px; }
+    60%   { width: 110px; }
+    68%   { width: 161px; }
+    76%   { width: 243px; }
+    83%   { width: 275px; }
+    87%   { width: 284px; }
+    91%   { width: 277px; }
+    95%   { width: 280px; }
+    100%  { width: 280px; }
+  }
+
+  .hproc__morph-frame { width: 280px; }
+
+  /* ── Layout (drag-assembly) panel ────────────────── */
+  .hproc__layout-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .hproc__la-card {
+    width: min(290px, 86vw);
+    min-height: 190px;
+    padding: 18px 16px;
+    gap: 12px;
+  }
+
+  .hproc__la-orbit { min-width: 0; overflow: visible; }
+  .hproc__la-card-left { width: 140px; }
+  .hproc__la-cardtitle { font-size: 17px; }
+  .hproc__la-cardbody { font-size: 10px; }
+  .hproc__la-circle { width: 90px; height: 90px; margin-left: -45px; margin-top: -45px; }
+  .hproc__la-img { width: 60px; height: 40px; }
+
+  .hproc__layout-title {
+    font-size: 56px;
+    text-align: center;
+  }
+
+  .hproc__layout-text {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ── Unique panel ────────────────────────────────── */
   .hproc__unique-layout {
     left: auto;
     width: 100%;
-    max-width: 720px;
+    max-width: 100%;
     min-height: auto;
     margin: 0 auto;
     padding: 8px 0 0;
     transform: none;
   }
-  .hproc__unique-layout::before {
-    display: none;
-  }
+
+  .hproc__unique-layout::before { display: none; }
+
   .hproc__unique-title {
-    font-size: 66px;
+    font-size: 54px;
     white-space: normal;
   }
+
   .hproc__unique-flow {
     gap: 8px;
-    margin-top: 28px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
+
   .hproc__unique-step,
   .hproc__unique-animated-beaker {
-    width: 82px;
-    height: 82px;
+    width: 64px;
+    height: 64px;
   }
-  .hproc__unique-step--sketch1 {
-    width: 74px;
+
+  .hproc__unique-step--sketch1 { width: 56px; }
+  .hproc__unique-beaker-img--sketch1 { width: 56px; height: 56px; }
+  .hproc__unique-beaker-img--sketch2 { width: 66px; height: 66px; }
+
+  /* sketch3 overflows its container via position:absolute on desktop —
+     on mobile reset to flow layout so it stays in-line with the others */
+  .hproc__unique-beaker-img--sketch3 {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    object-position: center center;
   }
-  .hproc__unique-beaker-img--sketch1 {
-    width: 74px;
-    height: 74px;
-  }
-  .hproc__unique-beaker-img--sketch2 {
-    width: 84px;
-    height: 84px;
-  }
-  .hproc__unique-beaker-img--sketch3,
+
   .hproc__unique-animated-frame {
-    bottom: 12px;
-    width: 168px;
-    height: 168px;
+    bottom: 8px;
+    width: 156px;
+    height: 156px;
   }
-  .hproc__unique-arrow {
-    width: 58px;
-    height: 28px;
-  }
-  .hproc__unique-arrow path {
-    stroke-width: 5;
-  }
+
+  .hproc__unique-arrow { width: 40px; height: 22px; }
+  .hproc__unique-arrow path { stroke-width: 5; }
+
   .hproc__unique-body {
     align-self: center;
-    margin: 36px 0 0;
-    font-size: 20px;
-    width: min(100%, 620px);
-    padding: 0 24px;
-    max-width: 620px;
+    margin: 24px 0 0;
+    font-size: 16px;
+    width: min(100%, 560px);
+    padding: 0 20px;
+    max-width: 560px;
+  }
+
+  /* ── Dot pagination ──────────────────────────────── */
+  .hproc__dots {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    z-index: 20;
+  }
+
+  .hproc__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.20);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .hproc__dot.is-active {
+    background: #8A3DE6;
+    transform: scale(1.4);
   }
 }
 
 @media (max-width: 560px) {
   .hproc__unique-title {
-    font-size: 46px;
+    font-size: 38px;
     line-height: 1.04;
   }
   .hproc__unique-flow {
     gap: 4px;
-    margin-top: 22px;
+    margin-top: 14px;
   }
   .hproc__unique-step,
   .hproc__unique-animated-beaker {
-    width: 58px;
-    height: 58px;
+    width: 48px;
+    height: 48px;
   }
-  .hproc__unique-step--sketch1 {
-    width: 52px;
-  }
-  .hproc__unique-beaker-img--sketch1 {
-    width: 52px;
-    height: 52px;
-  }
-  .hproc__unique-beaker-img--sketch2 {
+  .hproc__unique-step--sketch1 { width: 42px; }
+  .hproc__unique-beaker-img--sketch1 { width: 48px; height: 48px; }
+  .hproc__unique-beaker-img--sketch2 { width: 56px; height: 56px; }
+  /* sketch3 on 560px — same inline approach, just smaller */
+  .hproc__unique-beaker-img--sketch3 {
+    position: relative;
     width: 60px;
     height: 60px;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    object-position: center center;
   }
-  .hproc__unique-beaker-img--sketch3,
+
   .hproc__unique-animated-frame {
-    bottom: 8px;
-    width: 120px;
-    height: 120px;
+    bottom: 6px;
+    width: 115px;
+    height: 92px;
   }
   .hproc__unique-arrow {
-    width: 30px;
-    height: 18px;
+    width: 24px;
+    height: 16px;
     margin: 0;
   }
-  .hproc__unique-arrow path {
-    stroke-width: 7;
-  }
+  .hproc__unique-arrow path { stroke-width: 7; }
   .hproc__unique-body {
-    margin-top: 28px;
-    font-size: 17px;
+    margin-top: 18px;
+    font-size: 13px;
     line-height: 1.45;
-    padding: 0 20px;
+    padding: 0 16px;
   }
+
+  /* Creation Process — smaller board, no scale hack */
+  .hproc__cp-stage { transform: none; gap: 14px; }
+  .hproc__cp-board { --cell: 52px; --gap: 5px; }
+  .hproc__cp-title { font-size: 44px; }
+
+  /* Responsiveness — shrink browser further with scaled keyframes */
+  .hproc__resp-browser { width: 220px; }
+
+  @keyframes hproc-morph-cycle {
+    0%    { width: 220px; }
+    10%   { width: 220px; }
+    14%   { width: 204px; }
+    20%   { width: 141px; }
+    24%   { width: 137px; }
+    26%   { width: 134px; }
+    38%   { width: 134px; }
+    42%   { width: 104px; }
+    45%   { width: 88px; }
+    47%   { width: 86px; }
+    60%   { width: 86px; }
+    68%   { width: 125px; }
+    76%   { width: 189px; }
+    83%   { width: 215px; }
+    87%   { width: 224px; }
+    91%   { width: 218px; }
+    95%   { width: 220px; }
+    100%  { width: 220px; }
+  }
+
+  .hproc__morph-frame { width: 220px; }
+
+  /* Layout card — shrink further */
+  .hproc__la-card {
+    width: min(240px, 80vw);
+    min-height: 160px;
+    padding: 14px 12px;
+  }
+  .hproc__la-card-left { width: 115px; }
+  .hproc__la-cardtitle { font-size: 14px; }
+  .hproc__la-cardbody { font-size: 9px; }
+  .hproc__la-circle { width: 72px; height: 72px; margin-left: -36px; margin-top: -36px; }
+  .hproc__la-img { width: 48px; height: 32px; }
+
+  .hproc__font-title { font-size: 44px; }
+  .hproc__layout-title { font-size: 44px; }
 }
