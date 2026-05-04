@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '../gsap-config';
 import { SplitText } from 'gsap/SplitText';
+import { Flip } from 'gsap/Flip';
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, Flip);
 
 /* ─── Data ──────────────────────────────────────────────────────────────── */
 
@@ -35,9 +36,47 @@ const ITEMS = [
 export default function WhyUs() {
   const wordRefs = [useRef(null), useRef(null), useRef(null)];
   const cardRefs = [useRef(null), useRef(null), useRef(null)];
+  const sectionRef = useRef(null);
+  const gridRef = useRef(null);
 
   useEffect(() => {
+    let hoverCleanups = [];
     const ctx = gsap.context(() => {
+      // ── Final resting state: cards stack in left col, words to right col ──
+      const playFinal = () => {
+        const grid = gridRef.current;
+        const c = cardRefs.map((r) => r.current);
+        const w = wordRefs.map((r) => r.current);
+        if (!grid || c.some((x) => !x) || w.some((x) => !x)) return;
+
+        // Lock each card's current rendered width in pixels so the upcoming
+        // grid-cell change can't reflow them to a different size during Flip.
+        const cardWidths = c.map((card) => card.getBoundingClientRect().width);
+        c.forEach((card, i) => {
+          card.style.width = `${cardWidths[i]}px`;
+        });
+
+        const elements = [c[0], w[0], c[1], w[1], c[2], w[2]];
+        const state = Flip.getState(elements);
+
+        grid.style.rowGap = '2rem';
+        c[0].style.gridColumn = '1'; c[0].style.gridRow = '1';
+        w[0].style.gridColumn = '3'; w[0].style.gridRow = '1'; w[0].style.alignSelf = 'center';
+        c[1].style.gridColumn = '1'; c[1].style.gridRow = '2';
+        w[1].style.gridColumn = '3'; w[1].style.gridRow = '2'; w[1].style.alignSelf = 'center';
+        c[2].style.gridColumn = '1'; c[2].style.gridRow = '3';
+        w[2].style.gridColumn = '3'; w[2].style.gridRow = '3'; w[2].style.alignSelf = 'center';
+
+        Flip.from(state, {
+          duration: 0.6,
+          ease: 'power2.inOut',
+          stagger: (idx) => Math.floor(idx / 2) * 0.1,
+          onComplete: () => {
+            c.forEach((card) => { card.style.width = ''; });
+          },
+        });
+      };
+
       // ── Heading words: chars split upward, triggered per word ──
       wordRefs.forEach((ref) => {
         if (!ref.current) return;
@@ -72,17 +111,93 @@ export default function WhyUs() {
             start: 'top 90%',
             toggleActions: 'play none none none',
           },
+          onComplete: i === 2 ? playFinal : undefined,
         });
       });
+
+      // ── Cards: hover lift + stat pop ──
+      hoverCleanups = cardRefs.map((ref) => {
+        const card = ref.current;
+        if (!card) return () => {};
+
+        const stat = card.querySelector('[data-card-stat]');
+        const title = card.querySelector('[data-card-title]');
+
+        // Keep box-shadow geometry identical on enter/leave — only the alpha
+        // changes — so GSAP can interpolate smoothly without a snap.
+        const SHADOW_ON = '0 20px 40px -12px rgba(17, 17, 17, 0.18)';
+        const SHADOW_OFF = '0 20px 40px -12px rgba(17, 17, 17, 0)';
+        gsap.set(card, { boxShadow: SHADOW_OFF });
+
+        const enter = () => {
+          gsap.to(card, {
+            y: -8,
+            scale: 1.02,
+            boxShadow: SHADOW_ON,
+            duration: 0.4,
+            ease: 'power3.out',
+            overwrite: 'auto',
+          });
+          gsap.to(stat, {
+            scale: 1.08,
+            color: '#6A61D6',
+            duration: 0.4,
+            ease: 'power3.out',
+            transformOrigin: 'left center',
+            overwrite: 'auto',
+          });
+          gsap.to(title, {
+            x: 4,
+            duration: 0.4,
+            ease: 'power3.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const leave = () => {
+          gsap.to(card, {
+            y: 0,
+            scale: 1,
+            boxShadow: SHADOW_OFF,
+            duration: 0.7,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+          gsap.to(stat, {
+            scale: 1,
+            color: '#7F77DD',
+            duration: 0.7,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+          gsap.to(title, {
+            x: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        card.addEventListener('mouseenter', enter);
+        card.addEventListener('mouseleave', leave);
+        return () => {
+          card.removeEventListener('mouseenter', enter);
+          card.removeEventListener('mouseleave', leave);
+        };
+      });
+
     });
 
-    return () => ctx.revert();
+    return () => {
+      hoverCleanups.forEach((fn) => fn());
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <section style={{ background: 'var(--bg, #F7F6F4)', fontFamily: FONT }}>
+    <section ref={sectionRef} style={{ background: 'var(--bg, #F7F6F4)', fontFamily: FONT }}>
       {/* Desktop: diagonal grid layout */}
-      <div style={s.grid}>
+      <div ref={gridRef} style={s.grid}>
         {/* Row 1, Col 1 — "Three" */}
         <div ref={wordRefs[0]} style={{ ...s.word, gridColumn: '1', gridRow: '1' }}>Three</div>
 
@@ -116,10 +231,10 @@ export default function WhyUs() {
 function CardContent({ item }) {
   return (
     <div style={s.cardInner}>
-      <h3 style={s.cardTitle}>{item.title}</h3>
+      <h3 data-card-title style={s.cardTitle}>{item.title}</h3>
       <p style={s.cardBody}>{item.body}</p>
       <div style={s.statRow}>
-        <span style={s.stat}>{item.stat}</span>
+        <span data-card-stat style={s.stat}>{item.stat}</span>
         <span style={s.statLabel}>{item.statLabel}</span>
       </div>
     </div>
@@ -162,6 +277,8 @@ const s = {
     width: '100%',
     height: CARD_HEIGHT,
     boxSizing: 'border-box',
+    cursor: 'pointer',
+    willChange: 'transform',
   },
 
   /* Card inner padding */

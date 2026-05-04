@@ -23,6 +23,7 @@ import WebsitesProcess from './components/WebsitesProcess';
 import HorizontalProcess from './components/HorizontalProcess';
 import FlipCardStack from './components/FlipCardStack';
 import WhatYouGet from './components/WhatYouGet';
+import SmoothScroll from './components/SmoothScroll';
 import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
 import logoClean from '../img/Rootlabs-logo-xbg.png';
@@ -5916,7 +5917,12 @@ function navigate(path) {
         return () => mo.disconnect();
       }, []);
 
-      return <Router />;
+      return (
+        <>
+          <SmoothScroll />
+          <Router />
+        </>
+      );
     }
 
     export default App;
