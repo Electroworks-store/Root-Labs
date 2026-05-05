@@ -23,10 +23,10 @@ const ITEMS = [
     statLabel: 'SATISFACTION',
   },
   {
-    title: 'Real designers',
-    body: 'Work directly with the people doing the work — no account managers in the way.',
-    stat: '80 %',
-    statLabel: 'TIME SAVED',
+    title: 'Unique by design',
+    body: 'No templates. No recycled layouts. Every site is built from a blank canvas, so your brand looks like yours, not everyone else\'s.',
+    stat: '0',
+    statLabel: 'TEMPLATES USED',
   },
 ];
 

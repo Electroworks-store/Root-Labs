@@ -1245,6 +1245,226 @@ function navigate(path) {
       );
     }
 
+    // Mission Bell Section
+    function MissionBellSection() {
+      const sectionRef = useRef(null);
+      const headingRef = useRef(null);
+      const copyRef = useRef(null);
+
+      useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const balls = gsap.utils.toArray(section.querySelectorAll('.mission-bell-ball'));
+        const marker = section.querySelector('.mission-root-marker');
+
+        // Sort by cy descending: highest cy (bottom of chart) falls first
+        balls.sort((a, b) => parseFloat(b.getAttribute('cy')) - parseFloat(a.getAttribute('cy')));
+
+        // Each ball starts above the SVG viewport at its own horizontal position
+        gsap.set(balls, { y: -480, opacity: 1 });
+        gsap.set(marker, { y: -480, opacity: 1 });
+
+        const st = ScrollTrigger.create({
+          trigger: section,
+          start: 'top 72%',
+          once: true,
+          onEnter: () => {
+            // Animate heading from left
+            gsap.from(headingRef.current, {
+              x: -80,
+              opacity: 0,
+              duration: 0.65,
+              ease: 'power3.out',
+            });
+
+            // Animate copy from right
+            gsap.from(copyRef.current, {
+              x: 80,
+              opacity: 0,
+              duration: 0.65,
+              ease: 'power3.out',
+            });
+
+            // Animate balls
+            balls.forEach((ball, i) => {
+              // Slight random weight variation per ball
+              const dur = 0.72 + Math.random() * 0.18;
+              gsap.to(ball, {
+                y: 0,
+                duration: dur,
+                delay: i * 0.018,
+                ease: 'power2.in',
+                overwrite: false,
+              });
+            });
+            gsap.to(marker, {
+              y: 0,
+              duration: 0.85,
+              delay: balls.length * 0.018,
+              ease: 'power2.in',
+            });
+          },
+        });
+
+        return () => {
+          st.kill();
+          gsap.killTweensOf([...balls, marker]);
+        };
+      }, []);
+
+      const bellColumns = [3, 4, 5, 7, 9, 11, 10, 8, 6, 4, 3];
+      const bellStartX = 130;
+      const bellStep = 44;
+      const bellBaseY = 390;
+      const bellGapY = 35;
+      const ballRadius = 15;
+
+      return (
+        <section ref={sectionRef} className="mission-bell-section" aria-labelledby="mission-bell-heading">
+          <style>{`
+            .mission-bell-section {
+              --mission-purple: #8A3DE6;
+              background: #f8f8f7;
+              padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+            }
+
+            .mission-bell-grid {
+              width: min(100%, 94rem);
+              margin: 0 auto;
+              display: grid;
+              grid-template-columns: minmax(20rem, 1.1fr) minmax(25rem, 1.18fr) minmax(16rem, 0.72fr);
+              align-items: center;
+              gap: clamp(2rem, 4vw, 4.5rem);
+            }
+
+            .mission-bell-heading {
+              margin: 0;
+              color: #000;
+              font-family: 'Inter', system-ui, sans-serif;
+              font-size: clamp(3.6rem, 6.2vw, 6.4rem);
+              font-weight: 700;
+              line-height: 0.98;
+              letter-spacing: 0;
+            }
+
+            .mission-bell-heading span {
+              display: block;
+            }
+
+            .mission-bell-heading em {
+              color: var(--mission-purple);
+              font-style: normal;
+            }
+
+            .mission-bell-card {
+              position: relative;
+              width: 100%;
+              overflow: hidden;
+              margin-top: clamp(1rem, 2vw, 2rem);
+            }
+
+            .mission-bell-card svg {
+              display: block;
+              width: 100%;
+              height: auto;
+            }
+
+            .mission-bell-copy {
+              max-width: 24rem;
+              margin: 0;
+              color: #050505;
+              font-family: 'Inter', system-ui, sans-serif;
+              font-size: clamp(0.95rem, 1.3vw, 1.25rem);
+              font-weight: 400;
+              line-height: 1.35;
+              letter-spacing: 0;
+              text-align: right;
+              justify-self: end;
+            }
+
+            .mission-bell-column {
+              transform-origin: center bottom;
+            }
+
+            @media (max-width: 1100px) {
+              .mission-bell-grid {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+              }
+
+              .mission-bell-heading {
+                font-size: clamp(3rem, 11vw, 5rem);
+              }
+
+              .mission-bell-card {
+                max-width: 44rem;
+              }
+            }
+          `}</style>
+
+          <div className="mission-bell-grid">
+            <h2 ref={headingRef} id="mission-bell-heading" className="mission-bell-heading">
+              <span>The</span>
+              <span>middle is <em>crowded.</em></span>
+            </h2>
+
+            <div className="mission-bell-card" aria-label="Bell curve from boring to unique with Root Labs at the unique edge">
+              <svg viewBox="0 0 720 520" role="img" aria-labelledby="mission-chart-title mission-chart-desc">
+                <title id="mission-chart-title">Root Labs uniqueness curve</title>
+                <desc id="mission-chart-desc">A bell curve made from columns of balls, moving from boring on the left to unique on the right.</desc>
+                <defs>
+                  <filter id="missionBallInset" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="1" floodColor="#000" floodOpacity="0.22" />
+                  </filter>
+                </defs>
+
+                {bellColumns.map((count, columnIndex) => {
+                  const x = bellStartX + columnIndex * bellStep;
+                  const topY = bellBaseY - (count - 1) * bellGapY - ballRadius - 12;
+                  return (
+                    <g key={columnIndex} className="mission-bell-column">
+                      <line
+                        x1={x} y1={topY} x2={x} y2={bellBaseY + 18}
+                        stroke="#555" strokeWidth="3" strokeLinecap="round"
+                      />
+                      {Array.from({ length: count }, (_, rowIndex) => (
+                        <circle
+                          key={rowIndex}
+                          className="mission-bell-ball"
+                          cx={x}
+                          cy={bellBaseY - rowIndex * bellGapY}
+                          r={ballRadius}
+                          fill="#eeeeee"
+                          stroke="#aaaaaa"
+                          strokeWidth="4"
+                          filter="url(#missionBallInset)"
+                        />
+                      ))}
+                    </g>
+                  );
+                })}
+
+                <line x1="60" y1="430" x2="672" y2="430" stroke="#8a8a8a" strokeWidth="4" strokeLinecap="round" />
+                <path d="M652 412 L672 430 L652 448" fill="none" stroke="#8a8a8a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="60" y="466" fill="#505050" fontFamily="Inter, system-ui, sans-serif" fontSize="30" fontWeight="400">Boring</text>
+                <text x="577" y="466" fill="#505050" fontFamily="Inter, system-ui, sans-serif" fontSize="30" fontWeight="400">Unique</text>
+
+                <g className="mission-root-marker">
+                  <image href={favicon} x="595" y="381" width="38" height="38" preserveAspectRatio="xMidYMid meet" />
+                </g>
+              </svg>
+            </div>
+
+            <p ref={copyRef} className="mission-bell-copy">
+              No templates. No recycled layouts. We build every site from scratch so your brand stands out, not blends in.
+            </p>
+          </div>
+        </section>
+      );
+    }
+
     // About Section
     function About() {
       // Half-circle wave layers: semicircles centered at x=0, only right half visible
@@ -1360,175 +1580,8 @@ function navigate(path) {
             </div>
           </div>
 
-          {/* Mission Section — Venn Diagram */}
-          {(() => {
-            const vennRef = useRef(null);
-            const [vennVisible, setVennVisible] = useState(false);
-
-            useEffect(() => {
-              const el = vennRef.current;
-              if (!el) return;
-              const obs = new IntersectionObserver(
-                ([entry]) => { if (entry.isIntersecting) { setVennVisible(true); obs.disconnect(); } },
-                { threshold: 0.2 }
-              );
-              obs.observe(el);
-              return () => obs.disconnect();
-            }, []);
-
-            // Circle geometry: 3 circles in classic Venn layout
-            // Canvas: 520 x 480, circles r=140
-            const r = 140;
-            const cx = 260, cy = 220; // center of the diagram
-            const spread = 90; // distance from center to each circle's center
-            const circles = [
-              { cx: cx - spread * 0.87, cy: cy - spread * 0.5, label: 'Creativity', lx: -68, ly: -55, color: [138, 61, 230] },   // purple
-              { cx: cx + spread * 0.87, cy: cy - spread * 0.5, label: 'Quality', lx: 68, ly: -55, color: [56, 132, 248] },     // blue
-              { cx: cx, cy: cy + spread, label: 'Speed', lx: 0, ly: 85, color: [255, 193, 7] },                               // yellow
-            ];
-
-            return (
-              <div ref={vennRef} className="relative px-8 md:px-12 lg:px-20 py-32">
-                <div className="max-w-6xl mx-auto text-center">
-                  <p
-                    className="text-xs font-bold mb-16 tracking-[0.3em]"
-                    style={{
-                      color: 'var(--primary)',
-                      opacity: vennVisible ? 1 : 0,
-                      transform: vennVisible ? 'translateY(0)' : 'translateY(16px)',
-                      transition: 'opacity 0.6s ease, transform 0.6s ease',
-                    }}
-                  >
-                    OUR MISSION
-                  </p>
-
-                  {/* SVG Venn Diagram */}
-                  <div
-                    className="relative mx-auto"
-                    style={{ width: '100%', maxWidth: 520, aspectRatio: '520 / 480' }}
-                  >
-                    <svg
-                      viewBox="0 0 520 480"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: '100%', height: '100%', display: 'block' }}
-                      aria-hidden="true"
-                    >
-                      <defs>
-                        {/* Radial gradients for each circle — unique colors */}
-                        {circles.map((c, i) => (
-                          <radialGradient key={`grad-${i}`} id={`vennGrad${i + 1}`} cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor={`rgba(${c.color.join(',')}, 0.14)`} />
-                            <stop offset="100%" stopColor={`rgba(${c.color.join(',')}, 0.03)`} />
-                          </radialGradient>
-                        ))}
-                      </defs>
-
-                      {/* Three main circles — layered so overlaps naturally darken */}
-                      {circles.map((c, i) => (
-                        <g key={i}>
-                          <circle
-                            cx={c.cx}
-                            cy={c.cy}
-                            r={r}
-                            fill={`url(#vennGrad${i + 1})`}
-                            stroke={`rgba(${c.color.join(',')}, 0.22)`}
-                            strokeWidth="1.5"
-                            style={{
-                              opacity: vennVisible ? 1 : 0,
-                              transform: vennVisible
-                                ? 'scale(1)'
-                                : `translate(${c.lx * 0.4}px, ${c.ly * 0.4}px) scale(0.7)`,
-                              transformOrigin: `${c.cx}px ${c.cy}px`,
-                              transition: `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.12}s`,
-                            }}
-                          />
-                        </g>
-                      ))}
-
-                      {/* Overlap enhancement: draw circles again with lighter fill for stacking effect */}
-                      {circles.map((c, i) => (
-                        <circle
-                          key={`overlap-${i}`}
-                          cx={c.cx}
-                          cy={c.cy}
-                          r={r}
-                          fill={`rgba(${c.color.join(',')}, 0.04)`}
-                          style={{
-                            opacity: vennVisible ? 1 : 0,
-                            transition: `opacity 1.2s ease ${0.5 + i * 0.1}s`,
-                          }}
-                        />
-                      ))}
-
-                      {/* Labels */}
-                      {circles.map((c, i) => (
-                        <text
-                          key={`label-${i}`}
-                          x={c.cx + c.lx}
-                          y={c.cy + c.ly}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                          fill={`rgb(${c.color.join(',')})`}
-                          fontFamily="'Geist', sans-serif"
-                          fontWeight="700"
-                          fontSize="15"
-                          letterSpacing="0.04em"
-                          style={{
-                            opacity: vennVisible ? 1 : 0,
-                            transform: vennVisible ? 'translateY(0)' : 'translateY(10px)',
-                            transition: `opacity 0.6s ease ${0.6 + i * 0.15}s, transform 0.6s ease ${0.6 + i * 0.15}s`,
-                          }}
-                        >
-                          {c.label}
-                        </text>
-                      ))}
-                    </svg>
-
-                    {/* Center logo — floating above SVG at the triple intersection */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '46%',
-                        left: '50%',
-                        transform: vennVisible
-                          ? 'translate(-50%, -50%) scale(1)'
-                          : 'translate(-50%, -50%) scale(0)',
-                        width: 64,
-                        height: 64,
-                        borderRadius: '50%',
-                        background: '#fff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 24px rgba(138, 61, 230, 0.15), 0 0 0 4px rgba(138, 61, 230, 0.06)',
-                        zIndex: 5,
-                        transition: 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s',
-                      }}
-                    >
-                      <img
-                        src={`${import.meta.env.BASE_URL}img/rootlabs-favicon.png`}
-                        alt="Root Labs"
-                        style={{ width: '70%', height: '70%', objectFit: 'contain' }}
-                      />
-                    </div>
-                  </div>
-
-                  <p
-                    className="text-lg md:text-xl leading-relaxed mt-14 max-w-2xl mx-auto"
-                    style={{
-                      color: 'var(--muted)',
-                      opacity: vennVisible ? 1 : 0,
-                      transform: vennVisible ? 'translateY(0)' : 'translateY(20px)',
-                      transition: 'opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s',
-                    }}
-                  >
-                    Where creativity, quality, and speed overlap, that's where we work.
-                  </p>
-                </div>
-              </div>
-            );
-          })()}
+          {/* Mission Section - Bell Curve */}
+          <MissionBellSection />
 
           {/* Team Section - Meet the crew */}
           <div className="relative px-8 md:px-12 lg:px-20 py-32">
@@ -2725,8 +2778,9 @@ function navigate(path) {
       }
       .metrics-label {
         margin-top: clamp(1rem, 2vw, 1.5rem);
+        font-family: 'Inter', sans-serif;
         font-size: clamp(2.15rem, 4vw, 4rem);
-        font-weight: 300;
+        font-weight: 200;
         line-height: 1.05;
         letter-spacing: -0.055em;
         color: rgba(0, 0, 0, 0.84);

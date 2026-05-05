@@ -108,6 +108,7 @@ const HERO2_STYLES = `
 }
 
 .h2-heading-main {
+  font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(6rem, 13vw, 12.4rem);
   font-weight: 700;
   line-height: 0.82;
