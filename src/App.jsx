@@ -23,6 +23,7 @@ import WebsitesProcess from './components/WebsitesProcess';
 import HorizontalProcess from './components/HorizontalProcess';
 import FlipCardStack from './components/FlipCardStack';
 import WhatYouGet from './components/WhatYouGet';
+import SmoothScroll from './components/SmoothScroll';
 import './components/FlipCardStack.css';
 import lomniceLogo from '../img/lomnice.webp';
 import logoClean from '../img/Rootlabs-logo-xbg.png';
@@ -32,6 +33,28 @@ import rlLogoSvg from '../img/RL-logo.svg';
 // Navigation helper for client-side routing
 function navigate(path) {
   window.location.hash = path;
+}
+
+// Smooth scroll to a section by id or element.
+// Uses Lenis (already running) so the motion stays in sync with GSAP ScrollTrigger.
+// Respects prefers-reduced-motion: jumps instantly when the OS setting is on.
+const NAV_OFFSET = -88; // px — clears the fixed floating nav (top-6 + pill height)
+const SCROLL_EASING = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out
+
+function smoothScrollTo(target) {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = typeof target === 'string' ? document.getElementById(target) : target;
+  if (!el) return;
+  if (window.lenis) {
+    window.lenis.scrollTo(el, {
+      offset: NAV_OFFSET,
+      duration: 0.65,
+      easing: SCROLL_EASING,
+      immediate: prefersReduced,
+    });
+  } else {
+    el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+  }
 }
 
 // Helper: Serialize form data to object
@@ -118,14 +141,21 @@ function navigate(path) {
       const handleClick = (e, item) => {
         const href = getHref(item);
         const lower = item.toLowerCase();
-        
+
         // Special handling for About - always navigate with hash
         if (lower === 'about') {
           e.preventDefault();
           window.location.href = '/#about';
           return;
         }
-        
+
+        // Same-page section links — hand off to Lenis instead of native jump
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          smoothScrollTo(href.substring(1));
+          return;
+        }
+
         if (href.startsWith('/')) {
           e.preventDefault();
           navigate(href);
@@ -380,11 +410,13 @@ function navigate(path) {
             <div className="hero-enter hero-entered" style={{ transitionDelay: '0.35s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
                 <a href="#work"
+                  onClick={(e) => { e.preventDefault(); smoothScrollTo('work'); }}
                   className="glow-on-hover relative px-8 py-5 rounded-full text-white font-semibold text-lg inline-flex items-center justify-center transition-all duration-300 hover:translate-y-[-1px]"
                   style={{ background: 'var(--primary)', boxShadow: 'inset 0 0 0 5px rgba(255, 255, 255, 0.18)' }}>
                   <span className="relative z-10">{data.btnPrimary}</span>
                 </a>
                 <a href="#pricing"
+                  onClick={(e) => { e.preventDefault(); smoothScrollTo('pricing'); }}
                   className="btn-glass px-8 py-5 text-lg inline-flex items-center justify-center transition-all duration-300 hover:translate-y-[-1px]">
                   {data.btnSecondary}
                 </a>
@@ -3588,19 +3620,13 @@ function navigate(path) {
                 </p>
                 <div className="wsp-hero-ctas">
                   <button
-                    onClick={() => {
-                      const element = document.getElementById('pricing');
-                      if (element) element.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => smoothScrollTo('pricing')}
                     className="glow-on-hover wsp-btn-primary cursor-pointer"
                   >
                     View Pricing
                   </button>
                   <button
-                    onClick={() => {
-                      const element = document.getElementById('contact');
-                      if (element) element.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => smoothScrollTo('contact')}
                     className="wsp-btn-secondary cursor-pointer"
                   >
                     Contact Us
@@ -5197,8 +5223,7 @@ function navigate(path) {
                     key: item,
                     onClick: (e) => {
                       e.preventDefault();
-                      const section = document.getElementById(item);
-                      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      smoothScrollTo(item);
                     },
                     style: { color: '#8C5A3E', textDecoration: 'none', transition: 'color 0.2s', background: 'none', border: 'none', fontSize: '1rem', cursor: 'pointer', fontFamily: 'inherit' },
                     onMouseEnter: (e) => { e.target.style.color = '#D9A282'; },
@@ -5220,8 +5245,7 @@ function navigate(path) {
                 onClick: (e) => {
                   e.preventDefault();
                   setMenuOpen(false);
-                  const section = document.getElementById(item);
-                  if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  smoothScrollTo(item);
                 },
                 style: { display: 'block', width: '100%', textAlign: 'left', padding: '0.5rem', color: '#8C5A3E', background: 'none', border: 'none', fontSize: '1rem', cursor: 'pointer', fontFamily: 'inherit' }
               }, item.charAt(0).toUpperCase() + item.slice(1))
@@ -5254,8 +5278,7 @@ function navigate(path) {
               React.createElement('button', {
                 onClick: (e) => {
                   e.preventDefault();
-                  const section = document.getElementById('menu');
-                  if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  smoothScrollTo('menu');
                 },
                 style: { display: 'inline-block', background: '#E6C084', color: '#8C5A3E', padding: '0.75rem 2rem', borderRadius: '9999px', border: 'none', cursor: 'pointer', transition: 'all 0.3s', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', fontWeight: 500, fontSize: '1rem', fontFamily: 'inherit' },
                 onMouseEnter: (e) => { e.target.style.background = '#D9A282'; e.target.style.transform = 'scale(1.05)'; },
@@ -5402,10 +5425,7 @@ function navigate(path) {
             React.createElement('button', {
               onClick: () => {
                 navigate('/');
-                setTimeout(() => {
-                  const section = document.getElementById('work');
-                  if (section) section.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+                setTimeout(() => smoothScrollTo('work'), 100);
               },
               style: {
                 display: 'inline-flex',
@@ -5872,10 +5892,7 @@ function navigate(path) {
           if (hash && !hash.startsWith('#/')) {
             // It's a section anchor like #about
             setTimeout(() => {
-              const element = document.getElementById(hash.substring(1));
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
+              smoothScrollTo(hash.substring(1));
             }, 300); // Wait for page to render
           }
         };
@@ -5903,10 +5920,7 @@ function navigate(path) {
             window.scrollTo(0, 0);
           } else if (hash) {
             // Handle section scrolling
-            const element = document.getElementById(hash.substring(1));
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth' });
-            }
+            smoothScrollTo(hash.substring(1));
           }
         };
 
@@ -5970,7 +5984,12 @@ function navigate(path) {
         return () => mo.disconnect();
       }, []);
 
-      return <Router />;
+      return (
+        <>
+          <SmoothScroll />
+          <Router />
+        </>
+      );
     }
 
     export default App;
