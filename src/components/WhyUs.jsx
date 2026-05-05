@@ -249,7 +249,7 @@ const s = {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
     columnGap: 'clamp(1.25rem, 2.5vw, 2rem)',
-    rowGap: 'clamp(0.75rem, 1.5vw, 1.25rem)',
+    rowGap: 'clamp(0.5rem, 1vw, 0.85rem)',
     padding: 'clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 4rem)',
     maxWidth: '1280px',
     margin: '0 auto',

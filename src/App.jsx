@@ -863,7 +863,7 @@ function smoothScrollTo(target) {
     const LABS_WORDS = [
       { accent: 'L', rest: 'aunch' },
       { accent: 'A', rest: 'dapt'  },
-      { accent: 'B', rest: 'reak'  },
+      { accent: 'B', rest: 'uild'  },
       { accent: 'S', rest: 'hip'   },
     ];
 
