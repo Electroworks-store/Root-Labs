@@ -12,6 +12,9 @@ export default function SmoothScroll() {
       smoothTouch: false,
     });
 
+    // Expose instance so smoothScrollTo() in App.jsx can call lenis.scrollTo()
+    window.lenis = lenis;
+
     // Keep ScrollTrigger in sync with Lenis-driven scroll
     const onScroll = () => ScrollTrigger.update();
     lenis.on('scroll', onScroll);
@@ -25,6 +28,7 @@ export default function SmoothScroll() {
       lenis.off('scroll', onScroll);
       gsap.ticker.remove(tick);
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 
