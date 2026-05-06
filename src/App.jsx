@@ -656,7 +656,7 @@ function smoothScrollTo(target) {
                         </h3>
 
                         <p className="squareshare-description">
-                          Curate and display your collections with rich artifacts — photos, descriptions, and stories. When you're ready, transform any artifact into a product and sell directly through SquareShare. Built for small businesses and creators who want a storefront without building a store.
+                          Curate and display your collections with rich artifacts: photos, descriptions, and stories. When you're ready, transform any artifact into a product and sell directly through SquareShare. Built for small businesses and creators who want a storefront without building a store.
                         </p>
 
                         <a 
