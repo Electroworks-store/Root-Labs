@@ -787,7 +787,7 @@ function smoothScrollTo(target) {
                         </h3>
 
                         <p className="teamster-description">
-                          A unified workspace designed for growing teams. Sheets, metrics, chat, and calendar — all in one beautifully simple interface.
+                          A unified workspace designed for growing teams. Sheets, metrics, chat, and calendar, all in one beautifully simple interface.
                         </p>
 
                         <a 
@@ -971,7 +971,7 @@ function smoothScrollTo(target) {
                   >
                     {/* Accent letter — drops in with bouncy pour keyframe */}
                     <span style={{
-                      color: '#534AB7',
+                      color: 'var(--primary)',
                       flexShrink: 0,
                       display: 'inline-block',
                       animation: isPouring ? `labsLetterPour 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms both` : 'none',

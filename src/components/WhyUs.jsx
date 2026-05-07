@@ -140,7 +140,7 @@ export default function WhyUs() {
           });
           gsap.to(stat, {
             scale: 1.08,
-            color: '#6A61D6',
+            color: 'var(--primary)',
             duration: 0.4,
             ease: 'power3.out',
             transformOrigin: 'left center',
@@ -165,7 +165,7 @@ export default function WhyUs() {
           });
           gsap.to(stat, {
             scale: 1,
-            color: '#7F77DD',
+            color: 'var(--primary)',
             duration: 0.7,
             ease: 'power2.out',
             overwrite: 'auto',
@@ -321,7 +321,7 @@ const s = {
     fontFamily: FONT,
     fontSize: '2rem',
     fontWeight: 700,
-    color: '#7F77DD',
+    color: 'var(--primary)',
     lineHeight: 1,
     letterSpacing: '-0.02em',
   },
